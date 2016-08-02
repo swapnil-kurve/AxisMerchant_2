@@ -129,7 +129,27 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                 if(edtSrNo.getText().toString().trim().equals("") && edtTidNo.getText().toString().trim().equals(""))
                 {
-                    Constants.showToast(getActivity(), "Please enter at least one of the above field");
+                    if(txtFromDate.getText().toString().equals(""))
+                    {
+                        Constants.showToast(getActivity(),"Please provide from date");
+                    }else if(txtToDate.getText().toString().equals(""))
+                    {
+                        Constants.showToast(getActivity(),"Please provide to date");
+                    }else if(!txtFromDate.getText().toString().equals("") && !txtToDate.getText().toString().equals("")) {
+
+                        String fromDate = txtFromDate.getText().toString().trim();
+                        String toDate = txtToDate.getText().toString().trim();
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            new GetSRStatusList().executeOnExecutor(AsyncTask
+                                    .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate);
+                        } else {
+                            new GetSRStatusList().execute(Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate);
+                        }
+
+                    }else{
+                        Constants.showToast(getActivity(), "Please enter at least one of the above field");
+                    }
                 }else if(!edtSrNo.getText().toString().trim().equals("") && edtTidNo.getText().toString().trim().equals(""))
                 {
                     mSRNO = edtSrNo.getText().toString().trim();
@@ -189,10 +209,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     }
 
 
-
-
     private class GetSRStatusList extends AsyncTask<String, Void, String>
     {
+        private int len ;
         ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
@@ -207,6 +226,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         protected String doInBackground(String... arg0) {
             String str = null;
             try {
+                len = arg0.length;
                 HTTPUtils utils = new HTTPUtils();
                 HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
                 URI newURI = URI.create(arg0[0]);
@@ -218,6 +238,15 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+
+                if(arg0.length > 3)
+                {
+                    String mFromDate = encryptDecrypt.encrypt(arg0[3]);
+                    String mToDate = encryptDecrypt.encrypt(arg0[4]);
+
+                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.fromDate), mFromDate));
+                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.toDate), mToDate));
+                }
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -256,7 +285,11 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                     result = encryptDecryptRegister.decrypt(result);
                     if (result.equals("Success")) {
                         JSONObject object = transaction.getJSONObject(1);
-                        JSONArray transactionBetDates = object.getJSONArray("getLatestServiceRequest");
+                        JSONArray transactionBetDates;
+                        if(len > 3)
+                            transactionBetDates= object.getJSONArray("getrequestsBetweenDates");
+                        else
+                            transactionBetDates= object.getJSONArray("getLatestServiceRequest");
                         for (int i = 0; i < transactionBetDates.length(); i++) {
 
                             JSONObject object2 = transactionBetDates.getJSONObject(i);
@@ -295,7 +328,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                             srStatuses.add(srStatus);
                         }
 
-
+                        listSRStatus.setVisibility(View.VISIBLE);
+                        vSearchLayout.setVisibility(View.GONE);
+                        txtSearch.setVisibility(View.VISIBLE);
                         adapter = new SRStatusAdapter(getActivity(), srStatuses);
                         listSRStatus.setAdapter(adapter);
                         progressDialog.dismiss();
@@ -363,7 +398,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            // TODO Auto-generated method stub
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);

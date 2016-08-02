@@ -84,7 +84,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     private View lyEmail,lyDetailsLayout, lyShowEmailButton;
     ImageView imgFilter;
     TextView txtFromDate, txtToDate;
-    int DateFlag = 0;
+    int DateFlag = 0,type;
     Calendar myCalendar = Calendar.getInstance();
     TextView txtGrossAmount,txtMDR,txtServiceTax,txtHoldAmount,txtAdjustments,txtCashPos, txtPaymentDate,txtNoOfTxn,txtTotalValue, txtNetAmount,txtDateDuration, txtGraphType;
 
@@ -114,7 +114,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
         currentDateAndTime = sdf.format(new Date());
 
-        int type  = 0;
+        type  = 0;
         Bundle bundle = getArguments();
         if(bundle != null && bundle.containsKey(ARG_OBJECT))
         {
@@ -227,7 +227,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(flag == 0) {
+        if(type == 0) {
             viewDetailsLayout.setVisibility(View.VISIBLE);
             listData.setVisibility(View.GONE);
             lyDetailsLayout.setVisibility(View.VISIBLE);
@@ -406,14 +406,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         mprDataSet.add(mis_mpr);
                     }
-
-                    Collections.sort(mprDataSet, new Comparator<MIS_MPR>() {
-                        @Override
-                        public int compare(MIS_MPR lhs, MIS_MPR rhs) {
-                            return (lhs.getTransDate().compareTo(rhs.getTransDate()));
-                        }
-
-                    });
 
                     txtDateDuration.setText(date);
                     showBarChart();
@@ -734,13 +726,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                      /*  if(i == 0)
-                        {
-                            date = transDate.split("\\s+")[0];
-                        }else if(i == (transactionBetDates.length()-1))
-                        {
-                            date = transDate.split("\\s+")[0]+" TO "+date;
-                        }*/
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         mprDataSet.add(mis_mpr);
                     }
