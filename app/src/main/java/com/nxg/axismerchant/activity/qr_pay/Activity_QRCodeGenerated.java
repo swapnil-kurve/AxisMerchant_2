@@ -36,6 +36,8 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
     ImageView imgBack, imgNotification, imgProfile;
     String id, name, mcc, city, countryCode, currencyCode, amount="", primaryId="", secondaryId="";
     int checkId, checkName, check_mcc, checkCity, checkCountryCode, checkCurrencyCode, checkAmount;
+    String checkIdLength, checkNameLength, check_mccLength, checkCityLength, checkCountryCodeLength, checkCurrencyCodeLength, checkAmountLength;
+    ArrayList<String> alphanumeric;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,108 +59,123 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
 
 
-                SharedPreferences preferences = getSharedPreferences(Constants.QRPaymentData,MODE_PRIVATE);
-                if(preferences.contains("Amount")) {
-                    amount = preferences.getString("Amount", "0");
-                    checkAmount = amount.length();
-                }
-                if(preferences.contains("Primary_Id"))
-                    primaryId = preferences.getString("Primary_Id","0");
-                if(preferences.contains("Secondary_Id"))
-                    secondaryId = preferences.getString("Secondary_Id","0");
+        SharedPreferences preferences = getSharedPreferences(Constants.QRPaymentData,MODE_PRIVATE);
+        if(preferences.contains("Amount")) {
+            amount = preferences.getString("Amount", "0");
+            checkAmount = amount.length();
+            checkAmountLength = alphanumeric.get(checkAmount);
+        }
+        if(preferences.contains("Primary_Id"))
+            primaryId = preferences.getString("Primary_Id","0");
+        if(preferences.contains("Secondary_Id"))
+            secondaryId = preferences.getString("Secondary_Id","0");
 
-                getData();
+        getData();
 
-            Log.e("id", id);
-            Log.e("name", name);
-            Log.e("mcc", mcc);
-            Log.e("city", city);
-            Log.e("countryCode", countryCode);
-            Log.e("currencyCode", currencyCode);
+        Log.e("id", id);
+        Log.e("name", name);
+        Log.e("mcc", mcc);
+        Log.e("city", city);
+        Log.e("countryCode", countryCode);
+        Log.e("currencyCode", currencyCode);
 
+        Log.e("checkId", checkId+"");
+        Log.e("checkName", checkName+"");
+        Log.e("check_mcc", check_mcc+"");
+        Log.e("checkCity", checkCity+"");
+        Log.e("checkCountryCode", checkCountryCode+"");
+        Log.e("checkCurrencyCode", checkCurrencyCode+"");
 
+        checkIdLength = alphanumeric.get(checkId);
+        checkNameLength = alphanumeric.get(checkName);
+        check_mccLength = alphanumeric.get(check_mcc);
+        checkCityLength = alphanumeric.get(checkCity);
+        checkCountryCodeLength = alphanumeric.get(checkCountryCode);
+        checkCurrencyCodeLength = alphanumeric.get(checkCurrencyCode);
 
-            Log.e("checkId", checkId+"");
-            Log.e("checkName", checkName+"");
-            Log.e("check_mcc", check_mcc+"");
-            Log.e("checkCity", checkCity+"");
-            Log.e("checkCountryCode", checkCountryCode+"");
-            Log.e("checkCurrencyCode", checkCurrencyCode+"");
+        Log.e("checkIdLength", checkIdLength+"");
+        Log.e("checkNameLength", checkNameLength+"");
+        Log.e("check_mccLength", check_mccLength+"");
+        Log.e("checkCityLength", checkCityLength+"");
+        Log.e("checkCountryCodeLength", checkCountryCodeLength+"");
+        Log.e("checkCurrencyCodeLength", checkCurrencyCodeLength+"");
 
-            if(checkId !=0)//if(checkId >8 || checkId <15)
+        if(checkId !=0)//if(checkId >8 || checkId <15)
+        {
+            id ="0"+checkIdLength+id;
+            Log.e("id new", id);
+            if(checkName <= 25)
             {
-                id ="0"+checkId+id;
-                Log.e("id new", id);
-                if(checkName <= 25)
+                name= "1"+checkNameLength+name;
+                Log.e("name new", name);
+                if(check_mcc == 4)
                 {
-                    name= "1"+checkName+name;
-                    Log.e("name new", name);
-                    if(check_mcc == 4)
+                    mcc = "2"+check_mccLength+mcc;
+                    Log.e("mcc new", mcc);
+                    if(checkCity <=13)
                     {
-                        mcc = "2"+check_mcc+mcc;
-                        Log.e("mcc new", mcc);
-                        if(checkCity <=13)
+                        city = "3"+checkCityLength+city;
+                        Log.e("city new", city);
+                        if(checkCountryCode == 2)
                         {
-                            city = "3"+checkCity+city;
-                            Log.e("city new", city);
-                            if(checkCountryCode == 2)
+                            countryCode="4"+checkCountryCodeLength+countryCode;
+                            Log.e("countryCode new", countryCode);
+                            if(checkCurrencyCode == 3)
                             {
-                                countryCode="4"+checkCountryCode+countryCode;
-                                Log.e("countryCode new", countryCode);
-                                if(checkCurrencyCode == 3)
+                                currencyCode = "5"+checkCurrencyCodeLength+currencyCode;
+                                Log.e("currencyCode new", currencyCode);
+
+                                String qrInputText = id+name+mcc+city+countryCode+currencyCode;
+                                if(!amount.equalsIgnoreCase(""))
                                 {
-                                    currencyCode = "5"+checkCurrencyCode+currencyCode;
-                                    Log.e("currencyCode new", currencyCode);
                                     if(checkAmount <= 12)
                                     {
-                                        String qrInputText = id+name+mcc+city+countryCode+currencyCode;
-
-                                        if(!amount.equals("")) {
-                                            amount = "6" + checkAmount + amount;
-                                            qrInputText = qrInputText+amount;
-                                        }
-                                        if(!primaryId.equals("")) {
-                                            primaryId = "7" + primaryId.length() + primaryId;
-                                            qrInputText = qrInputText+primaryId;
-                                        }
-                                        if(!secondaryId.equals("")) {
-                                            secondaryId = "8" + secondaryId.length() + secondaryId;
-                                            qrInputText = qrInputText+secondaryId;
-                                        }
-                                        Log.e("amount new", amount);
-
-                                        Log.e("GenerateQRCode", qrInputText);
-
-                                        //Find screen size
-                                        WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
-                                        Display display = manager.getDefaultDisplay();
-                                        Point point = new Point();
-                                        display.getSize(point);
-                                        int width = point.x;
-                                        int height = point.y;
-                                        int smallerDimension = width < height ? width : height;
-                                        smallerDimension = smallerDimension * 3/4;
-
-                                        //Encode with a QR Code image
-                                        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrInputText,
-                                                null,
-                                                Contents_QRCode.Type.TEXT,
-                                                BarcodeFormat.QR_CODE.toString(),
-                                                smallerDimension);
-                                        try {
-                                            Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
-                                            ImageView myImage = (ImageView) findViewById(R.id.img_qrCode);
-                                            myImage.setImageBitmap(bitmap);
-                                        } catch (WriterException e) {
-                                            e.printStackTrace();
-                                        }
+                                        amount = "6" + checkAmountLength + amount;
+                                        qrInputText = qrInputText+amount;
                                     }
+                                }
+
+                                if(!primaryId.equals("")) {
+                                    primaryId = "7" + alphanumeric.get(primaryId.length()) + primaryId;
+                                    qrInputText = qrInputText+primaryId;
+                                }
+
+                                if(!secondaryId.equals("")) {
+                                    secondaryId = "8" + alphanumeric.get(secondaryId.length()) + secondaryId;
+                                    qrInputText = qrInputText+secondaryId;
+                                }
+
+                                Log.e("GenerateQRCode", qrInputText);
+
+                                //Find screen size
+                                WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+                                Display display = manager.getDefaultDisplay();
+                                Point point = new Point();
+                                display.getSize(point);
+                                int width = point.x;
+                                int height = point.y;
+                                int smallerDimension = width < height ? width : height;
+                                smallerDimension = smallerDimension * 3/4;
+
+                                //Encode with a QR Code image
+                                QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrInputText,
+                                        null,
+                                        Contents_QRCode.Type.TEXT,
+                                        BarcodeFormat.QR_CODE.toString(),
+                                        smallerDimension);
+                                try {
+                                    Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
+                                    ImageView myImage = (ImageView) findViewById(R.id.img_qrCode);
+                                    myImage.setImageBitmap(bitmap);
+                                } catch (WriterException e) {
+                                    e.printStackTrace();
                                 }
                             }
                         }
                     }
                 }
             }
+        }
 
         imgBack.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
@@ -183,7 +200,6 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
             checkCity = city.length();
             checkCountryCode = countryCode.length();
             checkCurrencyCode = currencyCode.length();
-
         }
     }
 
@@ -209,5 +225,44 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
         }
     }
 
+    public void numericToAlpha() {
+        alphanumeric = new ArrayList<>();
+        alphanumeric.add("0");
+        alphanumeric.add("1");
+        alphanumeric.add("2");
+        alphanumeric.add("3");
+        alphanumeric.add("4");
+        alphanumeric.add("5");
+        alphanumeric.add("6");
+        alphanumeric.add("7");
+        alphanumeric.add("8");
+        alphanumeric.add("9");
+        alphanumeric.add("A");
+        alphanumeric.add("B");
+        alphanumeric.add("C");
+        alphanumeric.add("D");
+        alphanumeric.add("E");
+        alphanumeric.add("F");
+        alphanumeric.add("G");
+        alphanumeric.add("H");
+        alphanumeric.add("I");
+        alphanumeric.add("J");
+        alphanumeric.add("K");
+        alphanumeric.add("L");
+        alphanumeric.add("M");
+        alphanumeric.add("N");
+        alphanumeric.add("O");
+        alphanumeric.add("P");
+        alphanumeric.add("Q");
+        alphanumeric.add("R");
+        alphanumeric.add("S");
+        alphanumeric.add("T");
+        alphanumeric.add("U");
+        alphanumeric.add("V");
+        alphanumeric.add("W");
+        alphanumeric.add("X");
+        alphanumeric.add("Y");
+        alphanumeric.add("Z");
+    }
 
 }

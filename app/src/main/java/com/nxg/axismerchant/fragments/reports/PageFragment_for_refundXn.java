@@ -22,7 +22,6 @@ import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
 import com.nxg.axismerchant.classes.HTTPUtils;
 import com.nxg.axismerchant.classes.SMSPayStatus;
-import com.nxg.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -53,19 +52,27 @@ public class PageFragment_for_refundXn extends Fragment {
     String MID, MOBILE;
     ListView listData;
 
-    DBHelper dbHelper;
     ArrayList<SMSPayStatus> statusArrayList;
     SMSPayStatus smsPayStatus;
     DataAdapter dataAdapter;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
-    String date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_for_refund_xn, container, false);
         getInitialize(view);
+
+        Bundle bundle = getArguments();
+        int pos = bundle.getInt(ARG_OBJECT);
+        TextView txtLabel = (TextView) view.findViewById(R.id.txtLabel);
+        if(pos == 0)
+        {
+            txtLabel.setVisibility(View.VISIBLE);
+        }else{
+            txtLabel.setVisibility(View.GONE);
+        }
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         MID = preferences.getString("MerchantID","0");
@@ -87,11 +94,6 @@ public class PageFragment_for_refundXn extends Fragment {
         encryptDecryptRegister = new EncryptDecryptRegister();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
 
     private void getTransactionData()
     {
@@ -256,14 +258,17 @@ public class PageFragment_for_refundXn extends Fragment {
             TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
             TextView txtAmount = (TextView) view.findViewById(R.id.txtAmount);
             TextView txtMobile = (TextView) view.findViewById(R.id.txtMobileNo);
+            TextView txtRemark = (TextView) view.findViewById(R.id.txtRemark);
             ImageView imgStatusSMS = (ImageView) view.findViewById(R.id.imgStatusSMS);
             View lyRefundLayout = view.findViewById(R.id.refundLayout);
 
             txtMobile.setText(statusArrayList.get(position).getCustMobile());
             txtAmount.setText(getResources().getString(R.string.Rs)+statusArrayList.get(position).getAmount());
             txtStatus.setText(statusArrayList.get(position).getStatus());
-            txtDate.setText(statusArrayList.get(position).getRemark());
+            txtDate.setText(Constants.splitDate(statusArrayList.get(position).getTransDate()));
             txtXnID.setText(statusArrayList.get(position).getInvoiceNum());
+            txtRemark.setText(statusArrayList.get(position).getRemark());
+            txtRemark.setVisibility(View.VISIBLE);
 
             if(statusArrayList.get(position).getStatus().equals("Pending")) {
                 imgStatusSMS.setImageResource(R.mipmap.pending);

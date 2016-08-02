@@ -60,11 +60,12 @@ public class Fragment_SMSTransactionReport extends Fragment{
     BarChart layoutChartXn, layoutChartVolume;
     SMSXnSummary smsXnSummary;
     ArrayList<SMSXnSummary> smsXnSummaries;
-    TextView txtGraphType;
+    TextView txtGraphType, txtDateDuration;
     CustomListAdapter adapter;
     ParallaxListView listData;
     public static String ARG_OBJECT = "object";
     private int type ;
+    String date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,6 +83,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
         layoutChartXn = (BarChart) v.findViewById(R.id.chartTransaction);
         layoutChartVolume = (BarChart) v.findViewById(R.id.chartVolume);
         txtGraphType = (TextView) v.findViewById(R.id.txtLeftText);
+        txtDateDuration = (TextView) v.findViewById(R.id.txtDateDuration);
 
         listData.addParallaxedHeaderView(v);
 
@@ -214,9 +216,9 @@ public class Fragment_SMSTransactionReport extends Fragment{
                             transstatus = encryptDecrypt.decrypt(transstatus);
 
                             transdate = transdate.split("\\s+")[0];
-                            String vol[] = volume.split("\\.");
+                            transdate = Constants.splitDate(transdate);
 
-                            smsXnSummary = new SMSXnSummary(vol[0], ticketSize, noOfTrans, transdate, fd, fday, fmonth, fyear, fulldate, transstatus);
+                            smsXnSummary = new SMSXnSummary(transdate, ticketSize, noOfTrans, transdate, fd, fday, fmonth, fyear, fulldate, transstatus);
                             smsXnSummaries.add(smsXnSummary);
                         }
 
@@ -259,28 +261,30 @@ public class Fragment_SMSTransactionReport extends Fragment{
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
 
-        int j = smsXnSummaries.size()-1;
-        for (int i = 0; i < smsXnSummaries.size(); i++) {
-                if (smsXnSummaries.get(i).getNoOfTrans().equals("")) {
-                    entries.add(new BarEntry(0, j));
-                    j--;
-                } else {
-                    entries.add(new BarEntry(Integer.parseInt(smsXnSummaries.get(i).getNoOfTrans()), j));
-                    j--;
-                }
+        ArrayList<SMSXnSummary> xnSummaries = new ArrayList<>();
+        for (int i = smsXnSummaries.size()-1; i>=0 ; i++) {
+            xnSummaries.add(smsXnSummaries.get(i));
+        }
+
+        date = "";
+        date = date + xnSummaries.get(0).getTransdate()+" To "+xnSummaries.get(xnSummaries.size()-1).getTransdate();
+        txtDateDuration.setText(date);
+
+        for (int i = 0; i < xnSummaries.size(); i++) {
+            if (xnSummaries.get(i).getNoOfTrans().equals("")) {
+                entries.add(new BarEntry(0, i));
+            } else {
+                entries.add(new BarEntry(Integer.parseInt(xnSummaries.get(i).getNoOfTrans()), i));
             }
+        }
 
         BarDataSet dataSet = new BarDataSet(entries, "");
         dataSet.setColor(getResources().getColor(R.color.colorPrimary));
         dataSet.setBarSpacePercent(25f);
 
-        for (int i = 0; i < smsXnSummaries.size(); i++) {
-            labels.add(smsXnSummaries.get(i).getFd()+smsXnSummaries.get(i).getFmonth());
+        for (int i = 0; i < xnSummaries.size(); i++) {
+            labels.add(xnSummaries.get(i).getFd()+xnSummaries.get(i).getFmonth());
         }
-
-        /*for (int i = smsXnSummaries.size()-1; i >=0; i--) {
-            labels.add(smsXnSummaries.get(i).getFd()+smsXnSummaries.get(i).getFmonth());
-        }*/
 
         BarChart chart = new BarChart(getActivity());
         BarData data = new BarData(labels, dataSet);
@@ -334,16 +338,23 @@ public class Fragment_SMSTransactionReport extends Fragment{
         txtGraphType.setText("Volume");
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        int j = smsXnSummaries.size()-1;
-        for (int i = 0; i < smsXnSummaries.size(); i++) {
-                if (smsXnSummaries.get(i).getVolume().equals("")) {
-                    entries.add(new BarEntry(0, j));
-                    j--;
-                } else {
-                    entries.add(new BarEntry(Integer.parseInt(smsXnSummaries.get(i).getVolume()), j));
-                    j--;
-                }
+        ArrayList<SMSXnSummary> xnSummaries = new ArrayList<>();
+        for (int i = smsXnSummaries.size()-1; i>=0 ; i++) {
+            xnSummaries.add(smsXnSummaries.get(i));
+        }
+
+        date = "";
+        date = date + xnSummaries.get(0).getTransdate()+" To "+xnSummaries.get(xnSummaries.size()-1).getTransdate();
+        txtDateDuration.setText(date);
+
+        for (int i = 0; i < xnSummaries.size(); i++) {
+            if (xnSummaries.get(i).getVolume().equals("")) {
+                entries.add(new BarEntry(0, i));
+            } else {
+                entries.add(new BarEntry(Integer.parseInt(xnSummaries.get(i).getVolume()), i));
             }
+        }
+
 
         BarDataSet dataSet = new BarDataSet(entries, "");
         dataSet.setColor(getResources().getColor(R.color.colorPrimary));
@@ -351,12 +362,10 @@ public class Fragment_SMSTransactionReport extends Fragment{
 
         ArrayList<String> labels = new ArrayList<>();
 
-        /*for (int i = 0; i < smsXnSummaries.size(); i++) {
-            labels.add(smsXnSummaries.get(i).getFd()+smsXnSummaries.get(i).getFmonth());
-        }*/
-        for (int i = smsXnSummaries.size()-1; i >=0; i--) {
-            labels.add(smsXnSummaries.get(i).getFd()+smsXnSummaries.get(i).getFmonth());
+        for (int i = 0; i < xnSummaries.size(); i++) {
+            labels.add(xnSummaries.get(i).getFd()+xnSummaries.get(i).getFmonth());
         }
+
 
         BarChart chart = new BarChart(getActivity());
         BarData data = new BarData(labels, dataSet);

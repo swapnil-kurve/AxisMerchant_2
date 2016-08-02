@@ -37,7 +37,7 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrpay_home);
 
-        TextView txtViewAllTransactions = (TextView) findViewById(R.id.txtViewAllTransactions);
+        TextView txtViewAllTransactions = (TextView) findViewById(R.id.txtSeeAllTransactions);
         TextView txtDynamicQRCode = (TextView) findViewById(R.id.txtDynamicQR);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgNotification = (ImageView) findViewById(R.id.imgNotification);
@@ -133,7 +133,7 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
                 startActivity(new Intent(this, Activity_UserProfile.class));
                 break;
 
-            case R.id.txtViewAllTransactions:
+            case R.id.txtSeeAllTransactions:
                 startActivity(new Intent(this, Activity_QRAllTransaction.class));
                 break;
         }

@@ -85,6 +85,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     ImageView imgFilter;
     TextView txtFromDate, txtToDate;
     int DateFlag = 0,type;
+    String duration;
     Calendar myCalendar = Calendar.getInstance();
     TextView txtGrossAmount,txtMDR,txtServiceTax,txtHoldAmount,txtAdjustments,txtCashPos, txtPaymentDate,txtNoOfTxn,txtTotalValue, txtNetAmount,txtDateDuration, txtGraphType;
 
@@ -301,11 +302,10 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     // check if the request code is same as what is passed  here it is 2
         if(requestCode==2)
         {
-//            String reportType = data.getStringExtra("ReportType");
             if(data != null) {
                 mGraphType = data.getStringExtra("ReportType");
                 String reportType = "unsettled";
-                String duration = data.getStringExtra("Duration");
+                duration = data.getStringExtra("Duration");
                 String reportCriteria = data.getStringExtra("Criteria");
 
                 getFilteredData(reportType, duration, reportCriteria);
@@ -396,18 +396,12 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        if(i == 0)
-                        {
-                            date = transDate.split("\\s+")[0];
-                        }else if(i == (transactionBetDates.length()-1))
-                        {
-                            date = transDate.split("\\s+")[0]+" TO "+date;
-                        }
+                        transDate = Constants.splitDate(transDate);
+
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         mprDataSet.add(mis_mpr);
                     }
 
-                    txtDateDuration.setText(date);
                     showBarChart();
                     progressDialog.dismiss();
                     adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet);
@@ -433,34 +427,43 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         if(layoutChart != null)
             layoutChart.removeAllViews();
 
+        ArrayList<MIS_MPR> mprArrayList = new ArrayList<>();
+        for (int i = mprDataSet.size()-1; i>=0 ; i++) {
+            mprArrayList.add(mprDataSet.get(i));
+        }
+
+        date = "";
+        date = date + mprArrayList.get(0).getTransDate()+" To "+mprArrayList.get(mprArrayList.size()-1).getTransDate();
+        txtDateDuration.setText(date);
+
         ArrayList<BarEntry> entries = new ArrayList<>();
 
         if(mGraphType.equalsIgnoreCase("Transactions")) {
-            for (int i = 0; i < mprDataSet.size(); i++) {
-                if (mprDataSet.get(i).getTransactions().equals("")) {
+            for (int i = 0; i < mprArrayList.size(); i++) {
+                if (mprArrayList.get(i).getTransactions().equals("")) {
                     entries.add(new BarEntry(0, i));
                 } else {
-                    entries.add(new BarEntry(Integer.parseInt(mprDataSet.get(i).getTransactions()), i));
+                    entries.add(new BarEntry(Integer.parseInt(mprArrayList.get(i).getTransactions()), i));
                 }
             }
             txtGraphType.setText("Transactions");
         }else if(mGraphType.equalsIgnoreCase("Transaction Volume"))
         {
-            for (int i = 0; i < mprDataSet.size(); i++) {
-                if (mprDataSet.get(i).getTxnVolume().equals("")) {
+            for (int i = 0; i < mprArrayList.size(); i++) {
+                if (mprArrayList.get(i).getTxnVolume().equals("")) {
                     entries.add(new BarEntry(0, i));
                 } else {
-                    entries.add(new BarEntry(Float.parseFloat(mprDataSet.get(i).getTxnVolume()), i));
+                    entries.add(new BarEntry(Float.parseFloat(mprArrayList.get(i).getTxnVolume()), i));
                 }
             }
             txtGraphType.setText("Transaction Volume");
         }else
         {
-            for (int i = 0; i < mprDataSet.size(); i++) {
-                if (mprDataSet.get(i).getAvgTicketSize().equals("")) {
+            for (int i = 0; i < mprArrayList.size(); i++) {
+                if (mprArrayList.get(i).getAvgTicketSize().equals("")) {
                     entries.add(new BarEntry(0, i));
                 } else {
-                    entries.add(new BarEntry(Float.parseFloat(mprDataSet.get(i).getAvgTicketSize()), i));
+                    entries.add(new BarEntry(Float.parseFloat(mprArrayList.get(i).getAvgTicketSize()), i));
                 }
             }
             txtGraphType.setText("Average Ticket Size");
@@ -472,8 +475,8 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
         ArrayList<String> labels = new ArrayList<>();
 
-        for (int i = 0; i < mprDataSet.size(); i++) {
-            labels.add(mprDataSet.get(i).gettDate());
+        for (int i = 0; i < mprArrayList.size(); i++) {
+            labels.add(mprArrayList.get(i).gettDate());
         }
 
         BarChart chart = new BarChart(getActivity());

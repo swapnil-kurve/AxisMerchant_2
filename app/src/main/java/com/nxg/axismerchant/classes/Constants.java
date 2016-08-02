@@ -241,4 +241,13 @@ public class Constants {
         }
     }
 
+
+    public static String splitDate(String date)
+    {
+        String[] mSplittedArr = date.split("/");
+
+        return mSplittedArr[1]+"/"+mSplittedArr[0]+"/"+mSplittedArr[2];
+    }
+
+
 }

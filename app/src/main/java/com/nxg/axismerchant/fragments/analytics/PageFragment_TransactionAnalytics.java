@@ -59,8 +59,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -77,7 +75,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
     ArrayList<MerchantLikeMe> likeMeArrayList;
     MIS_MPR mis_mpr;
     ArrayList<MIS_MPR> analyticsArrayList;
-
+    String date;
     CustomListAdapterForMerchantLikeMe adapter;
     CustomListAdapterForMPR adapterAnalytics;
     BarChart layoutChart;
@@ -311,12 +309,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         likeMeArrayList.add(merchantLikeMe);
                     }
 
-                    /*Collections.sort(likeMeArrayList, new Comparator<MerchantLikeMe>() {
-                        @Override
-                        public int compare(MerchantLikeMe lhs, MerchantLikeMe rhs) {
-                            return (rhs.getNoOfTxn().compareTo(lhs.getNoOfTxn()));
-                        }
-                    });*/
 
                     getGraphData();
                     progressDialog.dismiss();
@@ -328,7 +320,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                     lyTop.setVisibility(View.GONE);
                     lyInfo.setVisibility(View.VISIBLE);
                     progressDialog.dismiss();
-//                    Constants.showToast(getActivity(), "No details found");
 
                 }
             } catch (JSONException e) {
@@ -596,25 +587,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        if(i == 0)
-                        {
-                            date = transDate.split("\\s+")[0];
-                        }else if(i == (transactionBetDates.length()-1))
-                        {
-                            date = transDate.split("\\s+")[0]+" TO "+date;
-                        }
-
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         analyticsArrayList.add(mis_mpr);
                     }
 
-                    Collections.sort(analyticsArrayList, new Comparator<MIS_MPR>() {
-                        @Override
-                        public int compare(MIS_MPR lhs, MIS_MPR rhs) {
-                            return (lhs.getTransDate().compareTo(rhs.getTransDate()));
-                        }
-
-                    });
 
                     txtDateDuration.setText(date);
                     showBarChart();
@@ -648,32 +624,41 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         ArrayList<Entry> entries = new ArrayList<>();
         LineChart chart = new LineChart(getActivity());
 
+        ArrayList<MIS_MPR> arrayAnalytics = new ArrayList<>();
+        for (int i = analyticsArrayList.size()-1; i>=0 ; i++) {
+            arrayAnalytics.add(analyticsArrayList.get(i));
+        }
+
+        date = "";
+        date = date + arrayAnalytics.get(0).getTransDate()+" To "+arrayAnalytics.get(arrayAnalytics.size()-1).getTransDate();
+        txtDateDuration.setText(date);
+
         if(mGraphType.equalsIgnoreCase("Transactions")) {
-            for (int i = 0; i < analyticsArrayList.size(); i++) {
-                if (analyticsArrayList.get(i).getTransactions().equals("")) {
+            for (int i = 0; i < arrayAnalytics.size(); i++) {
+                if (arrayAnalytics.get(i).getTransactions().equals("")) {
                     entries.add(new BarEntry(0, i));
                 } else {
-                    entries.add(new BarEntry(Integer.parseInt(analyticsArrayList.get(i).getTransactions()), i));
+                    entries.add(new BarEntry(Integer.parseInt(arrayAnalytics.get(i).getTransactions()), i));
                 }
             }
             txtGraphType.setText("Transactions");
         }else if(mGraphType.equalsIgnoreCase("Transaction Volume"))
         {
-            for (int i = 0; i < analyticsArrayList.size(); i++) {
-                if (analyticsArrayList.get(i).getTxnVolume().equals("")) {
+            for (int i = 0; i < arrayAnalytics.size(); i++) {
+                if (arrayAnalytics.get(i).getTxnVolume().equals("")) {
                     entries.add(new BarEntry(0, i));
                 } else {
-                    entries.add(new BarEntry(Float.parseFloat(analyticsArrayList.get(i).getTxnVolume()), i));
+                    entries.add(new BarEntry(Float.parseFloat(arrayAnalytics.get(i).getTxnVolume()), i));
                 }
             }
             txtGraphType.setText("Transaction Volume");
         }else
         {
-            for (int i = 0; i < analyticsArrayList.size(); i++) {
-                if (analyticsArrayList.get(i).getAvgTicketSize().equals("")) {
+            for (int i = 0; i < arrayAnalytics.size(); i++) {
+                if (arrayAnalytics.get(i).getAvgTicketSize().equals("")) {
                     entries.add(new BarEntry(0, i));
                 } else {
-                    entries.add(new BarEntry(Float.parseFloat(analyticsArrayList.get(i).getAvgTicketSize()), i));
+                    entries.add(new BarEntry(Float.parseFloat(arrayAnalytics.get(i).getAvgTicketSize()), i));
                 }
             }
             txtGraphType.setText("Average Ticket Size");
@@ -684,8 +669,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
         ArrayList<String> labels = new ArrayList<>();
 
-        for (int i = 0; i < analyticsArrayList.size(); i++) {
-            labels.add(analyticsArrayList.get(i).gettDate());
+        for (int i = 0; i < arrayAnalytics.size(); i++) {
+            labels.add(arrayAnalytics.get(i).gettDate());
         }
 
         LineData data = new LineData(labels, dataSet);

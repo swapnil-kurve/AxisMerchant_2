@@ -80,6 +80,16 @@ public class PageFragment_for_TransactionReport extends Fragment {
         encryptDecryptRegister =  new EncryptDecryptRegister();
         encryptDecrypt = new EncryptDecrypt();
 
+        Bundle bundle = getArguments();
+        int pos = bundle.getInt(ARG_OBJECT);
+        TextView txtLabel = (TextView) view.findViewById(R.id.txtLabel);
+        if(pos == 0)
+        {
+            txtLabel.setVisibility(View.VISIBLE);
+        }else{
+            txtLabel.setVisibility(View.GONE);
+        }
+
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         MID = preferences.getString("MerchantID","0");
         MOBILE = preferences.getString("MobileNum","0");
@@ -207,13 +217,7 @@ public class PageFragment_for_TransactionReport extends Fragment {
                         tDate = encryptDecrypt.decrypt(tDate);
                         tType = encryptDecrypt.decrypt(tType);
 
-                        if(i == 0)
-                        {
-                            date = transDate.split("\\s+")[0];
-                        }else if(i == (transactionBetDates.length()-1))
-                        {
-                            date = date+" TO "+transDate.split("\\s+")[0];
-                        }
+                        transDate = Constants.splitDate(transDate);
                         report = new TransactionReport(Totaltransaction,transDate,TxnVolume,avgTicketSize,tDate,tType);
                         transactionReports.add(report);
                     }
@@ -252,13 +256,22 @@ public class PageFragment_for_TransactionReport extends Fragment {
     {
         layoutChart.clear();
 
+        ArrayList<TransactionReport> xnArrayList = new ArrayList<>();
+        for (int i = transactionReports.size()-1; i>=0 ; i++) {
+            xnArrayList.add(transactionReports.get(i));
+        }
+
+        date = "";
+        date = date + xnArrayList.get(0).getTransDate()+" To "+xnArrayList.get(xnArrayList.size()-1).getTransDate();
+        txtDateDuration.setText(date);
+
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < transactionReports.size(); i++) {
-            if (transactionReports.get(i).getTotaltransaction().equals("")) {
+        for (int i = 0; i < xnArrayList.size(); i++) {
+            if (xnArrayList.get(i).getTotaltransaction().equals("")) {
                 entries.add(new BarEntry(0, i));
             } else {
-                entries.add(new BarEntry(Integer.parseInt(transactionReports.get(i).getTotaltransaction()), i));
+                entries.add(new BarEntry(Integer.parseInt(xnArrayList.get(i).getTotaltransaction()), i));
             }
         }
 
@@ -268,8 +281,8 @@ public class PageFragment_for_TransactionReport extends Fragment {
 
         ArrayList<String> labels = new ArrayList<>();
 
-        for (int i = 0; i < transactionReports.size(); i++) {
-            labels.add(transactionReports.get(i).gettDate());
+        for (int i = 0; i < xnArrayList.size(); i++) {
+            labels.add(xnArrayList.get(i).gettDate());
         }
 
         BarChart chart = new BarChart(getActivity());

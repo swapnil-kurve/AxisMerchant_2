@@ -315,6 +315,14 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
             }
         }
 
+        if(txtHeading.getText().toString().trim().equalsIgnoreCase("Account Management"))
+        {
+            ((ImageView)findViewById(R.id.imgStar1)).setVisibility(View.GONE);
+            ((ImageView)findViewById(R.id.imgStar2)).setVisibility(View.GONE);
+            ((ImageView)findViewById(R.id.imgStar3)).setVisibility(View.GONE);
+            ((ImageView)findViewById(R.id.imgStar4)).setVisibility(View.GONE);
+            ((ImageView)findViewById(R.id.imgStar5)).setVisibility(View.GONE);
+        }
         imgBack.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
@@ -411,29 +419,28 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
     private void sendRequest() {
 
-        if(edtTID.getText().toString().trim().length() == 0 || edtProblemDetails.getText().toString().trim().length() == 0
-                || edtContactNumber.getText().toString().trim().length() == 0 )
-        {
-            Constants.showToast(this, "Please fill required details");
-        }else if(edtContactNumber.getText().toString().trim().length() < 10){
-            Constants.showToast(this, "Please enter valid mobile number");
-        }else if(visitingTime.equals("") || visitingTime.equalsIgnoreCase("Visiting Time"))
-        {
-            Constants.showToast(this, "Please provide visiting time");
-        }else  if(weeklyOff.equals("") || weeklyOff.equalsIgnoreCase("Merchant Week-Off"))
-        {
-            Constants.showToast(this, "Please provide weekly off");
-        }else if(txtSubCode.getText().toString().equalsIgnoreCase("Roll Required")) {
-            if (mTotalRollsRequired.equals("") || mTotalRollsRequired.equalsIgnoreCase("No. Of Rolls")) {
-                Constants.showToast(this, "Please provide required roll");
+        if(!txtHeading.getText().toString().trim().equalsIgnoreCase("")) {
+            if (edtTID.getText().toString().trim().length() == 0 || edtProblemDetails.getText().toString().trim().length() == 0
+                    || edtContactNumber.getText().toString().trim().length() == 0) {
+                Constants.showToast(this, "Please fill required details");
+            } else if (edtContactNumber.getText().toString().trim().length() < 10) {
+                Constants.showToast(this, "Please enter valid mobile number");
+            } else if (visitingTime.equals("") || visitingTime.equalsIgnoreCase("Visiting Time")) {
+                Constants.showToast(this, "Please provide visiting time");
+            } else if (weeklyOff.equals("") || weeklyOff.equalsIgnoreCase("Merchant Week-Off")) {
+                Constants.showToast(this, "Please provide weekly off");
+            } else if (txtSubCode.getText().toString().equalsIgnoreCase("Roll Required")) {
+                if (mTotalRollsRequired.equals("") || mTotalRollsRequired.equalsIgnoreCase("No. Of Rolls")) {
+                    Constants.showToast(this, "Please provide required roll");
+                } else {
+                    callService();
+                }
             } else {
                 callService();
             }
-        }else
-        {
+        }else{
             callService();
         }
-
     }
 
     private void callService() {
