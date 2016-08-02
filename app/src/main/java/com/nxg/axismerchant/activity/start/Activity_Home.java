@@ -269,9 +269,9 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 if (Constants.isNetworkConnectionAvailable(this)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new CheckStatus().executeOnExecutor(AsyncTask
-                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "checkRequestStatus", Constants.MERCHANT_ID, Constants.MOBILE_NUM, "SMSPay");
+                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "checkRequestStatus", MID, MOBILE, "SMSPay");
                     } else {
-                        new CheckStatus().execute(Constants.DEMO_SERVICE + "checkRequestStatus", Constants.MERCHANT_ID, Constants.MOBILE_NUM, "SMSPay");
+                        new CheckStatus().execute(Constants.DEMO_SERVICE + "checkRequestStatus", MID, MOBILE, "SMSPay");
 
                     }
                 } else {
@@ -679,7 +679,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
                     } else {
                         progressDialog.dismiss();
-
+                        startActivity(new Intent(Activity_Home.this, Activity_SMSSignUp.class));
                     }
                 }
             } catch (JSONException e) {

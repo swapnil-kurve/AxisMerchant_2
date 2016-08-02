@@ -1,6 +1,7 @@
 package com.nxg.axismerchant.fragments.service_support;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,8 +42,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by vismita.jain on 7/1/16.
@@ -57,7 +63,10 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     View vSearchLayout;
     EditText edtSrNo, edtTidNo;
     TextView txtSearch,txtSearch1;
-    String mSRNO, mTIDNo;
+    String mSRNO, mTIDNo, currentDateAndTime;
+    TextView txtFromDate, txtToDate;
+    int DateFlag = 0;
+    Calendar myCalendar = Calendar.getInstance();
 
     @Nullable
     @Override
@@ -72,14 +81,21 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         edtSrNo = (EditText) view.findViewById(R.id.edtSRNo);
         edtTidNo = (EditText) view.findViewById(R.id.edtTidNo);
 
+        txtFromDate = (TextView) view.findViewById(R.id.txtFromDate);
+        txtToDate = (TextView) view.findViewById(R.id.txtToDate);
+
         listSRStatus.setOnItemClickListener(this);
         txtSearch.setOnClickListener(this);
         txtSearch1.setOnClickListener(this);
+        txtFromDate.setOnClickListener(this);
+        txtToDate.setOnClickListener(this);
 
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
         srStatuses = new ArrayList<>();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        currentDateAndTime = sdf.format(new Date());
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         MID = preferences.getString("MerchantID","0");
@@ -129,6 +145,21 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                     SearchSR();
                 }
 
+                break;
+
+
+            case R.id.txtFromDate:
+                DateFlag = 0;
+                new DatePickerDialog(getActivity(), selectedDate, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                break;
+
+            case R.id.txtToDate:
+                DateFlag = 1;
+                new DatePickerDialog(getActivity(), selectedDate, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 break;
         }
     }
@@ -323,6 +354,53 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             txtMessage.setText("TID - "+srStatuses.get(position).getTid());
 
             return convertView;
+        }
+    }
+
+
+    DatePickerDialog.OnDateSetListener selectedDate = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+
+    };
+
+
+    private void updateLabel() {
+
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String calDate = sdf.format(myCalendar.getTime());
+        try {
+            if (DateFlag == 0) {
+                if (!sdf.parse(currentDateAndTime).before(sdf.parse(calDate)) && !sdf.parse(currentDateAndTime).equals(sdf.parse(calDate))) {
+                    txtFromDate.setText(sdf.format(myCalendar.getTime()));
+
+                } else {
+                    Constants.showToast(getActivity(), "From date should be less than today's date");
+                }
+            } else {
+                if(txtFromDate.getText().toString().equals("")){
+                    Constants.showToast(getActivity(), "Please enter from date");
+                }else {
+                    if (sdf.parse(calDate).after(sdf.parse(txtFromDate.getText().toString())) && !sdf.parse(calDate).after(sdf.parse(currentDateAndTime))) {
+                        txtToDate.setText(sdf.format(myCalendar.getTime()));
+                    } else {
+                        Constants.showToast(getActivity(), "Enter valid date");
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
         }
     }
 
