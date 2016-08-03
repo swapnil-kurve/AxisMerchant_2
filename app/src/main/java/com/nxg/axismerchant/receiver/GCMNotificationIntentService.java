@@ -119,7 +119,7 @@ public class GCMNotificationIntentService extends IntentService {
             {
                 preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("Validated",reqStatus);
+                editor.putString("SMSValidated",reqStatus);
                 editor.apply();
                 if(reqStatus.equalsIgnoreCase("pending"))
                     resultIntent = new Intent(this, Activity_SMSSignUp.class);

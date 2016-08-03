@@ -281,7 +281,7 @@ public class Activity_SMSTerms extends AppCompatActivity implements View.OnClick
             SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
 
-            editor.putString("Validated","pending");
+            editor.putString("SMSValidated","pending");
             editor.putString("Status",status);
             editor.putString("Request_ID", reqID);
             editor.apply();

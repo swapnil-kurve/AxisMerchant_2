@@ -297,7 +297,7 @@ public class Activity_QRTerms extends AppCompatActivity implements View.OnClickL
             SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
 
-            editor.putString("Validated","pending");
+            editor.putString("QRValidated","pending");
             editor.putString("Status",status);
             editor.putString("Request_ID", reqID);
             editor.apply();

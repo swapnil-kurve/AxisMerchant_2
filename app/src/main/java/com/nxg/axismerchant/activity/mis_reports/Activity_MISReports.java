@@ -156,7 +156,6 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-
         if(Fragment_for_MPR.viewDetailsLayout.getVisibility() == View.VISIBLE)
         {
             fragment_for_mpr.viewDetailsLayout.setVisibility(View.GONE);

@@ -260,7 +260,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
     private void gotoSMS() {
         SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
-        String res = preferences.getString("Validated","No");
+        String res = preferences.getString("SMSValidated","No");
         if(res.equalsIgnoreCase("Active"))
         {
             startActivity(new Intent(this, Activity_SMSPayHome.class));
@@ -279,7 +279,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             }else if(res.equalsIgnoreCase("Pending")){
             Intent intent = new Intent(this, Activity_SMSSignUp.class);
-            intent.putExtra("Validated","Pending");
+            intent.putExtra("SMSValidated","Pending");
             startActivity(intent);
         }else
         {
@@ -658,7 +658,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                         {
                             SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString("Validated","Active");
+                            editor.putString("SMSValidated","Active");
                             editor.apply();
 
                             progressDialog.dismiss();
@@ -668,7 +668,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                         }else if(status.equalsIgnoreCase("Pending"))
                         {
                             Intent intent = new Intent(Activity_Home.this, Activity_SMSSignUp.class);
-                            intent.putExtra("Validated","Pending");
+                            intent.putExtra("SMSValidated","Pending");
                             startActivity(intent);
                         }else
                         {

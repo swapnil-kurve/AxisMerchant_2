@@ -108,6 +108,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         layoutChart = (BarChart) v.findViewById(R.id.chartTransaction);
         txtDateDuration = (TextView) v.findViewById(R.id.txtDateDuration);
         txtGraphType = (TextView) v.findViewById(R.id.txtLeftText);
+        TextView txtLabel = (TextView) view.findViewById(R.id.txtLabel);
 
         listData.addParallaxedHeaderView(v);
         listData.setOnItemClickListener(this);
@@ -124,11 +125,13 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         if(type == 0) {
             getChartData("settled");
             flag = 0;
+            txtLabel.setVisibility(View.GONE);
         }
         else {
             getChartData("unsettled");
             imgFilter.setVisibility(View.VISIBLE);
             flag = 1;
+            txtLabel.setVisibility(View.VISIBLE);
         }
         return view;
     }
