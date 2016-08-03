@@ -719,7 +719,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
         @Override
         protected String doInBackground(String... arg0) {
-            String str = null;
+            String str = "";
             try {
                 HTTPUtils utils = new HTTPUtils();
                 HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));

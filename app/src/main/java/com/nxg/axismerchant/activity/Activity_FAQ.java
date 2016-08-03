@@ -88,7 +88,6 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
             Constants.showToast(this, "No internet available");
         }
 
-
     }
 
     @Override
@@ -166,15 +165,15 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
                 if(result.equals("Success"))
                 {
                     JSONObject object = transaction.getJSONObject(1);
-                    JSONArray transactionBetDates = object.getJSONArray("getMPRDetailsForDate");
+                    JSONArray transactionBetDates = object.getJSONArray("getFAQs");
                     for (int i = 0; i < transactionBetDates.length(); i++) {
 
                         JSONObject object2 = transactionBetDates.getJSONObject(i);
-                        String que = object2.optString("GrossAmt");
-                        String ans = object2.optString("MDR");
+                        String que = object2.optString("faqQue");
+                        String ans = object2.optString("faqAns");
 
-                        que = encryptDecrypt.decrypt(que);
-                        ans = encryptDecrypt.decrypt(ans);
+                        que = encryptDecryptRegister.decrypt(que);
+                        ans = encryptDecryptRegister.decrypt(ans);
 
                         faq = new FAQ(que,ans);
                         faqArrayList.add(faq);
@@ -255,6 +254,5 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
             return view;
         }
     }
-
 
 }
