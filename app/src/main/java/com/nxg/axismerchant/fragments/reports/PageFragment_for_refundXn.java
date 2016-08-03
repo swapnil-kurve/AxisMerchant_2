@@ -39,8 +39,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -191,17 +189,10 @@ public class PageFragment_for_refundXn extends Fragment {
                             isRefund = encryptDecrypt.decrypt(isRefund);
                             transDate = encryptDecrypt.decrypt(transDate);
 
+                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);
                             smsPayStatus = new SMSPayStatus("",custMobile, transAmt, transactionId, transStatus, remark, isRefund,transDate);
                             statusArrayList.add(smsPayStatus);
                         }
-
-                        Collections.sort(statusArrayList, new Comparator<SMSPayStatus>() {
-                            @Override
-                            public int compare(SMSPayStatus lhs, SMSPayStatus rhs) {
-                                return (lhs.getTransDate().compareTo(rhs.getTransDate()));
-                            }
-
-                        });
 
                         dataAdapter = new DataAdapter(getActivity(), statusArrayList);
                         listData.setAdapter(dataAdapter);

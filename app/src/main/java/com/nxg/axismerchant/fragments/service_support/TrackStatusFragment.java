@@ -284,6 +284,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                     result = encryptDecryptRegister.decrypt(result);
                     if (result.equals("Success")) {
+                        srStatuses.clear();
                         JSONObject object = transaction.getJSONObject(1);
                         JSONArray transactionBetDates;
                         if(len > 3)

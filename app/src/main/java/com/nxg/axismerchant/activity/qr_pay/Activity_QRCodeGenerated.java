@@ -72,6 +72,8 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
 
         getData();
 
+        alphanumeric = numericToAlpha();
+
         Log.e("id", id);
         Log.e("name", name);
         Log.e("mcc", mcc);
@@ -225,7 +227,7 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
         }
     }
 
-    public void numericToAlpha() {
+    public ArrayList numericToAlpha() {
         alphanumeric = new ArrayList<>();
         alphanumeric.add("0");
         alphanumeric.add("1");
@@ -263,6 +265,8 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
         alphanumeric.add("X");
         alphanumeric.add("Y");
         alphanumeric.add("Z");
+
+        return alphanumeric;
     }
 
 }

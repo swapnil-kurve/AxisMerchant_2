@@ -56,7 +56,7 @@ public class CustomListAdapterForMPR extends BaseAdapter {
             txtDate.setText("Week "+mprDataSet.get(position).gettDate());
         }else
         {
-            txtDate.setText(mprDataSet.get(position).gettDate());
+            txtDate.setText(mprDataSet.get(position).getTransDate());
         }
         return convertView;
     }

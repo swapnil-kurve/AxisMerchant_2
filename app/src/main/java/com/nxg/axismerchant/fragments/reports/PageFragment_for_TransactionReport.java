@@ -49,8 +49,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -217,18 +215,10 @@ public class PageFragment_for_TransactionReport extends Fragment {
                         tDate = encryptDecrypt.decrypt(tDate);
                         tType = encryptDecrypt.decrypt(tType);
 
-                        transDate = Constants.splitDate(transDate);
+                        transDate = Constants.splitDate(transDate.split("\\s+")[0]);
                         report = new TransactionReport(Totaltransaction,transDate,TxnVolume,avgTicketSize,tDate,tType);
                         transactionReports.add(report);
                     }
-
-                    Collections.sort(transactionReports, new Comparator<TransactionReport>() {
-                        @Override
-                        public int compare(TransactionReport lhs, TransactionReport rhs) {
-                            return (lhs.getTransDate().compareTo(rhs.getTransDate()));
-                        }
-
-                    });
 
                     txtDateDuration.setText(date);
                     showBarChart();
@@ -257,7 +247,7 @@ public class PageFragment_for_TransactionReport extends Fragment {
         layoutChart.clear();
 
         ArrayList<TransactionReport> xnArrayList = new ArrayList<>();
-        for (int i = transactionReports.size()-1; i>=0 ; i++) {
+        for (int i = transactionReports.size()-1; i>=0 ; i--) {
             xnArrayList.add(transactionReports.get(i));
         }
 
@@ -306,7 +296,7 @@ public class PageFragment_for_TransactionReport extends Fragment {
         chart.setDescription("");
         chart.setData(data);
         chart.setVisibleXRangeMaximum(7);
-        chart.moveViewToX(10);
+        chart.moveViewToX(xnArrayList.size());
         chart.setDoubleTapToZoomEnabled(false);
         chart.setPinchZoom(false);
         chart.setScaleEnabled(false);
@@ -367,7 +357,7 @@ public class PageFragment_for_TransactionReport extends Fragment {
             txtTransactions.setText(transactionReports.get(position).getTotaltransaction());
             txtVolume.setText(transactionReports.get(position).getTxnVolume());
             txtAvgTicketSize.setText(transactionReports.get(position).getAvgTicketSize());
-            txtDate.setText(transactionReports.get(position).gettDate());
+            txtDate.setText(transactionReports.get(position).getTransDate());
 
             return convertView;
         }

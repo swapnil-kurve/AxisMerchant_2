@@ -396,7 +396,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        transDate = Constants.splitDate(transDate);
+                        transDate = Constants.splitDate(transDate.split("\\s+")[0]);
 
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         mprDataSet.add(mis_mpr);
@@ -428,7 +428,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             layoutChart.removeAllViews();
 
         ArrayList<MIS_MPR> mprArrayList = new ArrayList<>();
-        for (int i = mprDataSet.size()-1; i>=0 ; i++) {
+        for (int i = mprDataSet.size()-1; i>=0 ; i--) {
             mprArrayList.add(mprDataSet.get(i));
         }
 
@@ -500,7 +500,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         chart.setDescription("");
         chart.setData(data);
         chart.setVisibleXRangeMaximum(7);
-        chart.moveViewToX(10);
+        chart.moveViewToX(mprArrayList.size());
         chart.getAxisRight().setDrawLabels(false);
         chart.setDoubleTapToZoomEnabled(false);
         chart.setPinchZoom(false);

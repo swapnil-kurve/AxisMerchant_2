@@ -218,7 +218,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
                             transdate = transdate.split("\\s+")[0];
                             transdate = Constants.splitDate(transdate);
 
-                            smsXnSummary = new SMSXnSummary(transdate, ticketSize, noOfTrans, transdate, fd, fday, fmonth, fyear, fulldate, transstatus);
+                            smsXnSummary = new SMSXnSummary(volume, ticketSize, noOfTrans, transdate, fd, fday, fmonth, fyear, fulldate, transstatus);
                             smsXnSummaries.add(smsXnSummary);
                         }
 
@@ -262,7 +262,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
         ArrayList<String> labels = new ArrayList<>();
 
         ArrayList<SMSXnSummary> xnSummaries = new ArrayList<>();
-        for (int i = smsXnSummaries.size()-1; i>=0 ; i++) {
+        for (int i = smsXnSummaries.size()-1; i>=0 ; i--) {
             xnSummaries.add(smsXnSummaries.get(i));
         }
 
@@ -307,7 +307,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
         chart.setDescription("");
         chart.setData(data);
         chart.setVisibleXRangeMaximum(7);
-        chart.moveViewToX(10);
+        chart.moveViewToX(xnSummaries.size());
         chart.getAxisRight().setDrawLabels(false);
         chart.setDoubleTapToZoomEnabled(false);
         chart.setPinchZoom(false);
@@ -339,7 +339,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
         ArrayList<BarEntry> entries = new ArrayList<>();
 
         ArrayList<SMSXnSummary> xnSummaries = new ArrayList<>();
-        for (int i = smsXnSummaries.size()-1; i>=0 ; i++) {
+        for (int i = smsXnSummaries.size()-1; i>=0 ; i--) {
             xnSummaries.add(smsXnSummaries.get(i));
         }
 
@@ -351,7 +351,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
             if (xnSummaries.get(i).getVolume().equals("")) {
                 entries.add(new BarEntry(0, i));
             } else {
-                entries.add(new BarEntry(Integer.parseInt(xnSummaries.get(i).getVolume()), i));
+                entries.add(new BarEntry(Float.parseFloat(xnSummaries.get(i).getVolume()), i));
             }
         }
 

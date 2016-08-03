@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,25 +79,6 @@ public class SubUserFragment extends Fragment implements View.OnClickListener {
 
         getUserList();
 
-
-        getView().setOnKeyListener( new View.OnKeyListener()
-        {
-            @Override
-            public boolean onKey( View v, int keyCode, KeyEvent event )
-            {
-                if( keyCode == KeyEvent.KEYCODE_BACK )
-                {
-                    if(lyCreateUser.getVisibility() == View.VISIBLE)
-                    {
-                        lyCreateUser.setVisibility(View.GONE);
-                        lyUserList.setVisibility(View.VISIBLE);
-                    }else {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        } );
 
         return view;
     }

@@ -457,9 +457,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         yValues2.add(v1e23);
 
         BarDataSet barDataSet1 = new BarDataSet(yValues1, "Avg. of Merchant");
-        barDataSet1.setColor(getResources().getColor(R.color.colorPrimary));
+        barDataSet1.setColor(getResources().getColor(R.color.green_float));
         BarDataSet barDataSet2 = new BarDataSet(yValues2, "You");
-        barDataSet2.setColor(getResources().getColor(R.color.green_float));
+        barDataSet2.setColor(getResources().getColor(R.color.colorPrimary));
 
         barDataSet1.setBarSpacePercent(25f);
         barDataSet2.setBarSpacePercent(25f);
@@ -587,6 +587,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
+                        transDate = Constants.splitDate(transDate.split("\\s+")[0]);
+
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         analyticsArrayList.add(mis_mpr);
                     }
@@ -625,7 +627,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         LineChart chart = new LineChart(getActivity());
 
         ArrayList<MIS_MPR> arrayAnalytics = new ArrayList<>();
-        for (int i = analyticsArrayList.size()-1; i>=0 ; i++) {
+        for (int i = analyticsArrayList.size()-1; i>=0 ; i--) {
             arrayAnalytics.add(analyticsArrayList.get(i));
         }
 
@@ -693,7 +695,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         chart.setDescription("");
         chart.setData(data);
         chart.setVisibleXRangeMaximum(7);
-        chart.moveViewToX(10);
+        chart.moveViewToX(arrayAnalytics.size());
         chart.setDoubleTapToZoomEnabled(false);
         chart.setPinchZoom(false);
         chart.notifyDataSetChanged();
