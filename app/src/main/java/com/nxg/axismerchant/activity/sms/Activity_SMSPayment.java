@@ -59,7 +59,7 @@ import java.util.List;
 public class Activity_SMSPayment extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imgBack, imgEditMobile, imgEditAmount, imgEditRemark, imgReadContact;
-    TextView txtNext, txtReqLabel;
+    TextView txtNext, txtReqLabel, txtOptional;
     EditText  edtCustMobile,edtAmount, edtRemarks;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
@@ -86,6 +86,20 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
                 retrieveFromDatabase(MobileNo);
             }
         }
+
+        edtRemarks.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(edtRemarks.hasFocus())
+                {
+                    txtOptional.setVisibility(View.GONE);
+                }else if(!edtRemarks.hasFocus() && edtRemarks.getText().toString().equalsIgnoreCase(""))
+                {
+                    txtOptional.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
 
     }
 
@@ -123,6 +137,7 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
         imgReadContact = (ImageView) findViewById(R.id.imgReadContact);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
+        txtOptional = (TextView) findViewById(R.id.txtOptional);
 
         cbFavorites = (CheckBox) findViewById(R.id.cbFavorites);
 

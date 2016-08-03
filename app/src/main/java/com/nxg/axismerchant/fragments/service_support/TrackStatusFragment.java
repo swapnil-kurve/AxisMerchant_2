@@ -63,7 +63,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     View vSearchLayout;
     EditText edtSrNo, edtTidNo;
     TextView txtSearch,txtSearch1;
-    String mSRNO, mTIDNo, currentDateAndTime;
+    String mSRNO = "", mTIDNo = "", currentDateAndTime;
     TextView txtFromDate, txtToDate;
     int DateFlag = 0;
     Calendar myCalendar = Calendar.getInstance();

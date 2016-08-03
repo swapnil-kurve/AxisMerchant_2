@@ -52,6 +52,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     SharedPreferences preferences;
     ImageView imgSwitch, imgErrorMID, imgErrorMobile;
     int flag = 1 ;
+    private String mGCMRedID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,6 +94,13 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         imgErrorMobile.setOnClickListener(this);
 
         encryptDecryptRegister = new EncryptDecryptRegister();
+
+        /*SharedPreferences prefs = getActivity().getSharedPreferences(Constants.UserDetails,
+                Context.MODE_PRIVATE);
+        mGCMRedID = prefs.getString("REG_ID","");
+
+        if(mGCMRedID.equalsIgnoreCase(""))
+            txtSubmit.setEnabled(false);*/
     }
 
 

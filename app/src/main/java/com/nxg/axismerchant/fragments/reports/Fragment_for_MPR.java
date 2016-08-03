@@ -2,6 +2,7 @@ package com.nxg.axismerchant.fragments.reports;
 
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -57,8 +59,6 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -261,7 +261,12 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 break;
 
             case R.id.txtConfirm:
-                sendEmail();
+                SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref,Context.MODE_PRIVATE);
+                String email = preferences.getString("MerchantEmail","");
+                if(email.equalsIgnoreCase(""))
+                    ShowDialog("No");
+                else
+                    sendEmail();
                 break;
 
             case R.id.lyShowEmail:
@@ -733,14 +738,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                         mprDataSet.add(mis_mpr);
                     }
 
-                    Collections.sort(mprDataSet, new Comparator<MIS_MPR>() {
-                        @Override
-                        public int compare(MIS_MPR lhs, MIS_MPR rhs) {
-                            return (lhs.getTransDate().compareTo(rhs.getTransDate()));
-                        }
-
-                    });
-
                     txtDateDuration.setText(date);
                     showBarChart();
                     progressDialog.dismiss();
@@ -831,13 +828,14 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 if(result.equals("Success"))
                 {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "Thanks for your request, Our team will get back to you");
+//                    Constants.showToast(getActivity(), "Thanks for your request, Our team will get back to you");
+                    ShowDialog("yes");
                     getActivity().onBackPressed();
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "Sorry! your email id is not registered with us. Kindly contact your relationship manager and register your email id.");
-
+//                    Constants.showToast(getActivity(), "Sorry! your email id is not registered with us. Kindly contact your relationship manager and register your email id.");
+                    ShowDialog("no");
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
@@ -853,7 +851,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            // TODO Auto-generated method stub
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -892,6 +889,35 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             e.printStackTrace();
 
         }
+    }
+
+
+    private void ShowDialog(String val)
+    {
+        // custom dialog
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_email_success);
+
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+        TextView textMessage = (TextView) dialog.findViewById(R.id.text);
+        TextView textEmailId = (TextView) dialog.findViewById(R.id.txtEmailID);
+        if(val.equalsIgnoreCase("no"))
+        {
+            textEmailId.setVisibility(View.GONE);
+            textMessage.setText(getResources().getString(R.string.email_sent_failed));
+            txtConfirm.setText("OK");
+        }
+        // if button is clicked, close the custom dialog
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+
+        dialog.show();
     }
 
 }

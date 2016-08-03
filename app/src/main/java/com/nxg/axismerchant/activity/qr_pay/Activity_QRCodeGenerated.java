@@ -58,7 +58,7 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
         imgNotification = (ImageView) findViewById(R.id.imgNotification);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
 
-
+        alphanumeric = numericToAlpha();
         SharedPreferences preferences = getSharedPreferences(Constants.QRPaymentData,MODE_PRIVATE);
         if(preferences.contains("Amount")) {
             amount = preferences.getString("Amount", "0");
@@ -72,7 +72,6 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
 
         getData();
 
-        alphanumeric = numericToAlpha();
 
         Log.e("id", id);
         Log.e("name", name);

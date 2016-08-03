@@ -80,7 +80,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
     CustomListAdapterForMPR adapterAnalytics;
     BarChart layoutChart;
     TextView txtDateDuration,txtGraphType;
-    View lyTop, lyInfo;
+    View lyTop, lyInfo, lyTopMessages;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,7 +96,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         layoutChart = (BarChart) v.findViewById(R.id.chartTransaction);
         txtDateDuration = (TextView) v.findViewById(R.id.txtDateDuration);
         txtGraphType = (TextView) v.findViewById(R.id.txtLeftText);
-        txtGraphType.setVisibility(View.GONE);
+        lyTopMessages = v.findViewById(R.id.lyTopMessages);
 
         listData.addParallaxedHeaderView(v);
 
@@ -120,10 +120,12 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
         if(position == 0) {
             getAnalyticsData();
-        }
-        else {
+            txtGraphType.setVisibility(View.VISIBLE);
+            lyTopMessages.setVisibility(View.VISIBLE);
+        } else {
             getMerchantData();
             imgFilter.setVisibility(View.GONE);
+            txtGraphType.setVisibility(View.GONE);
         }
 
         return view;
@@ -587,6 +589,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
+                        if(transDate.contains("/"))
                         transDate = Constants.splitDate(transDate.split("\\s+")[0]);
 
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);

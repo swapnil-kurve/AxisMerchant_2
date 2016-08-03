@@ -195,7 +195,7 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                         if(callType.equals("Details"))
                             transactionBetDates = object.getJSONArray("getServiceByID");
                         else
-                            transactionBetDates = object.getJSONArray("getServiceByID");
+                            transactionBetDates = object.getJSONArray("searchSRService");
 
                             JSONObject object2 = transactionBetDates.getJSONObject(0);
                             String merchantId = object2.optString("merchantId");

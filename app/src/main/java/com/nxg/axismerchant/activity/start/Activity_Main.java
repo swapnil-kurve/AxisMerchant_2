@@ -44,8 +44,9 @@ public class Activity_Main extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
+
+        Fabric.with(this, new Crashlytics());
 
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
        String status = preferences.getString("KeepLoggedIn","false");
@@ -198,7 +199,7 @@ public class Activity_Main extends AppCompatActivity {
                     storeRegIdinSharedPref(getApplicationContext(), regId);
 //                    Contents.showToast(Activity_EnterCardDetails.this, "Registered with GCM Server successfully");
                 } else {
-                    Constants.showToast(Activity_Main.this, "Reg ID Creation Failed.nnEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time."+msg);
+//                    Constants.showToast(Activity_Main.this, "Reg ID Creation Failed.nnEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time."+msg);
                 }
             }
         }.execute(null, null, null);

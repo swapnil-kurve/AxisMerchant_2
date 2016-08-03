@@ -23,6 +23,8 @@ import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.Contents_QRCode;
 import com.nxg.axismerchant.classes.QRCodeEncoder;
 
+import java.util.ArrayList;
+
 /**
  * Created by hp on 7/28/2016.
  */
@@ -31,6 +33,9 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
     String id, name, mcc, city, countryCode, currencyCode;
     int checkId, checkName, check_mcc, checkCity, checkCountryCode, checkCurrencyCode;
     ImageView imgBack, imgNotification, imgProfile;
+    ArrayList<String> alphanumeric;
+    String checkIdLength, checkNameLength, check_mccLength, checkCityLength, checkCountryCodeLength, checkCurrencyCodeLength, checkAmountLength;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,31 +54,40 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         imgProfile.setOnClickListener(this);
         txtViewAllTransactions.setOnClickListener(this);
 
+        alphanumeric = numericToAlpha();
+
+        checkIdLength = alphanumeric.get(checkId);
+        checkNameLength = alphanumeric.get(checkName);
+        check_mccLength = alphanumeric.get(check_mcc);
+        checkCityLength = alphanumeric.get(checkCity);
+        checkCountryCodeLength = alphanumeric.get(checkCountryCode);
+        checkCurrencyCodeLength = alphanumeric.get(checkCurrencyCode);
+
         getData();
 
         if(checkId !=0)//if(checkId >8 || checkId <15)
         {
-            id ="0"+checkId+id;
+            id ="0"+checkIdLength+id;
             Log.e("id new", id);
             if(checkName <= 25)
             {
-                name= "1"+checkName+name;
+                name= "1"+checkNameLength+name;
                 Log.e("name new", name);
                 if(check_mcc == 4)
                 {
-                    mcc = "2"+check_mcc+mcc;
+                    mcc = "2"+check_mccLength+mcc;
                     Log.e("mcc new", mcc);
                     if(checkCity <=13)
                     {
-                        city = "3"+checkCity+city;
+                        city = "3"+checkCityLength+city;
                         Log.e("city new", city);
                         if(checkCountryCode == 2)
                         {
-                            countryCode="4"+checkCountryCode+countryCode;
+                            countryCode="4"+checkCountryCodeLength+countryCode;
                             Log.e("countryCode new", countryCode);
                             if(checkCurrencyCode == 3)
                             {
-                                currencyCode = "5"+checkCurrencyCode+currencyCode;
+                                currencyCode = "5"+checkCurrencyCodeLength+currencyCode;
                                 Log.e("currencyCode new", currencyCode);
 
                                     String qrInputText = id+name+mcc+city+countryCode+currencyCode;
@@ -161,6 +175,48 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         }
     }
 
+
+    public ArrayList numericToAlpha() {
+        alphanumeric = new ArrayList<>();
+        alphanumeric.add("0");
+        alphanumeric.add("1");
+        alphanumeric.add("2");
+        alphanumeric.add("3");
+        alphanumeric.add("4");
+        alphanumeric.add("5");
+        alphanumeric.add("6");
+        alphanumeric.add("7");
+        alphanumeric.add("8");
+        alphanumeric.add("9");
+        alphanumeric.add("A");
+        alphanumeric.add("B");
+        alphanumeric.add("C");
+        alphanumeric.add("D");
+        alphanumeric.add("E");
+        alphanumeric.add("F");
+        alphanumeric.add("G");
+        alphanumeric.add("H");
+        alphanumeric.add("I");
+        alphanumeric.add("J");
+        alphanumeric.add("K");
+        alphanumeric.add("L");
+        alphanumeric.add("M");
+        alphanumeric.add("N");
+        alphanumeric.add("O");
+        alphanumeric.add("P");
+        alphanumeric.add("Q");
+        alphanumeric.add("R");
+        alphanumeric.add("S");
+        alphanumeric.add("T");
+        alphanumeric.add("U");
+        alphanumeric.add("V");
+        alphanumeric.add("W");
+        alphanumeric.add("X");
+        alphanumeric.add("Y");
+        alphanumeric.add("Z");
+
+        return alphanumeric;
+    }
 
 
 }
