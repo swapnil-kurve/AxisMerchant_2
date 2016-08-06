@@ -43,14 +43,6 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgNotification = (ImageView) findViewById(R.id.imgNotification);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
 
         imgBack.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
@@ -108,5 +100,23 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
+        super.onResume();
+
     }
 }

@@ -322,4 +322,21 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         }
     }
 
+    @Override
+    protected void onResume() {
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
+        super.onResume();
+    }
+
 }

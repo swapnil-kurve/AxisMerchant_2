@@ -14,6 +14,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.nxg.axismerchant.database.DBHelper;
@@ -249,5 +250,18 @@ public class Constants {
         return mSplittedArr[1]+"/"+mSplittedArr[0]+"/"+mSplittedArr[2];
     }
 
+
+    public static double getRes(Activity activity)
+    {
+        DisplayMetrics dm = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        double x = Math.pow(dm.widthPixels / dm.xdpi, 2);
+        double y = Math.pow(dm.heightPixels / dm.ydpi, 2);
+        double screenInches = Math.sqrt(x + y);
+//        Constants.showToast(activity, "Screen inches : " + screenInches);
+//        Log.d("debug", "Screen inches : " + screenInches);
+
+        return screenInches;
+    }
 
 }

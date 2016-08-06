@@ -60,18 +60,6 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
         encryptDecryptRegister =  new EncryptDecryptRegister();
         faqArrayList = new ArrayList<>();
 
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }else
-        {
-            txtNotification.setVisibility(View.GONE);
-        }
         imgBack.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
@@ -196,6 +184,23 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    @Override
+    protected void onResume() {
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
+        super.onResume();
+    }
 
     private class FAQ {
         String que ,ans;

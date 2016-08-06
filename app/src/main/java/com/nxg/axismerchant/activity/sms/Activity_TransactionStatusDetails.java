@@ -71,14 +71,6 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
         refLayout = findViewById(R.id.refundLayout);
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
 
         imgProfile.setOnClickListener(this);
         imgBack.setOnClickListener(this);
@@ -131,8 +123,18 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
     @Override
     protected void onResume() {
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
         super.onResume();
-
     }
 
     @Override
@@ -327,6 +329,8 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         transType = encryptDecrypt.decrypt(transType);
 
 //                      InsertIntoDatabase(custMobile, transAmt, remark, transactionId, transStatus);
+
+                        UpdateStatusIntoEPay(invoiceNo,transStatus);
 
                         String[] tDate = transDate.split("//s+");
 
@@ -646,6 +650,15 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DBHelper.IS_REFUND, refundStatus);
+
+        long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT,values,DBHelper.INVOICE_NO +" = "+invNo, null);
+    }
+
+    private void UpdateStatusIntoEPay(String invNo, String status) {
+        dbHelper = new DBHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.STATUS, status);
 
         long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT,values,DBHelper.INVOICE_NO +" = "+invNo, null);
     }

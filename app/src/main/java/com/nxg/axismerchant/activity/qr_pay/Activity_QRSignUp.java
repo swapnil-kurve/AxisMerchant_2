@@ -43,15 +43,6 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_sign_up);
 
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
-
         Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/Futura_LightBold.ttf");
 
         tabs = getResources().getStringArray(R.array.sms_pay_sign_up);
@@ -96,8 +87,18 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onResume() {
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
         super.onResume();
-
     }
 
     @Override

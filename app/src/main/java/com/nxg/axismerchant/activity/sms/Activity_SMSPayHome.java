@@ -91,14 +91,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
         txtLabel = (TextView) findViewById(R.id.txtLabel);
         lyBottom = findViewById(R.id.lyBottom);
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
 
         txtRequestNewPayment.setOnClickListener(this);
         imgBack.setOnClickListener(this);
@@ -224,11 +216,23 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
     @Override
     protected void onResume() {
-        super.onResume();
         retrieveFromDatabase();
 
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
+
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
+        super.onResume();
     }
 
     @Override

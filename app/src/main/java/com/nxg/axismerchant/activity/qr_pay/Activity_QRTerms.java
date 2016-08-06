@@ -62,15 +62,6 @@ public class Activity_QRTerms extends AppCompatActivity implements View.OnClickL
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
 
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
-
         imgAccept.setOnClickListener(this);
         txtProceed.setOnClickListener(this);
         imgBack.setOnClickListener(this);
@@ -85,13 +76,26 @@ public class Activity_QRTerms extends AppCompatActivity implements View.OnClickL
 
     @Override
     protected void onResume() {
-        super.onResume();
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         MID = preferences.getString("MerchantID","0");
         MOBILE = preferences.getString("MobileNum","0");
 
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
+
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+           txtNotification.setVisibility(View.VISIBLE);
+           txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+           txtNotification.setVisibility(View.GONE);
+        }
+        super.onResume();
 
     }
 

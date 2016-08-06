@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
@@ -22,6 +23,7 @@ public class BusinessDetailsFragment extends Fragment {
     TextView txtName, txtMobileNo, txtAddress, txtMerchantID;
     EncryptDecryptRegister encryptDecryptRegister;
     SharedPreferences preferences;
+    double screenInches;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,6 +32,7 @@ public class BusinessDetailsFragment extends Fragment {
 
         getInitialize(view);
 
+        setSize(view);
         Constants.retrieveMPINFromDatabase(getActivity());
         Constants.getIMEI(getActivity());
         SharedPreferences pref = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
@@ -55,6 +58,40 @@ public class BusinessDetailsFragment extends Fragment {
 
     }
 
+    private void setSize(View view) {
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            setSize(view,20,22,200);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            setSize(view, 15,18,45);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            setSize(view, 14,18,70);
+        }
+    }
+
+    private void setSize(View view, int i, int i1, int i2) {
+        ((TextView)view.findViewById(R.id.txtmid)).setTextSize(i);
+        ((TextView)view.findViewById(R.id.txtmobile)).setTextSize(i);
+        ((TextView)view.findViewById(R.id.txtaddress)).setTextSize(i);
+
+        txtMerchantID.setTextSize(i1);
+        txtMobileNo.setTextSize(i1);
+        txtAddress.setTextSize(i1);
+
+        ((ImageView)view.findViewById(R.id.imgMid)).getLayoutParams().height = i2;
+        ((ImageView)view.findViewById(R.id.imgMid)).getLayoutParams().width = i2;
+
+        ((ImageView)view.findViewById(R.id.imgMobile)).getLayoutParams().height = i2;
+        ((ImageView)view.findViewById(R.id.imgMobile)).getLayoutParams().width = i2;
+
+        ((ImageView)view.findViewById(R.id.imgAddress)).getLayoutParams().height = i2;
+        ((ImageView)view.findViewById(R.id.imgAddress)).getLayoutParams().width = i2;
+    }
 
     private void getInitialize(View view) {
 

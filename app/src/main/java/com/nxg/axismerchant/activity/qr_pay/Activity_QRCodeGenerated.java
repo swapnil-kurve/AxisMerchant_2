@@ -35,8 +35,8 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
     TextView txtOk;
     ImageView imgBack, imgNotification, imgProfile;
     String id, name, mcc, city, countryCode, currencyCode, amount="", primaryId="", secondaryId="";
-    int checkId, checkName, check_mcc, checkCity, checkCountryCode, checkCurrencyCode, checkAmount;
-    String checkIdLength, checkNameLength, check_mccLength, checkCityLength, checkCountryCodeLength, checkCurrencyCodeLength, checkAmountLength;
+    int checkId, checkName, check_mcc, checkCity, checkCountryCode, checkCurrencyCode, checkAmount, checkPrimaryId, checkSecondaryId;
+    String checkIdLength, checkNameLength, check_mccLength, checkCityLength, checkCountryCodeLength, checkCurrencyCodeLength, checkAmountLength, checkPrimaryIdLength, checkSecondaryLength;
     ArrayList<String> alphanumeric;
 
     @Override
@@ -195,12 +195,36 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
             countryCode = pref.getString("COUNTRY_Code","");
             currencyCode = pref.getString("currencyCode","");
 
+            if(id.length() > 15)
+                id = id.substring(0,15);
+            if(name.length() > 25)
+                name = name.substring(0,25);
+            if(mcc.length() > 4)
+                mcc = mcc.substring(0,4);
+            if(city.length() > 13)
+                city = city.substring(0,13);
+            if(countryCode.length() > 2)
+                countryCode = countryCode.substring(0,2);
+            if(currencyCode.length() > 3)
+                currencyCode = countryCode.substring(0,3);
+            if(amount.length() > 12)
+                amount = amount.substring(0,12);
+            if(primaryId.length() > 26)
+                primaryId = primaryId.substring(0,26);
+            if(secondaryId.length() > 26)
+                secondaryId = secondaryId.substring(0,26);
+
             checkId = id.length();
             checkName = name.length();
             check_mcc = mcc.length();
             checkCity = city.length();
             checkCountryCode = countryCode.length();
             checkCurrencyCode = currencyCode.length();
+            checkAmount = amount.length();
+            checkPrimaryId = primaryId.length();
+            checkSecondaryId = secondaryId.length();
+
+
         }
     }
 
@@ -266,6 +290,24 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
         alphanumeric.add("Z");
 
         return alphanumeric;
+    }
+
+
+    @Override
+    protected void onResume() {
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
+        super.onResume();
     }
 
 }

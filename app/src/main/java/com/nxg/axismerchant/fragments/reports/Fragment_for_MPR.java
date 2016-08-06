@@ -128,6 +128,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             txtLabel.setVisibility(View.GONE);
         }
         else {
+
             getChartData("unsettled");
             imgFilter.setVisibility(View.VISIBLE);
             flag = 1;
@@ -199,20 +200,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
     }
 
-    private void getMPRDetails(String transDate) {
-        if (Constants.isNetworkConnectionAvailable(getActivity())) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                new GetMPRDetails().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getMPRDetailsForDate", MID, MOBILE,transDate);
-            } else {
-                new GetMPRDetails().execute(Constants.DEMO_SERVICE+"getMPRDetailsForDate", MID, MOBILE,transDate);
-
-            }
-        } else {
-            Constants.showToast(getActivity(), "No internet available");
-        }
-
-    }
 
     private void getFilteredData(String reportType, String duration, String criteria) {
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
@@ -232,11 +219,11 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(type == 0) {
-            viewDetailsLayout.setVisibility(View.VISIBLE);
-            listData.setVisibility(View.GONE);
-            lyDetailsLayout.setVisibility(View.VISIBLE);
-            lyEmail.setVisibility(View.GONE);
-            getMPRDetails(mprDataSet.get(position).gettDate());
+            Fragment_MPRDetails mprDetails = new Fragment_MPRDetails();
+            Bundle bundle = new Bundle();
+            bundle.putString("Date",mprDataSet.get(position-1).gettDate());
+            mprDetails.setArguments(bundle);
+            getFragmentManager().beginTransaction().add(R.id.layout_container,mprDetails).addToBackStack("mprDetails").commit();
         }
     }
 
@@ -335,7 +322,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
         @Override
         protected String doInBackground(String... arg0) {
-            String str = null;
+            String str = "";
             try {
                 HTTPUtils utils = new HTTPUtils();
                 HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
@@ -377,49 +364,49 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             super.onPostExecute(data);
 
             try{
-                JSONArray transaction = new JSONArray(data);
-                JSONObject object1 = transaction.getJSONObject(0);
+                if(!data.equalsIgnoreCase("")) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
 
-                JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                JSONObject obj = rowResponse.getJSONObject(0);
-                String result = obj.optString("result");
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
-                if(result.equals("Success"))
-                {
-                    JSONObject object = transaction.getJSONObject(1);
-                    JSONArray transactionBetDates = object.getJSONArray("getTransactionBetDates");
-                    for (int i = 0; i < transactionBetDates.length(); i++) {
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray transactionBetDates = object.getJSONArray("getTransactionBetDates");
+                        for (int i = 0; i < transactionBetDates.length(); i++) {
 
-                        JSONObject object2 = transactionBetDates.getJSONObject(i);
-                        String Transactions = object2.optString("Transactions");
-                        String AvgTicketSize = object2.optString("AvgTicketSize");
-                        String TxnVolume = object2.optString("TxnVolume");
-                        String transDate = object2.optString("transDate");
-                        String tDate = object2.optString("tDate");
+                            JSONObject object2 = transactionBetDates.getJSONObject(i);
+                            String Transactions = object2.optString("Transactions");
+                            String AvgTicketSize = object2.optString("AvgTicketSize");
+                            String TxnVolume = object2.optString("TxnVolume");
+                            String transDate = object2.optString("transDate");
+                            String tDate = object2.optString("tDate");
 
-                        Transactions = encryptDecrypt.decrypt(Transactions);
-                        AvgTicketSize = encryptDecrypt.decrypt(AvgTicketSize);
-                        TxnVolume = encryptDecrypt.decrypt(TxnVolume);
-                        transDate = encryptDecrypt.decrypt(transDate);
-                        tDate = encryptDecrypt.decrypt(tDate);
+                            Transactions = encryptDecrypt.decrypt(Transactions);
+                            AvgTicketSize = encryptDecrypt.decrypt(AvgTicketSize);
+                            TxnVolume = encryptDecrypt.decrypt(TxnVolume);
+                            transDate = encryptDecrypt.decrypt(transDate);
+                            tDate = encryptDecrypt.decrypt(tDate);
 
-                        transDate = Constants.splitDate(transDate.split("\\s+")[0]);
+                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);
 
-                        mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
-                        mprDataSet.add(mis_mpr);
+                            mis_mpr = new MIS_MPR(Transactions, AvgTicketSize, TxnVolume, transDate, tDate);
+                            mprDataSet.add(mis_mpr);
+                        }
+
+                        showBarChart();
+                        progressDialog.dismiss();
+                        adapter = new CustomListAdapterForMPR(getActivity(), mprDataSet);
+                        listData.setAdapter(adapter);
+
+                    } else {
+                        progressDialog.dismiss();
+                        Constants.showToast(getActivity(), "No transactions found");
+
                     }
-
-                    showBarChart();
-                    progressDialog.dismiss();
-                    adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet);
-                    listData.setAdapter(adapter);
-
-                }
-                else {
-                    progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "No transactions found");
-
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();

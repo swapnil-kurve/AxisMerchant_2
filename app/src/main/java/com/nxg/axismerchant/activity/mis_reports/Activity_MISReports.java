@@ -19,6 +19,7 @@ import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.Notification;
 import com.nxg.axismerchant.database.DBHelper;
+import com.nxg.axismerchant.fragments.reports.Fragment_MPRDetails;
 import com.nxg.axismerchant.fragments.reports.Fragment_RefundTransactions;
 import com.nxg.axismerchant.fragments.reports.Fragment_for_MPR;
 import com.nxg.axismerchant.fragments.reports.Fragment_for_TransactionReport;
@@ -28,8 +29,8 @@ import java.util.ArrayList;
 public class Activity_MISReports extends AppCompatActivity implements View.OnClickListener {
 
     ViewPager viewPager;
-    private String[] tabs ;
-    Fragment_for_MPR fragment_for_mpr;
+    public static String[] tabs ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +42,6 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
 
         imgBack.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
@@ -76,9 +69,21 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
 
     @Override
     protected void onResume() {
-        super.onResume();
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
+
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
+        super.onResume();
     }
 
     @Override
@@ -114,7 +119,7 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
         @Override
         public Fragment getItem(int position) {
             if(position == 0) {
-                fragment_for_mpr = new Fragment_for_MPR();
+                Fragment_for_MPR fragment_for_mpr = new Fragment_for_MPR();
                 Bundle bundle = new Bundle();
                 bundle.putInt(Fragment_for_MPR.ARG_OBJECT, position);
                 fragment_for_mpr.setArguments(bundle);
@@ -128,7 +133,6 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
                 return fragment_for_transactionReport;
             }else if(position == 2)
             {
-//                Fragment_for_UnsettledPOS unsettledPOS = new Fragment_for_UnsettledPOS();
                 Fragment_for_MPR unsettledPOS = new Fragment_for_MPR();
                 Bundle bundle = new Bundle();
                 bundle.putInt(Fragment_for_MPR.ARG_OBJECT, position);
@@ -154,22 +158,11 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
         }
     }
 
+
     @Override
     public void onBackPressed() {
-        if(Fragment_for_MPR.viewDetailsLayout.getVisibility() == View.VISIBLE)
-        {
-            fragment_for_mpr.viewDetailsLayout.setVisibility(View.GONE);
-            fragment_for_mpr.listData.setVisibility(View.VISIBLE);
-
-        }else
-        {
-            super.onBackPressed();
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        if(Fragment_MPRDetails.flag == 1)
+            Fragment_MPRDetails.flag = 0;
+        super.onBackPressed();
     }
 }

@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -43,6 +44,7 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
     Intent returnFromGalleryIntent;
     private int flag = 0;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
+    double screenInches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_user_profile);
 
         getInitialize();
+
+        setSize();
 
         changeToBusinessDetails();
 
@@ -96,6 +100,37 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
 
     }
 
+    private void setSize() {
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            Constants.showToast(this, "1");
+            setSize(20,22,200);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            Constants.showToast(this, "2");
+            setSize(18,20,120);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            Constants.showToast(this, "3");
+            setSize(14,18,70);
+        }
+    }
+
+    private void setSize(int i, int i1, int i2) {
+
+        ((TextView)findViewById(R.id.txtTitle)).setTextSize(i1);
+        imgUserProfile.getLayoutParams().height = i2;
+        imgUserProfile.getLayoutParams().width = i2;
+
+        ((TextView)findViewById(R.id.txtUsername)).setTextSize(i);
+        ((TextView)findViewById(R.id.txtBusinessDetail)).setTextSize(i);
+        ((TextView)findViewById(R.id.txtSubUser)).setTextSize(i);
+
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -128,13 +163,11 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
         View layoutBusinessDetails = findViewById(R.id.layoutBusinessDetail);
         View layoutSubUser = findViewById(R.id.layoutSubUser);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
-//        ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
         imgUserProfile = (ImageView) findViewById(R.id.imgUserProfile);
 
         imgUserProfile.setOnClickListener(this);
         layoutBusinessDetails.setOnClickListener(this);
         imgBack.setOnClickListener(this);
-//        imgNotification.setOnClickListener(this);
 
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         if(preferences.getString("isAdmin","False").equals("True")){

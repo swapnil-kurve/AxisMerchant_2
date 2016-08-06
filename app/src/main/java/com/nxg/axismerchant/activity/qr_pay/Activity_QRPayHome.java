@@ -21,7 +21,9 @@ import com.nxg.axismerchant.activity.Activity_Notification;
 import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.Contents_QRCode;
+import com.nxg.axismerchant.classes.Notification;
 import com.nxg.axismerchant.classes.QRCodeEncoder;
+import com.nxg.axismerchant.database.DBHelper;
 
 import java.util.ArrayList;
 
@@ -54,6 +56,8 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         imgProfile.setOnClickListener(this);
         txtViewAllTransactions.setOnClickListener(this);
 
+        getData();
+
         alphanumeric = numericToAlpha();
 
         checkIdLength = alphanumeric.get(checkId);
@@ -63,7 +67,6 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         checkCountryCodeLength = alphanumeric.get(checkCountryCode);
         checkCurrencyCodeLength = alphanumeric.get(checkCurrencyCode);
 
-        getData();
 
         if(checkId !=0)//if(checkId >8 || checkId <15)
         {
@@ -165,6 +168,19 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
             countryCode = pref.getString("COUNTRY_Code","");
             currencyCode = pref.getString("currencyCode","");
 
+            if(id.length() > 15)
+                id = id.substring(0,15);
+            if(name.length() > 25)
+                name = name.substring(0,25);
+            if(mcc.length() > 4)
+                mcc = mcc.substring(0,4);
+            if(city.length() > 13)
+                city = city.substring(0,13);
+            if(countryCode.length() > 2)
+                countryCode = countryCode.substring(0,2);
+            if(currencyCode.length() > 3)
+                currencyCode = countryCode.substring(0,3);
+
             checkId = id.length();
             checkName = name.length();
             check_mcc = mcc.length();
@@ -218,5 +234,22 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         return alphanumeric;
     }
 
+
+    @Override
+    protected void onResume() {
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
+        super.onResume();
+    }
 
 }

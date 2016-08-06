@@ -69,14 +69,6 @@ public class Activity_ReferHome extends AppCompatActivity implements View.OnClic
         edtMobileNumber = (EditText) findViewById(R.id.edtMobileNumber);
         edtLandlineNumber = (EditText) findViewById(R.id.edtLandlineNumber);
         edtAddress = (EditText) findViewById(R.id.edtAddress);
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
 
         imgBack.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
@@ -193,6 +185,18 @@ public class Activity_ReferHome extends AppCompatActivity implements View.OnClic
         super.onResume();
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
+
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
     }
 
     private class SetReferral extends AsyncTask<String, Void, String>

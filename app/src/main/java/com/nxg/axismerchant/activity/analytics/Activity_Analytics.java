@@ -75,7 +75,6 @@ public class Activity_Analytics extends AppCompatActivity implements View.OnClic
 
     @Override
     protected void onResume() {
-        super.onResume();
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
 
@@ -90,6 +89,8 @@ public class Activity_Analytics extends AppCompatActivity implements View.OnClic
         }else {
             txtNotification.setVisibility(View.GONE);
         }
+
+        super.onResume();
     }
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -126,9 +127,5 @@ public class Activity_Analytics extends AppCompatActivity implements View.OnClic
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
 }

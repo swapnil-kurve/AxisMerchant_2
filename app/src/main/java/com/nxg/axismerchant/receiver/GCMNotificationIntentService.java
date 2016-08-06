@@ -66,18 +66,39 @@ public class GCMNotificationIntentService extends IntentService {
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
+    /**
+     * Check conditions and Show notification
+     * @param title
+     * @param message
+     * @param SubTitle
+     * @param imgPath
+     * @param promotionType
+     * @param promotionID
+     * @param withOption
+     * @param invNo
+     * @param transStatus
+     * @param gcm_type
+     * @param reqStatus
+     */
     private void sendNotification(String title, String message, String SubTitle, String imgPath, String promotionType, String promotionID, String withOption, String invNo, String transStatus, String gcm_type, String reqStatus) {
         Intent resultIntent;
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy");
         String currentDate = sdf.format(new Date());
+
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        String status = preferences.getString("KeepLoggedIn","false");
-        if(status.equals("false")) {
+        String status = preferences.getString("KeepLoggedIn","false");            //Get keep logged in status
+
+        if(status.equals("false")) { // This block executes when Keep logged in not checked or user logged out
             resultIntent = new Intent(this, Activity_Main.class);
             if(gcm_type.equalsIgnoreCase("Offers"))
             {
                 InsertIntoPromotionTable(title, message, SubTitle, imgPath, promotionType, promotionID, withOption);
-            }else if(gcm_type.equalsIgnoreCase("Transaction_Status"))
+            }else if(gcm_type.equalsIgnoreCase("notification")){
+
+                InsertIntoNotification(currentDate,message);
+                resultIntent = new Intent(this, Activity_Notification.class);
+            }else if(gcm_type.equalsIgnoreCase("SMS_Transaction_Status") || gcm_type.equalsIgnoreCase("SMS_Refund_Transaction"))
             {
                 preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
@@ -86,26 +107,42 @@ public class GCMNotificationIntentService extends IntentService {
 
                 UpdateIntoEPay(invNo, transStatus);
                 InsertIntoNotification(currentDate,message);
-            }else if(gcm_type.equalsIgnoreCase("Request Status"))
+            }else if(gcm_type.equalsIgnoreCase("SMS_Request_Status"))
             {
                 preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("Validated",reqStatus);
+                editor.putString("SMSRequestValidated",reqStatus);
                 editor.apply();
                 InsertIntoNotification(currentDate,message);
-            }else if(gcm_type.equalsIgnoreCase("notification")){
+            }else if(gcm_type.equalsIgnoreCase("QR_Transaction_Status") || gcm_type.equalsIgnoreCase("QR_Refund_Transaction"))
+            {
+                preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("Invoice Number",invNo);
+                editor.apply();
 
-
+                UpdateIntoEPay(invNo, transStatus);
                 InsertIntoNotification(currentDate,message);
-                resultIntent = new Intent(this, Activity_Notification.class);
+            }else if(gcm_type.equalsIgnoreCase("QR_Request_Status"))
+            {
+                preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("QRRequestValidated",reqStatus);
+                editor.apply();
+                InsertIntoNotification(currentDate,message);
             }
-        }else
+        }else       //// This block executes when Keep logged in checked or user logged In
         {
             if(gcm_type.equalsIgnoreCase("Offers"))
             {
                 InsertIntoPromotionTable(title, message, SubTitle, imgPath, promotionType, promotionID, withOption);
                 resultIntent = new Intent(this, Activity_OffersNotices.class);
-            }else if(gcm_type.equalsIgnoreCase("Transaction_Status"))
+            }else if(gcm_type.equalsIgnoreCase("notification"))
+            {
+
+                InsertIntoNotification(currentDate,message);
+                resultIntent = new Intent(this, Activity_Notification.class);
+            }else if(gcm_type.equalsIgnoreCase("SMS_Transaction_Status") || gcm_type.equalsIgnoreCase("SMS_Refund_Transaction"))
             {
                 preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
@@ -114,22 +151,45 @@ public class GCMNotificationIntentService extends IntentService {
 
                 UpdateIntoEPay(invNo, transStatus);
                 InsertIntoNotification(currentDate,message);
-                resultIntent = new Intent(this, Activity_TransactionStatusDetails.class);
-            }else if(gcm_type.equalsIgnoreCase("Request Status"))
+                if(gcm_type.equalsIgnoreCase("SMS_Refund_Transaction"))
+                    resultIntent = new Intent(this, Activity_Notification.class);
+                else
+                    resultIntent = new Intent(this, Activity_TransactionStatusDetails.class);
+            }else if(gcm_type.equalsIgnoreCase("SMS_Request_Status"))
             {
                 preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("SMSValidated",reqStatus);
+                editor.putString("SMSRequestValidated",reqStatus);
                 editor.apply();
                 if(reqStatus.equalsIgnoreCase("pending"))
                     resultIntent = new Intent(this, Activity_SMSSignUp.class);
                 else
                     resultIntent = new Intent(this, Activity_SMSPayHome.class);
                 InsertIntoNotification(currentDate,message);
-            }else if(gcm_type.equalsIgnoreCase("notification")){
+            }else if(gcm_type.equalsIgnoreCase("QR_Transaction_Status") || gcm_type.equalsIgnoreCase("QR_Refund_Transaction"))
+            {
+                preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("Invoice Number",invNo);
+                editor.apply();
 
+                UpdateIntoEPay(invNo, transStatus);
                 InsertIntoNotification(currentDate,message);
-                resultIntent = new Intent(this, Activity_Notification.class);
+                if(gcm_type.equalsIgnoreCase("QR_Refund_Transaction"))
+                    resultIntent = new Intent(this, Activity_Notification.class);
+                else
+                    resultIntent = new Intent(this, Activity_TransactionStatusDetails.class);
+            }else if(gcm_type.equalsIgnoreCase("QR_Request_Status"))
+            {
+                preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("QRRequestValidated",reqStatus);
+                editor.apply();
+                if(reqStatus.equalsIgnoreCase("pending"))
+                    resultIntent = new Intent(this, Activity_SMSSignUp.class);
+                else
+                    resultIntent = new Intent(this, Activity_SMSPayHome.class);
+                InsertIntoNotification(currentDate,message);
             }else
             {
                 resultIntent = new Intent(this, Activity_Home.class);
@@ -148,28 +208,27 @@ public class GCMNotificationIntentService extends IntentService {
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(title))
                 .setContentTitle(title)
-//                .setSubText(SubTitle)
                 .setContentText(message)
                 .setSmallIcon(R.mipmap.gcm_icon);
 
-        // Set pending intent
         mNotifyBuilder.setContentIntent(resultPendingIntent);
 
-        // Set Vibrate, Sound and Light
         int defaults = 0;
         defaults = defaults | Notification.DEFAULT_LIGHTS;
         defaults = defaults | Notification.DEFAULT_VIBRATE;
         defaults = defaults | Notification.DEFAULT_SOUND;
 
         mNotifyBuilder.setDefaults(defaults);
-        // Set the content for Notification
-//        mNotifyBuilder.setContentText(message);
-        // Set autocancel
         mNotifyBuilder.setAutoCancel(true);
-        // Post a profile
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
 
+
+    /**
+     * Update Refund Status of SMS Pay into Table
+     * @param invNo
+     * @param transStatus
+     */
     private void UpdateIntoEPay(String invNo, String transStatus) {
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -180,6 +239,18 @@ public class GCMNotificationIntentService extends IntentService {
 
         long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT,values,DBHelper.INVOICE_NO +" = "+invNo, null);
     }
+
+
+    /**
+     * Insert Offers into Table to maintain Offers list
+     * @param title
+     * @param message
+     * @param SubTitle
+     * @param imgPath
+     * @param promotionType
+     * @param promotionID
+     * @param withOption
+     */
 
     private void InsertIntoPromotionTable(String title, String message, String SubTitle, String imgPath, String promotionType, String promotionID, String withOption) {
         dbHelper = new DBHelper(getApplicationContext());
@@ -200,6 +271,12 @@ public class GCMNotificationIntentService extends IntentService {
         Log.v("id", String.valueOf(id));
     }
 
+
+    /**
+     * Insert Notification into Table to maintain notification list
+     * @param currentDate
+     * @param message
+     */
     private void InsertIntoNotification(String currentDate, String message) {
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();

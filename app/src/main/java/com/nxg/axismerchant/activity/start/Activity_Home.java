@@ -79,12 +79,12 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
     private ListView mDrawerList;
     private NavigationItemAdapter navigationItemAdapter;
     private String[] navigationItemList;
-    SQLiteDatabase mDatabase;
     EncryptDecrypt encryptDecrypt;
     ArrayList<Promotions> promotionsArrayList;
     Promotions promotions;
     String MID,MOBILE;
-
+    ImageView imgMenu;
+    double screenInches;
     EncryptDecryptRegister encryptDecryptRegister;
     private int[] images = {R.mipmap.smspay_menu, R.mipmap.qrpay_menu, R.mipmap.service_support_menu, R.mipmap.reports_menu,
             R.mipmap.analytics, R.mipmap.offers, R.mipmap.profile_menu, R.mipmap.refer, R.mipmap.faq, R.mipmap.demo_video,R.mipmap.ver, R.mipmap.logout};
@@ -96,6 +96,9 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_home_navigation);
 
         getInitialize();
+
+        setSize();
+
         navigationItemAdapter = new NavigationItemAdapter();
         mDrawerList.setAdapter(navigationItemAdapter);
 
@@ -139,6 +142,58 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
     }
 
+    private void setSize() {
+        screenInches = Constants.getRes(this);
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+//            Constants.showToast(this, "1");
+            setSize(16,18,20,22,24,115);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+//            Constants.showToast(this, "2");
+            setSize(12,14,16,18,20,55);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+//            Constants.showToast(this, "3");
+            setSize(10,12,14,16,18,30);
+        }
+    }
+
+    private void setSize(int i, float i1, float i2, float i3, float i4, int i5) {
+        txtUserName.setTextSize(i1);
+        txtLastLogin.setTextSize(i);
+
+        ((TextView)findViewById(R.id.txtTitle)).setTextSize(i4);
+
+        ((TextView)findViewById(R.id.txtSms1)).setTextSize(i3);
+        ((TextView)findViewById(R.id.txtSms2)).setTextSize(i2);
+
+
+        ((TextView)findViewById(R.id.txtqr1)).setTextSize(i3);
+        ((TextView)findViewById(R.id.txtqr2)).setTextSize(i2);
+
+        ((TextView)findViewById(R.id.txtreports1)).setTextSize(i3);
+        ((TextView)findViewById(R.id.txtreports2)).setTextSize(i2);
+
+        ((TextView)findViewById(R.id.txtsupport1)).setTextSize(i3);
+        ((TextView)findViewById(R.id.txtsupport2)).setTextSize(i2);
+
+        ((ImageView)findViewById(R.id.imgSMS)).getLayoutParams().height = i5;
+        ((ImageView)findViewById(R.id.imgSMS)).getLayoutParams().width = i5;
+
+        ((ImageView)findViewById(R.id.imgQR)).getLayoutParams().height = i5;
+        ((ImageView)findViewById(R.id.imgQR)).getLayoutParams().width = i5;
+
+        ((ImageView)findViewById(R.id.imgReports)).getLayoutParams().height = i5;
+        ((ImageView)findViewById(R.id.imgReports)).getLayoutParams().width = i5;
+
+        ((ImageView)findViewById(R.id.imgSupport)).getLayoutParams().height = i5;
+        ((ImageView)findViewById(R.id.imgSupport)).getLayoutParams().width = i5;
+    }
+
 
     private void getInitialize() {
         txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
@@ -147,7 +202,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         View lyReportsAndMIS = findViewById(R.id.reportsAndMIS);
         View lyServiceSupport = findViewById(R.id.serviceSupport);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
-        ImageView imgMenu = (ImageView) findViewById(R.id.imgMenu);
+        imgMenu = (ImageView) findViewById(R.id.imgMenu);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
 
         txtUserName = (TextView) findViewById(R.id.txtUserName);
@@ -200,14 +255,17 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onResume() {
-        super.onResume();
         dbHelper = new DBHelper(this);
         ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
         if(notificationArrayList.size() > 0)
         {
             txtNotification.setVisibility(View.VISIBLE);
             txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
         }
+        super.onResume();
     }
 
     @Override
@@ -260,7 +318,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
     private void gotoSMS() {
         SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
-        String res = preferences.getString("SMSValidated","No");
+        String res = preferences.getString("SMSRequestValidated","No");
         if(res.equalsIgnoreCase("Active"))
         {
             startActivity(new Intent(this, Activity_SMSPayHome.class));
@@ -279,7 +337,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             }else if(res.equalsIgnoreCase("Pending")){
             Intent intent = new Intent(this, Activity_SMSSignUp.class);
-            intent.putExtra("SMSValidated","Pending");
+            intent.putExtra("SMSRequestValidated","Pending");
             startActivity(intent);
         }else
         {
@@ -658,7 +716,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                         {
                             SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
-                            editor.putString("SMSValidated","Active");
+                            editor.putString("SMSRequestValidated","Active");
                             editor.apply();
 
                             progressDialog.dismiss();
@@ -668,7 +726,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                         }else if(status.equalsIgnoreCase("Pending"))
                         {
                             Intent intent = new Intent(Activity_Home.this, Activity_SMSSignUp.class);
-                            intent.putExtra("SMSValidated","Pending");
+                            intent.putExtra("SMSRequestValidated","Pending");
                             startActivity(intent);
                         }else
                         {

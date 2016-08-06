@@ -30,15 +30,6 @@ public class Activity_MIS_Home extends AppCompatActivity implements View.OnClick
         View XnView = findViewById(R.id.ly_Xn);
         View posView = findViewById(R.id.ly_pos);
         View refundView = findViewById(R.id.ly_refund);
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
 
         mprView.setOnClickListener(this);
         XnView.setOnClickListener(this);
@@ -51,9 +42,24 @@ public class Activity_MIS_Home extends AppCompatActivity implements View.OnClick
 
     @Override
     protected void onResume() {
-        super.onResume();
+
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
+
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
+
+        super.onResume();
     }
 
     @Override

@@ -91,14 +91,6 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         spinWeeklyOff = (Spinner) findViewById(R.id.spinnerWeeklyOff);
         spinnerVisitingTime = (Spinner) findViewById(R.id.spinnerVisitingTime);
 
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy | HH:mm");
         String currentDateandTime = sdf.format(new Date());
@@ -413,8 +405,18 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
     @Override
     protected void onResume() {
+        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
+        DBHelper dbHelper = new DBHelper(this);
+        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
+        if(notificationArrayList.size() > 0)
+        {
+            txtNotification.setVisibility(View.VISIBLE);
+            txtNotification.setText(String.valueOf(notificationArrayList.size()));
+        }else
+        {
+            txtNotification.setVisibility(View.GONE);
+        }
         super.onResume();
-
     }
 
     private void sendRequest() {
