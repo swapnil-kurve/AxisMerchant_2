@@ -63,7 +63,7 @@
                 android:padding="3dp"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
 
         <ImageView
@@ -76,254 +76,256 @@
             android:src="@mipmap/profile" />
     </RelativeLayout>
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/toolbar">
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:layout_below="@+id/toolbar">
 
-        <com.nxg.axismerchant.custom.CustomTextViewLightBold
-            android:id="@+id/txtName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/imgStatusSMS"
-            android:maxLines="1"
-            android:padding="5dp"
-            android:textColor="@color/dark_gray"
-            android:textSize="18sp" />
-
-        <com.nxg.axismerchant.custom.CustomTextViewLightBold
-            android:id="@+id/txtDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/txtName"
-            android:maxLines="1"
-            android:padding="5dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/dark_gray"
-            android:textSize="18sp" />
-
-
-        <ImageView
-            android:id="@+id/imgStatusSMS"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_toLeftOf="@+id/txtStatus"
-            android:padding="5dp" />
-
-        <com.nxg.axismerchant.custom.CustomTextViewLight
-            android:id="@+id/txtStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:maxLines="1"
-            android:padding="5dp"
-            android:textColor="@android:color/holo_orange_light"
-            android:textSize="16sp" />
-
-        <TableLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/txtDate"
-            android:padding="5dp">
+            android:padding="@dimen/activity_horizontal_margin">
 
-            <LinearLayout
+            <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/imgStatusSMS"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp" />
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/mVisaId"
-                    android:textColor="@color/stroke_gray"
-                    android:textSize="16sp" />
-
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:id="@+id/transactionID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                android:id="@+id/txtDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
-
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile No."
-                    android:textColor="@color/stroke_gray"
-                    android:textSize="16sp" />
-
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:id="@+id/mobileNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/txtName"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:textColor="@color/dark_gray"
+                android:textSize="18sp" />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/imgStatusSMS"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@+id/txtStatus"
+                android:padding="5dp"
+                android:visibility="gone" />
+
+            <com.nxg.axismerchant.custom.CustomTextViewLight
+                android:id="@+id/txtStatus"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
+                android:layout_alignParentRight="true"
+                android:maxLines="1"
+                android:padding="5dp"
+                android:textColor="@android:color/holo_orange_light"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="RRN No."
-                    android:textColor="@color/stroke_gray"
-                    android:textSize="16sp" />
-
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:id="@+id/rrnNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
+                android:layout_height="match_parent"
+                android:layout_below="@+id/txtDate"
+                android:padding="5dp">
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/amount"
-                    android:textColor="@color/stroke_gray"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:id="@+id/amount"
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mVisaId"
+                        android:textColor="@color/stroke_gray"
+                        android:textSize="16sp" />
+
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:id="@+id/txtmVisaID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Auth code"
+                        android:textColor="@color/stroke_gray"
+                        android:textSize="16sp" />
+
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:id="@+id/txtAuthCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
-
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Remark 1"
-                    android:textColor="@color/stroke_gray"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:id="@+id/remark1"
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="RRN No."
+                        android:textColor="@color/stroke_gray"
+                        android:textSize="16sp" />
+
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:id="@+id/rrnNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/amount"
+                        android:textColor="@color/stroke_gray"
+                        android:textSize="16sp" />
+
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:id="@+id/amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
-
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Remark 2"
-                    android:textColor="@color/stroke_gray"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:id="@+id/remark2"
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Remark 1"
+                        android:textColor="@color/stroke_gray"
+                        android:textSize="16sp" />
+
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:id="@+id/remark1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Remark 2"
+                        android:textColor="@color/stroke_gray"
+                        android:textSize="16sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp">
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:id="@+id/remark2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Transaction Status"
-                    android:textColor="@color/stroke_gray"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:id="@+id/transactionStatus"
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Transaction Status"
+                        android:textColor="@color/stroke_gray"
+                        android:textSize="16sp" />
+
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:id="@+id/transactionStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/refundLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="10dp">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:padding="5dp"
+                        android:src="@mipmap/refund_status" />
 
+                    <com.nxg.axismerchant.custom.CustomTextViewLight
+                        android:id="@+id/ref_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/img"
+                        android:maxLines="1"
+                        android:padding="5dp"
+                        android:text="Refund Payment"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+                </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/refundLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+            </TableLayout>
 
-                <ImageView
-                    android:id="@+id/img"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:padding="5dp"
-                    android:src="@mipmap/refund_status" />
+        </RelativeLayout>
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
-                    android:id="@+id/ref_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/img"
-                    android:maxLines="1"
-                    android:padding="5dp"
-                    android:text="Resend Link"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-        </TableLayout>
-
-    </RelativeLayout>
-
-</ScrollView>
+    </ScrollView>
 
 </RelativeLayout>

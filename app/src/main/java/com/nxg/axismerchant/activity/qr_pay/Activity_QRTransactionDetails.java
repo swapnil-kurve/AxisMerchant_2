@@ -28,9 +28,12 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -46,11 +49,9 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
-    String custMobile, remark, transAmt,XnID, urlCode,isRefund;
+    String XnID;
     TextView txtResText;
-    int simStatus;
     View refLayout;
-    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,6 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
         Constants.MERCHANT_ID = preferences.getString("MerchantID","0");
         Constants.MOBILE_NUM = preferences.getString("MobileNum","0");
 
-        refLayout.setVisibility(View.GONE);
         Bundle bundle = getIntent().getExtras();
         if(bundle != null && bundle.containsKey("XnId"))
         {
@@ -119,11 +119,13 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
         TextView txtYes = (TextView) dialog.findViewById(R.id.txtYes);
         TextView txtNo = (TextView) dialog.findViewById(R.id.txtNo);
 
+        final String val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'4604909012','password':'a01610228fe998f515a72dd730294d87','auth_code':'498664','ref_no':'618910005302','tid':'78313380','class_name':'AllTransaction','function':'refundSR'}";
+
         txtYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                callRefund();
+                callRefund(val);
             }
         });
 
@@ -177,13 +179,13 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
     }
 
 
-    private void callRefund() {
+    private void callRefund(String val) {
         if (Constants.isNetworkConnectionAvailable(getApplicationContext())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new RefundTransactions().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "refundTransaction", Constants.MERCHANT_ID, Constants.MOBILE_NUM,urlCode );
+                        .THREAD_POOL_EXECUTOR,  val );
             } else {
-                new RefundTransactions().execute(Constants.DEMO_SERVICE + "refundTransaction", Constants.MERCHANT_ID, Constants.MOBILE_NUM,urlCode );
+                new RefundTransactions().execute( val );
 
             }
         } else {
@@ -205,10 +207,36 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
             progressDialog.show();
         }
 
+
+        @Override
+        protected String doInBackground(String... params) {
+            String str = "";
+            HttpResponse response;
+            HttpClient myClient = new DefaultHttpClient();
+            HttpPost myConnection = new HttpPost("http://merchantportal.paycraftsol.com/MerchantApp/API/Merchant/Refund");
+
+            try {
+                myConnection.setHeader("Content-type", "application/json");
+                StringEntity entity = new StringEntity(params[0]);
+                myConnection.setEntity(entity);
+
+                response = myClient.execute(myConnection);
+                str = EntityUtils.toString(response.getEntity(), "UTF-8");
+
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return str;
+        }
+
+
+/*
         @Override
         protected String doInBackground(String... arg0) {
             String str = "";
-
 
             try {
                 HTTPUtils utils = new HTTPUtils();
@@ -240,6 +268,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
             }
             return str;
         }
+*/
 
         @Override
         protected void onPostExecute(String data) {
@@ -376,6 +405,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         String refund_flg = object1.optString("refund_flg");
                         String terminal_status = object1.optString("terminal_status");
                         String id = object1.optString("id");
+                        String transStatus = object1.optString("transStatus");
 
                         mvisa_merchant_id = encryptDecrypt.decrypt(mvisa_merchant_id);
                         merchantId = encryptDecrypt.decrypt(merchantId);
@@ -397,17 +427,18 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         refund_flg = encryptDecrypt.decrypt(refund_flg);
                         terminal_status = encryptDecrypt.decrypt(terminal_status);
                         id = encryptDecrypt.decrypt(id);
+                        transStatus = encryptDecrypt.decrypt(transStatus);
 
-//                        String[] tDate = transDate.split("//s+");
 
-                       /* ((TextView)findViewById(R.id.txtDate)).setText(tDate[0]);
-                        ((TextView)findViewById(R.id.transactionID)).setText(transactionId);
-                        ((TextView)findViewById(R.id.mobileNumber)).setText(custMobile);
-                        ((TextView)findViewById(R.id.rrnNo)).setText(vpc_ReceiptNo);
-                        ((TextView)findViewById(R.id.amount)).setText(getString(R.string.Rs)+transAmt);
-                        ((TextView)findViewById(R.id.remark)).setText(remark);
-                        ((TextView)findViewById(R.id.linkExpiry)).setText(linkExpiary);
-                        if(transStatus.equals("Pending")) {
+                        ((TextView)findViewById(R.id.txtName)).setText(customer_name);
+                        ((TextView)findViewById(R.id.txtDate)).setText(Constants.splitDate(onDate.split("\\s+")[0]));
+                        ((TextView)findViewById(R.id.txtmVisaID)).setText(mvisa_merchant_id);
+                        ((TextView)findViewById(R.id.txtAuthCode)).setText(auth_code);
+                        ((TextView)findViewById(R.id.rrnNo)).setText(ref_no);
+                        ((TextView)findViewById(R.id.amount)).setText(getString(R.string.Rs)+txn_amount);
+                        ((TextView)findViewById(R.id.remark1)).setText(primary_id);
+                        ((TextView)findViewById(R.id.remark2)).setText(secondary_id);
+                       /* if(transStatus.equals("Pending")) {
                             ((TextView) findViewById(R.id.txtStatus)).setText(transStatus);
                             ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_orange_light));
                             ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.pending);
@@ -422,14 +453,15 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                             ((View)findViewById(R.id.lyExpiry)).setVisibility(View.GONE);
                             ((View)findViewById(R.id.refundLayout)).setVisibility(View.VISIBLE);
                             txtResText.setText("Refund Payment");
-                            if(transType.equalsIgnoreCase("sales")) {
+                            refLayout.setVisibility(View.VISIBLE);
+                            *//*if(transType.equalsIgnoreCase("sales")) {
                                 if (isRefund.equals("0"))
                                     refLayout.setVisibility(View.VISIBLE);
                                 else
                                     refLayout.setVisibility(View.GONE);
                             }else{
                                 refLayout.setVisibility(View.GONE);
-                            }
+                            }*//*
 
                         }else
                         {

@@ -330,7 +330,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
 //                      InsertIntoDatabase(custMobile, transAmt, remark, transactionId, transStatus);
 
-                        UpdateStatusIntoEPay(invoiceNo,transStatus);
+                        UpdateStatusIntoEPay(transactionId,transStatus);
 
                         String[] tDate = transDate.split("//s+");
 

@@ -79,7 +79,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
     CustomListAdapterForMerchantLikeMe adapter;
     CustomListAdapterForMPR adapterAnalytics;
     BarChart layoutChart;
-    TextView txtDateDuration,txtGraphType;
+    TextView txtDateDuration,txtGraphType, txtXn, txtVol, txtTicket;
     View lyTop, lyInfo, lyTopMessages;
 
     @Override
@@ -97,6 +97,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         txtDateDuration = (TextView) v.findViewById(R.id.txtDateDuration);
         txtGraphType = (TextView) v.findViewById(R.id.txtLeftText);
         lyTopMessages = v.findViewById(R.id.lyTopMessages);
+
+        txtXn = (TextView) v.findViewById(R.id.txtXn);
+        txtVol = (TextView) v.findViewById(R.id.txtVol);
+        txtTicket = (TextView) v.findViewById(R.id.txtTicket);
 
         listData.addParallaxedHeaderView(v);
 
@@ -122,10 +126,18 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             getAnalyticsData();
             txtGraphType.setVisibility(View.VISIBLE);
             lyTopMessages.setVisibility(View.VISIBLE);
+
+            txtXn.setVisibility(View.GONE);
+            txtVol.setVisibility(View.GONE);
+            txtTicket.setVisibility(View.GONE);
         } else {
             getMerchantData();
             imgFilter.setVisibility(View.GONE);
             txtGraphType.setVisibility(View.GONE);
+
+            txtXn.setVisibility(View.VISIBLE);
+            txtVol.setVisibility(View.VISIBLE);
+            txtTicket.setVisibility(View.VISIBLE);
         }
 
         return view;
@@ -463,27 +475,33 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         BarDataSet barDataSet2 = new BarDataSet(yValues2, "You");
         barDataSet2.setColor(getResources().getColor(R.color.colorPrimary));
 
-        barDataSet1.setBarSpacePercent(25f);
-        barDataSet2.setBarSpacePercent(25f);
+        barDataSet1.setBarSpacePercent(0f);
+        barDataSet2.setBarSpacePercent(0f);
+
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(barDataSet1);
         dataSets.add(barDataSet2);
 
-        ArrayList<String> xValues = new ArrayList<>();
-        xValues.add("Ticket Size");
-        xValues.add("Volume");
-        xValues.add("Transaction");
 
+        ArrayList<String> xValues = new ArrayList<>();
+        xValues.add("");
+        xValues.add("");
+        xValues.add("");
+
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
 
         BarData data = new BarData(xValues, dataSets);
-        data.setValueTextSize(8);
+        data.setValueTextSize(6);
         data.setValueTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/futura_std_medium.otf"));
         data.setValueFormatter(new MyValueFormatter());
+        data.setGroupSpace(500f);
+
+        data.setGroupSpace(500f);
+        data.setGroupSpace(500f);
 
         chart.setData(data);
-
-        chart.getXAxis().setTextSize(8);// hides horizontal grid lines inside chart
+        chart.getXAxis().setTextSize(6);// hides horizontal grid lines inside chart
         YAxis leftAxis = chart.getAxisLeft();
         chart.getAxisRight().setEnabled(false); // hides horizontal grid lines with below line
         leftAxis.setEnabled(false); // hides vertical grid lines  inside chart
@@ -495,6 +513,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         chart.setPinchZoom(false);
         chart.notifyDataSetChanged();
         chart.setScaleEnabled(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getXAxis().setDrawGridLines(false);
 
         leftAxis.setDrawLabels(true);
         layoutChart.addView(chart);

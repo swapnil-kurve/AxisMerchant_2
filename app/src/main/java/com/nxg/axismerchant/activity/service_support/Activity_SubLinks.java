@@ -368,7 +368,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         ArrayList<String> visitingTime = new ArrayList<String>();
         visitingTime.add("Visiting Time");
         visitingTime.add("9:00AM - 12:00PM");
-        visitingTime.add("12:00AM - 4:00PM");
+        visitingTime.add("12:00PM - 4:00PM");
         visitingTime.add("4:00PM - 7:00PM");
 
 

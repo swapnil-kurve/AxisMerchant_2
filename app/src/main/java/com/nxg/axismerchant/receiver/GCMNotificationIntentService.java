@@ -21,6 +21,9 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.Activity_Notification;
 import com.nxg.axismerchant.activity.offers.Activity_OffersNotices;
+import com.nxg.axismerchant.activity.qr_pay.Activity_QRPayHome;
+import com.nxg.axismerchant.activity.qr_pay.Activity_QRSignUp;
+import com.nxg.axismerchant.activity.qr_pay.Activity_QRTransactionDetails;
 import com.nxg.axismerchant.activity.sms.Activity_SMSPayHome;
 import com.nxg.axismerchant.activity.sms.Activity_SMSSignUp;
 import com.nxg.axismerchant.activity.sms.Activity_TransactionStatusDetails;
@@ -173,12 +176,10 @@ public class GCMNotificationIntentService extends IntentService {
                 editor.putString("Invoice Number",invNo);
                 editor.apply();
 
-                UpdateIntoEPay(invNo, transStatus);
-                InsertIntoNotification(currentDate,message);
                 if(gcm_type.equalsIgnoreCase("QR_Refund_Transaction"))
                     resultIntent = new Intent(this, Activity_Notification.class);
                 else
-                    resultIntent = new Intent(this, Activity_TransactionStatusDetails.class);
+                    resultIntent = new Intent(this, Activity_QRTransactionDetails.class);
             }else if(gcm_type.equalsIgnoreCase("QR_Request_Status"))
             {
                 preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
@@ -186,9 +187,9 @@ public class GCMNotificationIntentService extends IntentService {
                 editor.putString("QRRequestValidated",reqStatus);
                 editor.apply();
                 if(reqStatus.equalsIgnoreCase("pending"))
-                    resultIntent = new Intent(this, Activity_SMSSignUp.class);
+                    resultIntent = new Intent(this, Activity_QRSignUp.class);
                 else
-                    resultIntent = new Intent(this, Activity_SMSPayHome.class);
+                    resultIntent = new Intent(this, Activity_QRPayHome.class);
                 InsertIntoNotification(currentDate,message);
             }else
             {

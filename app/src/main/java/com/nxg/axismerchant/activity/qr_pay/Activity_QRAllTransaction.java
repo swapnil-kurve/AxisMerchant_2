@@ -75,6 +75,8 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
 
+        qrTransactionsList = new ArrayList<>();
+
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         MID = preferences.getString("MerchantID","0");
         MOBILE = preferences.getString("MobileNum","0");
@@ -133,12 +135,10 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if(view.getId() == R.id.listQRTransactions)
-        {
-            Intent intent = new Intent(this, Activity_QRTransactionDetails.class);
-            intent.putExtra("XnId",qrTransactionsList.get(i).getId());
-            startActivity(intent);
-        }
+
+        Intent intent = new Intent(this, Activity_QRTransactionDetails.class);
+        intent.putExtra("XnId",qrTransactionsList.get(i).getId());
+        startActivity(intent);
     }
 
 
@@ -166,7 +166,7 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mvisa_merchant_id), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mvisa_merchant_id), encryptDecrypt.encrypt(arg0[3])));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -218,11 +218,13 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
                             ref_no = encryptDecrypt.decrypt(ref_no);
                             id = encryptDecrypt.decrypt(id);
 
+                            onDate = Constants.splitDate(onDate.split("\\s+")[0]);
                             qrTransactions = new QRTransactions(id,onDate,ref_no,mvisa_merchant_id,txn_amount);
                             qrTransactionsList.add(qrTransactions);
                         }
 
                         qrAdapter = new SetQRAdapter(Activity_QRAllTransaction.this, qrTransactionsList);
+                        listQRTransactions.setAdapter(qrAdapter);
 
                     } else {
                         Constants.showToast(Activity_QRAllTransaction.this, "No transactions found.");
@@ -271,7 +273,7 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.custom_row_for_sms_pay_status,null);
+            view = inflater.inflate(R.layout.custom_row_for_qr_pay_status,null);
 
             TextView txtDate = (TextView) view.findViewById(R.id.txtDate);
             TextView txtmVisaID = (TextView) view.findViewById(R.id.txtmVisaID);
