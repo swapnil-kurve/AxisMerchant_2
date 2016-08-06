@@ -24,8 +24,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -46,11 +44,11 @@ public class Constants {
     public static final String EPaymentData = "EPaymentData";
     public static final String QRPaymentData = "QRPaymentData";
 
-    public static String GOOGLE_PROJ_ID = "660348263150";//"351196372027";
+    public static String GOOGLE_PROJ_ID = "660348263150";
     public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
 
-    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
-//    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
+//    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
+    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
 
 //    public static final String DEMO_SERVICE = "https://192.168.88.14/mservices.asmx/";
 
@@ -133,21 +131,6 @@ public class Constants {
         }
     }
 
-
-    public static String changeDateFormat(String input)
-    {
-        SimpleDateFormat fromUser = new SimpleDateFormat("MM/dd/yyyy");
-        SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String reformattedStr = null;
-        try {
-
-            reformattedStr = myFormat.format(fromUser.parse(input));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return reformattedStr;
-    }
 
 
     public static String convertStreamToString(InputStream is) throws Exception {
