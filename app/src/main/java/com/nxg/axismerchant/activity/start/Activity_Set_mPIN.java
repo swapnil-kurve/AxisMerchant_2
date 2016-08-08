@@ -72,6 +72,34 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
         txtSubmit.setOnClickListener(this);
     }
 
+
+    private void setSize() {
+        double screenInches = Constants.getRes(this);
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            setSize(20,18);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            setSize(18,16);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            setSize(16,14);
+        }
+    }
+
+    private void setSize(int i, int i1) {
+        edtEnter_mPIN.setTextSize(i1);
+        edtConfirm_mPIN.setTextSize(i1);
+
+        ((TextView)findViewById(R.id.txtLabel)).setTextSize(i);
+        ((TextView)findViewById(R.id.txtTicket)).setTextSize(i);
+
+    }
+
+
     private void getUserMPIN()
     {
         String mMPIN, mConfirmedMPIN;

@@ -143,11 +143,13 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        UpdateReadStatusIntoPromotionTable(promotionsArrayList.get(position).getmPromotionID());
-        Intent intent = new Intent(this, Activity_OfferDetails.class);
-        intent.putExtra("PromotionId",promotionsArrayList.get(position).getmPromotionID());
-        intent.putExtra("PromoImg",promotionsArrayList.get(position).getmImgPath());
-        startActivity(intent);
+        if(promotionsArrayList.get(position).getmWithOption().equalsIgnoreCase("Yes")) {
+            UpdateReadStatusIntoPromotionTable(promotionsArrayList.get(position).getmPromotionID());
+            Intent intent = new Intent(this, Activity_OfferDetails.class);
+            intent.putExtra("PromotionId", promotionsArrayList.get(position).getmPromotionID());
+            intent.putExtra("PromoImg", promotionsArrayList.get(position).getmImgPath());
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -229,6 +231,13 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
 
             txtTitle.setText(promotionsArrayList.get(position).getmSubTitle());
             txtSecondaryText.setText(promotionsArrayList.get(position).getmMessage());
+
+            if(promotionsArrayList.get(position).getmWithOption().equalsIgnoreCase("Yes")){
+                imgIcon.setImageResource(R.mipmap.gift);
+            }else
+            {
+                imgIcon.setImageResource(R.mipmap.offers);
+            }
 
             if(promotionsArrayList.get(position).getmReadStatus().equalsIgnoreCase("Unread"))
             {

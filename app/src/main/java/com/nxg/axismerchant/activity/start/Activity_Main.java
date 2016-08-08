@@ -39,6 +39,7 @@ public class Activity_Main extends AppCompatActivity {
     GoogleCloudMessaging gcmObj;
     String regId;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 1111;
+    double screenInches;
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -47,6 +48,8 @@ public class Activity_Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Fabric.with(this, new Crashlytics());
+
+//        setSize();
 
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
        String status = preferences.getString("KeepLoggedIn","false");
@@ -108,6 +111,36 @@ public class Activity_Main extends AppCompatActivity {
 
     }
 
+   /* private void setSize() {
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            Constants.showToast(this, "1");
+            setSize(10,80);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            Constants.showToast(this, "2");
+            setSize(10,50);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            Constants.showToast(this, "3");
+            setSize(10,30);
+        }
+    }
+
+    private void setSize(int i, int i1) {
+
+        ((ImageView)findViewById(R.id.imgLogo)).getLayoutParams().height = i1;
+        ((ImageView)findViewById(R.id.imgLogo)).getLayoutParams().width = i1;
+
+        ((TextView)findViewById(R.id.txtSignIn)).setTextSize(i);
+        ((TextView)findViewById(R.id.txtSignUp)).setTextSize(i);
+
+    }*/
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -127,6 +160,7 @@ public class Activity_Main extends AppCompatActivity {
             }
         }
     }
+
 
 
     @Override

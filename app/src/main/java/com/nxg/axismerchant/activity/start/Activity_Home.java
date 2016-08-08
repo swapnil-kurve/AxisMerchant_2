@@ -147,17 +147,17 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
         if(screenInches<= 6 && screenInches>= 5)
         {
-//            Constants.showToast(this, "1");
+            Constants.showToast(this, "1");
             setSize(16,18,20,22,24,115);
         }
         else if(screenInches<= 5 && screenInches>= 4)
         {
-//            Constants.showToast(this, "2");
+            Constants.showToast(this, "2");
             setSize(12,14,16,18,20,55);
         }
         else if(screenInches<= 4 && screenInches>= 3)
         {
-//            Constants.showToast(this, "3");
+            Constants.showToast(this, "3");
             setSize(10,12,14,16,18,30);
         }
     }

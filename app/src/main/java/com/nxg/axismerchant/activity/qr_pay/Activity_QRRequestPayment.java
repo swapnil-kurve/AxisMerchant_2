@@ -1,7 +1,6 @@
 package com.nxg.axismerchant.activity.qr_pay;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -131,19 +130,22 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         String mPrimaryID = edtPrimaryId.getText().toString().trim();
         String mSecondaryID = edtSecondaryId.getText().toString();
 
-        SharedPreferences preferences = getSharedPreferences(Constants.QRPaymentData, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
+        if(!mAmount.equalsIgnoreCase(""))
+        {
+            mAmount = edtAmount.getText().toString().trim();
 
-        if (!mAmount.equals(""))
-            editor.putString("Amount",mAmount);
-        if (!mPrimaryID.equals(""))
-            editor.putString("Primary_Id",mPrimaryID);
-        if (!mSecondaryID.equals(""))
-            editor.putString("Secondary_Id",mSecondaryID);
-        editor.apply();
+            Intent intent = new Intent(this, Activity_QRCodeGenerated.class);
+            intent.putExtra("Amount",mAmount);
+            intent.putExtra("Primary_Id", mPrimaryID);
+            intent.putExtra("Secondary_Id", mSecondaryID);
+            startActivity(intent);
+        }else
+        {
+            Constants.showToast(this, getString(R.string.enter_amount));
+        }
 
-        Intent intent = new Intent(this, Activity_QRCodeGenerated.class);
-        startActivity(intent);
+
+
 
     }
 

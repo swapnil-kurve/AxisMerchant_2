@@ -53,6 +53,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     ImageView imgSwitch, imgErrorMID, imgErrorMobile;
     int flag = 1 ;
     private String mGCMRedID;
+    double screenInches;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +61,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         getInitialize(view);
+        setSize(view);
 
         edtMerchantID.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -101,6 +103,34 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
         if(mGCMRedID.equalsIgnoreCase(""))
             txtSubmit.setEnabled(false);*/
+    }
+
+
+    private void setSize(View view) {
+        screenInches = Constants.getRes(getActivity());
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            Constants.showToast(getActivity(), "1");
+            setSize(20,18,view);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            Constants.showToast(getActivity(), "2");
+            setSize(18,16,view);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            Constants.showToast(getActivity(), "3");
+            setSize(16,14,view);
+        }
+    }
+
+    private void setSize(int i, int i1, View view) {
+        edtMerchantID.setTextSize(i1);
+        edtMobileNumber.setTextSize(i1);
+
+        ((TextView)view.findViewById(R.id.txtKeepLogin)).setTextSize(i);
     }
 
 

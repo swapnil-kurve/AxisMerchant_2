@@ -59,16 +59,18 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
 
         alphanumeric = numericToAlpha();
-        SharedPreferences preferences = getSharedPreferences(Constants.QRPaymentData,MODE_PRIVATE);
-        if(preferences.contains("Amount")) {
-            amount = preferences.getString("Amount", "0");
+
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null)
+        {
+            amount = bundle.getString("Amount");
             checkAmount = amount.length();
             checkAmountLength = alphanumeric.get(checkAmount);
+
+            primaryId = bundle.getString("Primary_Id");
+            secondaryId = bundle.getString("Secondary_Id");
         }
-        if(preferences.contains("Primary_Id"))
-            primaryId = preferences.getString("Primary_Id","0");
-        if(preferences.contains("Secondary_Id"))
-            secondaryId = preferences.getString("Secondary_Id","0");
 
         getData();
 

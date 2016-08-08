@@ -215,8 +215,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
                             fulldate = encryptDecrypt.decrypt(fulldate);
                             transstatus = encryptDecrypt.decrypt(transstatus);
 
-                            transdate = transdate.split("\\s+")[0];
-                            transdate = Constants.splitDate(transdate);
+                            transdate = Constants.splitDate(transdate.split("\\s+")[0]);
 
                             smsXnSummary = new SMSXnSummary(volume, ticketSize, noOfTrans, transdate, fd, fday, fmonth, fyear, fulldate, transstatus);
                             smsXnSummaries.add(smsXnSummary);

@@ -609,7 +609,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        if(transDate.contains("/"))
                         transDate = Constants.splitDate(transDate.split("\\s+")[0]);
 
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
@@ -841,7 +840,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), getString(R.string.no_internet));
+                    Constants.showToast(getActivity(), getString(R.string.no_details));
 
                 }
             } catch (JSONException e) {
