@@ -467,7 +467,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -573,23 +573,23 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                             Request_Number = encryptDecrypt.decrypt(Request_Number);
                             Call_Status = encryptDecrypt.decrypt(Call_Status);
 
-                            Constants.showToast(Activity_SubLinks.this, "Your request number is "+Request_Number);
+                            Constants.showToast(Activity_SubLinks.this, getString(R.string.request_number)+" "+Request_Number);
                             onBackPressed();
                         }
                     }else
                     {
-                        Constants.showToast(Activity_SubLinks.this, "Network error, please try again later");
+                        Constants.showToast(Activity_SubLinks.this, getString(R.string.network_error));
                     }
                 }else
                 {
-                    Constants.showToast(Activity_SubLinks.this, "Network error, please try again later");
+                    Constants.showToast(Activity_SubLinks.this, getString(R.string.network_error));
                 }
 
 
             } catch (JSONException e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                Constants.showToast(Activity_SubLinks.this, "Network error, please try again later");
+                Constants.showToast(Activity_SubLinks.this, getString(R.string.network_error));
             }
             progressDialog.dismiss();
         }
@@ -610,8 +610,6 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
             public boolean isEnabled(int position) {
                 if(position == 0)
                 {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
                     return false;
                 }
                 else

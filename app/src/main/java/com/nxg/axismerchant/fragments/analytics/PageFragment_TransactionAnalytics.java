@@ -163,7 +163,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
 
     }
@@ -178,7 +178,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(),getString(R.string.no_internet));
         }
 
     }
@@ -193,7 +193,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -207,7 +207,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -436,7 +436,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "No details found");
+                    Constants.showToast(getActivity(), getString(R.string.no_details));
 
                 }
             } catch (JSONException e) {
@@ -626,7 +626,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "No details found");
+                    Constants.showToast(getActivity(), getString(R.string.no_details));
 
                 }
             } catch (JSONException e) {
@@ -828,14 +828,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        /*if(i == 0)
-                        {
-                            date = transDate.split("\\s+")[0];
-                        }else if(i == (transactionBetDates.length()-1))
-                        {
-                            date = transDate.split("\\s+")[0]+" TO "+date;
-                        }*/
-
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         analyticsArrayList.add(mis_mpr);
                     }
@@ -849,7 +841,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "No details found");
+                    Constants.showToast(getActivity(), getString(R.string.no_internet));
 
                 }
             } catch (JSONException e) {

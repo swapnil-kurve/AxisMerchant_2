@@ -227,7 +227,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
         if(mOTP.equals(""))
         {
-            Constants.showToast(this, "Please enter your OTP!");
+            Constants.showToast(this, getString(R.string.enter_otp));
         }
         else
         {
@@ -312,7 +312,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 }
                 else
                 {
-                    Constants.showToast(Activity_SetOTP.this, "Sorry! OTP does not match.");
+                    Constants.showToast(Activity_SetOTP.this, getString(R.string.incorrect_otp));
                 }
 
             } catch (JSONException e) {

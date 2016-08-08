@@ -240,27 +240,22 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
 
     private void getData() {
         String custMobile = "";
-//        if(edtCustMobile.getText().toString().trim().length()>4 && edtCustMobile.getText().toString().trim().contains("-")) {
-//            custMobile = edtCustMobile.getText().toString().trim().split("-")[1];
-//        }else if(edtCustMobile.getText().toString().trim().length() == 10)
-//        {
-            custMobile = edtCustMobile.getText().toString().trim();
-//        }
+        custMobile = edtCustMobile.getText().toString().trim();
         String amount = edtAmount.getText().toString().trim();
         String remark = edtRemarks.getText().toString();
 
         if (custMobile.equals("") && amount.equals("")) {
-            Constants.showToast(this, "All fields are mandatory");
+            Constants.showToast(this, getString(R.string.no_mobile_and_amount));
         } else if (custMobile.equals("")) {
-            Constants.showToast(this, "Mobile number is mandatory");
+            Constants.showToast(this, getString(R.string.no_mobile_number));
         } else if (amount.equals("")) {
-            Constants.showToast(this, "Please enter amount");
+            Constants.showToast(this, getString(R.string.amount));
         } else if (edtCustMobile.getText().length() < 10) {
-            Constants.showToast(this, "Mobile number should be of 10 digit");
+            Constants.showToast(this, getString(R.string.invalid_mobile_number));
         } else if (Double.parseDouble(amount) <= 0) {
-            Constants.showToast(this, "Amount should not be 0 or less");
+            Constants.showToast(this, getString(R.string.zero_amount));
         } else if (Double.parseDouble(amount) > 200000) {
-            Constants.showToast(this, "Amount should not be more than 200000");
+            Constants.showToast(this, getString(R.string.amount_exceeds_200000));
         } else if (custMobile.startsWith("7") || custMobile.startsWith("8") || custMobile.startsWith("9")) {
 
             if (i == 1) {
@@ -274,14 +269,14 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
 
                     }
                 } else {
-                    Constants.showToast(this, "No internet available");
+                    Constants.showToast(this, getString(R.string.no_internet));
                 }
             } else {
                 changeToReview();
             }
         }else
         {
-            Constants.showToast(this, "Please enter valid mobile number");
+            Constants.showToast(this, getString(R.string.enter_valid_mobile));
         }
 
 }
@@ -434,7 +429,7 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
                     }
 
                     progressDialog.dismiss();
-                    Constants.showToast(Activity_SMSPayment.this, "Message Sent Successfully!");
+                    Constants.showToast(Activity_SMSPayment.this, getString(R.string.url_sent));
                     finish();
 
                 } else {
@@ -444,17 +439,17 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
                     result = object2.optString("result");
                     result = encryptDecryptRegister.decrypt(result);
                     if(result.equalsIgnoreCase("Details not added")) {
-                        Constants.showToast(Activity_SMSPayment.this, "URL not sent.");
+                        Constants.showToast(Activity_SMSPayment.this, getString(R.string.url_not_sent));
                     }
                     progressDialog.dismiss();
                 }
             }else {
-                Constants.showToast(Activity_SMSPayment.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_SMSPayment.this,getString(R.string.network_error));
             }
         } catch (JSONException e) {
             progressDialog.dismiss();
             e.printStackTrace();
-            Constants.showToast(Activity_SMSPayment.this,"Network error occurred. Please try again later");
+            Constants.showToast(Activity_SMSPayment.this,getString(R.string.network_error));
         }
 
     }

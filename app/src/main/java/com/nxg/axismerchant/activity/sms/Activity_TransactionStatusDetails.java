@@ -94,7 +94,6 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         if(bundle != null && bundle.containsKey("XnID"))
         {
             XnID = bundle.getString("XnID");
-//            isRefund = bundle.getString("isRefund");
             getDetails(XnID);
         }else {
             preferences = getSharedPreferences(Constants.EPaymentData, MODE_PRIVATE);
@@ -116,7 +115,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -152,7 +151,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         ShowDialog();
                     }
                 }else {
-                    Constants.showToast(this, "You are on Airplane Mode");
+                    Constants.showToast(this, getString(R.string.airplane_mode));
                 }
 
             break;
@@ -181,7 +180,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -195,7 +194,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -375,17 +374,17 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         }
 
                     } else {
-                        Constants.showToast(Activity_TransactionStatusDetails.this, "No details found for this Transaction.");
+                        Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.no_details));
                     }
                     progressDialog.dismiss();
                 }else {
                     progressDialog.dismiss();
-                    Constants.showToast(Activity_TransactionStatusDetails.this,"Network error occurred. Please try again later");
+                    Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                Constants.showToast(Activity_TransactionStatusDetails.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.network_error));
             }
 
         }
@@ -495,7 +494,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         }
 
                         progressDialog.dismiss();
-                        Constants.showToast(Activity_TransactionStatusDetails.this, "Message Sent Successfully!");
+                        Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.url_sent));
                         finish();
                     } else {
                         JSONObject object = transaction.getJSONObject(1);
@@ -504,19 +503,19 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         result = object2.optString("result");
                         result = encryptDecryptRegister.decrypt(result);
                         if(result.equalsIgnoreCase("Details Not Added")) {
-                            Constants.showToast(Activity_TransactionStatusDetails.this, "URL not sent.");
+                            Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.url_not_sent));
                         }
                         progressDialog.dismiss();
                     }
                 }else
                 {
-                    Constants.showToast(Activity_TransactionStatusDetails.this,"Network error occurred. Please try again later");
+                    Constants.showToast(Activity_TransactionStatusDetails.this,getString(R.string.network_error));
                     progressDialog.dismiss();
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
-                Constants.showToast(Activity_TransactionStatusDetails.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_TransactionStatusDetails.this,getString(R.string.network_error));
             }
 
         }
@@ -617,7 +616,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         refLayout.setVisibility(View.GONE);
                         UpdateIntoEPay(XnID, "1");
                         progressDialog.dismiss();
-                        Constants.showToast(Activity_TransactionStatusDetails.this, "Refund successful");
+                        Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.refund_successful));
                         finish();
 
                     } else {
@@ -626,19 +625,19 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         JSONObject object2 = transactionBetDates.getJSONObject(0);
                         result = object2.optString("result");
                         result = encryptDecryptRegister.decrypt(result);
-                        Constants.showToast(Activity_TransactionStatusDetails.this, "Error occurred, please try again later");
+                        Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.network_error));
 
                         progressDialog.dismiss();
                     }
                 }else
                 {
-                    Constants.showToast(Activity_TransactionStatusDetails.this,"Network error occurred. Please try again later");
+                    Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.network_error));
                     progressDialog.dismiss();
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
-                Constants.showToast(Activity_TransactionStatusDetails.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.network_error));
             }
 
         }

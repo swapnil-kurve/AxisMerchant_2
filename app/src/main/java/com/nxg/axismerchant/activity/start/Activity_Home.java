@@ -137,7 +137,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
 
     }
@@ -333,7 +333,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
                     }
                 } else {
-                    Constants.showToast(this, "No internet available");
+                    Constants.showToast(this, getString(R.string.no_internet));
                 }
             }else if(res.equalsIgnoreCase("Pending")){
             Intent intent = new Intent(this, Activity_SMSSignUp.class);
@@ -414,7 +414,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("KeepLoggedIn", "false");
                     editor.apply();
-                    Constants.showToast(this,"Signed out successfully!");
+                    Constants.showToast(this,getString(R.string.sign_out));
                     startActivity(new Intent(this, Activity_Main.class));
                     finish();
                     break;
@@ -533,7 +533,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
         Context mContext;
         LayoutInflater mLayoutInflater;
-//        ArrayList<Promotions> promotionsArrayList;
         String[] ArrUrl;
 
         public CustomPagerAdapter(Activity_Home activity_home, String[] arrURL) {
@@ -541,12 +540,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
             this.ArrUrl = arrURL;
             mLayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-
-        /*public CustomPagerAdapter(Context context, ArrayList<Promotions> promotionsArrayList) {
-            mContext = context;
-            this.promotionsArrayList = promotionsArrayList;
-            mLayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }*/
 
         @Override
         public int getCount() {
@@ -562,9 +555,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         public Object instantiateItem(ViewGroup container, int position) {
             View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
-//            Promotions promotions = promotionsArrayList.get(position);
             ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
-//            Glide.with(mContext).load(promotions.getmImgPath()).into(imageView);
             Glide.with(mContext).load(ArrUrl[position]).into(imageView);
 
             container.addView(itemView);
@@ -758,7 +749,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
             }
         } else {
-            Constants.showToast(Activity_Home.this, "No internet available");
+            Constants.showToast(Activity_Home.this, getString(R.string.no_internet));
         }
     }
 
@@ -849,11 +840,11 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                     editor.apply();
 
                 } else {
-                    Constants.showToast(Activity_Home.this, "No details found");
+                    Constants.showToast(Activity_Home.this, getString(R.string.no_internet));
                 }
                 progressDialog.dismiss();
                 }else {
-                    Constants.showToast(Activity_Home.this,"Network error occurred. Please try again later");
+                    Constants.showToast(Activity_Home.this,getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();

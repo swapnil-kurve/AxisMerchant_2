@@ -73,7 +73,7 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
 
     }
@@ -173,7 +173,7 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(Activity_FAQ.this, "No transactions found");
+//                    Constants.showToast(Activity_FAQ.this, getString(R.string.no_internet));
 
                 }
             } catch (JSONException e) {

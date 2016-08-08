@@ -93,7 +93,7 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
 
     }
@@ -227,18 +227,18 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
                         listQRTransactions.setAdapter(qrAdapter);
 
                     } else {
-                        Constants.showToast(Activity_QRAllTransaction.this, "No transactions found.");
+                        Constants.showToast(Activity_QRAllTransaction.this, getString(R.string.no_details));
 
                     }
                     progressDialog.dismiss();
                 }else {
                     progressDialog.dismiss();
-                    Constants.showToast(Activity_QRAllTransaction.this, "Network error occurred. Please try again later");
+                    Constants.showToast(Activity_QRAllTransaction.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                Constants.showToast(Activity_QRAllTransaction.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_QRAllTransaction.this,getString(R.string.network_error));
             }
 
         }

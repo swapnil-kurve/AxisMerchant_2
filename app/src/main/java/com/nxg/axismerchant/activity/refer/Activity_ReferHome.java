@@ -126,9 +126,9 @@ public class Activity_ReferHome extends AppCompatActivity implements View.OnClic
         if(edtIndividualName.getText().toString().equals("") || edtBusinessEntityName.getText().toString().equals("") ||
                edtAddress.getText().toString().equals("") || edtMobileNumber.getText().toString().equals("") )
         {
-            Constants.showToast(this, "Please provide mandatory inputs.");
+            Constants.showToast(this, getString(R.string.mandatory_details));
         }else if(edtMobileNumber.getText().toString().trim().length() < 10){
-            Constants.showToast(this, "Please provide valid mobile number.");
+            Constants.showToast(this, getString(R.string.invalid_mobile_number));
         }else
         {
             String Name,BusinessName, typeOfBusiness, Address, MobileNumber, LandlineNumber;
@@ -149,7 +149,7 @@ public class Activity_ReferHome extends AppCompatActivity implements View.OnClic
 
                 }
             } else {
-                Constants.showToast(this, "No internet available");
+                Constants.showToast(this, getString(R.string.no_internet));
             }
         }
     }
@@ -286,7 +286,7 @@ public class Activity_ReferHome extends AppCompatActivity implements View.OnClic
             } catch (JSONException e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
-                Constants.showToast(Activity_ReferHome.this, "Network error");
+                Constants.showToast(Activity_ReferHome.this, getString(R.string.network_error));
             }
 
         }

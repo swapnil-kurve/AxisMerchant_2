@@ -100,7 +100,7 @@ public class Activity_FilterMIS extends AppCompatActivity implements View.OnClic
             reportCriteria = "All";
         else if(rdDomesticCredit.isChecked())
             reportCriteria = "domcredit";
-        else if(rdInternationalDebit.isChecked())
+        else if(rdDomesticDebit.isChecked())
             reportCriteria = "domdebit";
         else if(rdInternationalCredit.isChecked())
             reportCriteria = "intlcredit";

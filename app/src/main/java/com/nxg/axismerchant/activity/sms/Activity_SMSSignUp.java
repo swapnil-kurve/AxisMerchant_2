@@ -141,6 +141,9 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
          TextView txtMsg1 = (TextView) dialog.findViewById(R.id.txtMessage);
          TextView txtMsg2 = (TextView) dialog.findViewById(R.id.msg1);
 
+         txtMsg1.setVisibility(View.VISIBLE);
+         txtMsg2.setVisibility(View.VISIBLE);
+
          if (status.equalsIgnoreCase("Pending")) {
              txtTitle.setVisibility(View.GONE);
              txtMsg1.setText("Your Request is pending.");

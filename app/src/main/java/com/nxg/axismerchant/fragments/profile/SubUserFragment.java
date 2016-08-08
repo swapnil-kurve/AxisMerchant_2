@@ -100,7 +100,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener {
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
 
     }
@@ -179,35 +179,31 @@ public class SubUserFragment extends Fragment implements View.OnClickListener {
 
         try {
             mUserName = edtUserName.getText().toString().trim();
-//            if (edtMobileNo.getText().toString().trim().length() > 4 && edtMobileNo.getText().toString().trim().contains("-")) {
-//                mMobileNo = edtMobileNo.getText().toString().trim().split("-")[1];
-//            } else {
-                mMobileNo = edtMobileNo.getText().toString().trim();
-//            }
+            mMobileNo = edtMobileNo.getText().toString().trim();
             mEmailID = edtEmailId.getText().toString().trim();
 
             if (mUserName.equals("") || mMobileNo.equals("")) {
-                Constants.showToast(getActivity(), "Please enter details.");
+                Constants.showToast(getActivity(), getString(R.string.sub_user_not_entered));
             } else if (mMobileNo.equals("") || mMobileNo.length() < 10) {
-                Constants.showToast(getActivity(), "Please enter valid Mobile number");
+                Constants.showToast(getActivity(), getString(R.string.invalid_mobile_number));
             } else if (mMobileNo.startsWith("7") || mMobileNo.startsWith("8") || mMobileNo.startsWith("9")) {
 
                 if (mEmailID.length() != 0) {
                     if (Constants.isValidEmail(mEmailID)) {
                         createSubUser();
                     } else {
-                        Constants.showToast(getActivity(), "Invalid email id");
+                        Constants.showToast(getActivity(), getString(R.string.invalid_email_id));
                     }
                 } else {
                     createSubUser();
                 }
 
             } else {
-                Constants.showToast(getActivity(), "Please enter valid Mobile number");
+                Constants.showToast(getActivity(), getString(R.string.enter_valid_mobile));
             }
         }catch(Exception e)
         {
-            Constants.showToast(getActivity(), "Please enter valid details.");
+            Constants.showToast(getActivity(), getString(R.string.enter_valid_details));
         }
     }
 
@@ -222,7 +218,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener {
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -288,7 +284,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener {
 
                 result = encryptDecryptRegister.decrypt(result);
                 if (result.equals("Success")) {
-                    Constants.showToast(getActivity(), "User has been created.");
+                    Constants.showToast(getActivity(), getString(R.string.sub_user_created));
 
                     getUserList();
 
@@ -300,10 +296,10 @@ public class SubUserFragment extends Fragment implements View.OnClickListener {
                     edtEmailId.setText("");
 
                 } else if(result.equals("Already exists")){
-                    Constants.showToast(getActivity(), "This user already exists.");
+                    Constants.showToast(getActivity(), getString(R.string.sub_user_mobile_already_exists));
                 }else
                 {
-                    Constants.showToast(getActivity(), "Invalid details entered");
+                    Constants.showToast(getActivity(), getString(R.string.invalid_details));
                 }
                 progressDialog.dismiss();
             } catch (JSONException e) {
@@ -410,7 +406,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener {
                         progressDialog.dismiss();
                         txtCreateNewUser.setVisibility(View.GONE);
                         lyCreateUser.setVisibility(View.VISIBLE);
-                        Constants.showToast(getActivity(), "No details found");
+                        Constants.showToast(getActivity(), getString(R.string.no_subuser));
 
                     }
                 }

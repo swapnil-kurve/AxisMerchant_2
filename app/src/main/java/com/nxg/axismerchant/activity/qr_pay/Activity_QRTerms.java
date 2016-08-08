@@ -147,7 +147,7 @@ public class Activity_QRTerms extends AppCompatActivity implements View.OnClickL
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -241,14 +241,14 @@ public class Activity_QRTerms extends AppCompatActivity implements View.OnClickL
                     }
                 }else
                 {
-                    Constants.showToast(Activity_QRTerms.this, "Network error, please try again later");
+                    Constants.showToast(Activity_QRTerms.this, getString(R.string.network_error));
                 }
 
 
             } catch (JSONException e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                Constants.showToast(Activity_QRTerms.this, "Network error, please try again later");
+                Constants.showToast(Activity_QRTerms.this, getString(R.string.network_error));
             }
             progressDialog.dismiss();
         }

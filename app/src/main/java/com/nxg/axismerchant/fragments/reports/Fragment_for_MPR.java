@@ -195,7 +195,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
 
     }
@@ -211,7 +211,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
 
     }
@@ -287,7 +287,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
                 }
             } else {
-                Constants.showToast(getActivity(), "No internet available");
+                Constants.showToast(getActivity(), getString(R.string.no_internet));
             }
         }
     }
@@ -404,7 +404,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
                     } else {
                         progressDialog.dismiss();
-                        Constants.showToast(getActivity(), "No transactions found");
+                        Constants.showToast(getActivity(), getString(R.string.no_details));
 
                     }
                 }
@@ -623,7 +623,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "No transactions found");
+                    Constants.showToast(getActivity(), getString(R.string.no_details));
 
                 }
             } catch (JSONException e) {
@@ -737,7 +737,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "No details found");
+                    Constants.showToast(getActivity(), getString(R.string.no_details));
 
                 }
             } catch (JSONException e) {

@@ -104,7 +104,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -189,7 +189,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -303,19 +303,19 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         JSONObject object2 = transactionBetDates.getJSONObject(0);
                         result = object2.optString("result");
                         result = encryptDecryptRegister.decrypt(result);
-                        Constants.showToast(Activity_QRTransactionDetails.this, "Error occurred, please try again later");
+                        Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.network_error));
 
                         progressDialog.dismiss();
                     }
                 }else
                 {
-                    Constants.showToast(Activity_QRTransactionDetails.this,"Network error occurred. Please try again later");
+                    Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
                     progressDialog.dismiss();
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
-                Constants.showToast(Activity_QRTransactionDetails.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
             }
 
         }
@@ -473,17 +473,17 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         }*/
 
                     } else {
-                        Constants.showToast(Activity_QRTransactionDetails.this, "No details found for this Transaction.");
+                        Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.no_details));
                     }
                     progressDialog.dismiss();
                 }else {
                     progressDialog.dismiss();
-                    Constants.showToast(Activity_QRTransactionDetails.this,"Network error occurred. Please try again later");
+                    Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                Constants.showToast(Activity_QRTransactionDetails.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
             }
 
         }

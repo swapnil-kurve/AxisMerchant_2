@@ -121,7 +121,7 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
 
                 }
             } else {
-                Constants.showToast(this, "No internet available");
+                Constants.showToast(this, getString(R.string.no_internet));
             }
 
         } else {
@@ -394,7 +394,7 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
                             txtEmptyMsg.setVisibility(View.VISIBLE);
                         }
                     } else {
-                        Constants.showToast(Activity_OffersNotices.this, "No details found.");
+                        Constants.showToast(Activity_OffersNotices.this, getString(R.string.no_details));
 
                     }
                     progressDialog.dismiss();

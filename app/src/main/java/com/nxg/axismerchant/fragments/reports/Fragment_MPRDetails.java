@@ -138,7 +138,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
 
     }
@@ -201,7 +201,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
                 }
             } else {
-                Constants.showToast(getActivity(), "No internet available");
+                Constants.showToast(getActivity(), getString(R.string.no_internet));
             }
         }
     }
@@ -399,7 +399,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "No transactions found");
+                    Constants.showToast(getActivity(),getString(R.string.no_internet));
 
                 }
             } catch (JSONException e) {

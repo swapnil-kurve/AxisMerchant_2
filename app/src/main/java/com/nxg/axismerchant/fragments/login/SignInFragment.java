@@ -112,7 +112,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -126,10 +126,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         String mMPIN = edtMPIN.getText().toString().trim();
         if(mMPIN.equals(""))
         {
-            Constants.showToast(getActivity(), "Please enter MPIN!");
+            Constants.showToast(getActivity(), getString(R.string.mpin_not_provide));
         }else if(mMPIN.length()<4)
         {
-            Constants.showToast(getActivity(), "MPIN should be of 4 characters");
+            Constants.showToast(getActivity(), getString(R.string.mpin_less_digit));
             imgErrorMPIN.setVisibility(View.VISIBLE);
         }else
         {
@@ -154,7 +154,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
                 }
             } else {
-                Constants.showToast(getActivity(), "No internet available");
+                Constants.showToast(getActivity(), getString(R.string.no_internet));
             }
         }
     }
@@ -232,19 +232,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     editor.putString("LastLogin",lastLogin);
                     editor.apply();
 
-                    /*if(bundle.containsKey("Title")) {
-                        startActivity(new Intent(getActivity(), Activity_Messages.class));
-
-                    }else
-                    {*/
-                        startActivity(new Intent(getActivity(), Activity_Home.class));
-                        getActivity().finish();
-//                    }
+                    startActivity(new Intent(getActivity(), Activity_Home.class));
+                    getActivity().finish();
 
                 }
                 else
                 {
-                    Constants.showToast(getActivity(), "Please provide valid MPIN.");
+                    Constants.showToast(getActivity(), getString(R.string.wrong_mpin));
                 }
 
             } catch (JSONException e) {
@@ -320,7 +314,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
                         startActivity(new Intent(getActivity(), Activity_SetOTP.class));
                     } else {
-                        Constants.showToast(getActivity(), "Sorry, request cannot be process at this time");
+                        Constants.showToast(getActivity(), getString(R.string.request_cannot_process));
                     }
                 }
                 progressDialog.dismiss();

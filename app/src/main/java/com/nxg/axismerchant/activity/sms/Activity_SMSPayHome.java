@@ -140,7 +140,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
                 }
             } else {
-                Constants.showToast(this, "No internet available");
+                Constants.showToast(this, getString(R.string.no_internet));
             }
 
         } else {
@@ -183,7 +183,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -240,17 +240,17 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         switch (v.getId())
         {
             case R.id.txtNewPayment:
-//                if(!isOnAirplane){
-//                    if(simStatus == 1) {
+                if(!isOnAirplane){
+                    if(simStatus == 1) {
                         startActivity(new Intent(this, Activity_SMSPayment.class));
-//                    }else
-//                    {
-//                        ShowDialog();
-//                    }
-//                }else
-//                {
-//                    Constants.showToast(this,"You are on Airplane Mode");
-//                }
+                    }else
+                    {
+                        ShowDialog();
+                    }
+                }else
+                {
+                    Constants.showToast(this,"You are on Airplane Mode");
+                }
                 break;
 
             case R.id.txtSeeAllTransactions:
@@ -304,7 +304,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                 ShowDialog();
             }
         }else {
-            Constants.showToast(this, "You are on Airplane Mode");
+            Constants.showToast(this, getString(R.string.airplane_mode));
         }
     }
 
@@ -460,16 +460,16 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
                     }else
                     {
-                         Constants.showToast(Activity_SMSPayHome.this,"Network error occurred. Please try again later");
+                         Constants.showToast(Activity_SMSPayHome.this,getString(R.string.network_error));
                     }
                 }else
                 {
-                    Constants.showToast(Activity_SMSPayHome.this,"Network error occurred. Please try again later");
+                    Constants.showToast(Activity_SMSPayHome.this,getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
-                Constants.showToast(Activity_SMSPayHome.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_SMSPayHome.this,getString(R.string.network_error));
             }
         }
     }
@@ -600,12 +600,12 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                     progressDialog.dismiss();
                 }else {
                     progressDialog.dismiss();
-                    Constants.showToast(Activity_SMSPayHome.this, "Network error occurred. Please try again later");
+                    Constants.showToast(Activity_SMSPayHome.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                Constants.showToast(Activity_SMSPayHome.this,"Network error occurred. Please try again later");
+                Constants.showToast(Activity_SMSPayHome.this,getString(R.string.network_error));
             }
 
         }

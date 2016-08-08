@@ -127,7 +127,7 @@ public class PageFragment_for_TransactionReport extends Fragment {
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -230,7 +230,7 @@ public class PageFragment_for_TransactionReport extends Fragment {
                 }
                 else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "No transactions found");
+                    Constants.showToast(getActivity(), getString(R.string.no_details));
 
                 }
             } catch (JSONException e) {

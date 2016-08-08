@@ -146,7 +146,7 @@ public class Activity_SMSTerms extends AppCompatActivity implements View.OnClick
 
             }
         } else {
-            Constants.showToast(this, "No internet available");
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
 
@@ -255,9 +255,10 @@ public class Activity_SMSTerms extends AppCompatActivity implements View.OnClick
 
         if(!result.equals("Success"))
         {
-            txtTitle.setText("Sorry!");
-            txtMsg1.setText("Request cannot be processed at this moment.");
-            txtMsg2.setText("Please try after some time.");
+//            txtTitle.setText("Sorry!");
+//            txtMsg1.setText("Request cannot be processed at this moment.");
+//            txtMsg2.setText("Please try after some time.");
+            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit_fail));
             imgResponse.setImageResource(R.mipmap.fail);
             txtConfirm.setText("Ok");
             txtMID.setVisibility(View.GONE);
@@ -276,9 +277,11 @@ public class Activity_SMSTerms extends AppCompatActivity implements View.OnClick
         }else
         {
 //            txtMID.setText(Constants.MERCHANT_ID);
-            txtMsg1.setText("Thank you! Your Request is accepted.");
-            txtMsg2.setText("You will get confirmation within 48 hours.");
-            txtMsg2.setMaxLines(3);
+//            txtMsg1.setText("Thank you! Your Request is accepted.");
+//            txtMsg2.setText("You will get confirmation within 48 hours.");
+//            txtMsg2.setMaxLines(3);
+            txtMsg2.setVisibility(View.GONE);
+            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit));
             txtConfirm.setText("Ok");
 
             SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);

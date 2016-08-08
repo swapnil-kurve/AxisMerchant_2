@@ -338,16 +338,16 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                     } else {
                         progressDialog.dismiss();
-                        Constants.showToast(getActivity(), "No Transactions found");
+                        Constants.showToast(getActivity(), getString(R.string.no_details));
 
                     }
                 }else {
-                    Constants.showToast(getActivity(),"Network error occurred. Please try again later");
+                    Constants.showToast(getActivity(),getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
-                Constants.showToast(getActivity(),"Network error occurred. Please try again later");
+                Constants.showToast(getActivity(),getString(R.string.network_error));
             }
 
         }

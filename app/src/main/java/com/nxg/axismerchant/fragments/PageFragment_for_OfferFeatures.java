@@ -100,7 +100,7 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
 
 
@@ -130,13 +130,13 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
                 // Ask our service to set an alarm for that date, this activity talks to the client that talks to the service
                 scheduleClient.setAlarmForNotification(calendar);
                 // Notify the user what they just did
-                Constants.showToast(getActivity(), "Thanks for your request, our team will get back to you soon.");
+                Constants.showToast(getActivity(), getString(R.string.offer_remind_later));
                 getActivity().onBackPressed();
                 break;
 
             case R.id.txtYes:
                 setResponse(mPromotionId,"Accepted");
-                Constants.showToast(getActivity(),"Thank you for your feedback, Our relationship manager will get back to you.");
+                Constants.showToast(getActivity(), getString(R.string.offer_accepted));
                 break;
         }
     }
@@ -153,7 +153,7 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -356,7 +356,7 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
                         }
 
                     } else {
-                        Constants.showToast(getActivity(), "No details found.");
+                        Constants.showToast(getActivity(), getString(R.string.no_details));
 
                     }
                     progressDialog.dismiss();

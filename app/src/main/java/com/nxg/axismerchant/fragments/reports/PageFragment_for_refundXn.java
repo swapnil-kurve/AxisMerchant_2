@@ -104,7 +104,7 @@ public class PageFragment_for_refundXn extends Fragment {
 
             }
         } else {
-            Constants.showToast(getActivity(), "No internet available");
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -197,18 +197,18 @@ public class PageFragment_for_refundXn extends Fragment {
                         dataAdapter = new DataAdapter(getActivity(), statusArrayList);
                         listData.setAdapter(dataAdapter);
                     } else {
-                        Constants.showToast(getActivity(), "No transaction found.");
+                        Constants.showToast(getActivity(), getString(R.string.no_details));
 
                     }
                     progressDialog.dismiss();
                 }else {
                     progressDialog.dismiss();
-                    Constants.showToast(getActivity(), "Network error occurred. Please try again later");
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
                 progressDialog.dismiss();
-                Constants.showToast(getActivity(),"Network error occurred. Please try again later");
+                Constants.showToast(getActivity(),getString(R.string.network_error));
             }
 
         }

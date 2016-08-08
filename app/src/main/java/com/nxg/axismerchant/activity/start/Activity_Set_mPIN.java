@@ -81,13 +81,13 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
 
         if(mMPIN.equals(""))
         {
-            Constants.showToast(this, "Please enter MPIN!");
+            Constants.showToast(this, getString(R.string.mpin_not_provide));
         }else if(mMPIN.length()<4)
         {
-            Constants.showToast(this, "MPIN should be of 4 characters");
+            Constants.showToast(this, getString(R.string.mpin_less_digit));
         }else if(mConfirmedMPIN.equals(""))
         {
-            Constants.showToast(this, "Please confirm MPIN!");
+            Constants.showToast(this, getString(R.string.confirm_mpin));
         }else if(mMPIN.equals(mConfirmedMPIN))
         {
             Constants.MPIN = mMPIN;
@@ -109,11 +109,11 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
 
                 }
             } else {
-                Constants.showToast(this, "No internet available");
+                Constants.showToast(this, getString(R.string.no_internet));
             }
         }else
         {
-            Constants.showToast(this, "Details entered does not match!");
+            Constants.showToast(this, getString(R.string.mpin_not_matching));
         }
     }
 
@@ -180,7 +180,7 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
 
         @Override
         protected String doInBackground(String... arg0) {
-            String str = null;
+            String str = "";
             try {
                 HTTPUtils utils = new HTTPUtils();
                 HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
@@ -218,39 +218,39 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
             super.onPostExecute(s);
 
             try {
-                JSONObject object = new JSONObject(s);
-                JSONArray verifyOTP = object.getJSONArray("setMPin");
-                JSONObject object1 = verifyOTP.getJSONObject(0);
-                String result = object1.optString("result");
+                if(!s.equalsIgnoreCase("")) {
+                    JSONObject object = new JSONObject(s);
+                    JSONArray verifyOTP = object.getJSONArray("setMPin");
+                    JSONObject object1 = verifyOTP.getJSONObject(0);
+                    String result = object1.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
+                    result = encryptDecryptRegister.decrypt(result);
 
-                progressDialog.dismiss();
-                if(result.equals("Success"))
-                {
+                    progressDialog.dismiss();
+                    if (result.equals("Success")) {
 
-                    String lastLogin = object1.optString("lastLogin");
-                    lastLogin = encryptDecryptRegister.decrypt(lastLogin);
+                        String lastLogin = object1.optString("lastLogin");
+                        lastLogin = encryptDecryptRegister.decrypt(lastLogin);
 
-                    preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("LoggedIn", "true");
-                    editor.putString("LastLogin",lastLogin);
-                    String flag = preferences.getString("KeepFlag","0");
-                    if(flag.equals("1"))
-                        editor.putString("KeepLoggedIn","true");
-                    editor.apply();
+                        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("LoggedIn", "true");
+                        editor.putString("LastLogin", lastLogin);
+                        String flag = preferences.getString("KeepFlag", "0");
+                        if (flag.equals("1"))
+                            editor.putString("KeepLoggedIn", "true");
+                        editor.apply();
 
-                    Intent intent = new Intent(Activity_Set_mPIN.this, Activity_Home.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
+                        Intent intent = new Intent(Activity_Set_mPIN.this, Activity_Home.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Constants.showToast(Activity_Set_mPIN.this, getString(R.string.network_error));
+                    }
+                }else {
+                    Constants.showToast(Activity_Set_mPIN.this, getString(R.string.network_error));
                 }
-                else
-                {
-                    Constants.showToast(Activity_Set_mPIN.this, "Details entered are not valid.");
-                }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

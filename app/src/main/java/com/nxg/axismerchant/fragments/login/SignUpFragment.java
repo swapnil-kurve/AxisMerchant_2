@@ -184,17 +184,17 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
         if(Constants.MERCHANT_ID.length() < 15 && Constants.MOBILE_NUM.length() < 10)
         {
-            Constants.showToast(getActivity(), "Please enter valid details");
+            Constants.showToast(getActivity(), getString(R.string.enter_valid_details));
             imgErrorMID.setVisibility(View.VISIBLE);
             imgErrorMobile.setVisibility(View.VISIBLE);
 
         }else if(Constants.MERCHANT_ID.equals("") || Constants.MERCHANT_ID.length() < 15)
             {
-                Constants.showToast(getActivity(), "Please enter valid Merchant ID");
+                Constants.showToast(getActivity(), getString(R.string.enter_valid_mid));
                 imgErrorMID.setVisibility(View.VISIBLE);
             }else if(Constants.MOBILE_NUM.equals("") || Constants.MOBILE_NUM.length() < 10)
             {
-                Constants.showToast(getActivity(), "Please enter valid Mobile number");
+                Constants.showToast(getActivity(), getString(R.string.enter_valid_mobile));
                 imgErrorMobile.setVisibility(View.VISIBLE);
             }
             else {
@@ -217,7 +217,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
                     }
                 } else {
-                    Constants.showToast(getActivity(), "No internet available");
+                    Constants.showToast(getActivity(), getString(R.string.no_internet));
                 }
             }
 
@@ -303,10 +303,10 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
                         startActivity(new Intent(getActivity(), Activity_SetOTP.class));
                     }else {
-                        Constants.showToast(getActivity(), result);
+                        Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }
                 }else {
-                    Constants.showToast(getActivity(), "Details entered are not valid");
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
