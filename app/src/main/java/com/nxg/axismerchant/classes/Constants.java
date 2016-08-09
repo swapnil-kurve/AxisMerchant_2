@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.widget.Toast;
 
 import com.nxg.axismerchant.database.DBHelper;
@@ -48,9 +50,9 @@ public class Constants {
     public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
 
 //    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
-    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
+// public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
 
-//    public static final String DEMO_SERVICE = "https://192.168.88.14/mservices.asmx/";
+    public static final String DEMO_SERVICE = "https://192.168.88.14/mservices.asmx/";
 
     public static final String[] FORCE_TLS_PROTOCOL = {"TLSv1.2"};
     public static String ServiceRef = "http://192.168.2.162:8094/";
@@ -192,15 +194,19 @@ public class Constants {
             switch(SIM_STATE)
             {
                 case TelephonyManager.SIM_STATE_ABSENT: //SimState = "No Sim Found!";
-                    break;
+                    return 100;
+
                 case TelephonyManager.SIM_STATE_NETWORK_LOCKED: //SimState = "Network Locked!";
-                    break;
+                    return 200;
+
                 case TelephonyManager.SIM_STATE_PIN_REQUIRED: //SimState = "PIN Required to access SIM!";
-                    break;
+                    return 300;
+
                 case TelephonyManager.SIM_STATE_PUK_REQUIRED: //SimState = "PUK Required to access SIM!"; // Personal Unblocking Code
-                    break;
+                    return 400;
+
                 case TelephonyManager.SIM_STATE_UNKNOWN: //SimState = "Unknown SIM State!";
-                    break;
+                    return 600;
             }
             return 0;
         }
@@ -226,12 +232,12 @@ public class Constants {
     }
 
 
-    public static String splitDate(String date)
+  /*  public static String splitDate(String date)
     {
         String[] mSplittedArr = date.split("/");
 
         return mSplittedArr[1]+"/"+mSplittedArr[0]+"/"+mSplittedArr[2];
-    }
+    }*/
 
 
     public static double getRes(Activity activity)
@@ -241,10 +247,31 @@ public class Constants {
         double x = Math.pow(dm.widthPixels / dm.xdpi, 2);
         double y = Math.pow(dm.heightPixels / dm.ydpi, 2);
         double screenInches = Math.sqrt(x + y);
-//        Constants.showToast(activity, "Screen inches : " + screenInches);
+        Constants.showToast(activity, "Screen inches : " + screenInches);
 //        Log.d("debug", "Screen inches : " + screenInches);
 
         return screenInches;
     }
 
+    public static int getWidth(Activity activity)
+    {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        //int height = size.y;
+
+        return width;
+    }
+
+    public static int getHeight(Activity activity)
+    {
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        //int width = size.x;
+        int height = size.y;
+
+        return height;
+    }
 }

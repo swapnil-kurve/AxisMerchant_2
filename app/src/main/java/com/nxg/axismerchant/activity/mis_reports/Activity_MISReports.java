@@ -30,7 +30,7 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
 
     ViewPager viewPager;
     public static String[] tabs ;
-
+    PagerSlidingTabStrip tabsStrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +53,12 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
 
         // Give the PagerSlidingTabStrip the ViewPager
-        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabsStrip.setTypeface(typeFace , 0);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
+
+        setSize();
         int pos = 0;
         Intent intent = getIntent();
         if(intent != null && intent.hasExtra("Position"))
@@ -65,6 +67,34 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
         }
 
         viewPager.setCurrentItem(pos);
+    }
+
+
+    private void setSize() {
+        double screenInches = Constants.getRes(this);
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            Constants.showToast(this, "1");
+            setSize(32,24);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            Constants.showToast(this, "2");
+            setSize(28,20);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            Constants.showToast(this, "3");
+            setSize(22,18);
+        }
+    }
+
+    private void setSize(int i, int i1) {
+
+        ((TextView) findViewById(R.id.txtTitle)).setTextSize(i1);
+        tabsStrip.setTextSize(i);
+
     }
 
     @Override

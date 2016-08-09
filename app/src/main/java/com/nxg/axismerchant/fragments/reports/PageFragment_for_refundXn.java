@@ -189,7 +189,10 @@ public class PageFragment_for_refundXn extends Fragment {
                             isRefund = encryptDecrypt.decrypt(isRefund);
                             transDate = encryptDecrypt.decrypt(transDate);
 
-                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);
+                            /*if(transDate.contains("-"))
+                                transDate.replace("-","/");
+
+                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
                             smsPayStatus = new SMSPayStatus("",custMobile, transAmt, transactionId, transStatus, remark, isRefund,transDate);
                             statusArrayList.add(smsPayStatus);
                         }
@@ -256,7 +259,8 @@ public class PageFragment_for_refundXn extends Fragment {
             txtMobile.setText(statusArrayList.get(position).getCustMobile());
             txtAmount.setText(getResources().getString(R.string.Rs)+statusArrayList.get(position).getAmount());
             txtStatus.setText(statusArrayList.get(position).getStatus());
-            txtDate.setText(Constants.splitDate(statusArrayList.get(position).getTransDate()));
+//            txtDate.setText(Constants.splitDate(statusArrayList.get(position).getTransDate()));
+            txtDate.setText(statusArrayList.get(position).getTransDate());
             txtXnID.setText(statusArrayList.get(position).getInvoiceNum());
             txtRemark.setText(statusArrayList.get(position).getRemark());
             txtRemark.setVisibility(View.VISIBLE);

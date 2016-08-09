@@ -429,9 +429,12 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         id = encryptDecrypt.decrypt(id);
                         transStatus = encryptDecrypt.decrypt(transStatus);
 
+                        /*if(onDate.contains("-"))
+                            onDate.replace("-","/");*/
 
                         ((TextView)findViewById(R.id.txtName)).setText(customer_name);
-                        ((TextView)findViewById(R.id.txtDate)).setText(Constants.splitDate(onDate.split("\\s+")[0]));
+//                        ((TextView)findViewById(R.id.txtDate)).setText(Constants.splitDate(onDate.split("\\s+")[0]));
+                        ((TextView)findViewById(R.id.txtDate)).setText(onDate);
                         ((TextView)findViewById(R.id.txtmVisaID)).setText(mvisa_merchant_id);
                         ((TextView)findViewById(R.id.txtAuthCode)).setText(auth_code);
                         ((TextView)findViewById(R.id.rrnNo)).setText(ref_no);

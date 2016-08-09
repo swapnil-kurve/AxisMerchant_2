@@ -17,10 +17,12 @@ public class CustomListAdapterForMPR extends BaseAdapter {
     private LayoutInflater inflater;
     Context context;
     ArrayList<MIS_MPR> mprDataSet;
+    double screenInches;
 
-    public CustomListAdapterForMPR(FragmentActivity activity, ArrayList<MIS_MPR> mprDataSet) {
+    public CustomListAdapterForMPR(FragmentActivity activity, ArrayList<MIS_MPR> mprDataSet, double screenInches) {
         this.context = activity;
         this.mprDataSet = mprDataSet;
+        this.screenInches = screenInches;
     }
 
     @Override
@@ -44,20 +46,49 @@ public class CustomListAdapterForMPR extends BaseAdapter {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.custom_row_for_sms_report, null);
 
-        TextView txtTransactions = (TextView) convertView.findViewById(R.id.txtTransactions);
-        TextView txtVolume = (TextView) convertView.findViewById(R.id.txtVolume);
-        TextView txtAvgTicketSize = (TextView) convertView.findViewById(R.id.txtTicketSize);
-        TextView txtDate = (TextView) convertView.findViewById(R.id.txtDate);
+        viewHolder viewHolder = new viewHolder();
+        viewHolder.txtTransactions = (TextView) convertView.findViewById(R.id.txtTransactions);
+        viewHolder.txtVolume = (TextView) convertView.findViewById(R.id.txtVolume);
+        viewHolder.txtAvgTicketSize = (TextView) convertView.findViewById(R.id.txtTicketSize);
+        viewHolder.txtDate = (TextView) convertView.findViewById(R.id.txtDate);
 
-        txtTransactions.setText(mprDataSet.get(position).getTransactions());
-        txtVolume.setText(mprDataSet.get(position).getTxnVolume());
-        txtAvgTicketSize.setText(mprDataSet.get(position).getAvgTicketSize());
+        viewHolder.txtTransactions.setText(mprDataSet.get(position).getTransactions());
+        viewHolder.txtVolume.setText(mprDataSet.get(position).getTxnVolume());
+        viewHolder.txtAvgTicketSize.setText(mprDataSet.get(position).getAvgTicketSize());
         if(mprDataSet.get(position).gettDate().length() == 2) {
-            txtDate.setText("Week "+mprDataSet.get(position).gettDate());
+            viewHolder.txtDate.setText("Week "+mprDataSet.get(position).gettDate());
         }else
         {
-            txtDate.setText(mprDataSet.get(position).getTransDate());
+            viewHolder.txtDate.setText(mprDataSet.get(position).getTransDate());
         }
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            setSize(16,18,viewHolder);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            setSize(14,16, viewHolder);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            setSize(12,12, viewHolder);
+        }
+
         return convertView;
+    }
+
+
+    private void setSize(int i, int i1, viewHolder viewHolder) {
+
+        viewHolder.txtDate.setTextSize(i);
+        viewHolder.txtTransactions.setTextSize(i);
+        viewHolder.txtVolume.setTextSize(i);
+        viewHolder.txtAvgTicketSize.setTextSize(i);
+    }
+
+    class viewHolder
+    {
+        TextView txtTransactions, txtVolume, txtAvgTicketSize, txtDate;
     }
 }

@@ -589,7 +589,9 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                             transDate = encryptDecrypt.decrypt(transDate);
                             isRefund = encryptDecrypt.decrypt(isRefund);
 
-                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);
+                            /*if(transDate.contains("-"))
+                                transDate.replace("-","/");
+                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
                             InsertIntoDatabase(custMobile, transAmt, remark, transactionId, transStatus,transDate,isRefund);
                         }
 

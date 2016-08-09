@@ -67,7 +67,7 @@ import java.util.List;
 public class PageFragment_TransactionAnalytics extends Fragment implements View.OnClickListener {
 
     public static final String ARG_OBJECT = "object";
-    String MOBILE, MID, mGraphType = "Transactions";
+    String MOBILE, MID, mGraphType = "Transactions", mDuration = "Daily";
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
     public ParallaxListView listData;
@@ -81,6 +81,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
     BarChart layoutChart;
     TextView txtDateDuration,txtGraphType, txtXn, txtVol, txtTicket;
     View lyTop, lyInfo, lyTopMessages;
+    double screenInches;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -140,6 +141,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             txtTicket.setVisibility(View.VISIBLE);
         }
 
+        setSize();
+
         return view;
     }
 
@@ -150,6 +153,33 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         Constants.retrieveMPINFromDatabase(getActivity());
         Constants.getIMEI(getActivity());
 
+    }
+
+
+    private void setSize() {
+        screenInches = Constants.getRes(getActivity());
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            Constants.showToast(getActivity(), "1");
+            setSize(16,14);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            Constants.showToast(getActivity(), "2");
+            setSize(14,12);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            Constants.showToast(getActivity(), "3");
+            setSize(12,12);
+        }
+    }
+
+    private void setSize(int i, int i1) {
+
+        txtDateDuration.setTextSize(i);
+        txtGraphType.setTextSize(i);
     }
 
     private void getMerchantData() {
@@ -229,10 +259,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         {
             if(data != null) {
                 mGraphType = data.getStringExtra("ReportType");
-                String duration = data.getStringExtra("Duration");
+                mDuration = data.getStringExtra("Duration");
                 String reportCriteria = data.getStringExtra("Criteria");
 
-                getAnalyticsDataForFilter(duration, reportCriteria);
+                getAnalyticsDataForFilter(mDuration, reportCriteria);
             }
         }
     }
@@ -609,7 +639,11 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        transDate = Constants.splitDate(transDate.split("\\s+")[0]);
+                        /*if(transDate.contains("-"))
+                            transDate.replace("-","/");
+
+                        if(mDuration.equalsIgnoreCase("Daily"))
+                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
 
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         analyticsArrayList.add(mis_mpr);
@@ -619,7 +653,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                     txtDateDuration.setText(date);
                     showBarChart();
                     progressDialog.dismiss();
-                    adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList);
+                    adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList, screenInches);
                     listData.setAdapter(adapterAnalytics);
 
                 }
@@ -725,7 +759,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
         layoutChart.addView(chart);
 
-        adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList);
+        adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList, screenInches);
         adapterAnalytics.notifyDataSetChanged();
         listData.setAdapter(adapter);
     }
@@ -827,6 +861,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
+                        /*if(mDuration.equalsIgnoreCase("Daily"))
+                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         analyticsArrayList.add(mis_mpr);
                     }
@@ -834,7 +871,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                     txtDateDuration.setText(date);
                     showBarChart();
                     progressDialog.dismiss();
-                    adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList);
+                    adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList, screenInches);
                     listData.setAdapter(adapterAnalytics);
 
                 }

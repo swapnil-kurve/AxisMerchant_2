@@ -74,7 +74,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     String MOBILE, MID;
     MIS_MPR mis_mpr;
     ArrayList<MIS_MPR> mprDataSet;
-    private String date, mGraphType = "Transactions",currentDateAndTime;
+    private String date, mGraphType = "Transactions",currentDateAndTime,mDuration = "Daily";
 
     CustomListAdapterForMPR adapter;
     public ParallaxListView listData;
@@ -85,7 +85,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     ImageView imgFilter;
     TextView txtFromDate, txtToDate;
     int DateFlag = 0,type;
-    String duration;
+    double screenInches;
     Calendar myCalendar = Calendar.getInstance();
     TextView txtGrossAmount,txtMDR,txtServiceTax,txtHoldAmount,txtAdjustments,txtCashPos, txtPaymentDate,txtNoOfTxn,txtTotalValue, txtNetAmount,txtDateDuration, txtGraphType;
 
@@ -134,8 +134,37 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             flag = 1;
             txtLabel.setVisibility(View.VISIBLE);
         }
+        setSize();
         return view;
     }
+
+    private void setSize() {
+        screenInches = Constants.getRes(getActivity());
+
+        if(screenInches<= 6 && screenInches>= 5)
+        {
+            Constants.showToast(getActivity(), "1");
+            setSize(16,14);
+        }
+        else if(screenInches<= 5 && screenInches>= 4)
+        {
+            Constants.showToast(getActivity(), "2");
+            setSize(14,12);
+        }
+        else if(screenInches<= 4 && screenInches>= 3)
+        {
+            Constants.showToast(getActivity(), "3");
+            setSize(12,12);
+        }
+    }
+
+    private void setSize(int i, int i1) {
+
+        txtDateDuration.setTextSize(i);
+        txtGraphType.setTextSize(i);
+    }
+
+
 
     @Override
     public void onResume() {
@@ -300,10 +329,10 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             if(data != null) {
                 mGraphType = data.getStringExtra("ReportType");
                 String reportType = "unsettled";
-                duration = data.getStringExtra("Duration");
+                mDuration = data.getStringExtra("Duration");
                 String reportCriteria = data.getStringExtra("Criteria");
 
-                getFilteredData(reportType, duration, reportCriteria);
+                getFilteredData(reportType, mDuration, reportCriteria);
             }
         }
     }
@@ -391,7 +420,11 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                             transDate = encryptDecrypt.decrypt(transDate);
                             tDate = encryptDecrypt.decrypt(tDate);
 
-                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);
+                           /* if(transDate.contains("-"))
+                                transDate.replace("-","/");
+
+                            if(mDuration.equalsIgnoreCase("Daily"))
+                                transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
 
                             mis_mpr = new MIS_MPR(Transactions, AvgTicketSize, TxnVolume, transDate, tDate);
                             mprDataSet.add(mis_mpr);
@@ -399,7 +432,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
                         showBarChart();
                         progressDialog.dismiss();
-                        adapter = new CustomListAdapterForMPR(getActivity(), mprDataSet);
+                        adapter = new CustomListAdapterForMPR(getActivity(), mprDataSet,screenInches);
                         listData.setAdapter(adapter);
 
                     } else {
@@ -504,7 +537,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         layoutChart.notifyDataSetChanged();
         layoutChart.addView(chart);
 
-        adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet);
+        adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet,screenInches);
         adapter.notifyDataSetChanged();
         listData.setAdapter(adapter);
 
@@ -617,7 +650,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
                     }
                     progressDialog.dismiss();
-                    adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet);
+                    adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet, screenInches);
                     listData.setAdapter(adapter);
 
                 }
@@ -724,7 +757,11 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        transDate = Constants.splitDate(transDate.split("\\s+")[0]);
+                        /*if(transDate.contains("-"))
+                            transDate.replace("-","/");
+
+                        if(mDuration.equalsIgnoreCase("Daily"))
+                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
 
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         mprDataSet.add(mis_mpr);
@@ -733,7 +770,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                     txtDateDuration.setText(date);
                     showBarChart();
                     progressDialog.dismiss();
-                    adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet);
+                    adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet, screenInches);
                     listData.setAdapter(adapter);
 
                 }
@@ -820,13 +857,11 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 if(result.equals("Success"))
                 {
                     progressDialog.dismiss();
-//                    Constants.showToast(getActivity(), "Thanks for your request, Our team will get back to you");
                     ShowDialog("yes");
                     getActivity().onBackPressed();
                 }
                 else {
                     progressDialog.dismiss();
-//                    Constants.showToast(getActivity(), "Sorry! your email id is not registered with us. Kindly contact your relationship manager and register your email id.");
                     ShowDialog("no");
                 }
             } catch (JSONException e) {

@@ -73,34 +73,36 @@ public class Activity_MIS_Home extends AppCompatActivity implements View.OnClick
         if(screenInches<= 6 && screenInches>= 5)
         {
             Constants.showToast(this, "1");
-            setSize(16,18,80,100);
+            setSize(18,24,110,130);
         }
         else if(screenInches<= 5 && screenInches>= 4)
         {
             Constants.showToast(this, "2");
-            setSize(16,22,60,80);
+            setSize(16,20,60,80);
         }
         else if(screenInches<= 4 && screenInches>= 3)
         {
             Constants.showToast(this, "3");
-            setSize(10,12,30,50);
+            setSize(10,18,30,50);
         }
     }
 
     private void setSize(int i, int i1, int i2, int i3) {
 
-        ((TextView)findViewById(R.id.paymentText1)).setTextSize(i1);
-        ((TextView)findViewById(R.id.paymentText2)).setTextSize(i);
+        ((TextView)findViewById(R.id.txtTitle)).setTextSize(i1);
+
+        ((TextView)findViewById(R.id.title1)).setTextSize(i1);
+        ((TextView)findViewById(R.id.subtitle1)).setTextSize(i);
 
 
-        ((TextView)findViewById(R.id.transactionText1)).setTextSize(i1);
-        ((TextView)findViewById(R.id.transactionText2)).setTextSize(i);
+        ((TextView)findViewById(R.id.title2)).setTextSize(i1);
+        ((TextView)findViewById(R.id.subtitle2)).setTextSize(i);
 
-        ((TextView)findViewById(R.id.POSText1)).setTextSize(i1);
-        ((TextView)findViewById(R.id.POSText2)).setTextSize(i);
+        ((TextView)findViewById(R.id.title3)).setTextSize(i1);
+        ((TextView)findViewById(R.id.subtitle3)).setTextSize(i);
 
-        ((TextView)findViewById(R.id.refundText1)).setTextSize(i1);
-        ((TextView)findViewById(R.id.refundText2)).setTextSize(i);
+        ((TextView)findViewById(R.id.title4)).setTextSize(i1);
+        ((TextView)findViewById(R.id.subtitle4)).setTextSize(i);
 
         ((ImageView)findViewById(R.id.imgIcon1)).getLayoutParams().height = i3;
         ((ImageView)findViewById(R.id.imgIcon1)).getLayoutParams().width = i3;
