@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/email_sent_success"
-        android:textSize="18dp"
+        android:textSize="@dimen/title_size"
         android:textColor="@android:color/black"
         android:gravity="center"
         android:maxLines="2"/>
@@ -20,14 +20,14 @@
         android:id="@+id/txtEmailID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
+        android:textSize="@dimen/title_size"
         android:layout_marginTop="10dp"
         android:textColor="@android:color/black"
         android:gravity="center"
         android:maxLines="1"
         android:singleLine="true"/>
 
-    <com.nxg.axismerchant.custom.CustomTextViewHeavy
+    <com.nxg.axismerchant.custom.CustomTextViewMedium
         android:id="@+id/txtDone"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
@@ -36,12 +36,12 @@
         android:layout_marginTop="20dp"
         android:layout_toLeftOf="@+id/imgNotification"
         android:layout_toRightOf="@+id/imgBack"
-        android:background="@color/metal_gray"
+        android:background="@drawable/button_layout"
         android:gravity="center"
         android:padding="8dp"
         android:text="Done"
         android:textAllCaps="true"
         android:textColor="@color/colorPrimary"
-        android:textSize="18sp" />
+        android:textSize="@dimen/button_text_size" />
 
 </LinearLayout>

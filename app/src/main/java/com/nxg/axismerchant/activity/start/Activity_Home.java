@@ -97,7 +97,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
         getInitialize();
 
-        setSize();
 
         navigationItemAdapter = new NavigationItemAdapter();
         mDrawerList.setAdapter(navigationItemAdapter);
@@ -140,63 +139,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
             Constants.showToast(this, getString(R.string.no_internet));
         }
 
-    }
-
-    private void setSize() {
-        height = Constants.getHeight(this);
-        width = Constants.getWidth(this);
-
-        Constants.showToast(this, "" + width + " X " + height);
-
-        if(width == 1080 && height == 1920)
-        {
-            Constants.showToast(this, "1");
-            setSize(16,18,20,22,24,115);
-        }
-
-        else if(width == 480 && height == 854)
-        {
-            Constants.showToast(this, "2");
-            setSize(12,14,16,18,20,55);
-        }
-
-        /*else if(screenInches<= 4 && screenInches>= 3)
-        {
-            Constants.showToast(this, "3");
-            setSize(10,12,14,16,18,30);
-        }*/
-    }
-
-    private void setSize(int i, float i1, float i2, float i3, float i4, int i5) {
-        txtUserName.setTextSize(i1);
-        txtLastLogin.setTextSize(i);
-
-        ((TextView)findViewById(R.id.txtTitle)).setTextSize(i4);
-
-        ((TextView)findViewById(R.id.txtSms1)).setTextSize(i3);
-        ((TextView)findViewById(R.id.txtSms2)).setTextSize(i2);
-
-
-        ((TextView)findViewById(R.id.txtqr1)).setTextSize(i3);
-        ((TextView)findViewById(R.id.txtqr2)).setTextSize(i2);
-
-        ((TextView)findViewById(R.id.txtreports1)).setTextSize(i3);
-        ((TextView)findViewById(R.id.txtreports2)).setTextSize(i2);
-
-        ((TextView)findViewById(R.id.txtsupport1)).setTextSize(i3);
-        ((TextView)findViewById(R.id.txtsupport2)).setTextSize(i2);
-
-        ((ImageView)findViewById(R.id.imgSMS)).getLayoutParams().height = i5;
-        ((ImageView)findViewById(R.id.imgSMS)).getLayoutParams().width = i5;
-
-        ((ImageView)findViewById(R.id.imgQR)).getLayoutParams().height = i5;
-        ((ImageView)findViewById(R.id.imgQR)).getLayoutParams().width = i5;
-
-        ((ImageView)findViewById(R.id.imgReports)).getLayoutParams().height = i5;
-        ((ImageView)findViewById(R.id.imgReports)).getLayoutParams().width = i5;
-
-        ((ImageView)findViewById(R.id.imgSupport)).getLayoutParams().height = i5;
-        ((ImageView)findViewById(R.id.imgSupport)).getLayoutParams().width = i5;
     }
 
 

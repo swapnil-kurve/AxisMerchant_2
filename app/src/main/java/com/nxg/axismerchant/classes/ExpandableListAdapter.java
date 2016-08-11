@@ -122,11 +122,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         if (isExpanded)
         {
-            holder.imgIcon.setImageResource(R.mipmap.substract);
+            holder.imgIcon.setImageResource(R.mipmap.minus_sr);
             holder.lblListHeader.setTypeface(null, Typeface.BOLD);
         }else
         {
-            holder.imgIcon.setImageResource(R.mipmap.add);
+            holder.imgIcon.setImageResource(R.mipmap.plus_sr);
             holder.lblListHeader.setTypeface(null, Typeface.NORMAL);
         }
 

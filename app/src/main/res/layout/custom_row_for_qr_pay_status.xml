@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:paddingBottom="15dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="15dp">
+    android:paddingBottom="10dp"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    android:paddingTop="10dp">
 
     <com.nxg.axismerchant.custom.CustomTextViewLightBold
         android:id="@+id/txtDate"
@@ -19,9 +19,7 @@
         android:padding="5dp"
         android:text="On 23rd Jan 2016"
         android:textColor="@color/dark_gray"
-        android:textSize="18sp" />
-
-
+        android:textSize="@dimen/heading_small" />
 
     <com.nxg.axismerchant.custom.CustomTextViewLightBold
         android:id="@+id/txtRemark"
@@ -33,7 +31,7 @@
         android:padding="5dp"
         android:textColor="@color/dark_gray"
         android:textSize="18sp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TableLayout
         android:layout_width="match_parent"
@@ -51,8 +49,8 @@
                 android:layout_weight="1"
                 android:paddingLeft="5dp"
                 android:text="@string/mVisaId"
-                android:textColor="@color/stroke_gray"
-                android:textSize="16sp" />
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/subtitle_size" />
 
             <com.nxg.axismerchant.custom.CustomTextViewLight
                 android:layout_width="match_parent"
@@ -61,8 +59,8 @@
                 android:layout_weight="1"
                 android:paddingLeft="5dp"
                 android:text="@string/rrn"
-                android:textColor="@color/stroke_gray"
-                android:textSize="16sp" />
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/subtitle_size" />
 
             <com.nxg.axismerchant.custom.CustomTextViewLight
                 android:layout_width="match_parent"
@@ -71,8 +69,8 @@
                 android:layout_weight="1"
                 android:paddingLeft="5dp"
                 android:text="Amount"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="16sp" />
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/subtitle_size" />
 
         </TableRow>
 
@@ -86,11 +84,11 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img"
                 android:layout_weight="1"
+                android:maxLines="1"
                 android:paddingLeft="5dp"
                 android:text="354231"
-                android:maxLines="1"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/subtitle_size" />
 
             <com.nxg.axismerchant.custom.CustomTextViewLight
                 android:id="@+id/txtRRnNo"
@@ -98,11 +96,11 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img"
                 android:layout_weight="1"
+                android:maxLines="1"
                 android:paddingLeft="5dp"
                 android:text="987 645 1234"
-                android:maxLines="1"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/subtitle_size" />
 
             <com.nxg.axismerchant.custom.CustomTextViewLight
                 android:id="@+id/txtAmount"
@@ -110,11 +108,11 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/img"
                 android:layout_weight="1"
+                android:maxLines="1"
                 android:paddingLeft="5dp"
                 android:text="1,65,1234"
-                android:maxLines="1"
                 android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/subtitle_size" />
 
         </TableRow>
 
@@ -128,8 +126,8 @@
 
             <ImageView
                 android:id="@+id/img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/status_row_icon_size"
+                android:layout_height="@dimen/status_row_icon_size"
                 android:layout_alignParentLeft="true"
                 android:padding="5dp"
                 android:src="@mipmap/refund_status" />
@@ -144,7 +142,7 @@
                 android:padding="5dp"
                 android:text="Refund Payment"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+                android:textSize="@dimen/subtitle_size" />
         </RelativeLayout>
     </TableLayout>
 </RelativeLayout>

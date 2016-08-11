@@ -141,8 +141,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             txtTicket.setVisibility(View.VISIBLE);
         }
 
-        setSize();
-
         return view;
     }
 
@@ -155,32 +153,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
     }
 
-
-    private void setSize() {
-        screenInches = Constants.getRes(getActivity());
-
-        if(screenInches<= 6 && screenInches>= 5)
-        {
-            Constants.showToast(getActivity(), "1");
-            setSize(16,14);
-        }
-        else if(screenInches<= 5 && screenInches>= 4)
-        {
-            Constants.showToast(getActivity(), "2");
-            setSize(14,12);
-        }
-        else if(screenInches<= 4 && screenInches>= 3)
-        {
-            Constants.showToast(getActivity(), "3");
-            setSize(12,12);
-        }
-    }
-
-    private void setSize(int i, int i1) {
-
-        txtDateDuration.setTextSize(i);
-        txtGraphType.setTextSize(i);
-    }
 
     private void getMerchantData() {
 

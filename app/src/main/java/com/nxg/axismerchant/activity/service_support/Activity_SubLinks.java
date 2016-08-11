@@ -455,7 +455,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
             RollRequired = mTotalRollsRequired;
         else
             RollRequired = "0";
-        String WeeklyOff = weeklyOff;
+        String WeeklyOff = weeklyOff.substring(0,2);
         String serviceType = txtSubCode.getText().toString().trim();
 
         if (Constants.isNetworkConnectionAvailable(getApplicationContext())) {

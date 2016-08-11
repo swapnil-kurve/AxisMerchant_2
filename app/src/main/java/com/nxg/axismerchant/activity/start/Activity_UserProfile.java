@@ -22,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
@@ -52,8 +51,6 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_user_profile);
 
         getInitialize();
-
-        setSize();
 
         changeToBusinessDetails();
 
@@ -97,37 +94,6 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
                 }
             });
         }
-
-    }
-
-    private void setSize() {
-
-        if(screenInches<= 6 && screenInches>= 5)
-        {
-            Constants.showToast(this, "1");
-            setSize(20,22,200);
-        }
-        else if(screenInches<= 5 && screenInches>= 4)
-        {
-            Constants.showToast(this, "2");
-            setSize(18,20,120);
-        }
-        else if(screenInches<= 4 && screenInches>= 3)
-        {
-            Constants.showToast(this, "3");
-            setSize(14,18,70);
-        }
-    }
-
-    private void setSize(int i, int i1, int i2) {
-
-        ((TextView)findViewById(R.id.txtTitle)).setTextSize(i1);
-        imgUserProfile.getLayoutParams().height = i2;
-        imgUserProfile.getLayoutParams().width = i2;
-
-        ((TextView)findViewById(R.id.txtUsername)).setTextSize(i);
-        ((TextView)findViewById(R.id.txtBusinessDetail)).setTextSize(i);
-        ((TextView)findViewById(R.id.txtSubUser)).setTextSize(i);
 
     }
 

@@ -45,7 +45,7 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
     String MID,MOBILE, callType;
-    TextView txtMIDNo, txtTIDNo,txtDocketID, txtProblemCode, txtDate, txtClosingRemark, txtOk;
+    TextView txtMIDNo, txtTIDNo,txtDocketID, txtProblemCode, txtDate, txtClosingRemark, txtOk, txtResponseCode, txtCurrentStatus;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +59,8 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
         txtDate = (TextView) view.findViewById(R.id.txtDate);
         txtClosingRemark = (TextView) view.findViewById(R.id.txtClosingRemarks);
         txtOk = (TextView) view.findViewById(R.id.txtOK);
+        txtCurrentStatus = (TextView) view.findViewById(R.id.txtCurrentStatus);
+        txtResponseCode = (TextView) view.findViewById(R.id.txtResponseCode);
 
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
@@ -212,6 +214,9 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                             String serviceStatus = object2.optString("serviceStatus");
                             String requestDate = object2.optString("requestDate");
                             String problemSubCode = object2.optString("problemSubCode");
+                            String responseCode = object2.optString("responseCode");
+                            String currentStatus = object2.optString("currentStatus");
+                            String docketId = object2.optString("docketId");
 
                             merchantId = encryptDecrypt.decrypt(merchantId);
                             serviceID = encryptDecrypt.decrypt(serviceID);
@@ -227,14 +232,20 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                             serviceStatus = encryptDecrypt.decrypt(serviceStatus);
                             requestDate = encryptDecrypt.decrypt(requestDate);
                             problemSubCode = encryptDecrypt.decrypt(problemSubCode);
+                            responseCode = encryptDecrypt.decrypt(responseCode);
+                            currentStatus = encryptDecrypt.decrypt(currentStatus);
+                            docketId = encryptDecrypt.decrypt(docketId);
 
 
                         txtMIDNo.setText(merchantId);
                         txtTIDNo.setText(tid);
-                        txtDocketID.setText("");
+                        txtDocketID.setText(docketId);
                         txtProblemCode.setText(problemSubCode);
                         txtDate.setText(requestDate);
                         txtClosingRemark.setText("");
+                        txtResponseCode.setText(responseCode);
+                        txtCurrentStatus.setText(currentStatus);
+
 
                         progressDialog.dismiss();
 

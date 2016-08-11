@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.start.Activity_UserProfile;
-import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.Notification;
 import com.nxg.axismerchant.database.DBHelper;
 
@@ -108,36 +107,9 @@ public class Activity_Notification extends AppCompatActivity implements View.OnC
             txtDate.setText(notificationArrayList.get(position).getDate());
             txtMessage.setText(notificationArrayList.get(position).getMessage());
 
-            setSize();
 
             return convertView;
         }
-
-    }
-
-    private void setSize() {
-        double screenInches = Constants.getRes(this);
-
-        if(screenInches<= 6 && screenInches>= 5)
-        {
-            Constants.showToast(this, "1");
-            setSize(18,20);
-        }
-        else if(screenInches<= 5 && screenInches>= 4)
-        {
-            Constants.showToast(this, "2");
-            setSize(16,18);
-        }
-        else if(screenInches<= 4 && screenInches>= 3)
-        {
-            Constants.showToast(this, "3");
-            setSize(14,16);
-        }
-    }
-
-    private void setSize(int i, float i1) {
-        txtDate.setTextSize(i1);
-        txtMessage.setTextSize(i);
 
     }
 

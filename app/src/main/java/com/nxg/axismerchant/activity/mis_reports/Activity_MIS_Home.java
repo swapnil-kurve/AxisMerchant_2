@@ -25,8 +25,6 @@ public class Activity_MIS_Home extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mis_home);
 
-        setSize();
-
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
@@ -65,71 +63,6 @@ public class Activity_MIS_Home extends AppCompatActivity implements View.OnClick
 
         super.onResume();
     }
-
-
-    private void setSize() {
-        screenInches = Constants.getRes(this);
-
-        if(screenInches<= 6 && screenInches>= 5)
-        {
-            Constants.showToast(this, "1");
-            setSize(18,24,110,130);
-        }
-        else if(screenInches<= 5 && screenInches>= 4)
-        {
-            Constants.showToast(this, "2");
-            setSize(16,20,60,80);
-        }
-        else if(screenInches<= 4 && screenInches>= 3)
-        {
-            Constants.showToast(this, "3");
-            setSize(10,18,30,50);
-        }
-    }
-
-    private void setSize(int i, int i1, int i2, int i3) {
-
-        ((TextView)findViewById(R.id.txtTitle)).setTextSize(i1);
-
-        ((TextView)findViewById(R.id.title1)).setTextSize(i1);
-        ((TextView)findViewById(R.id.subtitle1)).setTextSize(i);
-
-
-        ((TextView)findViewById(R.id.title2)).setTextSize(i1);
-        ((TextView)findViewById(R.id.subtitle2)).setTextSize(i);
-
-        ((TextView)findViewById(R.id.title3)).setTextSize(i1);
-        ((TextView)findViewById(R.id.subtitle3)).setTextSize(i);
-
-        ((TextView)findViewById(R.id.title4)).setTextSize(i1);
-        ((TextView)findViewById(R.id.subtitle4)).setTextSize(i);
-
-        ((ImageView)findViewById(R.id.imgIcon1)).getLayoutParams().height = i3;
-        ((ImageView)findViewById(R.id.imgIcon1)).getLayoutParams().width = i3;
-
-        ((ImageView)findViewById(R.id.imgIcon2)).getLayoutParams().height = i3;
-        ((ImageView)findViewById(R.id.imgIcon2)).getLayoutParams().width = i3;
-
-        ((ImageView)findViewById(R.id.imgIcon3)).getLayoutParams().height = i3;
-        ((ImageView)findViewById(R.id.imgIcon3)).getLayoutParams().width = i3;
-
-        ((ImageView)findViewById(R.id.imgIcon4)).getLayoutParams().height = i3;
-        ((ImageView)findViewById(R.id.imgIcon4)).getLayoutParams().width = i3;
-
-        ((ImageView)findViewById(R.id.imgArrow1)).getLayoutParams().height = i2;
-        ((ImageView)findViewById(R.id.imgArrow1)).getLayoutParams().width = i2;
-
-        ((ImageView)findViewById(R.id.imgArrow2)).getLayoutParams().height = i2;
-        ((ImageView)findViewById(R.id.imgArrow2)).getLayoutParams().width = i2;
-
-        ((ImageView)findViewById(R.id.imgArrow3)).getLayoutParams().height = i2;
-        ((ImageView)findViewById(R.id.imgArrow3)).getLayoutParams().width = i2;
-
-        ((ImageView)findViewById(R.id.imgArrow4)).getLayoutParams().height = i2;
-        ((ImageView)findViewById(R.id.imgArrow4)).getLayoutParams().width = i2;
-
-    }
-
 
     @Override
     public void onClick(View v) {

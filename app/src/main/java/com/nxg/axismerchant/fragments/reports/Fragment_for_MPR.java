@@ -81,7 +81,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     public static final String ARG_OBJECT = "object";
     public static int flag = 0;
     public static View viewDetailsLayout;
-    private View lyEmail,lyDetailsLayout, lyShowEmailButton;
+    private View lyEmail, lyDetailsLayout, lyShowEmailButton;
     ImageView imgFilter;
     TextView txtFromDate, txtToDate;
     int DateFlag = 0,type;
@@ -134,36 +134,8 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             flag = 1;
             txtLabel.setVisibility(View.VISIBLE);
         }
-        setSize();
         return view;
     }
-
-    private void setSize() {
-        screenInches = Constants.getRes(getActivity());
-
-        if(screenInches<= 6 && screenInches>= 5)
-        {
-            Constants.showToast(getActivity(), "1");
-            setSize(16,14);
-        }
-        else if(screenInches<= 5 && screenInches>= 4)
-        {
-            Constants.showToast(getActivity(), "2");
-            setSize(14,12);
-        }
-        else if(screenInches<= 4 && screenInches>= 3)
-        {
-            Constants.showToast(getActivity(), "3");
-            setSize(12,12);
-        }
-    }
-
-    private void setSize(int i, int i1) {
-
-        txtDateDuration.setTextSize(i);
-        txtGraphType.setTextSize(i);
-    }
-
 
 
     @Override
@@ -210,7 +182,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         imgFilter.setOnClickListener(this);
         txtFromDate.setOnClickListener(this);
         txtToDate.setOnClickListener(this);
-        txtConfirm.setOnClickListener(this);
+//        txtConfirm.setOnClickListener(this);
         lyShowEmailButton.setOnClickListener(this);
     }
 
