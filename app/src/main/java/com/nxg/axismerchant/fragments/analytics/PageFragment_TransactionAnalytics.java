@@ -611,11 +611,11 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        /*if(transDate.contains("-"))
+                        if(transDate.contains("-"))
                             transDate.replace("-","/");
 
                         if(mDuration.equalsIgnoreCase("Daily"))
-                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+                            transDate = transDate.split("\\s+")[0];
 
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         analyticsArrayList.add(mis_mpr);
@@ -833,8 +833,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        /*if(mDuration.equalsIgnoreCase("Daily"))
-                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+                        if(mDuration.equalsIgnoreCase("Daily"))
+                            transDate = transDate.split("\\s+")[0];
 
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         analyticsArrayList.add(mis_mpr);

@@ -3,6 +3,7 @@ package com.nxg.axismerchant.activity.qr_pay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
 import com.nxg.axismerchant.classes.Notification;
+import com.nxg.axismerchant.custom.MoneyValueFilter;
 import com.nxg.axismerchant.database.DBHelper;
 
 import java.util.ArrayList;
@@ -45,14 +47,9 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         imgNotification = (ImageView) findViewById(R.id.imgNotification);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
         txtReqLabel = (TextView) findViewById(R.id.txtReq);
-        TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
-        DBHelper dbHelper = new DBHelper(this);
-        ArrayList<Notification> notificationArrayList = Constants.retrieveFromDatabase(this, dbHelper);
-        if(notificationArrayList.size() > 0)
-        {
-            txtNotification.setVisibility(View.VISIBLE);
-            txtNotification.setText(String.valueOf(notificationArrayList.size()));
-        }
+
+
+        edtAmount.setFilters(new InputFilter[]{new MoneyValueFilter()});
 
         txtViewAllTransactions.setOnClickListener(this);
         imgBack.setOnClickListener(this);
@@ -130,8 +127,15 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         String mPrimaryID = edtPrimaryId.getText().toString().trim();
         String mSecondaryID = edtSecondaryId.getText().toString();
 
-        if(!mAmount.equalsIgnoreCase(""))
+        if(mAmount.equalsIgnoreCase(""))
         {
+            Constants.showToast(this, getString(R.string.enter_amount));
+        }else if (Double.parseDouble(mAmount) <= 0) {
+            Constants.showToast(this, getString(R.string.zero_amount));
+        }else if(Double.parseDouble(mAmount) > 200000)
+        {
+            Constants.showToast(this, getString(R.string.amount_exceeds_200000));
+        }else{
             mAmount = edtAmount.getText().toString().trim();
 
             Intent intent = new Intent(this, Activity_QRCodeGenerated.class);
@@ -139,13 +143,7 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
             intent.putExtra("Primary_Id", mPrimaryID);
             intent.putExtra("Secondary_Id", mSecondaryID);
             startActivity(intent);
-        }else
-        {
-            Constants.showToast(this, getString(R.string.enter_amount));
         }
-
-
-
 
     }
 

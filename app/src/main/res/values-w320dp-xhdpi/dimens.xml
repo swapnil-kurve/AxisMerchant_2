@@ -1,0 +1,44 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_drawer_width">240dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="toolbar_height">50dp</dimen>
+    <dimen name="toolbar_img_width">40dp</dimen>
+    <dimen name="toolbar_title_size">20sp</dimen>
+    <dimen name="title_size">18sp</dimen>
+    <dimen name="welcome_msg_size">14sp</dimen>
+    <dimen name="home_screen_icon_width">30dp</dimen>
+    <dimen name="home_screen_icon_height">30dp</dimen>
+    <dimen name="margin_left_for_icon">25dp</dimen>
+    <dimen name="subtitle_size">14sp</dimen>
+    <dimen name="last_login_size">12sp</dimen>
+    <dimen name="tab_indicator_height">3dp</dimen>
+    <dimen name="view_pager_tab_height">40dp</dimen>
+    <dimen name="view_pager_title_size">12sp</dimen>
+    <dimen name="heading_big">24sp</dimen>
+    <dimen name="heading_small">16sp</dimen>
+    <dimen name="edt_left_icon_width">40dp</dimen>
+    <dimen name="edt_left_icon_height">40dp</dimen>
+    <dimen name="edtittext_size">16sp</dimen>
+    <dimen name="button_text_size">18sp</dimen>
+    <dimen name="filter_label_height">40dp</dimen>
+    <dimen name="bottom_layout_height">45dp</dimen>
+    <dimen name="main_logo_height">130dp</dimen>
+    <dimen name="main_logo_width">120dp</dimen>
+    <dimen name="toolbar_img_height">40dp</dimen>
+    <dimen name="offer_banner_size">160dp</dimen>
+    <dimen name="otp_edittext_size">50sp</dimen>
+    <dimen name="terms_check_size">30dp</dimen>
+    <dimen name="sr_plus_icon_size">30dp</dimen>
+    <dimen name="heading_big2">34dp</dimen>
+    <dimen name="remark_sms_home">12sp</dimen>
+    <dimen name="fav_star_size">35dp</dimen>
+    <dimen name="status_row_icon_size">25dp</dimen>
+    <dimen name="lable_small">12dp</dimen>
+    <dimen name="email_me_icon_size">30dp</dimen>
+    <dimen name="nav_icon_size">25dp</dimen>
+
+
+</resources>

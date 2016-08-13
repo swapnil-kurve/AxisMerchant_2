@@ -189,10 +189,10 @@ public class PageFragment_for_refundXn extends Fragment {
                             isRefund = encryptDecrypt.decrypt(isRefund);
                             transDate = encryptDecrypt.decrypt(transDate);
 
-                            /*if(transDate.contains("-"))
+                           if(transDate.contains("-"))
                                 transDate.replace("-","/");
 
-                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+                            transDate = transDate.split("\\s+")[0];
                             smsPayStatus = new SMSPayStatus("",custMobile, transAmt, transactionId, transStatus, remark, isRefund,transDate);
                             statusArrayList.add(smsPayStatus);
                         }

@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -49,7 +50,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
-    String XnID;
+    String XnID,val ;
     TextView txtResText;
     View refLayout;
 
@@ -118,8 +119,6 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
         TextView txtYes = (TextView) dialog.findViewById(R.id.txtYes);
         TextView txtNo = (TextView) dialog.findViewById(R.id.txtNo);
-
-        final String val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'4604909012','password':'a01610228fe998f515a72dd730294d87','auth_code':'498664','ref_no':'618910005302','tid':'78313380','class_name':'AllTransaction','function':'refundSR'}";
 
         txtYes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,7 +215,11 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
             HttpPost myConnection = new HttpPost("http://merchantportal.paycraftsol.com/MerchantApp/API/Merchant/Refund");
 
             try {
+//                myConnection.setHeader("Content-type", "application/json");
+                myConnection.setHeader("Accept", "application/json");
                 myConnection.setHeader("Content-type", "application/json");
+                myConnection.setHeader("Accept-Encoding", "gzip");
+
                 StringEntity entity = new StringEntity(params[0]);
                 myConnection.setEntity(entity);
 
@@ -233,48 +236,16 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
         }
 
 
-/*
-        @Override
-        protected String doInBackground(String... arg0) {
-            String str = "";
-
-            try {
-                HTTPUtils utils = new HTTPUtils();
-                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
-                URI newURI = URI.create(arg0[0]);
-                HttpPost httppost = new HttpPost(newURI);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.urlCode), encryptDecrypt.encrypt(arg0[3])));
-
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpclient.execute(httppost);
-                int stats = response.getStatusLine().getStatusCode();
-
-                if (stats == 200) {
-                    HttpEntity entity = response.getEntity();
-                    String data = EntityUtils.toString(entity);
-                    str = data;
-                }
-            } catch (ParseException e1) {
-                progressDialog.dismiss();
-                e1.printStackTrace();
-            } catch (IOException e) {
-                progressDialog.dismiss();
-                e.printStackTrace();
-            }
-            return str;
-        }
-*/
-
         @Override
         protected void onPostExecute(String data) {
             super.onPostExecute(data);
 
             try {
+
+                progressDialog.dismiss();
+                Constants.showToast(Activity_QRTransactionDetails.this,data);
+
+/*
                 if(!data.equals("")) {
                     JSONArray transaction = new JSONArray(data);
                     JSONObject object1 = transaction.getJSONObject(0);
@@ -312,7 +283,8 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                     Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
                     progressDialog.dismiss();
                 }
-            } catch (JSONException e) {
+*/
+            } catch (Exception e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
                 Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
@@ -429,11 +401,21 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         id = encryptDecrypt.decrypt(id);
                         transStatus = encryptDecrypt.decrypt(transStatus);
 
-                        /*if(onDate.contains("-"))
-                            onDate.replace("-","/");*/
+                        if(onDate.contains("-"))
+                            onDate.replace("-","/");
+                        String tid = "24313459";
+                        auth_code = "501450";
+                        ref_no = "622419070564";
+
+//                        val = createObject(mvisa_merchant_id,ref_no,tid,auth_code);
+//                        val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'"+mvisa_merchant_id+"','password':'a01610228fe998f515a72dd730294d87','auth_code':'"+auth_code+"','ref_no':'"+ref_no+"','tid':'24313459','class_name':'AllTransaction','function':'refundSR'}";
+
+                        val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'"+mvisa_merchant_id+"','password':'a01610228fe998f515a72dd730294d87','auth_code':'"+auth_code+"','ref_no':'"+ref_no+"','tid':'24313459','class_name':'AllTransaction','function':'refundSR'}";
+
+                        Log.e("Val", val);
 
                         ((TextView)findViewById(R.id.txtName)).setText(customer_name);
-//                        ((TextView)findViewById(R.id.txtDate)).setText(Constants.splitDate(onDate.split("\\s+")[0]));
+                        ((TextView)findViewById(R.id.txtDate)).setText(onDate.split("\\s+")[0]);
                         ((TextView)findViewById(R.id.txtDate)).setText(onDate);
                         ((TextView)findViewById(R.id.txtmVisaID)).setText(mvisa_merchant_id);
                         ((TextView)findViewById(R.id.txtAuthCode)).setText(auth_code);
@@ -490,6 +472,29 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
             }
 
         }
+    }
+
+    private String createObject(String mvisa_merchant_id, String ref_no, String tid, String auth_code) {
+//        val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':"+mvisa_merchant_id+",'password':'a01610228fe998f515a72dd730294d87','auth_code':"+auth_code+",'ref_no':"+ref_no+",'tid':"+tid+",'class_name':'AllTransaction','function':'refundSR'}";
+
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("bank_code","00031");
+            obj.put("session_id","12341234");
+            obj.put("username","8898626498");
+            obj.put("mvisa_merchant_id",mvisa_merchant_id);
+            obj.put("password","a01610228fe998f515a72dd730294d87");
+            obj.put("auth_code",auth_code);
+            obj.put("ref_no",ref_no);
+            obj.put("tid",tid);
+            obj.put("class_name","AllTransaction");
+            obj.put("function","refundSR");
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return obj.toString();
     }
 
 

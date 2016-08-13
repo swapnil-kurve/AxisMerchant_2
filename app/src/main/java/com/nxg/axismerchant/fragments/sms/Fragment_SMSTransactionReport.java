@@ -215,10 +215,12 @@ public class Fragment_SMSTransactionReport extends Fragment{
                             fulldate = encryptDecrypt.decrypt(fulldate);
                             transstatus = encryptDecrypt.decrypt(transstatus);
 
-                            /*if(transdate.contains("-"))
+                            if(transdate.contains("-"))
                                 transdate.replace("-","/");
 
-                            transdate = Constants.splitDate(transdate.split("\\s+")[0]);*/
+                            transdate = transdate.split("\\s+")[0];
+
+                            /*transdate = Constants.splitDate(transdate.split("\\s+")[0]);*/
 
                             smsXnSummary = new SMSXnSummary(volume, ticketSize, noOfTrans, transdate, fd, fday, fmonth, fyear, fulldate, transstatus);
                             smsXnSummaries.add(smsXnSummary);
@@ -305,7 +307,6 @@ public class Fragment_SMSTransactionReport extends Fragment{
         l.setXEntrySpace(0f);
         l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
 
-//        chart.animateY(700);
         chart.setDescription("");
         chart.setData(data);
         chart.setVisibleXRangeMaximum(7);
@@ -386,11 +387,10 @@ public class Fragment_SMSTransactionReport extends Fragment{
         l.setXEntrySpace(0f);
         l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
 
-//        chart.animateY(700);
         chart.setDescription("");
         chart.setData(data);
         chart.setVisibleXRangeMaximum(7);
-        chart.moveViewToX(10);
+        chart.moveViewToX(xnSummaries.size());
         chart.getAxisRight().setDrawLabels(false);
         chart.setDoubleTapToZoomEnabled(false);
         chart.setPinchZoom(false);

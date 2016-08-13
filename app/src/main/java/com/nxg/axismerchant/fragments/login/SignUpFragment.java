@@ -286,6 +286,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     String email = object1.optString("email");
                     String username = object1.optString("username");
                     String isAdmin = object1.optString("isAdmin");
+                    String veriPin = object1.optString("veriPin");
 
                     result = encryptDecryptRegister.decrypt(result);
                     progressDialog.dismiss();
@@ -294,6 +295,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         email = encryptDecryptRegister.decrypt(email);
                         username = encryptDecryptRegister.decrypt(username);
                         isAdmin = encryptDecryptRegister.decrypt(isAdmin);
+                        veriPin = encryptDecryptRegister.decrypt(veriPin);
 
                         preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -302,7 +304,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         editor.putString("isAdmin", isAdmin);
                         editor.apply();
 
-                        startActivity(new Intent(getActivity(), Activity_SetOTP.class));
+                        Intent intent = new Intent(getActivity(), Activity_SetOTP.class);
+                        intent.putExtra("OTP", veriPin);
+                        startActivity(intent);
                     }else {
                         Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }

@@ -215,10 +215,10 @@ public class PageFragment_for_TransactionReport extends Fragment {
                         tDate = encryptDecrypt.decrypt(tDate);
                         tType = encryptDecrypt.decrypt(tType);
 
-                        /*if(transDate.contains("-"))
+                        if(transDate.contains("-"))
                             transDate.replace("-","/");
 
-                        transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+                        transDate = transDate.split("\\s+")[0];
                         report = new TransactionReport(Totaltransaction,transDate,TxnVolume,avgTicketSize,tDate,tType);
                         transactionReports.add(report);
                     }

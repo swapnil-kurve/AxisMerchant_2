@@ -392,11 +392,11 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                             transDate = encryptDecrypt.decrypt(transDate);
                             tDate = encryptDecrypt.decrypt(tDate);
 
-                           /* if(transDate.contains("-"))
+                            if(transDate.contains("-"))
                                 transDate.replace("-","/");
 
                             if(mDuration.equalsIgnoreCase("Daily"))
-                                transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+                                transDate = transDate.split("\\s+")[0];
 
                             mis_mpr = new MIS_MPR(Transactions, AvgTicketSize, TxnVolume, transDate, tDate);
                             mprDataSet.add(mis_mpr);
@@ -496,7 +496,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         l.setXEntrySpace(0f);
         l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
 
-//        chart.animateY(700);
         chart.setDescription("");
         chart.setData(data);
         chart.setVisibleXRangeMaximum(7);
@@ -524,6 +523,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     }
 
 
+/*
     private class GetMPRDetails extends AsyncTask<String, Void, String>
     {
         ProgressDialog progressDialog;
@@ -638,6 +638,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
         }
     }
+*/
 
 
 
@@ -729,11 +730,11 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                         transDate = encryptDecrypt.decrypt(transDate);
                         tDate = encryptDecrypt.decrypt(tDate);
 
-                        /*if(transDate.contains("-"))
+                        if(transDate.contains("-"))
                             transDate.replace("-","/");
 
                         if(mDuration.equalsIgnoreCase("Daily"))
-                            transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+                            transDate = transDate.split("\\s+")[0];
 
                         mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
                         mprDataSet.add(mis_mpr);

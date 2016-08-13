@@ -23,7 +23,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -236,5 +240,21 @@ public class Constants {
         return mSplittedArr[1]+"/"+mSplittedArr[0]+"/"+mSplittedArr[2];
     }*/
 
+
+    public static String changeDateFormat(String date)
+    {
+        String startDateString = date;
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate;
+        try {
+            startDate = df.parse(startDateString);
+            String newDateString = df.format(startDate);
+            System.out.println(newDateString);
+            System.out.println(newDateString.split("/")[1]+newDateString.split("/")[0]+newDateString.split("/")[2]);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

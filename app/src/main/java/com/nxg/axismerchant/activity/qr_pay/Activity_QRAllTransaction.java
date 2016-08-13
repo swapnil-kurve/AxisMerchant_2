@@ -218,9 +218,9 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
                             ref_no = encryptDecrypt.decrypt(ref_no);
                             id = encryptDecrypt.decrypt(id);
 
-                            /*if(onDate.contains("-"))
+                            if(onDate.contains("-"))
                                 onDate.replace("-","/");
-                            onDate = Constants.splitDate(onDate.split("\\s+")[0]);*/
+                            onDate = onDate.split("\\s+")[0];
                             qrTransactions = new QRTransactions(id,onDate,ref_no,mvisa_merchant_id,txn_amount);
                             qrTransactionsList.add(qrTransactions);
                         }

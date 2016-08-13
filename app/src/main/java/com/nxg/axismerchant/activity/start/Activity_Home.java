@@ -32,6 +32,7 @@ import com.nxg.axismerchant.activity.Activity_Version;
 import com.nxg.axismerchant.activity.Activity_VideoDemo;
 import com.nxg.axismerchant.activity.analytics.Activity_Analytics;
 import com.nxg.axismerchant.activity.mis_reports.Activity_MIS_Home;
+import com.nxg.axismerchant.activity.offers.Activity_OfferDetails;
 import com.nxg.axismerchant.activity.offers.Activity_OffersNotices;
 import com.nxg.axismerchant.activity.qr_pay.Activity_QRPayHome;
 import com.nxg.axismerchant.activity.qr_pay.Activity_QRSignUp;
@@ -43,6 +44,7 @@ import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
 import com.nxg.axismerchant.classes.HTTPUtils;
+import com.nxg.axismerchant.classes.HomeBanner;
 import com.nxg.axismerchant.classes.Notification;
 import com.nxg.axismerchant.classes.Promotions;
 import com.nxg.axismerchant.database.DBHelper;
@@ -84,7 +86,8 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
     Promotions promotions;
     String MID,MOBILE;
     ImageView imgMenu;
-    int width,height;
+    ArrayList<HomeBanner> homeBanners;
+    HomeBanner banner;
     EncryptDecryptRegister encryptDecryptRegister;
     private int[] images = {R.mipmap.smspay_menu, R.mipmap.qrpay_menu, R.mipmap.service_support_menu, R.mipmap.reports_menu,
             R.mipmap.analytics, R.mipmap.offers, R.mipmap.profile_menu, R.mipmap.refer, R.mipmap.faq, R.mipmap.demo_video,R.mipmap.ver, R.mipmap.logout};
@@ -175,6 +178,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         viewPager.setInterval(4000);
 
         promotionsArrayList = new ArrayList<>(3);
+        homeBanners = new ArrayList<>();
 
     }
 
@@ -243,23 +247,27 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.qrCodePayment:
-                SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
-                if(preferences.contains("mvisaId"))
-                {
-                    String mVisaId = preferences.getString("mvisaId","");
-                    if(mVisaId.equals("")  ||  mVisaId.equalsIgnoreCase("Null"))
-                    {
-                        startActivity(new Intent(this, Activity_QRSignUp.class));
-                    }else
-                    {
-                        startActivity(new Intent(this, Activity_QRPayHome.class));
-                    }
-                }else
-                {
-                    startActivity(new Intent(this, Activity_QRSignUp.class));
-                }
+                gotoQR();
                 break;
 
+        }
+    }
+
+    private void gotoQR() {
+        SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
+        if(preferences.contains("mvisaId"))
+        {
+            String mVisaId = preferences.getString("mvisaId","");
+            if(mVisaId.equals("")  ||  mVisaId.equalsIgnoreCase("Null"))
+            {
+                startActivity(new Intent(this, Activity_QRSignUp.class));
+            }else
+            {
+                startActivity(new Intent(this, Activity_QRPayHome.class));
+            }
+        }else
+        {
+            startActivity(new Intent(this, Activity_QRSignUp.class));
         }
     }
 
@@ -303,22 +311,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                     break;
 
                 case 1:
-                    SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
-                    if(preferences.contains("mvisaId"))
-                    {
-                        String mVisaId = preferences.getString("mvisaId","");
-                        if(mVisaId.equals("")  ||  mVisaId.equalsIgnoreCase("Null"))
-                        {
-                            startActivity(new Intent(this, Activity_QRSignUp.class));
-                        }else
-                        {
-                            startActivity(new Intent(this, Activity_QRPayHome.class));
-                        }
-                    }
-                    else
-                    {
-                        startActivity(new Intent(this, Activity_QRSignUp.class));
-                    }
+                    gotoQR();
                     break;
 
                 case 2:
@@ -449,10 +442,18 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
                             JSONObject object2 = getImagesForSlider.getJSONObject(i);
                             String pImg = object2.optString("pImg");
+                            String stype = object2.optString("stype");
+                            String pID = object2.optString("pID");
+                            String sPriority = object2.optString("sPriority");
 
                             pImg = encryptDecryptRegister.decrypt(pImg);
+                            stype = encryptDecryptRegister.decrypt(stype);
+                            pID = encryptDecryptRegister.decrypt(pID);
+                            sPriority = encryptDecryptRegister.decrypt(sPriority);
 
                             ArrURL[i] = pImg;
+                            banner = new HomeBanner(pImg,stype,pID,sPriority);
+                            homeBanners.add(banner);
                         }
 
                         CustomPagerAdapter customPagerAdapter = new CustomPagerAdapter(Activity_Home.this, ArrURL);
@@ -499,7 +500,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
             View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
 
             ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
@@ -507,6 +508,12 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
             container.addView(itemView);
 
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        redirectUser(position);
+                }
+            });
             return itemView;
         }
 
@@ -514,6 +521,31 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((LinearLayout) object);
         }
+    }
+
+    private void redirectUser(int position) {
+        String type = homeBanners.get(position).getStype();
+
+        if(type.equalsIgnoreCase("OFFER"))
+        {
+            Intent intent = new Intent(this, Activity_OfferDetails.class);
+            intent.putExtra("PromotionId", homeBanners.get(position).getpID());
+            intent.putExtra("PromoImg", homeBanners.get(position).getpImg());
+            startActivity(intent);
+        }else
+        if(type.equalsIgnoreCase("SMS"))
+        {
+            gotoSMS();
+        }else
+        if(type.equalsIgnoreCase("QR"))
+        {
+            gotoQR();
+        }else
+        if(type.equalsIgnoreCase("REFER"))
+        {
+            startActivity(new Intent(this, Activity_ReferHome.class));
+        }
+
     }
 
     private class NavigationItemAdapter extends BaseAdapter

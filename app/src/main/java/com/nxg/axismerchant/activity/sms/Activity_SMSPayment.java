@@ -226,6 +226,8 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
                 imgEditRemark.setVisibility(View.GONE);
                 imgEditAmount.setVisibility(View.VISIBLE);
                 imgReadContact.setVisibility(View.GONE);
+                txtOptional.setVisibility(View.VISIBLE);
+
                 break;
 
             case R.id.imgReadContact:
@@ -291,6 +293,7 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
         imgEditRemark.setVisibility(View.VISIBLE);
         imgEditAmount.setVisibility(View.VISIBLE);
         imgReadContact.setVisibility(View.GONE);
+        txtOptional.setVisibility(View.GONE);
         if(mFromFavo.equals("Yes"))
             cbFavorites.setVisibility(View.GONE);
         else
@@ -481,7 +484,6 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
 
             changeToReview();
 
-            cbFavorites.setVisibility(View.GONE);
         }
 
     }
@@ -505,6 +507,7 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
                 number = number.replaceAll("[^a-zA-Z0-9]+", "");
                 number = number.substring(number.length()-10,number.length());
                 edtCustMobile.setText(number);
+                edtCustMobile.setSelection(edtCustMobile.getText().length());
             }
         }
     }
