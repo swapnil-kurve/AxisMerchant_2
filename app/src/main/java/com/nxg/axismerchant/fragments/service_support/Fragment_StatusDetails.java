@@ -74,11 +74,10 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
         txtOk.setOnClickListener(this);
 
         Bundle bundle = getArguments();
-        String mSRNo = "", mTIDNo = "";
+        String mSRNo = "";
         if(bundle != null)
         {
-            callType = bundle.getString("Call_Type");
-            if(callType.equals("Details")) {
+
                 mSRNo = bundle.getString("SRNo");
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -88,20 +87,8 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                     new GetSRStatusDetails().execute(Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRNo);
 
                 }
-            }
-            else
-            {
-                mTIDNo = bundle.getString("TIDNo");
-                mSRNo = bundle.getString("SRNo");
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    new GetSRStatusDetails().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNo, mTIDNo);
-                } else {
-                    new GetSRStatusDetails().execute(Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNo, mTIDNo);
 
-                }
-            }
         }
 
 

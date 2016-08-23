@@ -212,6 +212,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             super.onPostExecute(s);
 
             try {
+                if(s != null) {
                 JSONObject object = new JSONObject(s);
                 JSONArray verifyOTP = object.getJSONArray("verifyPin");
                 JSONObject object1 = verifyOTP.getJSONObject(0);
@@ -240,7 +241,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 {
                     Constants.showToast(getActivity(), getString(R.string.wrong_mpin));
                 }
-
+                }else {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

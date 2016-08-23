@@ -344,7 +344,8 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
                         }
                         if(pos == 0)
                         {
-                            txtText.setText(promotionText);
+//                            txtText.setText(promotionText);
+                            txtText.setText(Html.fromHtml(promotionText));
                         }
 
                         if(withOptions.equalsIgnoreCase("Yes"))

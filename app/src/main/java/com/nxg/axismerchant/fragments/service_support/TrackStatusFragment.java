@@ -67,6 +67,8 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     TextView txtFromDate, txtToDate;
     int DateFlag = 0;
     Calendar myCalendar = Calendar.getInstance();
+    View lyTID, lyDate;
+    TextView txtSearchByDate, txtSearchBySR;
 
     @Nullable
     @Override
@@ -76,10 +78,15 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         listSRStatus = (ListView) view.findViewById(R.id.listSRStatus);
         txtSearch = (TextView) view.findViewById(R.id.txtSearch);
         txtSearch1 = (TextView) view.findViewById(R.id.txtSearch1);
+        lyDate = view.findViewById(R.id.lyDate);
+        lyTID = view.findViewById(R.id.lyTid);
         vSearchLayout = view.findViewById(R.id.searchLayout);
 
         edtSrNo = (EditText) view.findViewById(R.id.edtSRNo);
         edtTidNo = (EditText) view.findViewById(R.id.edtTidNo);
+
+        txtSearchByDate = (TextView) view.findViewById(R.id.txtSearchByDate);
+        txtSearchBySR = (TextView) view.findViewById(R.id.txtSearchBySR);
 
         txtFromDate = (TextView) view.findViewById(R.id.txtFromDate);
         txtToDate = (TextView) view.findViewById(R.id.txtToDate);
@@ -89,6 +96,8 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         txtSearch1.setOnClickListener(this);
         txtFromDate.setOnClickListener(this);
         txtToDate.setOnClickListener(this);
+        txtSearchBySR.setOnClickListener(this);
+        txtSearchByDate.setOnClickListener(this);
 
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
@@ -126,44 +135,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.txtSearch1:
-
-                if(edtSrNo.getText().toString().trim().equals("") && edtTidNo.getText().toString().trim().equals(""))
-                {
-                    if(txtFromDate.getText().toString().equals(""))
-                    {
-                        Constants.showToast(getActivity(),"Please provide from date");
-                    }else if(txtToDate.getText().toString().equals(""))
-                    {
-                        Constants.showToast(getActivity(),"Please provide to date");
-                    }else if(!txtFromDate.getText().toString().equals("") && !txtToDate.getText().toString().equals("")) {
-
-                        String fromDate = txtFromDate.getText().toString().trim();
-                        String toDate = txtToDate.getText().toString().trim();
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                            new GetSRStatusList().executeOnExecutor(AsyncTask
-                                    .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate);
-                        } else {
-                            new GetSRStatusList().execute(Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate);
-                        }
-
-                    }else{
-                        Constants.showToast(getActivity(), "Please enter at least one of the above field");
-                    }
-                }else if(!edtSrNo.getText().toString().trim().equals("") && edtTidNo.getText().toString().trim().equals(""))
-                {
-                    mSRNO = edtSrNo.getText().toString().trim();
-                    SearchSR();
-                }else if(edtSrNo.getText().toString().trim().equals("") && !edtTidNo.getText().toString().trim().equals(""))
-                {
-                    mTIDNo = edtTidNo.getText().toString().trim();
-                    SearchSR();
-                }else
-                {
-                    mSRNO = edtSrNo.getText().toString().trim();
-                    mTIDNo = edtTidNo.getText().toString().trim();
-                    SearchSR();
-                }
+                searchStatus();
 
                 break;
 
@@ -181,18 +153,83 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
                 break;
+
+            case R.id.txtSearchByDate:
+                lyDate.setVisibility(View.VISIBLE);
+                lyTID.setVisibility(View.GONE);
+                break;
+
+            case R.id.txtSearchBySR:
+                lyDate.setVisibility(View.GONE);
+                lyTID.setVisibility(View.VISIBLE);
+                break;
         }
+    }
+
+    private void searchStatus() {
+
+        if(lyTID.getVisibility() == View.VISIBLE)
+        {
+            if(edtSrNo.getText().toString().trim().equals("") && edtTidNo.getText().toString().trim().equals(""))
+            {
+                Constants.showToast(getActivity(), "Please enter at least one of the above field");
+            }else if(!edtSrNo.getText().toString().trim().equals("") && edtTidNo.getText().toString().trim().equals(""))
+            {
+                mSRNO = edtSrNo.getText().toString().trim();
+                SearchSR();
+            }else if(edtSrNo.getText().toString().trim().equals("") && !edtTidNo.getText().toString().trim().equals(""))
+            {
+                mTIDNo = edtTidNo.getText().toString().trim();
+                SearchSR();
+            }else
+            {
+                mSRNO = edtSrNo.getText().toString().trim();
+                mTIDNo = edtTidNo.getText().toString().trim();
+                SearchSR();
+            }
+        }else
+        {
+            if(txtFromDate.getText().toString().equals(""))
+            {
+                Constants.showToast(getActivity(),"Please provide from date");
+            }else if(txtToDate.getText().toString().equals(""))
+            {
+                Constants.showToast(getActivity(),"Please provide to date");
+            }else if(!txtFromDate.getText().toString().equals("") && !txtToDate.getText().toString().equals("")) {
+
+                String fromDate = txtFromDate.getText().toString().trim();
+                String toDate = txtToDate.getText().toString().trim();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    new GetSRStatusList().executeOnExecutor(AsyncTask
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate);
+                } else {
+                    new GetSRStatusList().execute(Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate);
+                }
+
+            }
+        }
+
+
     }
 
     private void SearchSR()
     {
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         bundle.putString("SRNo",mSRNO);
         bundle.putString("TIDNo",mTIDNo);
         bundle.putString("Call_Type","Search");
         Fragment_StatusDetails statusDetails = new Fragment_StatusDetails();
         statusDetails.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.xnContainer, statusDetails).commit();
+        getFragmentManager().beginTransaction().replace(R.id.xnContainer, statusDetails).commit();*/
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new GetStatusListBySR().executeOnExecutor(AsyncTask
+                    .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNO, mTIDNo);
+        } else {
+            new GetStatusListBySR().execute(Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNO, mTIDNo);
+
+        }
     }
 
     @Override
@@ -438,6 +475,147 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
         }
     }
+
+    private class GetStatusListBySR extends AsyncTask<String, Void, String>
+    {
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            String str = null;
+            try {
+                HTTPUtils utils = new HTTPUtils();
+                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
+                URI newURI = URI.create(arg0[0]);
+                HttpPost httppost = new HttpPost(newURI);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                String mID = encryptDecryptRegister.encrypt(arg0[1]);
+                String mobile = encryptDecryptRegister.encrypt(arg0[2]);
+                String srno = encryptDecrypt.encrypt(arg0[3]);
+
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+
+                String tid = encryptDecrypt.encrypt(arg0[4]);
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.serviceRequestNumber),srno));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.tid),tid));
+
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpclient.execute(httppost);
+                int stats = response.getStatusLine().getStatusCode();
+
+                if (stats == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    str = data;
+                }
+            } catch (ParseException e1) {
+                progressDialog.dismiss();
+                e1.printStackTrace();
+            } catch (IOException e) {
+                progressDialog.dismiss();
+                e.printStackTrace();
+            }
+            return str;
+        }
+
+
+        @Override
+        protected void onPostExecute(String data) {
+            super.onPostExecute(data);
+
+            try{
+                if(!data.equals("")) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
+
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
+
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray transactionBetDates;
+
+                        transactionBetDates = object.getJSONArray("searchSRService");
+
+                        for (int i = 0; i < transactionBetDates.length(); i++) {
+
+                            JSONObject object2 = transactionBetDates.getJSONObject(i);
+                            String merchantId = object2.optString("merchantId");
+                            String serviceID = object2.optString("serviceID");
+                            String merMobileNo = object2.optString("merMobileNo");
+                            String tid = object2.optString("tid");
+                            String serviceType = object2.optString("serviceType");
+                            String probDetails = object2.optString("probDetails");
+                            String offDays = object2.optString("offDays");
+                            String visitTiming = object2.optString("visitTiming");
+                            String contactNo = object2.optString("contactNo");
+                            String rollsRequired = object2.optString("rollsRequired");
+                            String serviceRequestNumber = object2.optString("serviceRequestNumber");
+                            String serviceStatus = object2.optString("serviceStatus");
+                            String requestDate = object2.optString("requestDate");
+                            String problemSubCode = object2.optString("problemSubCode");
+
+                            merchantId = encryptDecrypt.decrypt(merchantId);
+                            serviceID = encryptDecrypt.decrypt(serviceID);
+                            merMobileNo = encryptDecrypt.decrypt(merMobileNo);
+                            tid = encryptDecrypt.decrypt(tid);
+                            serviceType = encryptDecrypt.decrypt(serviceType);
+                            probDetails = encryptDecrypt.decrypt(probDetails);
+                            offDays = encryptDecrypt.decrypt(offDays);
+                            visitTiming = encryptDecrypt.decrypt(visitTiming);
+                            contactNo = encryptDecrypt.decrypt(contactNo);
+                            rollsRequired = encryptDecrypt.decrypt(rollsRequired);
+                            serviceRequestNumber = encryptDecrypt.decrypt(serviceRequestNumber);
+                            serviceStatus = encryptDecrypt.decrypt(serviceStatus);
+                            requestDate = encryptDecrypt.decrypt(requestDate);
+                            problemSubCode = encryptDecrypt.decrypt(problemSubCode);
+
+
+
+                            srStatus = new SRStatus(merchantId,serviceID,merMobileNo,tid,serviceType,probDetails,offDays,visitTiming,contactNo,rollsRequired,
+                                    serviceRequestNumber,serviceStatus,requestDate,problemSubCode);
+                            srStatuses.add(srStatus);
+
+                        }
+
+                        listSRStatus.setVisibility(View.VISIBLE);
+                        vSearchLayout.setVisibility(View.GONE);
+                        txtSearch.setVisibility(View.VISIBLE);
+                        adapter = new SRStatusAdapter(getActivity(), srStatuses);
+                        listSRStatus.setAdapter(adapter);
+                        progressDialog.dismiss();
+
+                    } else {
+                        progressDialog.dismiss();
+                        Constants.showToast(getActivity(), getString(R.string.no_details));
+
+                    }
+                }else {
+                    Constants.showToast(getActivity(),getString(R.string.network_error));
+                }
+            } catch (JSONException e) {
+                progressDialog.dismiss();
+                e.printStackTrace();
+                Constants.showToast(getActivity(),getString(R.string.network_error));
+            }
+
+        }
+    }
+
 
 
 }

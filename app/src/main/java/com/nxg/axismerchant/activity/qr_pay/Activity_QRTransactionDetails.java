@@ -242,38 +242,22 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
             try {
 
-                progressDialog.dismiss();
-                Constants.showToast(Activity_QRTransactionDetails.this,data);
-
-/*
                 if(!data.equals("")) {
-                    JSONArray transaction = new JSONArray(data);
-                    JSONObject object1 = transaction.getJSONObject(0);
+                    JSONObject object1 = new JSONObject(data);
 
-                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                    JSONObject obj = rowResponse.getJSONObject(0);
-                    String result = obj.optString("result");
-
-                    result = encryptDecryptRegister.decrypt(result);
+                    String result = object1.optString("Result");
+                    String refundStatus = object1.optString("ReturnDescription");
                     if (result.equals("Success")) {
-                        JSONObject object = transaction.getJSONObject(1);
-                        JSONArray transactionBetDates = object.getJSONArray("refundTransaction");
-                        for (int i = 0; i < transactionBetDates.length(); i++) {
 
-                            JSONObject object2 = transactionBetDates.getJSONObject(i);
-
-                        }
-                        refLayout.setVisibility(View.GONE);
-                        progressDialog.dismiss();
-                        Constants.showToast(Activity_QRTransactionDetails.this, "Refund successful");
+                        Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.refund_successful));
                         finish();
 
-                    } else {
-                        JSONObject object = transaction.getJSONObject(1);
-                        JSONArray transactionBetDates = object.getJSONArray("refundTransaction");
-                        JSONObject object2 = transactionBetDates.getJSONObject(0);
-                        result = object2.optString("result");
-                        result = encryptDecryptRegister.decrypt(result);
+
+                    } if(refundStatus.equalsIgnoreCase("Cannot Refund"))
+                    {
+                        Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.cannot_refund));
+                    }else {
+
                         Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.network_error));
 
                         progressDialog.dismiss();
@@ -283,7 +267,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                     Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
                     progressDialog.dismiss();
                 }
-*/
+
             } catch (Exception e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
@@ -378,6 +362,8 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         String terminal_status = object1.optString("terminal_status");
                         String id = object1.optString("id");
                         String transStatus = object1.optString("transStatus");
+                        String isRefund = object1.optString("isRefund");
+                        String tid = object1.optString("tid");
 
                         mvisa_merchant_id = encryptDecrypt.decrypt(mvisa_merchant_id);
                         merchantId = encryptDecrypt.decrypt(merchantId);
@@ -400,17 +386,19 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         terminal_status = encryptDecrypt.decrypt(terminal_status);
                         id = encryptDecrypt.decrypt(id);
                         transStatus = encryptDecrypt.decrypt(transStatus);
+                        isRefund = encryptDecrypt.decrypt(isRefund);
+                        tid = encryptDecrypt.decrypt(tid);
 
                         if(onDate.contains("-"))
                             onDate.replace("-","/");
-                        String tid = "24313459";
+//                        String tid = "24313459";
                         auth_code = "501450";
                         ref_no = "622419070564";
 
 //                        val = createObject(mvisa_merchant_id,ref_no,tid,auth_code);
 //                        val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'"+mvisa_merchant_id+"','password':'a01610228fe998f515a72dd730294d87','auth_code':'"+auth_code+"','ref_no':'"+ref_no+"','tid':'24313459','class_name':'AllTransaction','function':'refundSR'}";
 
-                        val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'"+mvisa_merchant_id+"','password':'a01610228fe998f515a72dd730294d87','auth_code':'"+auth_code+"','ref_no':'"+ref_no+"','tid':'24313459','class_name':'AllTransaction','function':'refundSR'}";
+                        val = "[{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'"+mvisa_merchant_id+"','password':'a01610228fe998f515a72dd730294d87','auth_code':'"+auth_code+"','ref_no':'"+ref_no+"','tid':'"+tid+"','class_name':'AllTransaction','function':'refundSR'}]";
 
                         Log.e("Val", val);
 
@@ -423,6 +411,12 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         ((TextView)findViewById(R.id.amount)).setText(getString(R.string.Rs)+txn_amount);
                         ((TextView)findViewById(R.id.remark1)).setText(primary_id);
                         ((TextView)findViewById(R.id.remark2)).setText(secondary_id);
+
+                        if (isRefund.equals("0"))
+                            refLayout.setVisibility(View.VISIBLE);
+                        else
+                            refLayout.setVisibility(View.GONE);
+
                        /* if(transStatus.equals("Pending")) {
                             ((TextView) findViewById(R.id.txtStatus)).setText(transStatus);
                             ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_orange_light));

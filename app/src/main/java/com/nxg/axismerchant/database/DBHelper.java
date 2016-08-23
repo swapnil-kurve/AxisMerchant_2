@@ -14,6 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME_E_PAYMENT = "EPayment";
     public static final String TABLE_NAME_MPIN = "mpin";
     public static final String TABLE_NAME_NOTIFICATION = "notification";
+    public static final String TABLE_NAME_MIS_XN_REPORT = "TransactionReport";
     private static final int DATABASE_VERSION = 2;
 
     public static final String UID = "_id";
@@ -36,6 +37,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String AMOUNT = "amount";
     public static final String REMARK = "remark";
 
+    public static final String MIS_TR_TOTAL_Xn = "totalTransaction";
+    public static final String MIS_TR_AVG_TCKT_SIZE = "avgTicketSize";
+    public static final String MIS_TR_XN_VOLUME = "volume";
+    public static final String MIS_TR_XN_DATE = "transDate";
+    public static final String MIS_TR_TDATE = "tDate";
+    public static final String MIS_TR_TTYPE = "tType";
+
     public static final String MPIN = "mpin";
 
     private static final String CREATE_TABLE_PROMOTIONS = "CREATE TABLE "+ TABLE_NAME_PROMOTIONS +" ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+PROMOTION_ID+" VARCHAR(255),"
@@ -47,6 +55,10 @@ public class DBHelper extends SQLiteOpenHelper {
             +CUST_MOBILE+" VARCHAR(255),"+AMOUNT+" VARCHAR(255),"+REMARK+" VARCHAR(255),"
             +INVOICE_NO+" VARCHAR(255), "+IS_FAVORITE+" VARCHAR(255), "+IS_REFUND+" VARCHAR(255), "+TRANS_DATE+" VARCHAR(255), "+STATUS+" VARCHAR(255));";
 
+    private static final String CREATE_TABLE_MIS_TRANSACTION_REPORT = "CREATE TABLE "+ TABLE_NAME_MIS_XN_REPORT +" ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+            +MIS_TR_TOTAL_Xn+" VARCHAR(255),"+MIS_TR_AVG_TCKT_SIZE+" VARCHAR(255),"+MIS_TR_XN_VOLUME+" VARCHAR(255),"
+            +MIS_TR_XN_DATE+" VARCHAR(255), "+MIS_TR_TDATE+" VARCHAR(255), "+MIS_TR_TTYPE+" VARCHAR(255));";
+
     private static final String CREATE_TABLE_MPIN = "CREATE TABLE "+ TABLE_NAME_MPIN +" ("+MPIN+" VARCHAR(255));";
 
     private static final String CREATE_TABLE_NOTIFICATION = "CREATE TABLE "+ TABLE_NAME_NOTIFICATION +" ("+UID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -57,6 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DROP_TABLE_E_PAYMENT = "DROP TABLE IF EXISTS "+TABLE_NAME_E_PAYMENT;
     private static final String DROP_TABLE_MPIN = "DROP TABLE IF EXISTS "+TABLE_NAME_MPIN;
     private static final String DROP_TABLE_NOTIFICATION = "DROP TABLE IF EXISTS "+TABLE_NAME_NOTIFICATION;
+    public static final String DROP_TABLE_MIS_XN_REPORT = "DROP TABLE IF EXISTS "+TABLE_NAME_MIS_XN_REPORT;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -70,6 +83,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(CREATE_TABLE_E_PAYMENT);
             db.execSQL(CREATE_TABLE_MPIN);
             db.execSQL(CREATE_TABLE_NOTIFICATION);
+            db.execSQL(CREATE_TABLE_MIS_TRANSACTION_REPORT);
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -84,6 +98,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(DROP_TABLE_E_PAYMENT);
             db.execSQL(DROP_TABLE_MPIN);
             db.execSQL(DROP_TABLE_NOTIFICATION);
+            db.execSQL(DROP_TABLE_MIS_XN_REPORT);
             onCreate(db);
         }catch (Exception e)
         {

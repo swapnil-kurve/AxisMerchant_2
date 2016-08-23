@@ -2,13 +2,17 @@ package com.nxg.axismerchant.fragments.reports;
 
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +35,9 @@ import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
 import com.nxg.axismerchant.classes.HTTPUtils;
+import com.nxg.axismerchant.classes.SMSPayStatus;
 import com.nxg.axismerchant.classes.TransactionReport;
+import com.nxg.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -64,8 +70,10 @@ public class PageFragment_for_TransactionReport extends Fragment {
     TextView txtDateDuration;
     String MOBILE, MID;
     private String date;
-
+    int pageNO;
+    DBHelper dbHelper;
     TransactionReport report;
+    private String pageTitle;
     ArrayList<TransactionReport> transactionReports;
     TransactionReportAdapter transactionReportAdapter;
 
@@ -79,14 +87,8 @@ public class PageFragment_for_TransactionReport extends Fragment {
         encryptDecrypt = new EncryptDecrypt();
 
         Bundle bundle = getArguments();
-        int pos = bundle.getInt(ARG_OBJECT);
+        pageNO = bundle.getInt(ARG_OBJECT);
         TextView txtLabel = (TextView) view.findViewById(R.id.txtLabel);
-        if(pos == 0)
-        {
-            txtLabel.setVisibility(View.VISIBLE);
-        }else{
-            txtLabel.setVisibility(View.GONE);
-        }
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         MID = preferences.getString("MerchantID","0");
@@ -99,7 +101,27 @@ public class PageFragment_for_TransactionReport extends Fragment {
 
         listData.addParallaxedHeaderView(v);
 
-        getChartData();
+
+
+        if(pageNO == 0)
+        {
+            txtLabel.setVisibility(View.VISIBLE);
+
+            dbHelper = new DBHelper(getActivity());
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            db.execSQL("delete from "+ DBHelper.TABLE_NAME_MIS_XN_REPORT);
+
+            getChartData();
+        }else{
+            txtLabel.setVisibility(View.GONE);
+            if(pageNO == 1)
+                pageTitle = "SMS";
+            else if(pageNO == 2)
+                pageTitle = "QR";
+
+            retrieveFromDatabase();
+        }
+
 
         return view;
     }
@@ -219,12 +241,12 @@ public class PageFragment_for_TransactionReport extends Fragment {
                             transDate.replace("-","/");
 
                         transDate = transDate.split("\\s+")[0];
-                        report = new TransactionReport(Totaltransaction,transDate,TxnVolume,avgTicketSize,tDate,tType);
-                        transactionReports.add(report);
+//                        report = new TransactionReport(Totaltransaction,transDate,TxnVolume,avgTicketSize,tDate,tType);
+//                        transactionReports.add(report);
+                        InsertIntoDatabase(Totaltransaction, avgTicketSize, TxnVolume, transDate, tDate,tType);
                     }
-
                     txtDateDuration.setText(date);
-                    showBarChart();
+                    retrieveFromDatabase();
 
                     transactionReportAdapter = new TransactionReportAdapter(getActivity(),transactionReports);
                     listData.setAdapter(transactionReportAdapter);
@@ -249,67 +271,68 @@ public class PageFragment_for_TransactionReport extends Fragment {
     {
         layoutChart.clear();
 
-        ArrayList<TransactionReport> xnArrayList = new ArrayList<>();
-        for (int i = transactionReports.size()-1; i>=0 ; i--) {
-            xnArrayList.add(transactionReports.get(i));
-        }
-
-        date = "";
-        date = date + xnArrayList.get(0).getTransDate()+" To "+xnArrayList.get(xnArrayList.size()-1).getTransDate();
-        txtDateDuration.setText(date);
-
-        ArrayList<BarEntry> entries = new ArrayList<>();
-
-        for (int i = 0; i < xnArrayList.size(); i++) {
-            if (xnArrayList.get(i).getTotaltransaction().equals("")) {
-                entries.add(new BarEntry(0, i));
-            } else {
-                entries.add(new BarEntry(Integer.parseInt(xnArrayList.get(i).getTotaltransaction()), i));
+        if(transactionReports.size() > 0) {
+            ArrayList<TransactionReport> xnArrayList = new ArrayList<>();
+            for (int i = transactionReports.size() - 1; i >= 0; i--) {
+                xnArrayList.add(transactionReports.get(i));
             }
+
+            date = "";
+            date = date + xnArrayList.get(0).getTransDate() + " To " + xnArrayList.get(xnArrayList.size() - 1).getTransDate();
+            txtDateDuration.setText(date);
+
+            ArrayList<BarEntry> entries = new ArrayList<>();
+
+            for (int i = 0; i < xnArrayList.size(); i++) {
+                if (xnArrayList.get(i).getTotaltransaction().equals("")) {
+                    entries.add(new BarEntry(0, i));
+                } else {
+                    entries.add(new BarEntry(Integer.parseInt(xnArrayList.get(i).getTotaltransaction()), i));
+                }
+            }
+
+            BarDataSet dataSet = new BarDataSet(entries, "");
+            dataSet.setColor(getResources().getColor(R.color.colorPrimary));
+            dataSet.setBarSpacePercent(25f);
+
+            ArrayList<String> labels = new ArrayList<>();
+
+            for (int i = 0; i < xnArrayList.size(); i++) {
+                labels.add(xnArrayList.get(i).gettDate());
+            }
+
+            BarChart chart = new BarChart(getActivity());
+            BarData data = new BarData(labels, dataSet);
+            data.setValueFormatter(new MyValueFormatter());
+
+            XAxis xAxis = chart.getXAxis();
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setDrawGridLines(false);
+            xAxis.setSpaceBetweenLabels(0);
+
+            Legend l = chart.getLegend();
+            l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+            l.setForm(Legend.LegendForm.LINE);
+            l.setFormSize(0f);
+            l.setTextSize(0f);
+            l.setXEntrySpace(0f);
+            l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
+
+            chart.getAxisRight().setEnabled(false);
+            chart.setDescription("");
+            chart.setData(data);
+            chart.setVisibleXRangeMaximum(7);
+            chart.moveViewToX(xnArrayList.size());
+            chart.setDoubleTapToZoomEnabled(false);
+            chart.setPinchZoom(false);
+            chart.setScaleEnabled(false);
+
+            layoutChart.addView(chart);
+
+            transactionReportAdapter = new TransactionReportAdapter(getActivity(), transactionReports);
+            transactionReportAdapter.notifyDataSetChanged();
+            listData.setAdapter(transactionReportAdapter);
         }
-
-        BarDataSet dataSet = new BarDataSet(entries, "");
-        dataSet.setColor(getResources().getColor(R.color.colorPrimary));
-        dataSet.setBarSpacePercent(25f);
-
-        ArrayList<String> labels = new ArrayList<>();
-
-        for (int i = 0; i < xnArrayList.size(); i++) {
-            labels.add(xnArrayList.get(i).gettDate());
-        }
-
-        BarChart chart = new BarChart(getActivity());
-        BarData data = new BarData(labels, dataSet);
-        data.setValueFormatter(new MyValueFormatter());
-
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setSpaceBetweenLabels(0);
-
-        Legend l = chart.getLegend();
-        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
-        l.setForm(Legend.LegendForm.LINE);
-        l.setFormSize(0f);
-        l.setTextSize(0f);
-        l.setXEntrySpace(0f);
-        l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
-
-        chart.getAxisRight().setEnabled(false);
-        chart.setDescription("");
-        chart.setData(data);
-        chart.setVisibleXRangeMaximum(7);
-        chart.moveViewToX(xnArrayList.size());
-        chart.setDoubleTapToZoomEnabled(false);
-        chart.setPinchZoom(false);
-        chart.setScaleEnabled(false);
-
-        layoutChart.addView(chart);
-
-        transactionReportAdapter = new TransactionReportAdapter(getActivity(),transactionReports);
-        transactionReportAdapter.notifyDataSetChanged();
-        listData.setAdapter(transactionReportAdapter);
-
     }
 
 
@@ -365,5 +388,61 @@ public class PageFragment_for_TransactionReport extends Fragment {
             return convertView;
         }
     }
+
+
+    private void InsertIntoDatabase(String totaltransaction, String avgTicketSize, String txnVolume, String transDate, String tDate, String tType) {
+        dbHelper = new DBHelper(getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DBHelper.MIS_TR_TOTAL_Xn, totaltransaction);
+        values.put(DBHelper.MIS_TR_AVG_TCKT_SIZE, avgTicketSize);
+        values.put(DBHelper.MIS_TR_XN_VOLUME, txnVolume);
+        values.put(DBHelper.MIS_TR_XN_DATE, transDate);
+        values.put(DBHelper.MIS_TR_TDATE, tDate);
+        values.put(DBHelper.MIS_TR_TTYPE, tType);
+
+        long id = db.insert(DBHelper.TABLE_NAME_MIS_XN_REPORT, null, values);
+        Log.v("id", String.valueOf(id));
+    }
+
+
+    private void retrieveFromDatabase() {
+        dbHelper = new DBHelper(getActivity());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor crs;
+        if(pageNO == 0) {
+            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.MIS_TR_TOTAL_Xn + ","
+                    + DBHelper.MIS_TR_AVG_TCKT_SIZE + "," + DBHelper.MIS_TR_XN_VOLUME + ","
+                    + DBHelper.MIS_TR_XN_DATE + "," + DBHelper.MIS_TR_TDATE + "," + DBHelper.MIS_TR_TTYPE+ " from " + DBHelper.TABLE_NAME_MIS_XN_REPORT , null);
+        }else {
+            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.MIS_TR_TOTAL_Xn + ","
+                    + DBHelper.MIS_TR_AVG_TCKT_SIZE + "," + DBHelper.MIS_TR_XN_VOLUME + ","
+                    + DBHelper.MIS_TR_XN_DATE + "," + DBHelper.MIS_TR_TDATE + "," + DBHelper.MIS_TR_TTYPE+ " from " + DBHelper.TABLE_NAME_MIS_XN_REPORT+
+                    " where " + DBHelper.MIS_TR_TTYPE+" = ?", new String[] {pageTitle});
+        }
+
+        transactionReports.clear();
+        while (crs.moveToNext()) {
+            String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
+            String Totaltransaction = crs.getString(crs.getColumnIndex(DBHelper.MIS_TR_TOTAL_Xn));
+            String avgTicketSize = crs.getString(crs.getColumnIndex(DBHelper.MIS_TR_AVG_TCKT_SIZE));
+            String TxnVolume = crs.getString(crs.getColumnIndex(DBHelper.MIS_TR_XN_VOLUME));
+            String transDate = crs.getString(crs.getColumnIndex(DBHelper.MIS_TR_XN_DATE));
+            String tDate = crs.getString(crs.getColumnIndex(DBHelper.MIS_TR_TDATE));
+            String tType = crs.getString(crs.getColumnIndex(DBHelper.MIS_TR_TTYPE));
+
+            report = new TransactionReport(Totaltransaction,transDate,TxnVolume,avgTicketSize,tDate,tType);
+            transactionReports.add(report);
+        }
+
+        transactionReportAdapter = new TransactionReportAdapter(getActivity(),transactionReports);
+        listData.setAdapter(transactionReportAdapter);
+
+        transactionReportAdapter.notifyDataSetChanged();
+
+        showBarChart();
+    }
+
 
 }
