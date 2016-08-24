@@ -234,9 +234,11 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
 
             if(promotionsArrayList.get(position).getmWithOption().equalsIgnoreCase("Yes")){
                 imgIcon.setImageResource(R.mipmap.gift);
+                txtTitle.setMaxLines(1);
             }else
             {
                 imgIcon.setImageResource(R.mipmap.offers);
+                txtTitle.setMaxLines(3);
             }
 
             if(promotionsArrayList.get(position).getmReadStatus().equalsIgnoreCase("Unread"))
@@ -407,6 +409,8 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
 
                     }
                     progressDialog.dismiss();
+                }else {
+                    Constants.showToast(Activity_OffersNotices.this, getString(R.string.network_error));
                 }
                 progressDialog.dismiss();
             } catch (JSONException e) {

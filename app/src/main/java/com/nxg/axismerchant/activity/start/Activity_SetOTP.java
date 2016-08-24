@@ -306,6 +306,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
             super.onPostExecute(s);
 
             try {
+                if(s != null){
                 JSONObject object = new JSONObject(s);
                 JSONArray verifyOTP = object.getJSONArray("verifyOTP");
                 JSONObject object1 = verifyOTP.getJSONObject(0);
@@ -322,7 +323,9 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 {
                     Constants.showToast(Activity_SetOTP.this, getString(R.string.incorrect_otp));
                 }
-
+                }else {
+                    Constants.showToast(Activity_SetOTP.this, getString(R.string.network_error));
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -384,6 +387,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
             super.onPostExecute(data);
 
             try{
+                if(data != null){
                 JSONObject object = new JSONObject(data);
                 JSONArray verifyOTP = object.getJSONArray("registerAndSendVeriCode");
                 JSONObject object1 = verifyOTP.getJSONObject(0);
@@ -411,6 +415,9 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 else
                 {
                     Constants.showToast(Activity_SetOTP.this, "Details entered are not valid");
+                }
+                }else {
+                    Constants.showToast(Activity_SetOTP.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -246,20 +246,22 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                     JSONObject object1 = new JSONObject(data);
 
                     String result = object1.optString("Result");
-                    String refundStatus = object1.optString("ReturnDescription");
-                    if (result.equals("Success")) {
+                    String ReturnDescription = object1.optString("ReturnDescription");
+                    if (result.equals("SUCCESS")) {
 
                         Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.refund_successful));
                         finish();
 
 
-                    } if(refundStatus.equalsIgnoreCase("Cannot Refund"))
-                    {
-                        Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.cannot_refund));
-                    }else {
+                    }else if(result.equals("FAILED")){
+                        if(ReturnDescription.equalsIgnoreCase("Cannot Refund. Transaction does not exist"))
+                        {
+                            Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.cannot_refund));
+                        }else {
 
-                        Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.network_error));
+                            Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.network_error));
 
+                        }
                         progressDialog.dismiss();
                     }
                 }else
@@ -391,12 +393,6 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
                         if(onDate.contains("-"))
                             onDate.replace("-","/");
-//                        String tid = "24313459";
-                        auth_code = "501450";
-                        ref_no = "622419070564";
-
-//                        val = createObject(mvisa_merchant_id,ref_no,tid,auth_code);
-//                        val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'"+mvisa_merchant_id+"','password':'a01610228fe998f515a72dd730294d87','auth_code':'"+auth_code+"','ref_no':'"+ref_no+"','tid':'24313459','class_name':'AllTransaction','function':'refundSR'}";
 
                         val = "[{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'"+mvisa_merchant_id+"','password':'a01610228fe998f515a72dd730294d87','auth_code':'"+auth_code+"','ref_no':'"+ref_no+"','tid':'"+tid+"','class_name':'AllTransaction','function':'refundSR'}]";
 
@@ -414,42 +410,10 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
                         if (isRefund.equals("0"))
                             refLayout.setVisibility(View.VISIBLE);
-                        else
-                            refLayout.setVisibility(View.GONE);
-
-                       /* if(transStatus.equals("Pending")) {
-                            ((TextView) findViewById(R.id.txtStatus)).setText(transStatus);
-                            ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_orange_light));
-                            ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.pending);
-                            ((View)findViewById(R.id.refundLayout)).setVisibility(View.VISIBLE);
-                            txtResText.setText("Resend Link");
-                            refLayout.setVisibility(View.VISIBLE);
-                        }else if(transStatus.equals("Success"))
-                        {
-                            ((TextView) findViewById(R.id.txtStatus)).setText(transStatus);
-                            ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_green_dark));
-                            ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.success);
-                            ((View)findViewById(R.id.lyExpiry)).setVisibility(View.GONE);
-                            ((View)findViewById(R.id.refundLayout)).setVisibility(View.VISIBLE);
-                            txtResText.setText("Refund Payment");
-                            refLayout.setVisibility(View.VISIBLE);
-                            *//*if(transType.equalsIgnoreCase("sales")) {
-                                if (isRefund.equals("0"))
-                                    refLayout.setVisibility(View.VISIBLE);
-                                else
-                                    refLayout.setVisibility(View.GONE);
-                            }else{
-                                refLayout.setVisibility(View.GONE);
-                            }*//*
-
-                        }else
-                        {
-                            ((TextView) findViewById(R.id.txtStatus)).setText(transStatus);
-                            ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                            ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.fail);
-                            txtResText.setText("Resend Link");
-                            refLayout.setVisibility(View.VISIBLE);
-                        }*/
+                        else {
+                            txtResText.setText("Already Refunded");
+                            refLayout.setEnabled(false);
+                        }
 
                     } else {
                         Constants.showToast(Activity_QRTransactionDetails.this, getString(R.string.no_details));
@@ -468,28 +432,6 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
         }
     }
 
-    private String createObject(String mvisa_merchant_id, String ref_no, String tid, String auth_code) {
-//        val = "{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':"+mvisa_merchant_id+",'password':'a01610228fe998f515a72dd730294d87','auth_code':"+auth_code+",'ref_no':"+ref_no+",'tid':"+tid+",'class_name':'AllTransaction','function':'refundSR'}";
-
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("bank_code","00031");
-            obj.put("session_id","12341234");
-            obj.put("username","8898626498");
-            obj.put("mvisa_merchant_id",mvisa_merchant_id);
-            obj.put("password","a01610228fe998f515a72dd730294d87");
-            obj.put("auth_code",auth_code);
-            obj.put("ref_no",ref_no);
-            obj.put("tid",tid);
-            obj.put("class_name","AllTransaction");
-            obj.put("function","refundSR");
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return obj.toString();
-    }
 
 
 }

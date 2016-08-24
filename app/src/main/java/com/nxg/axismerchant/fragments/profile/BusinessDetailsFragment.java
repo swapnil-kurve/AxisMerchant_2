@@ -22,7 +22,6 @@ public class BusinessDetailsFragment extends Fragment {
     TextView txtName, txtMobileNo, txtAddress, txtMerchantID;
     EncryptDecryptRegister encryptDecryptRegister;
     SharedPreferences preferences;
-    double screenInches;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

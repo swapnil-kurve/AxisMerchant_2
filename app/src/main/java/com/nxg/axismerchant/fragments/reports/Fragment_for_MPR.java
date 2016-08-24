@@ -523,125 +523,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     }
 
 
-/*
-    private class GetMPRDetails extends AsyncTask<String, Void, String>
-    {
-        ProgressDialog progressDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... arg0) {
-            String str = null;
-            try {
-                HTTPUtils utils = new HTTPUtils();
-                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
-                URI newURI = URI.create(arg0[0]);
-                HttpPost httppost = new HttpPost(newURI);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                String mID = encryptDecryptRegister.encrypt(arg0[1]);
-                String mobile = encryptDecryptRegister.encrypt(arg0[2]);
-                String trans_date = encryptDecrypt.encrypt(arg0[3]);
-
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
-                nameValuePairs.add(new BasicNameValuePair("forDate", trans_date));
-
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpclient.execute(httppost);
-                int stats = response.getStatusLine().getStatusCode();
-
-                if (stats == 200) {
-                    HttpEntity entity = response.getEntity();
-                    String data = EntityUtils.toString(entity);
-                    str = data;
-                }
-            } catch (ParseException e1) {
-                progressDialog.dismiss();
-                e1.printStackTrace();
-            } catch (IOException e) {
-                progressDialog.dismiss();
-                e.printStackTrace();
-            }
-            return str;
-        }
-
-
-        @Override
-        protected void onPostExecute(String data) {
-            super.onPostExecute(data);
-
-            try{
-                JSONArray transaction = new JSONArray(data);
-                JSONObject object1 = transaction.getJSONObject(0);
-
-                JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                JSONObject obj = rowResponse.getJSONObject(0);
-                String result = obj.optString("result");
-
-                result = encryptDecryptRegister.decrypt(result);
-                if(result.equals("Success"))
-                {
-                    JSONObject object = transaction.getJSONObject(1);
-                    JSONArray transactionBetDates = object.getJSONArray("getMPRDetailsForDate");
-                    for (int i = 0; i < transactionBetDates.length(); i++) {
-
-                        JSONObject object2 = transactionBetDates.getJSONObject(i);
-                        String GrossAmt = object2.optString("GrossAmt");
-                        String MDR = object2.optString("MDR");
-                        String serviceTax = object2.optString("serviceTax");
-                        String HOLD_VALUE = object2.optString("HOLD_VALUE");
-                        String ADJUSTMENTS = object2.optString("ADJUSTMENTS");
-                        String CASH_AT_POS = object2.optString("CASH_AT_POS");
-                        String NETAMT = object2.optString("NETAMT");
-                        String transDate = object2.optString("transDate");
-                        String tDate = object2.optString("tDate");
-                        String TOTALTXNS = object2.optString("TOTALTXNS");
-
-                        transDate = encryptDecrypt.decrypt(transDate);
-                        transDate = transDate.split("\\s+")[0];
-
-                        txtGrossAmount.setText(encryptDecrypt.decrypt(GrossAmt));
-                        txtMDR.setText(encryptDecrypt.decrypt(MDR));
-                        txtServiceTax.setText(encryptDecrypt.decrypt(serviceTax));
-                        txtHoldAmount.setText(encryptDecrypt.decrypt(HOLD_VALUE));
-                        txtAdjustments.setText(encryptDecrypt.decrypt(ADJUSTMENTS));
-                        txtCashPos.setText(encryptDecrypt.decrypt(CASH_AT_POS));
-                        txtNoOfTxn.setText(encryptDecrypt.decrypt(TOTALTXNS));
-                        txtPaymentDate.setText(transDate);
-                        txtTotalValue.setText(encryptDecrypt.decrypt(NETAMT));
-                        txtNetAmount.setText(encryptDecrypt.decrypt(NETAMT));
-
-                    }
-                    progressDialog.dismiss();
-                    adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet, screenInches);
-                    listData.setAdapter(adapter);
-
-                }
-                else {
-                    progressDialog.dismiss();
-                    Constants.showToast(getActivity(), getString(R.string.no_details));
-
-                }
-            } catch (JSONException e) {
-                progressDialog.dismiss();
-                e.printStackTrace();
-            }
-
-        }
-    }
-*/
-
-
-
     private class GetFilteredData extends AsyncTask<String, Void, String>
     {
         ProgressDialog progressDialog;
@@ -819,6 +700,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             super.onPostExecute(data);
 
             try{
+                if(data != null){
                 JSONArray transaction = new JSONArray(data);
                 JSONObject object1 = transaction.getJSONObject(0);
 
@@ -836,6 +718,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 else {
                     progressDialog.dismiss();
                     ShowDialog("no");
+                }
+                }else {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();

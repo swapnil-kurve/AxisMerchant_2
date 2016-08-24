@@ -178,7 +178,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
             super.onPostExecute(data);
 
             try{
-                if(!data.equals("")) {
+                if(data != null) {
                     JSONArray transaction = new JSONArray(data);
                     JSONObject object1 = transaction.getJSONObject(0);
 

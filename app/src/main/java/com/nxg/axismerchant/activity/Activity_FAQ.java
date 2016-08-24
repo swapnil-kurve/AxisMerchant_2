@@ -142,6 +142,7 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
             super.onPostExecute(data);
 
             try{
+                if(!data.equals("")){
                 JSONArray transaction = new JSONArray(data);
                 JSONObject object1 = transaction.getJSONObject(0);
 
@@ -174,7 +175,9 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
                 else {
                     progressDialog.dismiss();
 //                    Constants.showToast(Activity_FAQ.this, getString(R.string.no_internet));
-
+                }
+                }else {
+                    Constants.showToast(Activity_FAQ.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();

@@ -311,7 +311,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             super.onPostExecute(data);
 
             try{
-                if(!data.equals("")) {
+                if(data != null) {
                     JSONArray transaction = new JSONArray(data);
                     JSONObject object1 = transaction.getJSONObject(0);
 
@@ -536,7 +536,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             super.onPostExecute(data);
 
             try{
-                if(!data.equals("")) {
+                if(data != null) {
                     JSONArray transaction = new JSONArray(data);
                     JSONObject object1 = transaction.getJSONObject(0);
 

@@ -206,6 +206,7 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
             super.onPostExecute(s);
 
             try {
+                if(s != null){
                 JSONObject object = new JSONObject(s);
                 JSONArray verifyOTP = object.getJSONArray("addPromotionResponse");
                 JSONObject object1 = verifyOTP.getJSONObject(0);
@@ -220,6 +221,9 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
                 else
                 {
                     getActivity().onBackPressed();
+                }
+                }else {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
 
             } catch (JSONException e) {

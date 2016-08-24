@@ -266,6 +266,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
             super.onPostExecute(data);
 
             try{
+                if(data != null){
                 JSONArray transaction = new JSONArray(data);
                 JSONObject object1 = transaction.getJSONObject(0);
 
@@ -285,6 +286,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                     progressDialog.dismiss();
 //                    Constants.showToast(getActivity(), "Sorry! your email id is not registered with us. Kindly contact your relationship manager and register your email id.");
                     ShowDialog("no");
+                }
+                }else {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
@@ -353,6 +357,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
             super.onPostExecute(data);
 
             try{
+                if(data != null){
                 JSONArray transaction = new JSONArray(data);
                 JSONObject object1 = transaction.getJSONObject(0);
 
@@ -400,7 +405,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 else {
                     progressDialog.dismiss();
                     Constants.showToast(getActivity(),getString(R.string.no_internet));
-
+                }
+                }else {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();

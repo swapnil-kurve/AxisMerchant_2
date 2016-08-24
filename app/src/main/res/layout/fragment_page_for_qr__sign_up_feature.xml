@@ -1,0 +1,253 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/lytop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/grow_business"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/title_size" />
+
+
+            <com.nxg.axismerchant.custom.CustomTextViewLight
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="3"
+                android:text="@string/axis_offer_qr"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/subtitle_size" />
+
+            <com.nxg.axismerchant.custom.CustomTextViewHeavy
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="35dp"
+                android:maxLines="1"
+                android:text="@string/qr_feature_title1"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/subtitle_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_textview" />
+
+                <com.nxg.axismerchant.custom.CustomTextViewLight
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:text="@string/qr_pt1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/subtitle_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_textview" />
+
+                <com.nxg.axismerchant.custom.CustomTextViewLight
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:text="@string/qr_pt2"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/subtitle_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_textview" />
+
+                <com.nxg.axismerchant.custom.CustomTextViewLight
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:text="@string/qr_pt3"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/subtitle_size" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_textview" />
+
+                <com.nxg.axismerchant.custom.CustomTextViewLight
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:text="@string/qr_pt4"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/subtitle_size" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_textview" />
+
+                <com.nxg.axismerchant.custom.CustomTextViewLight
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:text="@string/qr_pt5"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/subtitle_size" />
+            </LinearLayout>
+
+
+
+            <com.nxg.axismerchant.custom.CustomTextViewHeavy
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="35dp"
+                android:maxLines="1"
+                android:text="@string/qr_feature_title2"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/subtitle_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_textview" />
+
+                <com.nxg.axismerchant.custom.CustomTextViewLight
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:text="@string/qr_pt6"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/subtitle_size" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_textview" />
+
+                <com.nxg.axismerchant.custom.CustomTextViewLight
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:text="@string/qr_pt7"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/subtitle_size" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/circular_textview" />
+
+                <com.nxg.axismerchant.custom.CustomTextViewLight
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"
+                    android:text="@string/qr_pt8"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/subtitle_size" />
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>

@@ -168,7 +168,7 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
             super.onPostExecute(data);
 
             try{
-                if(!data.equals("")) {
+                if(data != null) {
                     JSONArray transaction = new JSONArray(data);
                     JSONObject object1 = transaction.getJSONObject(0);
 

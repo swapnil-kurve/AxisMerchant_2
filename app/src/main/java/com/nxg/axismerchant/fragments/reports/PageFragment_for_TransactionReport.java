@@ -139,13 +139,20 @@ public class PageFragment_for_TransactionReport extends Fragment {
         transactionReports = new ArrayList<>();
     }
 
+
     private void getChartData() {
+        String mVisaId = "";
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.ProfileInfo,Context.MODE_PRIVATE);
+        if(preferences.contains("mvisaId")) {
+            mVisaId = preferences.getString("mvisaId", "");
+        }
+
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetTransactions().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE, mVisaId, "All");
             } else {
-                new GetTransactions().execute(Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE);
+                new GetTransactions().execute(Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE, mVisaId, "All");
 
             }
         } else {
@@ -178,9 +185,13 @@ public class PageFragment_for_TransactionReport extends Fragment {
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 String mID = encryptDecryptRegister.encrypt(arg0[1]);
                 String mobile = encryptDecryptRegister.encrypt(arg0[2]);
+                String mVisaId = encryptDecrypt.encrypt(arg0[3]);
+                String mTType = encryptDecrypt.encrypt(arg0[4]);
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mvisaId), mVisaId));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.Ttype), mTType));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -208,55 +219,55 @@ public class PageFragment_for_TransactionReport extends Fragment {
             super.onPostExecute(data);
 
             try{
-                JSONArray transaction = new JSONArray(data);
-                JSONObject object1 = transaction.getJSONObject(0);
+                if(data != null) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
 
-                JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                JSONObject obj = rowResponse.getJSONObject(0);
-                String result = obj.optString("result");
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
-                if(result.equals("Success"))
-                {
-                    JSONObject object = transaction.getJSONObject(1);
-                    JSONArray transactionBetDates = object.getJSONArray("getTransDetailsforAll");
-                    for (int i = 0; i < transactionBetDates.length(); i++) {
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray transactionBetDates = object.getJSONArray("getTransDetailsforAll");
+                        for (int i = 0; i < transactionBetDates.length(); i++) {
 
-                        JSONObject object2 = transactionBetDates.getJSONObject(i);
-                        String Totaltransaction = object2.optString("Totaltransaction");
-                        String avgTicketSize = object2.optString("avgTicketSize");
-                        String TxnVolume = object2.optString("TxnVolume");
-                        String transDate = object2.optString("transDate");
-                        String tDate = object2.optString("tDate");
-                        String tType = object2.optString("tType");
+                            JSONObject object2 = transactionBetDates.getJSONObject(i);
+                            String Totaltransaction = object2.optString("Totaltransaction");
+                            String avgTicketSize = object2.optString("avgTicketSize");
+                            String TxnVolume = object2.optString("TxnVolume");
+                            String transDate = object2.optString("transDate");
+                            String tDate = object2.optString("tDate");
+                            String tType = object2.optString("tType");
 
-                        Totaltransaction = encryptDecrypt.decrypt(Totaltransaction);
-                        avgTicketSize = encryptDecrypt.decrypt(avgTicketSize);
-                        TxnVolume = encryptDecrypt.decrypt(TxnVolume);
-                        transDate = encryptDecrypt.decrypt(transDate);
-                        tDate = encryptDecrypt.decrypt(tDate);
-                        tType = encryptDecrypt.decrypt(tType);
+                            Totaltransaction = encryptDecrypt.decrypt(Totaltransaction);
+                            avgTicketSize = encryptDecrypt.decrypt(avgTicketSize);
+                            TxnVolume = encryptDecrypt.decrypt(TxnVolume);
+                            transDate = encryptDecrypt.decrypt(transDate);
+                            tDate = encryptDecrypt.decrypt(tDate);
+                            tType = encryptDecrypt.decrypt(tType);
 
-                        if(transDate.contains("-"))
-                            transDate.replace("-","/");
+                            if (transDate.contains("-"))
+                                transDate.replace("-", "/");
 
-                        transDate = transDate.split("\\s+")[0];
+                            transDate = transDate.split("\\s+")[0];
 //                        report = new TransactionReport(Totaltransaction,transDate,TxnVolume,avgTicketSize,tDate,tType);
 //                        transactionReports.add(report);
-                        InsertIntoDatabase(Totaltransaction, avgTicketSize, TxnVolume, transDate, tDate,tType);
+                            InsertIntoDatabase(Totaltransaction, avgTicketSize, TxnVolume, transDate, tDate, tType);
+                        }
+                        txtDateDuration.setText(date);
+                        retrieveFromDatabase();
+
+                        transactionReportAdapter = new TransactionReportAdapter(getActivity(), transactionReports);
+                        listData.setAdapter(transactionReportAdapter);
+                        progressDialog.dismiss();
+
+                    } else {
+                        progressDialog.dismiss();
+                        Constants.showToast(getActivity(), getString(R.string.no_details));
+
                     }
-                    txtDateDuration.setText(date);
-                    retrieveFromDatabase();
-
-                    transactionReportAdapter = new TransactionReportAdapter(getActivity(),transactionReports);
-                    listData.setAdapter(transactionReportAdapter);
-                    progressDialog.dismiss();
-
-                }
-                else {
-                    progressDialog.dismiss();
-                    Constants.showToast(getActivity(), getString(R.string.no_details));
-
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();

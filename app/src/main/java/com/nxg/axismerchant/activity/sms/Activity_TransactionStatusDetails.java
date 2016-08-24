@@ -361,7 +361,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                                 else {
 //                                    refLayout.setVisibility(View.GONE);
                                     txtResText.setText("Already refunded");
-                                    txtResText.setEnabled(false);
+                                    refLayout.setEnabled(false);
                                 }
                             }else{
                                 refLayout.setVisibility(View.GONE);

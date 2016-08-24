@@ -294,50 +294,52 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             super.onPostExecute(data);
 
             try{
-                JSONArray transaction = new JSONArray(data);
-                JSONObject object1 = transaction.getJSONObject(0);
+                if(data != null) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
 
-                JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                JSONObject obj = rowResponse.getJSONObject(0);
-                String result = obj.optString("result");
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
-                if(result.equals("Success"))
-                {
-                    JSONObject object = transaction.getJSONObject(1);
-                    JSONArray transactionBetDates = object.getJSONArray("getMerchantLikeMe");
-                    for (int i = 0; i < transactionBetDates.length(); i++) {
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray transactionBetDates = object.getJSONArray("getMerchantLikeMe");
+                        for (int i = 0; i < transactionBetDates.length(); i++) {
 
-                        JSONObject object2 = transactionBetDates.getJSONObject(i);
-                        String noOfTxn = object2.optString("noOfTxn");
-                        String avgTicketSize = object2.optString("avgTicketSize");
-                        String txnVol = object2.optString("txnVol");
-                        String mer_id = object2.optString("mer_id");
-                        String mHead = object2.optString("mHead");
+                            JSONObject object2 = transactionBetDates.getJSONObject(i);
+                            String noOfTxn = object2.optString("noOfTxn");
+                            String avgTicketSize = object2.optString("avgTicketSize");
+                            String txnVol = object2.optString("txnVol");
+                            String mer_id = object2.optString("mer_id");
+                            String mHead = object2.optString("mHead");
 
-                        noOfTxn = encryptDecrypt.decrypt(noOfTxn);
-                        avgTicketSize = encryptDecrypt.decrypt(avgTicketSize);
-                        txnVol = encryptDecrypt.decrypt(txnVol);
-                        mer_id = encryptDecrypt.decrypt(mer_id);
-                        mHead = encryptDecrypt.decrypt(mHead);
+                            noOfTxn = encryptDecrypt.decrypt(noOfTxn);
+                            avgTicketSize = encryptDecrypt.decrypt(avgTicketSize);
+                            txnVol = encryptDecrypt.decrypt(txnVol);
+                            mer_id = encryptDecrypt.decrypt(mer_id);
+                            mHead = encryptDecrypt.decrypt(mHead);
 
-                        merchantLikeMe = new MerchantLikeMe(noOfTxn,txnVol,avgTicketSize,mer_id,mHead);
-                        likeMeArrayList.add(merchantLikeMe);
+                            merchantLikeMe = new MerchantLikeMe(noOfTxn, txnVol, avgTicketSize, mer_id, mHead);
+                            likeMeArrayList.add(merchantLikeMe);
+                        }
+
+
+                        getGraphData();
+                        progressDialog.dismiss();
+                        adapter = new CustomListAdapterForMerchantLikeMe(getActivity(), likeMeArrayList);
+                        listData.setAdapter(adapter);
+
+                    } else {
+                        lyTop.setVisibility(View.GONE);
+                        lyInfo.setVisibility(View.VISIBLE);
+                        progressDialog.dismiss();
+
                     }
-
-
-                    getGraphData();
-                    progressDialog.dismiss();
-                    adapter = new CustomListAdapterForMerchantLikeMe(getActivity(),likeMeArrayList);
-                    listData.setAdapter(adapter);
-
-                }
-                else {
-                    lyTop.setVisibility(View.GONE);
-                    lyInfo.setVisibility(View.VISIBLE);
-                    progressDialog.dismiss();
-
-                }
+                }else {
+                Constants.showToast(getActivity(), getString(R.string.network_error));
+            }
             } catch (JSONException e) {
                 progressDialog.dismiss();
                 e.printStackTrace();
@@ -402,6 +404,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             super.onPostExecute(data);
 
             try{
+                if(data != null){
                 JSONArray transaction = new JSONArray(data);
                 JSONObject object1 = transaction.getJSONObject(0);
 
@@ -439,7 +442,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 else {
                     progressDialog.dismiss();
                     Constants.showToast(getActivity(), getString(R.string.no_details));
-
+                }
+                }else {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
@@ -584,6 +589,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             super.onPostExecute(data);
             String date = "";
             try{
+                if(data != null){
                 JSONArray transaction = new JSONArray(data);
                 JSONObject object1 = transaction.getJSONObject(0);
 
@@ -632,7 +638,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 else {
                     progressDialog.dismiss();
                     Constants.showToast(getActivity(), getString(R.string.no_details));
-
+                }
+                }else {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();

@@ -362,7 +362,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener {
             super.onPostExecute(data);
 
             try {
-                if (!data.equals("null")) {
+                if (data != null) {
                     JSONArray transaction = new JSONArray(data);
                     JSONObject object1 = transaction.getJSONObject(0);
 

@@ -77,7 +77,7 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
         Constants.getIMEI(this);
 
         SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
-        String res = preferences.getString("Validated","No");
+        String res = preferences.getString("SMSRequestValidated","No");
         if(res.equalsIgnoreCase("pending"))
         {
             ShowDialog2("pending");
@@ -152,7 +152,7 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
              txtConfirm.setText("Ok");
              SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
              SharedPreferences.Editor editor = preferences.edit();
-             editor.putString("Validated", "pending");
+             editor.putString("SMSRequestValidated", "pending");
              editor.apply();
          } else if (status.equalsIgnoreCase("Block")) {
              txtTitle.setVisibility(View.GONE);
@@ -163,7 +163,7 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
              txtConfirm.setText("Ok");
              SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
              SharedPreferences.Editor editor = preferences.edit();
-             editor.putString("Validated", "pending");
+             editor.putString("SMSRequestValidated", "pending");
              editor.apply();
          }
          // if button is clicked, close the custom dialog

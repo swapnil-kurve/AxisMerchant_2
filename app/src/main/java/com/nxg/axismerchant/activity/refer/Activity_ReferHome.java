@@ -265,6 +265,7 @@ public class Activity_ReferHome extends AppCompatActivity implements View.OnClic
             super.onPostExecute(data);
 
             try{
+                if(!data.equals("")){
                 JSONArray transaction = new JSONArray(data);
                 JSONObject object1 = transaction.getJSONObject(0);
 
@@ -282,6 +283,9 @@ public class Activity_ReferHome extends AppCompatActivity implements View.OnClic
                     progressDialog.dismiss();
                     ShowDialog(0);
 
+                }
+                }else {
+                    Constants.showToast(Activity_ReferHome.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
