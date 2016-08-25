@@ -210,7 +210,7 @@ public class GCMNotificationIntentService extends IntentService {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(title))
                 .setContentTitle(title)
                 .setContentText(message)
-                .setSmallIcon(R.mipmap.gcm_icon);
+                .setSmallIcon(getNotificationIcon());
 
         mNotifyBuilder.setContentIntent(resultPendingIntent);
 
@@ -224,7 +224,10 @@ public class GCMNotificationIntentService extends IntentService {
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
 
-
+    private int getNotificationIcon() {
+        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
+        return useWhiteIcon ? R.mipmap.axis_mnemonic : R.mipmap.ic_launcher;
+    }
     /**
      * Update Refund Status of SMS Pay into Table
      * @param invNo

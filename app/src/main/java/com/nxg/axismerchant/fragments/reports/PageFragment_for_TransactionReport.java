@@ -86,8 +86,7 @@ public class PageFragment_for_TransactionReport extends Fragment {
         encryptDecryptRegister =  new EncryptDecryptRegister();
         encryptDecrypt = new EncryptDecrypt();
 
-        Bundle bundle = getArguments();
-        pageNO = bundle.getInt(ARG_OBJECT);
+
         TextView txtLabel = (TextView) view.findViewById(R.id.txtLabel);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
@@ -102,7 +101,8 @@ public class PageFragment_for_TransactionReport extends Fragment {
         listData.addParallaxedHeaderView(v);
 
 
-
+        Bundle bundle = getArguments();
+        pageNO = bundle.getInt(ARG_OBJECT);
         if(pageNO == 0)
         {
             txtLabel.setVisibility(View.VISIBLE);
@@ -114,10 +114,12 @@ public class PageFragment_for_TransactionReport extends Fragment {
             getChartData();
         }else{
             txtLabel.setVisibility(View.GONE);
-            if(pageNO == 1)
+            if(pageNO == 1) {
                 pageTitle = "SMS";
-            else if(pageNO == 2)
+            }
+            else if(pageNO == 2) {
                 pageTitle = "QR";
+            }
 
             retrieveFromDatabase();
         }

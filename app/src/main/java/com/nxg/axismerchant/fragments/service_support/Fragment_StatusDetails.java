@@ -77,17 +77,15 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
         String mSRNo = "";
         if(bundle != null)
         {
+            mSRNo = bundle.getString("SRNo");
 
-                mSRNo = bundle.getString("SRNo");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new GetSRStatusDetails().executeOnExecutor(AsyncTask
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRNo);
+            } else {
+                new GetSRStatusDetails().execute(Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRNo);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    new GetSRStatusDetails().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRNo);
-                } else {
-                    new GetSRStatusDetails().execute(Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRNo);
-
-                }
-
+            }
 
         }
 
@@ -134,13 +132,8 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
-                if(callType.equals("Details"))
-                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.serviceRequestNumber),srno));
-                else{
-                    String tid = encryptDecrypt.encrypt(arg0[4]);
-                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.serviceRequestNumber),srno));
-                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.tid),tid));
-                }
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.serviceRequestNumber),srno));
+
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -181,10 +174,7 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                         JSONObject object = transaction.getJSONObject(1);
                         JSONArray transactionBetDates;
 
-                        if(callType.equals("Details"))
                             transactionBetDates = object.getJSONArray("getServiceByID");
-                        else
-                            transactionBetDates = object.getJSONArray("searchSRService");
 
                             JSONObject object2 = transactionBetDates.getJSONObject(0);
                             String merchantId = object2.optString("merchantId");

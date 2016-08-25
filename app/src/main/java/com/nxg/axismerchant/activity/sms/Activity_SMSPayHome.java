@@ -245,7 +245,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                         startActivity(new Intent(this, Activity_SMSPayment.class));
                     }else
                     {
-                        ShowDialog();
+                        ShowDialog(simStatus);
                     }
                 }else
                 {
@@ -301,7 +301,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                     startActivity(intent);
                 }
             } else {
-                ShowDialog();
+                ShowDialog(simStatus);
             }
         }else {
             Constants.showToast(this, getString(R.string.airplane_mode));
@@ -475,7 +475,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     }
 
 
-    private  void ShowDialog()
+    private  void ShowDialog(int simStatus)
     {
         // custom dialog
         final Dialog dialog = new Dialog(this);
@@ -496,7 +496,33 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         imgResponse.setVisibility(View.GONE);
         txtMsg2.setVisibility(View.GONE);
 
-        txtMsg1.setText("Please insert sim card to use this feature.");
+        switch (simStatus)
+        {
+            case 100:
+                txtMsg1.setText("Please insert sim card to use this feature.");
+                break;
+
+            case 200:
+                txtMsg1.setText("Your Sim network is locked.");
+                break;
+
+            case 300:
+                txtMsg1.setText("Your Sim id PIN Locked.");
+                break;
+
+            case 400:
+                txtMsg1.setText("Your Sim id PUK Locked.");
+                break;
+
+            case 600:
+                txtMsg1.setText("Unknown sim state.");
+                break;
+
+            case 0:
+                txtMsg1.setText("Please insert sim card to use this feature.");
+                break;
+        }
+
         txtConfirm.setText("Ok");
         txtConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -49,9 +49,11 @@ import java.util.List;
 public class SignInFragment extends Fragment implements View.OnClickListener {
 
     EditText edtMPIN;
-    ImageView imgErrorMPIN;
+    ImageView imgErrorMPIN, imgSwitch;
     SharedPreferences preferences;
     EncryptDecryptRegister encryptDecryptRegister;
+    int flag = 1 ;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,11 +80,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     private void getInitialize(View view) {
         edtMPIN = (EditText) view.findViewById(R.id.edtmPIN);
         imgErrorMPIN = (ImageView) view.findViewById(R.id.imgErrorMPIN);
+        imgSwitch = (ImageView) view.findViewById(R.id.imgTick);
+
         TextView txtSubmit = (TextView) view.findViewById(R.id.txtSubmit);
         TextView txtForgotMPIN = (TextView) view.findViewById(R.id.txtForgotMPIN);
 
         txtSubmit.setOnClickListener(this);
         txtForgotMPIN.setOnClickListener(this);
+        imgSwitch.setOnClickListener(this);
 
         encryptDecryptRegister = new EncryptDecryptRegister();
     }
@@ -98,6 +103,18 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
             case R.id.txtForgotMPIN:
                 forgotMPIN();
+                break;
+
+            case R.id.imgTick:
+                if(flag == 0)
+                {
+                    imgSwitch.setImageResource(R.mipmap.login_tick);
+                    flag = 1;
+                }else
+                {
+                    imgSwitch.setImageResource(0);
+                    flag = 0;
+                }
                 break;
         }
     }
@@ -140,6 +157,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("MPIN", mMPIN);
+            if(flag == 1)
+                editor.putString("KeepLoggedIn","true");
             editor.apply();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a");

@@ -241,7 +241,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             bundle.putString("Call_Type","Details");
             Fragment_StatusDetails statusDetails = new Fragment_StatusDetails();
             statusDetails.setArguments(bundle);
-            getFragmentManager().beginTransaction().replace(R.id.xnContainer, statusDetails).commit();
+            getFragmentManager().beginTransaction().replace(R.id.xnContainer, statusDetails).addToBackStack("statusDetails").commit();
         }
     }
 

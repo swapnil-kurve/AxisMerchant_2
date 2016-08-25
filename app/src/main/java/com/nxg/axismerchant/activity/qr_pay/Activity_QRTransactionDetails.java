@@ -407,6 +407,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         ((TextView)findViewById(R.id.amount)).setText(getString(R.string.Rs)+txn_amount);
                         ((TextView)findViewById(R.id.remark1)).setText(primary_id);
                         ((TextView)findViewById(R.id.remark2)).setText(secondary_id);
+                        ((TextView)findViewById(R.id.transactionStatus)).setText(transStatus);
 
                         if (isRefund.equals("0"))
                             refLayout.setVisibility(View.VISIBLE);

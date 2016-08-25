@@ -28,6 +28,7 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
     LinearLayout lyServiceSupport, lyTrackStatus;
     View viewServiceSupport, viewTrackStatus;
     ImageView imgBack, imgNotification, imgProfile;
+    private int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
     }
     private void changeToServiceSupport()
     {
+        flag = 0;
         viewServiceSupport.setBackgroundColor(Color.WHITE);
         viewTrackStatus.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
@@ -90,6 +92,7 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
 
     private void changeToTrackStatus()
     {
+        flag = 1;
         viewTrackStatus.setBackgroundColor(Color.WHITE);
         viewServiceSupport.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
@@ -99,7 +102,12 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        if(flag == 1)
+//        {
+//            changeToServiceSupport();
+//        }else {
+            super.onBackPressed();
+//        }
     }
 
     @Override
