@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.text.Html;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -208,9 +209,9 @@ public class GCMNotificationIntentService extends IntentService {
 
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(title))
-                .setContentTitle(title)
-                .setContentText(message)
-                .setSmallIcon(getNotificationIcon());
+                .setContentTitle(Html.fromHtml(title))
+                .setContentText(Html.fromHtml(message))
+                .setSmallIcon(R.mipmap.axis_mnemonic);
 
         mNotifyBuilder.setContentIntent(resultPendingIntent);
 

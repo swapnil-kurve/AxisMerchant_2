@@ -39,7 +39,6 @@ public class Activity_Main extends AppCompatActivity {
     GoogleCloudMessaging gcmObj;
     String regId;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 1111;
-    double screenInches;
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
@@ -104,9 +103,9 @@ public class Activity_Main extends AppCompatActivity {
             {
                 mTitle = getIntent().getExtras().getString("Title");
                 bundle.putString("Title",mTitle);
-        }
+            }
 
-    }
+        }
 
     }
 

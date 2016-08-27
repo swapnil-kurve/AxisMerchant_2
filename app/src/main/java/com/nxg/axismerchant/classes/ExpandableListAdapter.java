@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
@@ -40,6 +41,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView txtMobileNo;
         TextView txtAddedOn;
         ImageView imgIcon;
+        TextView txtmVisaID;
     }
 
 
@@ -73,10 +75,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             holder.txtEmailID = (TextView) convertView.findViewById(R.id.txtEmailID);
             holder.txtMobileNo = (TextView) convertView.findViewById(R.id.txtMobileNumber);
             holder.txtAddedOn = (TextView) convertView.findViewById(R.id.txtAddedOn);
+            holder.txtmVisaID = (TextView) convertView.findViewById(R.id.txtmVisaID);
 
             holder.txtEmailID.setText(childText.getEmailid());
             holder.txtMobileNo.setText(childText.getMobileNo());
             holder.txtAddedOn.setText(childText.getAddedDate());
+            if(childText.getAssignedMVisaID().equalsIgnoreCase("") || childText.getAssignedMVisaID().equalsIgnoreCase("null"))
+                holder.txtmVisaID.setText("mVisa Id");
+            else
+                holder.txtmVisaID.setText(childText.getAssignedMVisaID());
         }
         return convertView;
     }

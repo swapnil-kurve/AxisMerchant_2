@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -229,8 +230,8 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
             TextView txtSecondaryText = (TextView) convertView.findViewById(R.id.txtSecondaryText);
             ImageView imgIcon = (ImageView) convertView.findViewById(R.id.imgIcon);
 
-            txtTitle.setText(promotionsArrayList.get(position).getmSubTitle());
-            txtSecondaryText.setText(promotionsArrayList.get(position).getmMessage());
+            txtTitle.setText(Html.fromHtml(promotionsArrayList.get(position).getmSubTitle()));
+            txtSecondaryText.setText(Html.fromHtml(promotionsArrayList.get(position).getmMessage()));
 
             if(promotionsArrayList.get(position).getmWithOption().equalsIgnoreCase("Yes")){
                 imgIcon.setImageResource(R.mipmap.gift);

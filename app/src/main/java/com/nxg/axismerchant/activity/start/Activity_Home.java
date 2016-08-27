@@ -67,7 +67,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
@@ -87,6 +89,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
     String MID,MOBILE;
     ImageView imgMenu;
     ArrayList<HomeBanner> homeBanners;
+    ArrayList<String> mvisaArrayList;
     HomeBanner banner;
     EncryptDecryptRegister encryptDecryptRegister;
     private int[] images = {R.mipmap.smspay_menu, R.mipmap.qrpay_menu, R.mipmap.service_support_menu, R.mipmap.reports_menu,
@@ -130,6 +133,26 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         }
 
         getMerchantDetails();
+        getPromotionImages();
+        getMVisaIDs();
+
+    }
+
+    private void getMVisaIDs() {
+        if (Constants.isNetworkConnectionAvailable(this)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new GetmVisaIds().executeOnExecutor(AsyncTask
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getAllMvisaIds", MID, MOBILE);
+            } else {
+                new GetmVisaIds().execute(Constants.DEMO_SERVICE + "getAllMvisaIds", MID, MOBILE);
+
+            }
+        } else {
+            Constants.showToast(this, getString(R.string.no_internet));
+        }
+    }
+
+    private void getPromotionImages() {
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetPromotions().executeOnExecutor(AsyncTask
@@ -141,7 +164,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         } else {
             Constants.showToast(this, getString(R.string.no_internet));
         }
-
     }
 
 
@@ -179,6 +201,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
         promotionsArrayList = new ArrayList<>(3);
         homeBanners = new ArrayList<>();
+        mvisaArrayList = new ArrayList<>();
 
     }
 
@@ -547,6 +570,108 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
+
+    public class GetmVisaIds extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+        String ArrURL[];
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(Activity_Home.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            String str = null;
+            try {
+                HTTPUtils utils = new HTTPUtils();
+                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
+                URI newURI = URI.create(arg0[0]);
+                HttpPost httppost = new HttpPost(newURI);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpclient.execute(httppost);
+                int stats = response.getStatusLine().getStatusCode();
+
+                if (stats == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    str = data;
+                }
+            } catch (org.apache.http.ParseException e1) {
+                progressDialog.dismiss();
+                e1.printStackTrace();
+            } catch (IOException e) {
+                progressDialog.dismiss();
+                e.printStackTrace();
+            }
+            return str;
+        }
+
+
+        @Override
+        protected void onPostExecute(String data) {
+            super.onPostExecute(data);
+
+            try {
+                if (data != null) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
+
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
+
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray getImagesForSlider = object.getJSONArray("getAllMvisaIds");
+                        ArrURL = new String[getImagesForSlider.length()];
+                        for (int i = 0; i < getImagesForSlider.length(); i++) {
+
+                            JSONObject object2 = getImagesForSlider.getJSONObject(i);
+                            String mvisa_mid = object2.optString("mvisa_mid");
+
+                            mvisa_mid = encryptDecrypt.decrypt(mvisa_mid);
+
+                            mvisaArrayList.add(mvisa_mid);
+                        }
+
+                        SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        //Set the values
+                        Set<String> set = new HashSet<String>();
+                        set.addAll(mvisaArrayList);
+                        editor.putStringSet("mVisaIds", set);
+                        editor.apply();
+
+                        progressDialog.dismiss();
+
+                    } else {
+                        progressDialog.dismiss();
+
+                    }
+                }
+            } catch (JSONException e) {
+                progressDialog.dismiss();
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
 
     private class NavigationItemAdapter extends BaseAdapter
     {

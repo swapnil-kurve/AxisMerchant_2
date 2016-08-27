@@ -174,6 +174,8 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
         imgEditRemark.setOnClickListener(this);
         imgReadContact.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -251,7 +253,9 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
         } else if (custMobile.equals("")) {
             Constants.showToast(this, getString(R.string.no_mobile_number));
         } else if (amount.equals("")) {
-            Constants.showToast(this, getString(R.string.amount));
+            Constants.showToast(this, getString(R.string.no_amount));
+        } else if(amount.startsWith(".")){
+            Constants.showToast(this, getString(R.string.no_amount));
         } else if (edtCustMobile.getText().length() < 10) {
             Constants.showToast(this, getString(R.string.invalid_mobile_number));
         } else if (Double.parseDouble(amount) <= 0) {

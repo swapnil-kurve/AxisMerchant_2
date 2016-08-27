@@ -68,8 +68,10 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         switch(v.getId())
         {
             case R.id.txtViewAllTransactions:
-                if(i == 1)
+                if(i == 1) {
                     startActivity(new Intent(this, Activity_QRCodeGenerated.class));
+                    finish();
+                }
                 else
                     getData();
                 break;
@@ -130,6 +132,8 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         if(mAmount.equalsIgnoreCase(""))
         {
             Constants.showToast(this, getString(R.string.enter_amount));
+        }else if(mAmount.startsWith(".")){
+            Constants.showToast(this, getString(R.string.no_amount));
         }else if (Double.parseDouble(mAmount) <= 0) {
             Constants.showToast(this, getString(R.string.zero_amount));
         }else if(Double.parseDouble(mAmount) > 200000)
@@ -143,6 +147,7 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
             intent.putExtra("Primary_Id", mPrimaryID);
             intent.putExtra("Secondary_Id", mSecondaryID);
             startActivity(intent);
+            finish();
         }
 
     }

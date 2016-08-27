@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="img_edit_size">35dp</dimen>
+    <dimen name="edt_left_icon_width_user">35dp</dimen>
 </resources>

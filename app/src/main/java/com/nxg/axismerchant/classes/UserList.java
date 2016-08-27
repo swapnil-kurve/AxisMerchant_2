@@ -5,9 +5,9 @@ package com.nxg.axismerchant.classes;
  */
 public class UserList {
 
-    String regUsersID,merchantId,mobileNo,userName, addedDate,emailid,isRegistered;
+    String regUsersID,merchantId,mobileNo,userName, addedDate,emailid,isRegistered,assignedMVisaID;
 
-    public UserList(String regUsersID, String merchantId, String mobileNo, String userName, String addedDate, String emailid, String isRegistered) {
+    public UserList(String regUsersID, String merchantId, String mobileNo, String userName, String addedDate, String emailid, String isRegistered, String assignedMVisaID) {
         this.regUsersID = regUsersID;
         this.merchantId = merchantId;
         this.mobileNo = mobileNo;
@@ -15,6 +15,7 @@ public class UserList {
         this.addedDate = addedDate;
         this.emailid = emailid;
         this.isRegistered = isRegistered;
+        this.assignedMVisaID = assignedMVisaID;
     }
 
     public String getRegUsersID() {
@@ -43,5 +44,9 @@ public class UserList {
 
     public String getIsRegistered() {
         return isRegistered;
+    }
+
+    public String getAssignedMVisaID() {
+        return assignedMVisaID;
     }
 }
