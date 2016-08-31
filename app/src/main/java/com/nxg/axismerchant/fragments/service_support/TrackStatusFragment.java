@@ -136,7 +136,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
             case R.id.txtSearch1:
                 searchStatus();
-
                 break;
 
 
@@ -237,7 +236,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         if(parent.getId() == R.id.listSRStatus)
         {
             Bundle bundle = new Bundle();
-            bundle.putString("SRNo",srStatuses.get(position).getServiceRequestNumber());
+            bundle.putString("SRID",srStatuses.get(position).getServiceID());
             bundle.putString("Call_Type","Details");
             Fragment_StatusDetails statusDetails = new Fragment_StatusDetails();
             statusDetails.setArguments(bundle);
@@ -345,6 +344,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                             String serviceStatus = object2.optString("serviceStatus");
                             String requestDate = object2.optString("requestDate");
                             String problemSubCode = object2.optString("problemSubCode");
+                            String responseCode = object2.optString("responseCode");
+                            String currentStatus = object2.optString("currentStatus");
+                            String docketId = object2.optString("docketId");
 
                             merchantId = encryptDecrypt.decrypt(merchantId);
                             serviceID = encryptDecrypt.decrypt(serviceID);
@@ -360,9 +362,13 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                             serviceStatus = encryptDecrypt.decrypt(serviceStatus);
                             requestDate = encryptDecrypt.decrypt(requestDate);
                             problemSubCode = encryptDecrypt.decrypt(problemSubCode);
+                            responseCode = encryptDecrypt.decrypt(responseCode);
+                            currentStatus = encryptDecrypt.decrypt(currentStatus);
+                            docketId = encryptDecrypt.decrypt(docketId);
+
 
                             srStatus = new SRStatus(merchantId,serviceID,merMobileNo,tid,serviceType,probDetails,offDays,visitTiming,contactNo,rollsRequired,
-                                    serviceRequestNumber,serviceStatus,requestDate,problemSubCode);
+                                    serviceRequestNumber,serviceStatus,requestDate,problemSubCode,responseCode,docketId,currentStatus);
                             srStatuses.add(srStatus);
                         }
 
@@ -418,13 +424,25 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView  = inflater.inflate(R.layout.custom_row_for_notification, null);
+            convertView  = inflater.inflate(R.layout.custom_row_for_sr_status, null);
 
             TextView txtDate = (TextView) convertView.findViewById(R.id.txtDate);
-            TextView txtMessage = (TextView) convertView.findViewById(R.id.txtMsg);
+            TextView txtDocketIDTitle = (TextView) convertView.findViewById(R.id.txtDocketIDTitle);
+            TextView txtDocketID = (TextView) convertView.findViewById(R.id.txtDocketID);
+            TextView txtProblemCode = (TextView) convertView.findViewById(R.id.txtProblemCode);
 
             txtDate.setText(srStatuses.get(position).getRequestDate());
-            txtMessage.setText("TID - "+srStatuses.get(position).getTid());
+            txtProblemCode.setText(srStatuses.get(position).getProblemSubCode());
+
+            if(srStatuses.get(position).getDocketId().equalsIgnoreCase(""))
+            {
+                txtDocketIDTitle.setText("Docket ID");
+                txtDocketID.setText(srStatuses.get(position).getDocketId());
+            }else
+            {
+                txtDocketIDTitle.setText("Reference ID");
+                txtDocketID.setText(srStatuses.get(position).getServiceRequestNumber());
+            }
 
             return convertView;
         }
@@ -568,6 +586,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                             String serviceStatus = object2.optString("serviceStatus");
                             String requestDate = object2.optString("requestDate");
                             String problemSubCode = object2.optString("problemSubCode");
+                            String responseCode = object2.optString("responseCode");
+                            String currentStatus = object2.optString("currentStatus");
+                            String docketId = object2.optString("docketId");
 
                             merchantId = encryptDecrypt.decrypt(merchantId);
                             serviceID = encryptDecrypt.decrypt(serviceID);
@@ -583,11 +604,14 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                             serviceStatus = encryptDecrypt.decrypt(serviceStatus);
                             requestDate = encryptDecrypt.decrypt(requestDate);
                             problemSubCode = encryptDecrypt.decrypt(problemSubCode);
+                            responseCode = encryptDecrypt.decrypt(responseCode);
+                            currentStatus = encryptDecrypt.decrypt(currentStatus);
+                            docketId = encryptDecrypt.decrypt(docketId);
 
 
 
                             srStatus = new SRStatus(merchantId,serviceID,merMobileNo,tid,serviceType,probDetails,offDays,visitTiming,contactNo,rollsRequired,
-                                    serviceRequestNumber,serviceStatus,requestDate,problemSubCode);
+                                    serviceRequestNumber,serviceStatus,requestDate,problemSubCode,responseCode,docketId,currentStatus);
                             srStatuses.add(srStatus);
 
                         }

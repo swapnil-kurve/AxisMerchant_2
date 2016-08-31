@@ -6,9 +6,9 @@ package com.nxg.axismerchant.classes;
 public class SRStatus {
 
     String merchantId,serviceID,merMobileNo,tid,serviceType,probDetails,offDays,visitTiming,contactNo,rollsRequired,
-            serviceRequestNumber,serviceStatus,requestDate,problemSubCode;
+            serviceRequestNumber,serviceStatus,requestDate,problemSubCode, responseCode, docketId, currentStatus;
 
-    public SRStatus(String merchantId, String serviceID, String merMobileNo, String tid, String serviceType, String probDetails, String offDays, String visitTiming, String contactNo, String rollsRequired, String serviceRequestNumber, String serviceStatus, String requestDate, String problemSubCode) {
+    public SRStatus(String merchantId, String serviceID, String merMobileNo, String tid, String serviceType, String probDetails, String offDays, String visitTiming, String contactNo, String rollsRequired, String serviceRequestNumber, String serviceStatus, String requestDate, String problemSubCode, String responseCode, String docketId, String currentStatus) {
         this.merchantId = merchantId;
         this.serviceID = serviceID;
         this.merMobileNo = merMobileNo;
@@ -23,8 +23,22 @@ public class SRStatus {
         this.serviceStatus = serviceStatus;
         this.requestDate = requestDate;
         this.problemSubCode = problemSubCode;
+        this.responseCode = responseCode;
+        this.docketId = docketId;
+        this.currentStatus = currentStatus;
     }
 
+    public String getResponseCode() {
+        return responseCode;
+    }
+
+    public String getDocketId() {
+        return docketId;
+    }
+
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
 
     public String getMerchantId() {
         return merchantId;

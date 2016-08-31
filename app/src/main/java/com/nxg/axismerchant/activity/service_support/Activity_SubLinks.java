@@ -1,6 +1,7 @@
 package com.nxg.axismerchant.activity.service_support;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -421,27 +423,51 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
     private void sendRequest() {
 
-        if(!txtHeading.getText().toString().trim().equalsIgnoreCase("")) {
-            if (edtTID.getText().toString().trim().length() == 0 || edtProblemDetails.getText().toString().trim().length() == 0
-                    || edtContactNumber.getText().toString().trim().length() == 0) {
+        if(!txtHeading.getText().toString().trim().equalsIgnoreCase("Account Management"))
+        {
+            /*if (edtTID.getText().toString().trim().length() == 0 || edtProblemDetails.getText().toString().trim().length() == 0
+                    || edtContactNumber.getText().toString().trim().length() == 0)
+            {
                 Constants.showToast(this, "Please fill required details");
-            } else if (edtContactNumber.getText().toString().trim().length() < 10) {
-                Constants.showToast(this, "Please enter valid mobile number");
-            } else if (visitingTime.equals("") || visitingTime.equalsIgnoreCase("Visiting Time")) {
-                Constants.showToast(this, "Please provide visiting time");
-            } else if (weeklyOff.equals("") || weeklyOff.equalsIgnoreCase("Merchant Week-Off")) {
-                Constants.showToast(this, "Please provide weekly off");
-            } else if (txtSubCode.getText().toString().equalsIgnoreCase("Roll Required")) {
-                if (mTotalRollsRequired.equals("") || mTotalRollsRequired.equalsIgnoreCase("No. Of Rolls")) {
-                    Constants.showToast(this, "Please provide required roll");
-                } else {
+            } else*/
+            if(edtTID.getText().toString().trim().length() == 0)
+            {
+                Constants.showToast(this, getString(R.string.invalid_id));
+                edtTID.setError("");
+            } else if(edtProblemDetails.getText().toString().trim().length() == 0)
+            {
+                Constants.showToast(this, getString(R.string.invalid_problem_desc));
+                edtProblemDetails.setError("");
+            } else if (edtContactNumber.getText().toString().trim().length() < 10)
+            {
+                Constants.showToast(this, getString(R.string.invalid_mobile_number));
+                edtContactNumber.setError("");
+            } else if (visitingTime.equals("") || visitingTime.equalsIgnoreCase("Visiting Time"))
+            {
+                Constants.showToast(this, getString(R.string.null_visit_time));
+            } else if (weeklyOff.equals("") || weeklyOff.equalsIgnoreCase("Merchant Week-Off"))
+            {
+                Constants.showToast(this, getString(R.string.null_week_off));
+            } else if (txtSubCode.getText().toString().equalsIgnoreCase("Roll Required"))
+            {
+                if (mTotalRollsRequired.equals("") || mTotalRollsRequired.equalsIgnoreCase("No. Of Rolls"))
+                {
+                    Constants.showToast(this, getString(R.string.no_of_rolls));
+                } else
+                {
                     callService();
                 }
             } else {
                 callService();
             }
         }else{
-            callService();
+            if(edtProblemDetails.getText().toString().trim().length() == 0)
+            {
+                Constants.showToast(this, getString(R.string.invalid_problem_desc));
+                edtProblemDetails.setError("");
+            }else {
+                callService();
+            }
         }
     }
 
@@ -569,16 +595,22 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                             JSONObject object2 = addServiceRequest.getJSONObject(i);
                             String Request_Number = object2.optString("Request_Number");
                             String Call_Status = object2.optString("Call_Status");
+                            String docket_id = object2.optString("docket_id");
+                            String responseCode = object2.optString("responseCode");
 
                             Request_Number = encryptDecrypt.decrypt(Request_Number);
                             Call_Status = encryptDecrypt.decrypt(Call_Status);
+                            docket_id = encryptDecrypt.decrypt(docket_id);
+                            responseCode = encryptDecrypt.decrypt(responseCode);
 
-                            Constants.showToast(Activity_SubLinks.this, getString(R.string.request_number)+" "+Request_Number);
-                            onBackPressed();
+                            if(Request_Number.equalsIgnoreCase(""))
+                                ShowDialogReponse("Fail", "");
+                            else
+                                ShowDialogReponse("Success", Request_Number);
                         }
                     }else
                     {
-                        Constants.showToast(Activity_SubLinks.this, getString(R.string.network_error));
+                        ShowDialogReponse("Fail", "");
                     }
                 }else
                 {
@@ -638,5 +670,42 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
         return dataAdapter;
     }
+
+
+
+    private void ShowDialogReponse(String response, String request_Number)
+    {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_sr_request);
+
+        TextView txtResponseStatus = (TextView) dialog.findViewById(R.id.txtResponseStatus);
+        TextView txtRequestNumber = (TextView) dialog.findViewById(R.id.txtRequestNumber);
+        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        if(response.equalsIgnoreCase("Success"))
+        {
+            txtRequestNumber.setText(getString(R.string.request_number)+" \n"+request_Number);
+            imgResponse.setImageResource(R.drawable.happiness);
+        }else if(request_Number.equalsIgnoreCase("Fail"))
+        {
+            txtRequestNumber.setText(getString(R.string.request_cannot_process));
+            imgResponse.setImageResource(R.mipmap.fail);
+        }
+
+        // if button is clicked, close the custom dialog
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+
+        dialog.show();
+    }
+
 
 }

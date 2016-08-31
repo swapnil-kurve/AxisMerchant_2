@@ -49,12 +49,12 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(0);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
 
         // Give the PagerSlidingTabStrip the ViewPager
         tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabsStrip.setTypeface(typeFace , 0);
+        tabsStrip.setTypeface(typeFace , 1);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
 

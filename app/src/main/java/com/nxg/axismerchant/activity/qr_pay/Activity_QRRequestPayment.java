@@ -24,7 +24,7 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
 {
     EditText edtAmount, edtPrimaryId, edtSecondaryId;
     EncryptDecryptRegister encryptDecryptRegister;
-    TextView txtViewAllTransactions,txtReqLabel;
+    TextView txtViewAllTransactions,txtReqLabel, txtPIDOptional, txtSIDOptional;
     ImageView imgBack, imgNotification, imgProfile,imgEditPrimaryID, imgEditAmount, imgEditSecondaryID;
     int i;
 
@@ -40,6 +40,9 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         imgEditAmount = (ImageView) findViewById(R.id.imgEdit);
         imgEditPrimaryID = (ImageView) findViewById(R.id.imgEdit1);
         imgEditSecondaryID = (ImageView) findViewById(R.id.imgEdit2);
+
+        txtPIDOptional = (TextView) findViewById(R.id.txtPIDOptional);
+        txtSIDOptional = (TextView) findViewById(R.id.txtSIDOptional);
 
         txtViewAllTransactions = (TextView) findViewById(R.id.txtViewAllTransactions);
 
@@ -60,6 +63,32 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         imgEditSecondaryID.setOnClickListener(this);
 
         encryptDecryptRegister = new EncryptDecryptRegister();
+
+        edtPrimaryId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(edtPrimaryId.hasFocus())
+                {
+                    txtPIDOptional.setVisibility(View.GONE);
+                }else if(!edtPrimaryId.hasFocus() && edtPrimaryId.getText().toString().equalsIgnoreCase(""))
+                {
+                    txtPIDOptional.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        edtSecondaryId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(edtSecondaryId.hasFocus())
+                {
+                    txtSIDOptional.setVisibility(View.GONE);
+                }else if(!edtSecondaryId.hasFocus() && edtSecondaryId.getText().toString().equalsIgnoreCase(""))
+                {
+                    txtSIDOptional.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     @Override

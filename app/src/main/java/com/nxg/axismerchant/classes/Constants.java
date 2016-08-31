@@ -50,10 +50,9 @@ public class Constants {
     public static String GOOGLE_PROJ_ID = "660348263150";
     public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
 
-//    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
-     public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
+//     public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
 
-//    public static final String DEMO_SERVICE = "https://192.168.88.14/mservices.asmx/";
+    public static final String DEMO_SERVICE = "https://192.168.88.14/mservices.asmx/";
 
     public static final String[] FORCE_TLS_PROTOCOL = {"TLSv1.2"};
     public static String ServiceRef = "http://192.168.2.162:8094/";
@@ -64,49 +63,7 @@ public class Constants {
     }
 
 
-    //  code to get the app signature
-    public static String printKeyHash(Context context) {
-        PackageInfo packageInfo;
-        String key = null;
-        try {
-            //getting application package name, as defined in manifest
-            String packageName = context.getApplicationContext().getPackageName();
-
-            //Retriving package info
-            packageInfo = context.getPackageManager().getPackageInfo(packageName,
-                    PackageManager.GET_SIGNATURES);
-            //Log.e("Package Name=", context.getApplicationContext().getPackageName());
-            for (Signature signature : packageInfo.signatures)
-            {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                key = new String(Base64.encode(md.digest(), 0));
-                // String key = new String(Base64.encodeBytes(md.digest()));
-                key=key.replace("+", "");
-                key=key.replace("/", "");
-                key=key.replace("\\", "");
-                //Log.e("Key Hash=", key);
-            }
-        }
-        catch (PackageManager.NameNotFoundException e1)
-        {
-            // Log.e("Name not found", e1.toString());
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            //Log.e("No such an algorithm", e.toString());
-        }
-        catch (Exception e)
-        {
-            //Log.e("Exception", e.toString());
-        }
-
-        return key;
-    }
-
-
-
-
+    //To get IMEI number of device
     public static void getIMEI(Context context){
 
         TelephonyManager mngr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
@@ -114,6 +71,7 @@ public class Constants {
     }
 
 
+    //To check Internet connectivity of device
     public static boolean isNetworkConnectionAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context
                 .CONNECTIVITY_SERVICE);
@@ -124,8 +82,7 @@ public class Constants {
     }
 
 
-
-
+    // To Validate email id
     public final static boolean isValidEmail(CharSequence target) {
         if (target == null) {
             return false;
@@ -147,6 +104,7 @@ public class Constants {
         return sb.toString();
     }
 
+    // To retrieve stored MPIN from database
     public static void retrieveMPINFromDatabase(Context context) {
         DBHelper dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -159,6 +117,8 @@ public class Constants {
 
     }
 
+
+    // To retrieve Notifications from database
     public static ArrayList retrieveFromDatabase(Context context, DBHelper dbHelper) {
         dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -182,6 +142,7 @@ public class Constants {
     }
 
 
+    //  To check device's SIM support
     public static int isSimSupport(Context context)
     {
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -236,14 +197,7 @@ public class Constants {
     }
 
 
-  /*  public static String splitDate(String date)
-    {
-        String[] mSplittedArr = date.split("/");
-
-        return mSplittedArr[1]+"/"+mSplittedArr[0]+"/"+mSplittedArr[2];
-    }*/
-
-
+    //  To change format of Date
     public static String changeDateFormat(String date)
     {
         String startDateString = date;

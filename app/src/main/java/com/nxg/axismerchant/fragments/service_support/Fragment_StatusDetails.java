@@ -74,16 +74,16 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
         txtOk.setOnClickListener(this);
 
         Bundle bundle = getArguments();
-        String mSRNo = "";
+        String mSRID = "";
         if(bundle != null)
         {
-            mSRNo = bundle.getString("SRNo");
+            mSRID = bundle.getString("SRID");
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetSRStatusDetails().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRNo);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRID);
             } else {
-                new GetSRStatusDetails().execute(Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRNo);
+                new GetSRStatusDetails().execute(Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRID);
 
             }
 
@@ -219,7 +219,7 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                         txtDocketID.setText(docketId);
                         txtProblemCode.setText(problemSubCode);
                         txtDate.setText(requestDate);
-                        txtClosingRemark.setText("");
+                        txtClosingRemark.setText(serviceStatus);
                         txtResponseCode.setText(responseCode);
                         txtCurrentStatus.setText(currentStatus);
 
