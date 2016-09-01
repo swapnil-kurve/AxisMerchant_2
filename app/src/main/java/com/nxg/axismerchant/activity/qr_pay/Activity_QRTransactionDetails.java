@@ -212,10 +212,9 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
             String str = "";
             HttpResponse response;
             HttpClient myClient = new DefaultHttpClient();
-            HttpPost myConnection = new HttpPost("http://merchantportal.paycraftsol.com/MerchantApp/API/Merchant/Refund");
+            HttpPost myConnection = new HttpPost(Constants.DEMO_SERVICE_REFUND+"MerchantApp/API/Merchant/Refund");
 
             try {
-//                myConnection.setHeader("Content-type", "application/json");
                 myConnection.setHeader("Accept", "application/json");
                 myConnection.setHeader("Content-type", "application/json");
                 myConnection.setHeader("Accept-Encoding", "gzip");
