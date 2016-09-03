@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
@@ -210,9 +211,14 @@ public class GCMNotificationIntentService extends IntentService {
         mNotifyBuilder = new NotificationCompat.Builder(this)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(title))
                 .setContentTitle(Html.fromHtml(title))
-                .setContentText(Html.fromHtml(message))
-                .setSmallIcon(R.mipmap.axis_mnemonic);
+                .setContentText(Html.fromHtml(message));
+//                .setSmallIcon(R.mipmap.axis_mnemonic);
 
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mNotifyBuilder.setSmallIcon(R.mipmap.axis_tr1);
+        } else {
+            mNotifyBuilder.setSmallIcon(R.mipmap.axis_mnemonic);
+        }
         mNotifyBuilder.setContentIntent(resultPendingIntent);
 
         int defaults = 0;

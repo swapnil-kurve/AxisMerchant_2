@@ -43,7 +43,6 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
     Intent returnFromGalleryIntent;
     private int flag = 0;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
-    double screenInches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

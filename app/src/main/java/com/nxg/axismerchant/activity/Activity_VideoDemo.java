@@ -16,11 +16,18 @@ public class Activity_VideoDemo extends AppCompatActivity {
         setContentView(R.layout.activity_video_demo);
 
         VideoView view = (VideoView)findViewById(R.id.videoView);
-        String path = "android.resource://" + getPackageName() + "/" + R.raw.axis;
+        String path = "https://youtu.be/1jVBpT0m8Wg";
+        view.setVideoURI(Uri.parse(path));
+        MediaController mc= new MediaController(Activity_VideoDemo.this);
+        mc.setAnchorView(view);
+        view.setMediaController(mc);
+        view.start();
+
+     /*   String path = "android.resource://" + getPackageName() + "/" + R.raw.axis;
         view.setVideoURI(Uri.parse(path));
         MediaController mc= new MediaController(Activity_VideoDemo.this);
         view.setMediaController(mc);
-        view.start();
+        view.start();*/
 
     }
 

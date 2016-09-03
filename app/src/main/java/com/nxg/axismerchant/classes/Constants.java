@@ -50,11 +50,13 @@ public class Constants {
     public static String GOOGLE_PROJ_ID = "660348263150";
     public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
 
+//    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
+
     public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
     public static final String DEMO_SERVICE_REFUND ="http://merchantportal.paycraftsol.com/";
 
-//    public static final String DEMO_SERVICE = "http://192.168.88.14:443/mservices.asmx/";
-//    public static final String DEMO_SERVICE_REFUND = "http://192.168.88.14:443/";
+//    public static final String DEMO_SERVICE = "http://192.168.88.14:9006/mservices.asmx/";
+//    public static final String DEMO_SERVICE_REFUND = "http://192.168.88.14:9006/";
 
     public static final String[] FORCE_TLS_PROTOCOL = {"TLSv1.2"};
     public static String ServiceRef = "http://192.168.2.162:8094/";

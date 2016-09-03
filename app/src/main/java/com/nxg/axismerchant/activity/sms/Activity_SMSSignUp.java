@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,6 +35,8 @@ import com.nxg.axismerchant.classes.EncryptDecryptRegister;
 import com.nxg.axismerchant.classes.HTTPUtils;
 import com.nxg.axismerchant.classes.Notification;
 import com.nxg.axismerchant.database.DBHelper;
+import com.nxg.axismerchant.fragments.profile.BusinessDetailsFragment;
+import com.nxg.axismerchant.fragments.profile.SubUserFragment;
 import com.nxg.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFeatures;
 import com.nxg.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFees;
 
@@ -56,8 +60,8 @@ import java.util.List;
 
 public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClickListener {
 
-    ViewPager viewPager;
-    private String[] tabs ;
+//    ViewPager viewPager;
+//    private String[] tabs ;
     String MID,MOBILE;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
@@ -70,28 +74,20 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_sign_up);
 
-        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/Futura_LightBold.ttf");
-
-        tabs = getResources().getStringArray(R.array.sms_pay_sign_up);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
+        View layoutFeatures = findViewById(R.id.layoutFeatures);
+        View layoutFees = findViewById(R.id.layoutFees);
         txtProceed = (TextView) findViewById(R.id.txtProceed);
+
         imgBack.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
         txtProceed.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
+        layoutFeatures.setOnClickListener(this);
+        layoutFees.setOnClickListener(this);
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setOffscreenPageLimit(1);
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
-
-        // Give the PagerSlidingTabStrip the ViewPager
-        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabsStrip.setTypeface(typeFace,0);
-        // Attach the view pager to the tab strip
-        tabsStrip.setViewPager(viewPager);
 
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
@@ -103,6 +99,8 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
 
+        changeToFeatures();
+
         SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
         String res = preferences.getString("SMSRequestValidated","No");
         if(res.equalsIgnoreCase("pending"))
@@ -110,15 +108,35 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
             ShowDialog2("pending");
         }
 
-        txtProceed.setText(getString(R.string.proceed));
-
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                return true;
-            }
-        });
     }
+
+
+    private void changeToFeatures()
+    {
+        txtProceed.setText(getString(R.string.proceed));
+        (findViewById(R.id.viewFeatures)).setBackgroundColor(Color.WHITE);
+        (findViewById(R.id.viewFees)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        PageFragmentForSMS_SignUpFeatures pageFragmentForSMSSignUp = new PageFragmentForSMS_SignUpFeatures();
+        Bundle bundle = new Bundle();
+        bundle.putInt(PageFragmentForSMS_SignUpFeatures.ARG_OBJECT, 0);
+        pageFragmentForSMSSignUp.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.container,pageFragmentForSMSSignUp).commit();
+    }
+
+    private void changeToFees()
+    {
+        txtProceed.setText(getString(R.string.proceedTerms));
+        (findViewById(R.id.viewFees)).setBackgroundColor(Color.WHITE);
+        (findViewById(R.id.viewFeatures)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        PageFragmentForSMS_SignUpFees sms_signUpFees = new PageFragmentForSMS_SignUpFees();
+        Bundle bundle = new Bundle();
+        bundle.putInt(PageFragmentForSMS_SignUpFees.ARG_OBJECT, 1);
+        sms_signUpFees.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.container, sms_signUpFees).commit();
+    }
+
 
     @Override
     protected void onResume() {
@@ -152,11 +170,10 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
             case R.id.txtProceed:
                 if(eventClicked == 0) {
                     eventClicked = 1;
-                    txtProceed.setText(getString(R.string.proceedTerms));
-                    viewPager.setCurrentItem(1, true);
+                    changeToFees();
 
                 }else if(eventClicked == 1) {
-                    ShowDialog2();
+                    ShowTermsAndConditions();
                 }
                 break;
 
@@ -183,6 +200,14 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
             case R.id.txtDone:
                 if(flag==1)
                     sendRequest();
+                break;
+
+            case R.id.layoutFeatures:
+                changeToFeatures();
+                break;
+
+            case R.id.layoutFees:
+                changeToFees();
                 break;
         }
     }
@@ -244,47 +269,7 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
 
 
 
-    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-
-        public SampleFragmentPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        @Override
-        public int getCount() {
-            return tabs.length;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            if(eventClicked == 0) {
-                PageFragmentForSMS_SignUpFeatures pageFragmentForSMSSignUp = new PageFragmentForSMS_SignUpFeatures();
-                Bundle bundle = new Bundle();
-                bundle.putInt(PageFragmentForSMS_SignUpFeatures.ARG_OBJECT, position);
-                pageFragmentForSMSSignUp.setArguments(bundle);
-                return pageFragmentForSMSSignUp;
-            }else if(eventClicked == 1)
-            {
-                PageFragmentForSMS_SignUpFees sms_signUpFees = new PageFragmentForSMS_SignUpFees();
-                Bundle bundle = new Bundle();
-                bundle.putInt(PageFragmentForSMS_SignUpFees.ARG_OBJECT, position);
-                sms_signUpFees.setArguments(bundle);
-                return sms_signUpFees;
-            }else
-            {
-                return null;
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            // Generate title based on item position
-            return tabs[position];
-        }
-    }
-
-
-    private void ShowDialog2()
+    private void ShowTermsAndConditions()
     {
         // custom dialog
         final Dialog dialog = new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen);
@@ -301,6 +286,8 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
 
         imgAccept.setOnClickListener(this);
         txtDone.setOnClickListener(this);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         dialog.show();
     }

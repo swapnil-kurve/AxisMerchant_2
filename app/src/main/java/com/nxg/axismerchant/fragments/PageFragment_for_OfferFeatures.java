@@ -46,16 +46,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PageFragment_for_OfferFeatures extends Fragment implements View.OnClickListener {
+public class PageFragment_for_OfferFeatures extends Fragment{
 
     public static final String ARG_OBJECT = "object";
     String MID,MOBILE;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
     String pImgpath,promotionText,withOptions,terms,pHead,promoCode,offerValidity,promotype;
-    DBHelper dbHelper;
-    // This is a handle so that we can call methods on our service
-    private ScheduleClient scheduleClient;
+
     private String mPromotionId;
     int pos;
     TextView txtText;
@@ -81,11 +79,6 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
         
         viewButtonLayout = view.findViewById(R.id.buttonLayout);
         txtText = (TextView) view.findViewById(R.id.txtText);
-        TextView txtRemindLater = (TextView) view.findViewById(R.id.txtRemindLater);
-        TextView txtYes = (TextView) view.findViewById(R.id.txtYes);
-
-        txtRemindLater.setOnClickListener(this);
-        txtYes.setOnClickListener(this);
 
         encryptDecryptRegister = new EncryptDecryptRegister();
         encryptDecrypt = new EncryptDecrypt();
@@ -105,9 +98,7 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
 
 
 
-        // Create a new service client and bind our activity to this service
-        scheduleClient = new ScheduleClient(getActivity());
-        scheduleClient.doBindService();
+
 
         return view;
     }
@@ -120,141 +111,9 @@ public class PageFragment_for_OfferFeatures extends Fragment implements View.OnC
     }
 
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.txtRemindLater:
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.MONTH,1);
-                // Ask our service to set an alarm for that date, this activity talks to the client that talks to the service
-                scheduleClient.setAlarmForNotification(calendar);
-                // Notify the user what they just did
-                Constants.showToast(getActivity(), getString(R.string.offer_remind_later));
-                getActivity().onBackPressed();
-                break;
-
-            case R.id.txtYes:
-                setResponse(mPromotionId,"Accepted");
-                Constants.showToast(getActivity(), getString(R.string.offer_accepted));
-                break;
-        }
-    }
-
-
-
-    private void setResponse(String promotionID, String status) {
-        if (Constants.isNetworkConnectionAvailable(getActivity())) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                new SetResponse().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addPromotionResponse", Constants.MERCHANT_ID, promotionID, status );
-            } else {
-                new SetResponse().execute(Constants.DEMO_SERVICE+"addPromotionResponse",Constants.MERCHANT_ID, promotionID, status);
-
-            }
-        } else {
-            Constants.showToast(getActivity(), getString(R.string.no_internet));
-        }
-    }
-
-
-    private class SetResponse extends AsyncTask<String, Void, String>
-    {
-        String pResponse, promotionID;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... arg0) {
-            String str = null;
-            try {
-                HTTPUtils utils = new HTTPUtils();
-                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
-                URI newURI = URI.create(arg0[0]);
-                HttpPost httppost = new HttpPost(newURI);
-                pResponse = arg0[3];
-                promotionID = arg0[2];
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.promotion_id), encryptDecryptRegister.encrypt(arg0[2])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.promotion_response), encryptDecryptRegister.encrypt(arg0[3])));
-
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpclient.execute(httppost);
-                int stats = response.getStatusLine().getStatusCode();
-
-                if (stats == 200) {
-                    HttpEntity entity = response.getEntity();
-                    String data = EntityUtils.toString(entity);
-                    str = data;
-                }
-            }catch (ParseException e1) {
-                e1.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return str;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            try {
-                if(s != null){
-                JSONObject object = new JSONObject(s);
-                JSONArray verifyOTP = object.getJSONArray("addPromotionResponse");
-                JSONObject object1 = verifyOTP.getJSONObject(0);
-                String result = object1.optString("result");
-
-                result = encryptDecryptRegister.decrypt(result);
-
-                if(result.equals("Success"))
-                {
-                    updateStatus(pResponse,promotionID);
-                }
-                else
-                {
-                    getActivity().onBackPressed();
-                }
-                }else {
-                    Constants.showToast(getActivity(), getString(R.string.network_error));
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    private void updateStatus(String status, String promotionID)
-    {
-        dbHelper = new DBHelper(getActivity());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DBHelper.STATUS, status);
-
-        long id = db.update(DBHelper.TABLE_NAME_PROMOTIONS,values, DBHelper.PROMOTION_ID +" = "+promotionID, null);
-
-        getActivity().onBackPressed();
-    }
-
-    @Override
-    public void onDestroy() {
-
-        // When our activity is stopped ensure we also stop the connection to the service
-        // this stops us leaking our activity into the system *bad*
-        if(scheduleClient != null)
-            scheduleClient.doUnbindService();
-        super.onDestroy();
-    }
-
+    /**
+     * To Get Promotion details on the basis of Promotion ID
+     */
     private class GetPromotionsByID extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;

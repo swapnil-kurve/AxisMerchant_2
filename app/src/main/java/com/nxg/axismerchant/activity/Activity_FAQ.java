@@ -255,7 +255,7 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
             TextView txtQue = (TextView) view.findViewById(R.id.txtQue);
             TextView txtAns = (TextView) view.findViewById(R.id.txtAns);
 
-            txtQueNo.setText("Question "+i);
+            txtQueNo.setText("Question "+(i+1));
             txtQue.setText(faqArrayList.get(i).getQue());
             txtAns.setText(faqArrayList.get(i).getAns());
 

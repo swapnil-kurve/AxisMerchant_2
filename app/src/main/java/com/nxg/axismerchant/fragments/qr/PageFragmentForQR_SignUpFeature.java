@@ -1,4 +1,4 @@
-package com.nxg.axismerchant.fragments;
+package com.nxg.axismerchant.fragments.qr;
 
 
 import android.os.Bundle;

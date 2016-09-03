@@ -197,9 +197,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             editor.putString("MerchantID", Constants.MERCHANT_ID);
             editor.putString("MobileNum", Constants.MOBILE_NUM);
             editor.putString("IMEI", Constants.IMEI);
-            if(flag == 1)
-                editor.putString("KeepLoggedIn","true");
-                editor.apply();
+            editor.putInt("KeepFlag",flag);
+            editor.apply();
 
                 if (Constants.isNetworkConnectionAvailable(getActivity())) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {

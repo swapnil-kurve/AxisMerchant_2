@@ -238,8 +238,8 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("LoggedIn", "true");
                         editor.putString("LastLogin", lastLogin);
-                        String flag = preferences.getString("KeepFlag", "0");
-                        if (flag.equals("1"))
+                        int flag = preferences.getInt("KeepFlag",0);
+                        if (flag == 1)
                             editor.putString("KeepLoggedIn", "true");
                         editor.apply();
 

@@ -16,9 +16,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nxg.axismerchant.R;
@@ -50,22 +52,22 @@ public class Activity_Main extends AppCompatActivity {
 
 
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-       String status = preferences.getString("KeepLoggedIn","false");
-            if(status.equals("true")) {
-                startActivity(new Intent(this, Activity_Home.class));
-                finish();
-            }else
-            {
-                if(preferences.contains("LoggedIn"))
-                {
-                    String stat = preferences.getString("LoggedIn","false");
-                    if(stat.equals("true")) {
-                        changeToSignIn();
-                        (findViewById(R.id.layoutSignUp)).setVisibility(View.GONE);
-                    }
-                }else
-                    changeToSignUp();
+        if(preferences.contains("LoggedIn"))
+        {
+            String mSignUpStatus = preferences.getString("LoggedIn","false");
+            if(mSignUpStatus.equals("true")) {
+
+                String status = preferences.getString("KeepLoggedIn","false");
+                if(status.equals("true")) {
+                    startActivity(new Intent(this, Activity_Home.class));
+                    finish();
+                }else {
+                    changeToSignIn();
+                    (findViewById(R.id.layoutSignUp)).setVisibility(View.GONE);
+                }
             }
+        }else
+            changeToSignUp();
 
 
         /**
@@ -95,7 +97,7 @@ public class Activity_Main extends AppCompatActivity {
         String loginStatus = preferences.getString("LoggedIn", "false");
 
         if (loginStatus.equals("false")) {
-            registerInBackground();
+//            registerInBackground();
         } else {
             String mTitle = null;// mMessage = null, mSubTitle = null, mImgPath = null, mPromotionType = null, mPromotionID = null, mWithOption = null;
             Bundle bundle = new Bundle();
@@ -218,7 +220,7 @@ public class Activity_Main extends AppCompatActivity {
     }
 
 
-    // Check if Google Playservices is installed in Device or not
+    /*// Check if Google Playservices is installed in Device or not
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(this);
@@ -234,11 +236,26 @@ public class Activity_Main extends AppCompatActivity {
             }
             return false;
         } else {
-            /*Toast.makeText(
+            *//*Toast.makeText(
                     getApplicationContext(),
                     "This device supports Play services, App will work normally",
-                    Toast.LENGTH_LONG).show();*/
+                    Toast.LENGTH_LONG).show();*//*
         }
+        return true;
+    }*/
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            }
+
+            return false;
+        }
+
         return true;
     }
 

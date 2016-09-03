@@ -27,7 +27,11 @@ public class HTTPUtils {
      */
     public HttpClient getNewHttpClient(boolean isHTTPS) {
 
-        File sdCard = Environment.getExternalStorageDirectory();
+        if(!isHTTPS){
+            return getNewHttpClient();
+        }else
+            return null;
+       /* File sdCard = Environment.getExternalStorageDirectory();
         try {
             if(!isHTTPS){
                 return getNewHttpClient();
@@ -46,7 +50,7 @@ public class HTTPUtils {
             return new DefaultHttpClient(ccm, params);
         } catch (Exception e) {
             return null;
-        }
+        }*/
     }
 
 

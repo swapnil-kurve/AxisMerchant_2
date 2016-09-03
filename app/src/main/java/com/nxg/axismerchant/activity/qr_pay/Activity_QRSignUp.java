@@ -25,8 +25,8 @@ import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
 import com.nxg.axismerchant.classes.Notification;
 import com.nxg.axismerchant.database.DBHelper;
-import com.nxg.axismerchant.fragments.PageFragmentForQR_SignUpFeature;
-import com.nxg.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFeatures;
+import com.nxg.axismerchant.fragments.qr.PageFragmentForQR_SignUpFeature;
+import com.nxg.axismerchant.fragments.qr.PageFragmentForQR_SignUpFees;
 import com.nxg.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFees;
 
 import java.util.ArrayList;
@@ -199,11 +199,11 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
                 return qr_signUpFeature;
             }else if(position == 1)
             {
-                PageFragmentForSMS_SignUpFees sms_signUpFees = new PageFragmentForSMS_SignUpFees();
+                PageFragmentForQR_SignUpFees qr_signUpFees = new PageFragmentForQR_SignUpFees();
                 Bundle bundle = new Bundle();
                 bundle.putInt(PageFragmentForSMS_SignUpFees.ARG_OBJECT, position);
-                sms_signUpFees.setArguments(bundle);
-                return sms_signUpFees;
+                qr_signUpFees.setArguments(bundle);
+                return qr_signUpFees;
             }else
             {
                 return null;

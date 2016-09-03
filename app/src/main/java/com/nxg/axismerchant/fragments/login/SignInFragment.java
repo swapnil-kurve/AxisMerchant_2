@@ -52,7 +52,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     ImageView imgErrorMPIN, imgSwitch;
     SharedPreferences preferences;
     EncryptDecryptRegister encryptDecryptRegister;
-    int flag = 1 ;
+    int flag = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,7 +70,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         Constants.MERCHANT_ID = preferences.getString("MerchantID", "");
-        Constants.MOBILE_NUM = preferences.getString("MobileNum","");
+        Constants.MOBILE_NUM = preferences.getString("MobileNum", "");
         Constants.getIMEI(getActivity());
         Constants.retrieveMPINFromDatabase(getActivity());
 
@@ -95,8 +95,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.txtSubmit:
                 getMPIN();
                 break;
@@ -106,12 +105,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.imgTick:
-                if(flag == 0)
-                {
+                if (flag == 0) {
                     imgSwitch.setImageResource(R.mipmap.login_tick);
                     flag = 1;
-                }else
-                {
+                } else {
                     imgSwitch.setImageResource(0);
                     flag = 0;
                 }
@@ -123,7 +120,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new ForgotMPIN().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "forgotpin",Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "forgotpin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
             } else {
                 new ForgotMPIN().execute(Constants.DEMO_SERVICE + "forgotpin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
 
@@ -141,15 +138,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private void getMPIN() {
         String mMPIN = edtMPIN.getText().toString().trim();
-        if(mMPIN.equals(""))
-        {
+        if (mMPIN.equals("")) {
             Constants.showToast(getActivity(), getString(R.string.mpin_not_provide));
-        }else if(mMPIN.length()<4)
-        {
+        } else if (mMPIN.length() < 4) {
             Constants.showToast(getActivity(), getString(R.string.mpin_less_digit));
             imgErrorMPIN.setVisibility(View.VISIBLE);
-        }else
-        {
+        } else {
             Constants.getIMEI(getActivity());
             Constants.retrieveMPINFromDatabase(getActivity());
             Constants.MPIN = mMPIN;
@@ -157,8 +151,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("MPIN", mMPIN);
-            if(flag == 1)
-                editor.putString("KeepLoggedIn","true");
             editor.apply();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a");
@@ -167,9 +159,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             if (Constants.isNetworkConnectionAvailable(getActivity())) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new VerifyMPIN().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI,currentDateandTime);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateandTime);
                 } else {
-                    new VerifyMPIN().execute(Constants.DEMO_SERVICE+"verifyPin",Constants.MERCHANT_ID,Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI,currentDateandTime);
+                    new VerifyMPIN().execute(Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateandTime);
 
                 }
             } else {
@@ -179,9 +171,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private class VerifyMPIN extends AsyncTask<String, Void, String>
-    {
+    private class VerifyMPIN extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -216,7 +208,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     String data = EntityUtils.toString(entity);
                     str = data;
                 }
-            }catch (org.apache.http.ParseException e1) {
+            } catch (org.apache.http.ParseException e1) {
                 progressDialog.dismiss();
                 e1.printStackTrace();
             } catch (IOException e) {
@@ -231,36 +223,35 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             super.onPostExecute(s);
 
             try {
-                if(s != null) {
-                JSONObject object = new JSONObject(s);
-                JSONArray verifyOTP = object.getJSONArray("verifyPin");
-                JSONObject object1 = verifyOTP.getJSONObject(0);
-                String result = object1.optString("result");
+                if (s != null) {
+                    JSONObject object = new JSONObject(s);
+                    JSONArray verifyOTP = object.getJSONArray("verifyPin");
+                    JSONObject object1 = verifyOTP.getJSONObject(0);
+                    String result = object1.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
+                    result = encryptDecryptRegister.decrypt(result);
 
-                progressDialog.dismiss();
-                if(result.equals("Success"))
-                {
-                    String lastLogin = object1.optString("lastLogin");
+                    progressDialog.dismiss();
+                    if (result.equals("Success")) {
+                        String lastLogin = object1.optString("lastLogin");
 
-                    lastLogin = encryptDecryptRegister.decrypt(lastLogin);
+                        lastLogin = encryptDecryptRegister.decrypt(lastLogin);
 
-                    preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("LoggedIn", "true");
-                    editor.putString("LastLogin",lastLogin);
-                    editor.apply();
+                        preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("LoggedIn", "true");
+                        editor.putString("LastLogin", lastLogin);
+                        if (flag == 1)
+                            editor.putString("KeepLoggedIn", "true");
+                        editor.apply();
 
-                    startActivity(new Intent(getActivity(), Activity_Home.class));
-                    getActivity().finish();
+                        startActivity(new Intent(getActivity(), Activity_Home.class));
+                        getActivity().finish();
 
-                }
-                else
-                {
-                    Constants.showToast(getActivity(), getString(R.string.wrong_mpin));
-                }
-                }else {
+                    } else {
+                        Constants.showToast(getActivity(), getString(R.string.wrong_mpin));
+                    }
+                } else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
@@ -274,6 +265,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     private class ForgotMPIN extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -322,8 +314,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String data) {
             super.onPostExecute(data);
 
-            try{
-                if(data != null) {
+            try {
+                if (data != null) {
                     JSONArray transaction = new JSONArray(data);
                     JSONObject object1 = transaction.getJSONObject(0);
 
