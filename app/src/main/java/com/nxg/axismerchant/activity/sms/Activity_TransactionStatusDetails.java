@@ -145,10 +145,11 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                     if (simStatus == 1) {
                         if (txtResText.getText().toString().equalsIgnoreCase("Resend Link"))
                             callResend();
-                        else
-                            getConfirm();
                     } else {
-                        ShowDialog();
+                        if (txtResText.getText().toString().equalsIgnoreCase("Refund Payment"))
+                            getConfirm();
+                        else
+                            ShowDialog();
                     }
                 }else {
                     Constants.showToast(this, getString(R.string.airplane_mode));

@@ -37,6 +37,8 @@ import com.nxg.axismerchant.database.DBHelper;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.goncalves.pugnotification.notification.PugNotification;
+
 
 public class GCMNotificationIntentService extends IntentService {
     // Sets an ID for the profile, so it can be updated
@@ -203,37 +205,39 @@ public class GCMNotificationIntentService extends IntentService {
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                 resultIntent, PendingIntent.FLAG_ONE_SHOT);
 
-        NotificationCompat.Builder mNotifyBuilder;
-        NotificationManager mNotificationManager;
 
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        mNotifyBuilder = new NotificationCompat.Builder(this)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(title))
-                .setContentTitle(Html.fromHtml(title))
-                .setContentText(Html.fromHtml(message));
-//                .setSmallIcon(R.mipmap.axis_mnemonic);
-
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mNotifyBuilder.setSmallIcon(R.mipmap.axis_tr1);
-        } else {
-            mNotifyBuilder.setSmallIcon(R.mipmap.axis_mnemonic);
+        if(message.equals("")) {
+            PugNotification.with(this)
+                    .load()
+                    .title(title)
+                    .message(SubTitle)
+                    .bigTextStyle(title)
+                    .smallIcon(R.mipmap.axis_tr)
+                    .largeIcon(R.mipmap.axis_mnemonic)
+                    .flags(Notification.DEFAULT_ALL)
+                    .click(resultPendingIntent)
+                    .autoCancel(true)
+                    .simple()
+                    .build();
+        }else {
+            PugNotification.with(this)
+                    .load()
+                    .title(title)
+                    .message(message)
+                    .bigTextStyle(title)
+                    .smallIcon(R.mipmap.axis_tr)
+                    .largeIcon(R.mipmap.axis_mnemonic)
+                    .flags(Notification.DEFAULT_ALL)
+                    .click(resultPendingIntent)
+                    .autoCancel(true)
+                    .simple()
+                    .build();
         }
-        mNotifyBuilder.setContentIntent(resultPendingIntent);
-
-        int defaults = 0;
-        defaults = defaults | Notification.DEFAULT_LIGHTS;
-        defaults = defaults | Notification.DEFAULT_VIBRATE;
-        defaults = defaults | Notification.DEFAULT_SOUND;
-
-        mNotifyBuilder.setDefaults(defaults);
-        mNotifyBuilder.setAutoCancel(true);
-        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
 
     private int getNotificationIcon() {
         boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.mipmap.axis_mnemonic : R.mipmap.ic_launcher;
+        return useWhiteIcon ? R.mipmap.axis_mnemonic : R.mipmap.axis_tr;
     }
     /**
      * Update Refund Status of SMS Pay into Table

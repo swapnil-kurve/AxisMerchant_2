@@ -807,10 +807,11 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
                         status = encryptDecrypt.decrypt(status);
 
+                        SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+
                         if(status.equalsIgnoreCase("Active"))
                         {
-                            SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = preferences.edit();
                             editor.putString("SMSRequestValidated","Active");
                             editor.apply();
 
@@ -820,6 +821,9 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                             finish();
                         }else if(status.equalsIgnoreCase("Pending"))
                         {
+                            editor.putString("SMSRequestValidated","Pending");
+                            editor.apply();
+
                             Intent intent = new Intent(Activity_Home.this, Activity_SMSSignUp.class);
                             intent.putExtra("SMSRequestValidated","Pending");
                             startActivity(intent);
@@ -827,7 +831,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                         {
                             startActivity(new Intent(Activity_Home.this, Activity_SMSSignUp.class));
                         }
-
                         progressDialog.dismiss();
 
                     } else {

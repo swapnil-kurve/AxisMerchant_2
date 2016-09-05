@@ -77,7 +77,7 @@ public class PageFragment_for_OfferFeatures extends Fragment{
             pos = Integer.parseInt(bundle.getString("Position"));
         }
         
-        viewButtonLayout = view.findViewById(R.id.buttonLayout);
+        viewButtonLayout = getActivity().findViewById(R.id.buttonLayout);
         txtText = (TextView) view.findViewById(R.id.txtText);
 
         encryptDecryptRegister = new EncryptDecryptRegister();

@@ -97,7 +97,7 @@ public class Activity_Main extends AppCompatActivity {
         String loginStatus = preferences.getString("LoggedIn", "false");
 
         if (loginStatus.equals("false")) {
-//            registerInBackground();
+            registerInBackground();
         } else {
             String mTitle = null;// mMessage = null, mSubTitle = null, mImgPath = null, mPromotionType = null, mPromotionID = null, mWithOption = null;
             Bundle bundle = new Bundle();

@@ -65,7 +65,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
     ArrayList<UserList> userListArrayList;
     ArrayList<String> mVisaArrayList;
     UserList userList;
-    TextView txtCreateNewUser;
+    TextView txtCreateNewUser,txtSubmit;
     View lyCreateUser, lyUserList;
     private String blockCharacterSet = "~#^|$%&*!()-+?,.<>@:;";
     private String blockNumberSet = "1234567890~#^|$%&*!()-+?,.<>@:;";
@@ -111,7 +111,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         edtMobileNo = (EditText) view.findViewById(R.id.edtMobileNumber);
         edtUserName = (EditText) view.findViewById(R.id.edtUsername);
         spinMVisaID = (Spinner) view.findViewById(R.id.spinnermVisaId);
-        TextView txtSubmit = (TextView) view.findViewById(R.id.txtSubmit);
+        txtSubmit = (TextView) view.findViewById(R.id.txtSubmit);
         txtCreateNewUser = (TextView) view.findViewById(R.id.txtCreateNewUser);
         lyCreateUser = view.findViewById(R.id.lyCreateUser);
         lyUserList = view.findViewById(R.id.lyTop);
@@ -280,6 +280,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
 
         lyCreateUser.setVisibility(View.VISIBLE);
         lyUserList.setVisibility(View.GONE);
+        txtSubmit.setText(getString(R.string.update));
 
         editFlag = 1;
 
@@ -577,30 +578,49 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
             super.onPostExecute(data);
 
             try {
-                JSONObject object1 = new JSONObject(data);
-                JSONArray addUser = object1.getJSONArray("updateUser");
+                if(data != null) {
+                    JSONArray array = new JSONArray(data);
+                    JSONObject object0 = array.getJSONObject(0);
+                    JSONArray rowsResponse = object0.getJSONArray("rowsResponse");
 
-                JSONObject obj = addUser.getJSONObject(0);
-                String result = obj.optString("result");
+                    JSONObject obj = rowsResponse.getJSONObject(0);
+                    String result = obj.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
-                if (result.equals("Success")) {
-                    Constants.showToast(getActivity(), getString(R.string.sub_user_created));
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object1 = array.getJSONObject(1);
+                        JSONArray updateUser = object1.getJSONArray("updateUser");
 
-                    getUserList();
+                        JSONObject obj0 = updateUser.getJSONObject(0);
+                        String res = obj0.optString("res");
 
-                    lyCreateUser.setVisibility(View.GONE);
-                    lyUserList.setVisibility(View.VISIBLE);
+                        res = encryptDecrypt.decrypt(res);
 
-                    edtUserName.setText("");
-                    edtMobileNo.setText("");
-                    edtEmailId.setText("");
-                    spinMVisaID.setPrompt("mVisa Id");
+                        if(res.equalsIgnoreCase("Success")) {
+                            Constants.showToast(getActivity(), getString(R.string.sub_user_created));
 
-                } else {
-                    Constants.showToast(getActivity(), getString(R.string.invalid_details));
+                            getUserList();
+
+                            lyCreateUser.setVisibility(View.GONE);
+                            lyUserList.setVisibility(View.VISIBLE);
+
+                            edtUserName.setText("");
+                            edtMobileNo.setText("");
+                            edtEmailId.setText("");
+                            spinMVisaID.setPrompt("mVisa Id");
+                        }else
+                        {
+                            Constants.showToast(getActivity(), getString(R.string.invalid_details));
+                        }
+
+                    } else {
+                        Constants.showToast(getActivity(), getString(R.string.invalid_details));
+                    }
+                    progressDialog.dismiss();
+                }else
+                {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
-                progressDialog.dismiss();
             } catch (JSONException e) {
                 progressDialog.dismiss();
                 e.printStackTrace();

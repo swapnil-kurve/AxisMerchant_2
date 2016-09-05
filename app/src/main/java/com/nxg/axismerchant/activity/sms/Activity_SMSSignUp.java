@@ -103,9 +103,9 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
 
         SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
         String res = preferences.getString("SMSRequestValidated","No");
-        if(res.equalsIgnoreCase("pending"))
+        if(res.equalsIgnoreCase("Pending"))
         {
-            ShowDialog2("pending");
+            ShowDialog2("Pending");
         }
 
     }

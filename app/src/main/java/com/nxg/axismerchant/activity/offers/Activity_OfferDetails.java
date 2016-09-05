@@ -193,6 +193,7 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
             PageFragment_for_OfferFeatures fragmentForOfferFeatures = new PageFragment_for_OfferFeatures();
             Bundle bundle = new Bundle();
             bundle.putString("Position",String.valueOf(position));
+            bundle.putString("PromotionId",mPromotionId);
             bundle.putInt(PageFragment_for_OfferFeatures.ARG_OBJECT, position);
             fragmentForOfferFeatures.setArguments(bundle);
             return fragmentForOfferFeatures;
