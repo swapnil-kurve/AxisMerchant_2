@@ -2,10 +2,8 @@ package com.nxg.axismerchant.fragments;
 
 
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,8 +19,6 @@ import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
 import com.nxg.axismerchant.classes.HTTPUtils;
-import com.nxg.axismerchant.database.DBHelper;
-import com.nxg.axismerchant.offer_alarm.ScheduleClient;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -40,7 +36,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -152,10 +147,8 @@ public class PageFragment_for_OfferFeatures extends Fragment{
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -227,7 +220,6 @@ public class PageFragment_for_OfferFeatures extends Fragment{
                 }
                 progressDialog.dismiss();
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
             }
 

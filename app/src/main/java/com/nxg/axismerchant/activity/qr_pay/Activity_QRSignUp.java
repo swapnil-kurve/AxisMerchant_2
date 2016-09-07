@@ -1,71 +1,82 @@
 package com.nxg.axismerchant.activity.qr_pay;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.Activity_Notification;
+import com.nxg.axismerchant.activity.start.Activity_Home;
 import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
+import com.nxg.axismerchant.classes.HTTPUtils;
 import com.nxg.axismerchant.classes.Notification;
 import com.nxg.axismerchant.database.DBHelper;
 import com.nxg.axismerchant.fragments.qr.PageFragmentForQR_SignUpFeature;
 import com.nxg.axismerchant.fragments.qr.PageFragmentForQR_SignUpFees;
 import com.nxg.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFees;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Activity_QRSignUp extends AppCompatActivity implements View.OnClickListener {
 
-    ViewPager viewPager;
-    private String[] tabs ;
     String MID,MOBILE;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
+    int flag = 0, eventClicked = 0;
+    ImageView imgAccept;
+    TextView txtDone,txtProceed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_sign_up);
 
-        Typeface typeFace = Typeface.createFromAsset(getAssets(), "fonts/Futura_LightBold.ttf");
-
-        tabs = getResources().getStringArray(R.array.sms_pay_sign_up);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
-        TextView txtProceed = (TextView) findViewById(R.id.txtProceed);
+        View layoutFeatures = findViewById(R.id.layoutFeatures);
+        View layoutFees = findViewById(R.id.layoutFees);
+        txtProceed = (TextView) findViewById(R.id.txtProceed);
+
         imgBack.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
         txtProceed.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
-
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setOffscreenPageLimit(1);
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
-
-        // Give the PagerSlidingTabStrip the ViewPager
-        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-        tabsStrip.setTypeface(typeFace,0);
-        // Attach the view pager to the tab strip
-        tabsStrip.setViewPager(viewPager);
+        layoutFeatures.setOnClickListener(this);
+        layoutFees.setOnClickListener(this);
 
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
@@ -77,14 +88,44 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
 
+        changeToFeatures();
+
         SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
-        String res = preferences.getString("Validated","No");
+        String res = preferences.getString("QRRequestValidated","No");
         if(res.equalsIgnoreCase("pending"))
         {
             ShowDialog2("pending");
         }
 
     }
+
+
+    private void changeToFeatures()
+    {
+        txtProceed.setText(getString(R.string.proceed));
+        (findViewById(R.id.viewFeatures)).setBackgroundColor(Color.WHITE);
+        (findViewById(R.id.viewFees)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        PageFragmentForQR_SignUpFeature qr_signUpFeature = new PageFragmentForQR_SignUpFeature();
+        Bundle bundle = new Bundle();
+        bundle.putInt(PageFragmentForQR_SignUpFeature.ARG_OBJECT, 0);
+        qr_signUpFeature.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.container,qr_signUpFeature).commit();
+    }
+
+    private void changeToFees()
+    {
+        txtProceed.setText(getString(R.string.proceedTerms));
+        (findViewById(R.id.viewFees)).setBackgroundColor(Color.WHITE);
+        (findViewById(R.id.viewFeatures)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        PageFragmentForQR_SignUpFees qr_signUpFees = new PageFragmentForQR_SignUpFees();
+        Bundle bundle = new Bundle();
+        bundle.putInt(PageFragmentForSMS_SignUpFees.ARG_OBJECT, 1);
+        qr_signUpFees.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.container, qr_signUpFees).commit();
+    }
+
 
     @Override
     protected void onResume() {
@@ -115,11 +156,46 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
                 break;
 
             case R.id.txtProceed:
-                startActivity(new Intent(this, Activity_QRTerms.class));
+                if(eventClicked == 0) {
+                    eventClicked = 1;
+                    changeToFees();
+
+                }else if(eventClicked == 1) {
+                    ShowTermsAndConditions();
+                }
                 break;
 
             case R.id.imgNotification:
                 startActivity(new Intent(this, Activity_Notification.class));
+                break;
+
+            case R.id.imgAccept:
+                if(flag == 0)
+                {
+                    imgAccept.setImageResource(R.mipmap.login_tick);
+                    txtDone.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    txtDone.setEnabled(true);
+                    flag = 1;
+                }else
+                {
+                    imgAccept.setImageResource(0);
+                    txtDone.setTextColor(getResources().getColor(R.color.dark_gray));
+                    txtDone.setEnabled(false);
+                    flag = 0;
+                }
+                break;
+
+            case R.id.txtDone:
+                if(flag==1)
+                    sendRequest();
+                break;
+
+            case R.id.layoutFeatures:
+                changeToFeatures();
+                break;
+
+            case R.id.layoutFees:
+                changeToFees();
                 break;
         }
     }
@@ -177,44 +253,210 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
     }
 
 
+    private void ShowTermsAndConditions()
+    {
+        // custom dialog
+        final Dialog dialog = new Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_qr_terms);
 
-    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
+        imgAccept = (ImageView) dialog.findViewById(R.id.imgAccept);
+        txtDone = (TextView) dialog.findViewById(R.id.txtDone);
 
-        public SampleFragmentPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
+        TextView txtTerms = (TextView) dialog.findViewById(R.id.txtTerms);
 
-        @Override
-        public int getCount() {
-            return tabs.length;
-        }
+        txtTerms.setText(Html.fromHtml(getString(R.string.termsDataQR)));
+        txtTerms.setMovementMethod(LinkMovementMethod.getInstance());
 
-        @Override
-        public Fragment getItem(int position) {
-            if(position == 0) {
-                PageFragmentForQR_SignUpFeature qr_signUpFeature = new PageFragmentForQR_SignUpFeature();
-                Bundle bundle = new Bundle();
-                bundle.putInt(PageFragmentForQR_SignUpFeature.ARG_OBJECT, position);
-                qr_signUpFeature.setArguments(bundle);
-                return qr_signUpFeature;
-            }else if(position == 1)
-            {
-                PageFragmentForQR_SignUpFees qr_signUpFees = new PageFragmentForQR_SignUpFees();
-                Bundle bundle = new Bundle();
-                bundle.putInt(PageFragmentForSMS_SignUpFees.ARG_OBJECT, position);
-                qr_signUpFees.setArguments(bundle);
-                return qr_signUpFees;
-            }else
-            {
-                return null;
+        imgAccept.setOnClickListener(this);
+        txtDone.setOnClickListener(this);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        dialog.show();
+    }
+
+
+    private void sendRequest() {
+        if (Constants.isNetworkConnectionAvailable(this)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new SendRequest().executeOnExecutor(AsyncTask
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "");
+            } else {
+                new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "");
+
             }
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            // Generate title based on item position
-            return tabs[position];
+        } else {
+            Constants.showToast(this, getString(R.string.no_internet));
         }
     }
+
+
+    public class SendRequest extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            progressDialog = new ProgressDialog(Activity_QRSignUp.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            String str = "";
+            try {
+                HTTPUtils utils = new HTTPUtils();
+                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
+                URI newURI = URI.create(arg0[0]);
+                HttpPost httppost = new HttpPost(newURI);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mer_mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.tid), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.service_type), encryptDecrypt.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.prob_details), encryptDecrypt.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.off_days), encryptDecrypt.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.visit_timing), encryptDecrypt.encrypt(arg0[7])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.contact_no), encryptDecrypt.encrypt(arg0[8])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.rolls_required), encryptDecrypt.encrypt(arg0[9])));
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpclient.execute(httppost);
+                int stats = response.getStatusLine().getStatusCode();
+
+                if (stats == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    str = data;
+                }
+            } catch (ParseException e1) {
+                progressDialog.dismiss();
+            } catch (IOException e) {
+                progressDialog.dismiss();
+            }
+
+            return str;
+        }
+
+        @Override
+        protected void onPostExecute(String data) {
+            try {
+                if(!data.equals("")) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
+
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
+
+                    result = encryptDecryptRegister.decrypt(result);
+
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray addServiceRequest = object.getJSONArray("addServiceRequest");
+
+                        for (int i = 0; i < addServiceRequest.length(); i++) {
+                            JSONObject object2 = addServiceRequest.getJSONObject(i);
+                            String Request_Number = object2.optString("Request_Number");
+                            String Call_Status = object2.optString("Call_Status");
+
+                            Request_Number = encryptDecrypt.decrypt(Request_Number);
+                            Call_Status = encryptDecrypt.decrypt(Call_Status);
+
+//                            Constants.showToast(Activity_QRTerms.this, "Your request number is "+Request_Number);
+//                            onBackPressed();
+                            progressDialog.dismiss();
+                            ShowDialog2("Success",Request_Number,Call_Status);
+                        }
+                    }else
+                    {
+//                        Constants.showToast(Activity_QRTerms.this, "Network error, please try again later");
+                        progressDialog.dismiss();
+                        ShowDialog2(result, "Fail", "null");
+                    }
+                }else
+                {
+                    Constants.showToast(Activity_QRSignUp.this, getString(R.string.network_error));
+                }
+
+
+            } catch (JSONException e) {
+                progressDialog.dismiss();
+                Constants.showToast(Activity_QRSignUp.this, getString(R.string.network_error));
+            }
+            progressDialog.dismiss();
+        }
+    }
+
+
+    private void ShowDialog2(String result, String status, String reqID)
+    {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_message_for_sms);
+        dialog.setCancelable(false);
+
+        TextView txtMID = (TextView) dialog.findViewById(R.id.txtMID);
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        TextView txtTitle = (TextView) dialog.findViewById(R.id.txtTitle);
+        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
+        TextView txtMsg1 = (TextView) dialog.findViewById(R.id.txtMessage);
+        TextView txtMsg2 = (TextView) dialog.findViewById(R.id.msg1);
+
+        if(!result.equals("Success"))
+        {
+            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit_fail));
+            imgResponse.setImageResource(R.mipmap.fail);
+            txtConfirm.setText("Ok");
+            txtMID.setVisibility(View.GONE);
+
+            // if button is clicked, close the custom dialog
+            txtConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(Activity_QRSignUp.this, Activity_Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }else
+        {
+            txtMsg2.setVisibility(View.GONE);
+            txtMsg1.setText(getString(R.string.qr_on_boarding_pop_up));
+            txtConfirm.setText("Ok");
+
+            SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            editor.putString("QRRequestValidated","pending");
+            editor.putString("Status",status);
+            editor.putString("Request_ID", reqID);
+            editor.apply();
+
+            // if button is clicked, close the custom dialog
+            txtConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                    Intent intent = new Intent(Activity_QRSignUp.this, Activity_Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+
+
+        dialog.show();
+    }
+
 
 }

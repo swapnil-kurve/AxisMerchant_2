@@ -280,10 +280,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -342,7 +340,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }
@@ -390,10 +387,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -448,7 +443,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }
@@ -575,10 +569,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -644,7 +636,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
 
         }
@@ -797,10 +789,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
+
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
             return str;
         }
@@ -862,7 +854,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }

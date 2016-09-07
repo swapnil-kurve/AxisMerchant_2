@@ -351,10 +351,8 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -415,7 +413,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }
@@ -569,10 +566,8 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -635,7 +630,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }
@@ -686,10 +680,8 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -724,7 +716,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }
@@ -771,7 +762,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
 
         }
     }

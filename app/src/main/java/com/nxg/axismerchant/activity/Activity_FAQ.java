@@ -128,10 +128,8 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -181,7 +179,6 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }

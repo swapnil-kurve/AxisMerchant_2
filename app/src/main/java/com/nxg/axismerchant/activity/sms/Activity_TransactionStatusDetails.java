@@ -145,10 +145,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                     if (simStatus == 1) {
                         if (txtResText.getText().toString().equalsIgnoreCase("Resend Link"))
                             callResend();
-                    } else {
-                        if (txtResText.getText().toString().equalsIgnoreCase("Refund Payment"))
-                            getConfirm();
                         else
+                            getConfirm();
+                    } else {
                             ShowDialog();
                     }
                 }else {
@@ -272,10 +271,8 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -345,7 +342,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                             ((TextView) findViewById(R.id.txtStatus)).setText(transStatus);
                             ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_orange_light));
                             ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.pending);
-                            ((View)findViewById(R.id.refundLayout)).setVisibility(View.VISIBLE);
+                            findViewById(R.id.refundLayout).setVisibility(View.VISIBLE);
                             txtResText.setText("Resend Link");
                             refLayout.setVisibility(View.VISIBLE);
                         }else if(transStatus.equals("Success"))
@@ -353,8 +350,8 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                             ((TextView) findViewById(R.id.txtStatus)).setText(transStatus);
                             ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_green_dark));
                             ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.success);
-                            ((View)findViewById(R.id.lyExpiry)).setVisibility(View.GONE);
-                            ((View)findViewById(R.id.refundLayout)).setVisibility(View.VISIBLE);
+                            findViewById(R.id.lyExpiry).setVisibility(View.GONE);
+                            findViewById(R.id.refundLayout).setVisibility(View.VISIBLE);
                             txtResText.setText("Refund Payment");
                             if(transType.equalsIgnoreCase("sales")) {
                                 if (isRefund.equals("0"))
@@ -386,7 +383,6 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                     Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
                 Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.network_error));
             }
@@ -441,10 +437,10 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
+
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
             return str;
         }
@@ -518,7 +514,6 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
                 Constants.showToast(Activity_TransactionStatusDetails.this,getString(R.string.network_error));
             }
 
@@ -587,10 +582,8 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -640,7 +633,6 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
                 Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.network_error));
             }
 

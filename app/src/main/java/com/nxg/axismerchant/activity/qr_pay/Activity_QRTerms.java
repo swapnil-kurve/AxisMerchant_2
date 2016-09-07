@@ -194,10 +194,8 @@ public class Activity_QRTerms extends AppCompatActivity implements View.OnClickL
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
             return str;
@@ -246,7 +244,6 @@ public class Activity_QRTerms extends AppCompatActivity implements View.OnClickL
 
 
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
                 Constants.showToast(Activity_QRTerms.this, getString(R.string.network_error));
             }

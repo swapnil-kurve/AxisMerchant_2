@@ -34,7 +34,6 @@ import com.nxg.axismerchant.activity.analytics.Activity_Analytics;
 import com.nxg.axismerchant.activity.mis_reports.Activity_MIS_Home;
 import com.nxg.axismerchant.activity.offers.Activity_OfferDetails;
 import com.nxg.axismerchant.activity.offers.Activity_OffersNotices;
-import com.nxg.axismerchant.activity.qr_pay.Activity_QRPayHome;
 import com.nxg.axismerchant.activity.qr_pay.Activity_QRSignUp;
 import com.nxg.axismerchant.activity.refer.Activity_ReferHome;
 import com.nxg.axismerchant.activity.service_support.Activity_ServiceSupport;
@@ -278,7 +277,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
     private void gotoQR() {
         SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
-        if(preferences.contains("mvisaId"))
+        /*if(preferences.contains("mvisaId"))
         {
             String mVisaId = preferences.getString("mvisaId","");
             if(mVisaId.equals("")  ||  mVisaId.equalsIgnoreCase("Null"))
@@ -289,9 +288,9 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(this, Activity_QRPayHome.class));
             }
         }else
-        {
+        {*/
             startActivity(new Intent(this, Activity_QRSignUp.class));
-        }
+//        }
     }
 
     private void gotoSMS() {
@@ -434,10 +433,8 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             } catch (org.apache.http.ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -494,7 +491,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
         }
     }
@@ -519,7 +515,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return view == ((LinearLayout) object);
+            return view == object;
         }
 
         @Override
@@ -610,10 +606,10 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             } catch (org.apache.http.ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
+
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
             return str;
         }
@@ -664,7 +660,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
         }
     }
@@ -775,10 +771,10 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             } catch (org.apache.http.ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
+
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
             return str;
         }
@@ -840,7 +836,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
         }
     }
@@ -897,10 +893,8 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             }catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -955,7 +949,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }

@@ -164,10 +164,8 @@ public class Fragment_SMSTransactionReport extends Fragment{
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -246,7 +244,6 @@ public class Fragment_SMSTransactionReport extends Fragment{
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
                 Constants.showToast(getActivity(),getString(R.string.network_error));
             }
 

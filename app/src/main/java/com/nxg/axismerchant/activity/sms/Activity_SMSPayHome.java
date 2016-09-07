@@ -392,10 +392,8 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                 }
             } catch (org.apache.http.ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -468,7 +466,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
                 Constants.showToast(Activity_SMSPayHome.this,getString(R.string.network_error));
             }
         }
@@ -572,10 +569,8 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -634,7 +629,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                     Constants.showToast(Activity_SMSPayHome.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
                 Constants.showToast(Activity_SMSPayHome.this,getString(R.string.network_error));
             }

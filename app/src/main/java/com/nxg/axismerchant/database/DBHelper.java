@@ -86,7 +86,6 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(CREATE_TABLE_MIS_TRANSACTION_REPORT);
         }catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
 
@@ -102,7 +101,6 @@ public class DBHelper extends SQLiteOpenHelper {
             onCreate(db);
         }catch (Exception e)
         {
-            e.printStackTrace();
         }
     }
 }

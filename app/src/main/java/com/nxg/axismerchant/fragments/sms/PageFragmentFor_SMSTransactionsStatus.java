@@ -212,7 +212,7 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
 
             }catch (Exception e)
             {
-                e.printStackTrace();
+
             }
             return view;
         }

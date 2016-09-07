@@ -6,25 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.Activity_Notification;
 import com.nxg.axismerchant.activity.start.Activity_Home;
@@ -35,8 +28,6 @@ import com.nxg.axismerchant.classes.EncryptDecryptRegister;
 import com.nxg.axismerchant.classes.HTTPUtils;
 import com.nxg.axismerchant.classes.Notification;
 import com.nxg.axismerchant.database.DBHelper;
-import com.nxg.axismerchant.fragments.profile.BusinessDetailsFragment;
-import com.nxg.axismerchant.fragments.profile.SubUserFragment;
 import com.nxg.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFeatures;
 import com.nxg.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFees;
 
@@ -60,8 +51,7 @@ import java.util.List;
 
 public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClickListener {
 
-//    ViewPager viewPager;
-//    private String[] tabs ;
+
     String MID,MOBILE;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
@@ -281,7 +271,7 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
 
         TextView txtTerms = (TextView) dialog.findViewById(R.id.txtTerms);
 
-        txtTerms.setText(Html.fromHtml(getString(R.string.termsData)));
+        txtTerms.setText(Html.fromHtml(getString(R.string.termsDataSMS)));
         txtTerms.setMovementMethod(LinkMovementMethod.getInstance());
 
         imgAccept.setOnClickListener(this);
@@ -345,10 +335,8 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -386,7 +374,6 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
                 }
                 progressDialog.dismiss();
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
             }
 

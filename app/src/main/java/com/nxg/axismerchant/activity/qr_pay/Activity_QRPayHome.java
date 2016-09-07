@@ -119,7 +119,6 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
                                         ImageView myImage = (ImageView) findViewById(R.id.img_qrCode);
                                         myImage.setImageBitmap(bitmap);
                                     } catch (WriterException e) {
-                                        e.printStackTrace();
                                     }
                             }
                         }

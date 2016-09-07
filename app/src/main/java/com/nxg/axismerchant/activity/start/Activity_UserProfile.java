@@ -43,7 +43,7 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
     Intent returnFromGalleryIntent;
     private int flag = 0;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
-
+    SubUserFragment userFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,7 +157,7 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
         (findViewById(R.id.viewSubUser)).setBackgroundColor(Color.WHITE);
         (findViewById(R.id.viewBusinessDetails)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-        SubUserFragment userFragment = new SubUserFragment();
+        userFragment = new SubUserFragment();
         getFragmentManager().beginTransaction().replace(R.id.container, userFragment).commit();
     }
 
@@ -209,7 +209,7 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
                     startActivityForResult(i, RESULT_SELECT_IMAGE);
 
                 }catch(Exception e){
-                    e.printStackTrace();
+
                 }
                 break;
 
@@ -264,7 +264,6 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
                         });
 
                     }catch(Exception e){
-                        e.printStackTrace();
                         Intent returnFromGalleryIntent = new Intent();
                         setResult(RESULT_CANCELED, returnFromGalleryIntent);
                     }
@@ -281,8 +280,20 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
     @Override
     public void onBackPressed() {
         if(flag == 1){
-            changeToBusinessDetails();
-            flag = 0;
+            boolean groupsCollapsed = false;
+            for (int i=0; i<userFragment.expandableListView.getCount(); ++i) {
+                if (userFragment.expandableListView.isGroupExpanded(i)) {
+                    userFragment.expandableListView.collapseGroup(i);
+                    groupsCollapsed = true;
+                }
+            }
+
+            // If no groups collapsed, call the default back button
+            if (!groupsCollapsed) {
+                changeToBusinessDetails();
+                flag = 0;
+            }
+
         }else {
             super.onBackPressed();
         }

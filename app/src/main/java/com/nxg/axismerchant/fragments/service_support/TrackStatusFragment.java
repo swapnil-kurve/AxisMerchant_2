@@ -214,14 +214,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
     private void SearchSR()
     {
-        /*Bundle bundle = new Bundle();
-        bundle.putString("SRNo",mSRNO);
-        bundle.putString("TIDNo",mTIDNo);
-        bundle.putString("Call_Type","Search");
-        Fragment_StatusDetails statusDetails = new Fragment_StatusDetails();
-        statusDetails.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.xnContainer, statusDetails).commit();*/
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new GetStatusListBySR().executeOnExecutor(AsyncTask
                     .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNO, mTIDNo);
@@ -296,10 +288,8 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -389,7 +379,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
                 Constants.showToast(getActivity(),getString(R.string.network_error));
             }
 
@@ -489,7 +478,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
 
         }
     }
@@ -540,10 +528,8 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -633,7 +619,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
                 Constants.showToast(getActivity(),getString(R.string.network_error));
             }
 

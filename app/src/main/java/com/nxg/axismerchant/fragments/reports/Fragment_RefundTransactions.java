@@ -184,10 +184,8 @@ public class Fragment_RefundTransactions extends Fragment {
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -258,7 +256,6 @@ public class Fragment_RefundTransactions extends Fragment {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
                 Constants.showToast(getActivity(),getString(R.string.network_error));
             }

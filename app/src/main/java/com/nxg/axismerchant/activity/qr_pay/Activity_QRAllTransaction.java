@@ -179,10 +179,8 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -238,7 +236,6 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
                     Constants.showToast(Activity_QRAllTransaction.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
                 Constants.showToast(Activity_QRAllTransaction.this,getString(R.string.network_error));
             }

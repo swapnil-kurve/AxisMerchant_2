@@ -226,9 +226,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                 str = EntityUtils.toString(response.getEntity(), "UTF-8");
 
             } catch (ClientProtocolException e) {
-                e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
             }
 
             return str;
@@ -271,7 +269,6 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
             } catch (Exception e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
                 Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
             }
 
@@ -316,10 +313,9 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
+
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -424,7 +420,6 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                     Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
                 Constants.showToast(Activity_QRTransactionDetails.this,getString(R.string.network_error));
             }

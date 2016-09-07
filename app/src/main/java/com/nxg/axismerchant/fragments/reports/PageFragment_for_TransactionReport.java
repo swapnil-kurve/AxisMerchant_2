@@ -1,18 +1,10 @@
 package com.nxg.axismerchant.fragments.reports;
 
 
-import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,30 +24,9 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.classes.Constants;
-import com.nxg.axismerchant.classes.EncryptDecrypt;
-import com.nxg.axismerchant.classes.EncryptDecryptRegister;
-import com.nxg.axismerchant.classes.HTTPUtils;
-import com.nxg.axismerchant.classes.SMSPayStatus;
 import com.nxg.axismerchant.classes.TransactionReport;
-import com.nxg.axismerchant.database.DBHelper;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,8 +40,6 @@ public class PageFragment_for_TransactionReport extends Fragment {
     TextView txtDateDuration;
     private String date;
     int pageNO;
-    private String pageTitle;
-    TransactionReport report;
     ArrayList<TransactionReport> transactionReports;
     TransactionReportAdapter transactionReportAdapter;
 
@@ -123,7 +92,6 @@ public class PageFragment_for_TransactionReport extends Fragment {
 
             showBarChart(transactionReports);
         }else if(pageNO == 1) {
-            pageTitle = "SMS";
             for (int i = 0; i < transactionReports.size(); i++) {
                 if(transactionReports.get(i).gettType().equalsIgnoreCase("SMS")){
                     reportArrayList.add(transactionReports.get(i));
@@ -136,7 +104,6 @@ public class PageFragment_for_TransactionReport extends Fragment {
             showBarChart(reportArrayList);
         }
         else if(pageNO == 2) {
-            pageTitle = "QR";
             for (int i = 0; i < transactionReports.size(); i++) {
                 if(transactionReports.get(i).gettType().equalsIgnoreCase("QR")){
                     reportArrayList.add(transactionReports.get(i));

@@ -207,10 +207,8 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                 }
             }catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -254,7 +252,6 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                     Constants.showToast(Activity_Set_mPIN.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
             }
 
         }

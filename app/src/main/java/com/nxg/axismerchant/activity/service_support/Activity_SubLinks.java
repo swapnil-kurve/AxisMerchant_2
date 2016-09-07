@@ -20,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -160,7 +159,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
             if(heading.equalsIgnoreCase("RollsRequired")) {
                 txtSubCode.setText("Roll Required");
                 txtHeading.setText("Quick Links");
-                ((RelativeLayout)findViewById(R.id.lyNoOfRolls)).setVisibility(View.VISIBLE);
+                findViewById(R.id.lyNoOfRolls).setVisibility(View.VISIBLE);
             }
 
             if(heading.equalsIgnoreCase("TrainingRequired")) {
@@ -311,11 +310,11 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
         if(txtHeading.getText().toString().trim().equalsIgnoreCase("Account Management"))
         {
-            ((ImageView)findViewById(R.id.imgStar1)).setVisibility(View.GONE);
-            ((ImageView)findViewById(R.id.imgStar2)).setVisibility(View.GONE);
-            ((ImageView)findViewById(R.id.imgStar3)).setVisibility(View.GONE);
-            ((ImageView)findViewById(R.id.imgStar4)).setVisibility(View.GONE);
-            ((ImageView)findViewById(R.id.imgStar5)).setVisibility(View.GONE);
+            findViewById(R.id.imgStar1).setVisibility(View.GONE);
+            findViewById(R.id.imgStar2).setVisibility(View.GONE);
+            findViewById(R.id.imgStar3).setVisibility(View.GONE);
+            findViewById(R.id.imgStar4).setVisibility(View.GONE);
+            findViewById(R.id.imgStar5).setVisibility(View.GONE);
         }
         imgBack.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
@@ -565,10 +564,9 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
+
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
             return str;
@@ -604,13 +602,13 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                             responseCode = encryptDecrypt.decrypt(responseCode);
 
                             if(Request_Number.equalsIgnoreCase(""))
-                                ShowDialogReponse("Fail", "");
+                                ShowDialogReponse("Fail", "", "", "");
                             else
-                                ShowDialogReponse("Success", Request_Number);
+                                ShowDialogReponse("Success", Request_Number, docket_id, responseCode);
                         }
                     }else
                     {
-                        ShowDialogReponse("Fail", "");
+                        ShowDialogReponse("Fail", "", "", "");
                     }
                 }else
                 {
@@ -619,7 +617,6 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
 
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
                 Constants.showToast(Activity_SubLinks.this, getString(R.string.network_error));
             }
@@ -640,14 +637,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         {
             @Override
             public boolean isEnabled(int position) {
-                if(position == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override
@@ -673,7 +663,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
 
 
-    private void ShowDialogReponse(String response, String request_Number)
+    private void ShowDialogReponse(String response, String request_Number, String docket_id, String response_code)
     {
         // custom dialog
         final Dialog dialog = new Dialog(this);
@@ -687,10 +677,12 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
         if(response.equalsIgnoreCase("Success"))
         {
-            txtRequestNumber.setText(getString(R.string.request_number)+" \n"+request_Number);
+            txtResponseStatus.setText("Success");
+            txtRequestNumber.setText(getString(R.string.request_number)+" \n"+request_Number+",\n Docket Id "+docket_id+",\n Response Code "+response_code);
             imgResponse.setImageResource(R.drawable.happiness);
         }else if(request_Number.equalsIgnoreCase("Fail"))
         {
+            txtResponseStatus.setText("Fail");
             txtRequestNumber.setText(getString(R.string.request_cannot_process));
             imgResponse.setImageResource(R.mipmap.fail);
         }

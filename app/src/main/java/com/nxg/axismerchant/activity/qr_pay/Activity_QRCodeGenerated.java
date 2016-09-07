@@ -171,7 +171,6 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
                                     ImageView myImage = (ImageView) findViewById(R.id.img_qrCode);
                                     myImage.setImageBitmap(bitmap);
                                 } catch (WriterException e) {
-                                    e.printStackTrace();
                                 }
                             }
                         }

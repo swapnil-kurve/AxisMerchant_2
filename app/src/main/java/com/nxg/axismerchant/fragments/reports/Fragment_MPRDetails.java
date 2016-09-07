@@ -51,7 +51,7 @@ import java.util.Locale;
  */
 public class Fragment_MPRDetails extends Fragment implements View.OnClickListener {
 
-    TextView txtGrossAmount,txtMDR,txtServiceTax,txtHoldAmount,txtAdjustments,txtCashPos, txtPaymentDate,txtNoOfTxn,txtTotalValue, txtNetAmount,txtFromDate, txtToDate;;
+    TextView txtGrossAmount,txtMDR,txtServiceTax,txtHoldAmount,txtAdjustments,txtCashPos, txtPaymentDate,txtNoOfTxn,txtTotalValue, txtNetAmount,txtFromDate, txtToDate;
     String MOBILE, MID, currentDateAndTime;
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
@@ -252,10 +252,8 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -278,13 +276,10 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 if(result.equals("Success"))
                 {
                     progressDialog.dismiss();
-//                    Constants.showToast(getActivity(), "Thanks for your request, Our team will get back to you");
                     ShowDialog("yes");
-//                    getActivity().onBackPressed();
                 }
                 else {
                     progressDialog.dismiss();
-//                    Constants.showToast(getActivity(), "Sorry! your email id is not registered with us. Kindly contact your relationship manager and register your email id.");
                     ShowDialog("no");
                 }
                 }else {
@@ -292,7 +287,6 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }
@@ -343,10 +337,10 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
+
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
             return str;
         }
@@ -411,7 +405,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
 
         }
@@ -459,7 +453,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+
 
         }
     }

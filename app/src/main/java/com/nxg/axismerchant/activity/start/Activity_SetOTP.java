@@ -293,10 +293,8 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 }
             }catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -327,7 +325,6 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                     Constants.showToast(Activity_SetOTP.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
             }
 
         }
@@ -373,10 +370,8 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -420,7 +415,6 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                     Constants.showToast(Activity_SetOTP.this, getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
             }
 
         }

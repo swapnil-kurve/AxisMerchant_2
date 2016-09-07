@@ -1,11 +1,7 @@
 package com.nxg.axismerchant.fragments.reports;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,29 +13,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
-import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
-import com.nxg.axismerchant.classes.HTTPUtils;
 import com.nxg.axismerchant.classes.SMSPayStatus;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +29,6 @@ public class PageFragment_for_refundXn extends Fragment {
     ListView listData;
 
     ArrayList<SMSPayStatus> statusArrayList;
-    SMSPayStatus smsPayStatus;
     DataAdapter dataAdapter;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;

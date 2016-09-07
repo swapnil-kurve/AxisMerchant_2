@@ -52,13 +52,13 @@ import java.util.Set;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SubUserFragment extends Fragment implements View.OnClickListener, ExpandableListView.OnChildClickListener, AdapterView.OnItemSelectedListener {
+public class SubUserFragment extends Fragment implements View.OnClickListener, ExpandableListView.OnChildClickListener, AdapterView.OnItemSelectedListener, ExpandableListView.OnGroupExpandListener {
 
     EditText edtUserName, edtMobileNo, edtEmailId;
     String mUserName = "", mMobileNo = "", mEmailID = "", mMVisaId = "", MID, MOBILE;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
-    ExpandableListView expandableListView;
+    public ExpandableListView expandableListView;
     Spinner spinMVisaID;
     public static int editFlag = 0;
 
@@ -126,6 +126,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         txtSubmit.setOnClickListener(this);
         txtCreateNewUser.setOnClickListener(this);
         expandableListView.setOnChildClickListener(this);
+        expandableListView.setOnGroupExpandListener(this);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.ProfileInfo, Context.MODE_PRIVATE);
         //Retrieve the values
@@ -301,6 +302,11 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
 
     }
 
+    @Override
+    public void onGroupExpand(int i) {
+
+    }
+
     private class CreateSubUser extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
@@ -342,10 +348,8 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -383,7 +387,6 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 progressDialog.dismiss();
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }
@@ -427,10 +430,8 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -493,7 +494,6 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
         }
     }
@@ -564,10 +564,8 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
             return str;
         }
@@ -597,7 +595,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                         res = encryptDecrypt.decrypt(res);
 
                         if(res.equalsIgnoreCase("Success")) {
-                            Constants.showToast(getActivity(), getString(R.string.sub_user_created));
+                            Constants.showToast(getActivity(), getString(R.string.sub_user_updated));
 
                             getUserList();
 
@@ -623,7 +621,6 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
             }
 
         }
@@ -635,11 +632,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override
