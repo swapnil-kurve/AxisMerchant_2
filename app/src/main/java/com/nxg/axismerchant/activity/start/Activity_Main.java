@@ -16,12 +16,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.classes.Constants;
@@ -265,4 +263,7 @@ public class Activity_Main extends AppCompatActivity {
         super.onResume();
         checkPlayServices();
     }
+
+
+
 }

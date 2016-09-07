@@ -3,9 +3,6 @@ package com.nxg.axismerchant.classes;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -13,7 +10,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
-import android.util.Base64;
 import android.widget.Toast;
 
 import com.nxg.axismerchant.database.DBHelper;
@@ -21,8 +17,6 @@ import com.nxg.axismerchant.database.DBHelper;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,6 +40,7 @@ public class Constants {
     public static final String ProfileInfo = "ProfileInfo";
     public static final String EPaymentData = "EPaymentData";
     public static final String QRPaymentData = "QRPaymentData";
+    public static final String LanguageData = "LanguageData";
 
     public static String GOOGLE_PROJ_ID = "660348263150";
     public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
@@ -70,7 +65,7 @@ public class Constants {
     //To get IMEI number of device
     public static void getIMEI(Context context){
 
-        TelephonyManager mngr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+        TelephonyManager mngr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         IMEI = mngr.getDeviceId();
     }
 
