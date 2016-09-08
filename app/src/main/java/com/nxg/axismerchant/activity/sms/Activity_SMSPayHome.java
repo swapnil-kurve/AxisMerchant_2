@@ -98,6 +98,9 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         txtSeeAllTransactions.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
 
+        int[] coachMarks = {R.drawable.sms_01, R.drawable.sms_02};
+        Constants.onCoachMark(this, coachMarks);
+
         /**
          * Run time permissions for Android M
          */

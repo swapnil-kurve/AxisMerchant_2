@@ -56,6 +56,9 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         imgProfile.setOnClickListener(this);
         txtViewAllTransactions.setOnClickListener(this);
 
+        int[] coachMarks = {R.drawable.qr_1, R.drawable.qr_2};
+        Constants.onCoachMark(this, coachMarks);
+
         getData();
 
         alphanumeric = numericToAlpha();

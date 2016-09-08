@@ -141,6 +141,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             txtTicket.setVisibility(View.VISIBLE);
         }
 
+        int[] coachMarks = {R.drawable.analytics, R.drawable.analytics_2, R.drawable.analytics_3};
+        Constants.onCoachMark(getActivity(), coachMarks);
+
         return view;
     }
 
@@ -152,6 +155,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         Constants.getIMEI(getActivity());
 
     }
+
+
 
 
     private void getMerchantData() {

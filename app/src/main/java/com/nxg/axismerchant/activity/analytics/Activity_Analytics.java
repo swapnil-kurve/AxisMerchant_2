@@ -55,6 +55,7 @@ public class Activity_Analytics extends AppCompatActivity implements View.OnClic
         tabsStrip.setViewPager(viewPager);
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId())

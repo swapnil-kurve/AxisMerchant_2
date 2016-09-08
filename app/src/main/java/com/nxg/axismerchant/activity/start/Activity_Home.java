@@ -34,6 +34,7 @@ import com.nxg.axismerchant.activity.analytics.Activity_Analytics;
 import com.nxg.axismerchant.activity.mis_reports.Activity_MIS_Home;
 import com.nxg.axismerchant.activity.offers.Activity_OfferDetails;
 import com.nxg.axismerchant.activity.offers.Activity_OffersNotices;
+import com.nxg.axismerchant.activity.qr_pay.Activity_QRPayHome;
 import com.nxg.axismerchant.activity.qr_pay.Activity_QRSignUp;
 import com.nxg.axismerchant.activity.refer.Activity_ReferHome;
 import com.nxg.axismerchant.activity.service_support.Activity_ServiceSupport;
@@ -94,6 +95,8 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
     private int[] images = {R.mipmap.smspay_menu, R.mipmap.qrpay_menu, R.mipmap.service_support_menu, R.mipmap.reports_menu,
             R.mipmap.analytics, R.mipmap.offers, R.mipmap.profile_menu, R.mipmap.refer, R.mipmap.faq, R.mipmap.demo_video,R.mipmap.ver, R.mipmap.logout};
 
+    private int[] homeCoach = {R.drawable.home_profile, R.drawable.home_smspay, R.drawable.home_qr, R.drawable.home_reports, R.drawable.home_service_support};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +134,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
             txtUserName.setText("Good Evening " + user + "!");
         }
 
+        Constants.onCoachMark(this,homeCoach);
         getMerchantDetails();
         getPromotionImages();
         getMVisaIDs();
@@ -277,7 +281,7 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
     private void gotoQR() {
         SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
-        /*if(preferences.contains("mvisaId"))
+        if(preferences.contains("mvisaId"))
         {
             String mVisaId = preferences.getString("mvisaId","");
             if(mVisaId.equals("")  ||  mVisaId.equalsIgnoreCase("Null"))
@@ -288,9 +292,9 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(this, Activity_QRPayHome.class));
             }
         }else
-        {*/
+        {
             startActivity(new Intent(this, Activity_QRSignUp.class));
-//        }
+        }
     }
 
     private void gotoSMS() {

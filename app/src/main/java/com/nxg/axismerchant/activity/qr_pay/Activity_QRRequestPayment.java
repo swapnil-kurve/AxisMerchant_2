@@ -62,6 +62,9 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         imgEditPrimaryID.setOnClickListener(this);
         imgEditSecondaryID.setOnClickListener(this);
 
+        int[] coachMarks = {R.drawable.qr_pay_3};
+        Constants.onCoachMark(this, coachMarks);
+
         encryptDecryptRegister = new EncryptDecryptRegister();
 
         edtPrimaryId.setOnFocusChangeListener(new View.OnFocusChangeListener() {

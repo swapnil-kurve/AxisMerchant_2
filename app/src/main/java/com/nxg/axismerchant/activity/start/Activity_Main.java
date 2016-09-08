@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +21,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nxg.axismerchant.R;
+import com.nxg.axismerchant.activity.AppActivity;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.fragments.login.SignInFragment;
 import com.nxg.axismerchant.fragments.login.SignUpFragment;
@@ -32,7 +32,7 @@ import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
-public class Activity_Main extends AppCompatActivity {
+public class Activity_Main extends AppActivity {
 
     SharedPreferences preferences;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;

@@ -52,6 +52,9 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
         lyTrackStatus.setOnClickListener(this);
 
         changeToServiceSupport();
+
+        int[] coachMarks = {R.drawable.service_support_01, R.drawable.service_support_2};
+        Constants.onCoachMark(this, coachMarks);
     }
 
     @Override

@@ -123,6 +123,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             type = bundle.getInt(ARG_OBJECT,0);
         }
         if(type == 0) {
+            int[] coachMarks = {R.drawable.reports_01, R.drawable.reports_02};
+            Constants.onCoachMark(getActivity(), coachMarks);
+
             getChartData("settled");
             flag = 0;
             txtLabel.setVisibility(View.GONE);

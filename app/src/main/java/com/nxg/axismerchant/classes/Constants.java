@@ -2,16 +2,23 @@ package com.nxg.axismerchant.classes;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.database.DBHelper;
 
 import java.io.BufferedReader;
@@ -213,4 +220,32 @@ public class Constants {
         return null;
     }
 
+
+    public static void onCoachMark(final Context context, final int[] coachMarks){
+
+        final Dialog dialog = new Dialog(context, R.style.WalkthroughTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.coach_mark);
+        dialog.setCanceledOnTouchOutside(true);
+        //for dismissing anywhere you touch
+        View masterView = dialog.findViewById(R.id.coach_mark_master_view);
+        final ImageView imgCoach = (ImageView) dialog.findViewById(R.id.coach_marks_image);
+        Glide.with(context).load(coachMarks[0]).into(imgCoach);
+
+        masterView.setOnClickListener(new View.OnClickListener() {
+            int i = 1;
+            @Override
+            public void onClick(View view) {
+                if (i < coachMarks.length)
+                {
+                    Glide.with(context).load(coachMarks[i]).into(imgCoach);
+                    i++;
+                }else {
+                    dialog.dismiss();
+                }
+            }
+        });
+        dialog.show();
+    }
 }
