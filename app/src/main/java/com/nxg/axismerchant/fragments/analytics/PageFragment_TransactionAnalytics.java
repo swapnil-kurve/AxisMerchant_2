@@ -141,8 +141,13 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             txtTicket.setVisibility(View.VISIBLE);
         }
 
-        int[] coachMarks = {R.drawable.analytics, R.drawable.analytics_2, R.drawable.analytics_3};
-        Constants.onCoachMark(getActivity(), coachMarks);
+        SharedPreferences pref = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+
+        String LastLogin = pref.getString("LastLogin", "");
+        if(LastLogin.equals("firstLogin")) {
+            int[] coachMarks = {R.drawable.analytics, R.drawable.analytics_2, R.drawable.analytics_3};
+            Constants.onCoachMark(getActivity(), coachMarks);
+        }
 
         return view;
     }

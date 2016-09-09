@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +29,7 @@ import com.nxg.axismerchant.activity.Activity_FAQ;
 import com.nxg.axismerchant.activity.Activity_Notification;
 import com.nxg.axismerchant.activity.Activity_Version;
 import com.nxg.axismerchant.activity.Activity_VideoDemo;
+import com.nxg.axismerchant.activity.AppActivity;
 import com.nxg.axismerchant.activity.analytics.Activity_Analytics;
 import com.nxg.axismerchant.activity.mis_reports.Activity_MIS_Home;
 import com.nxg.axismerchant.activity.offers.Activity_OfferDetails;
@@ -73,7 +73,7 @@ import java.util.Set;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
-public class Activity_Home extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
+public class Activity_Home extends AppActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     AutoScrollViewPager viewPager;
     SharedPreferences preferences;
@@ -105,10 +105,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
         getInitialize();
 
-
-        navigationItemAdapter = new NavigationItemAdapter();
-        mDrawerList.setAdapter(navigationItemAdapter);
-
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         String user = preferences.getString("Username", "");
         String LastLogin = preferences.getString("LastLogin", "");
@@ -117,24 +113,81 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
 
+        SharedPreferences preferences = getSharedPreferences(Constants.LanguageData, Context.MODE_PRIVATE);
+        int languageSelected = preferences.getInt("Selected_Language",0);
+
         if (LastLogin.equals("firstLogin")) {
-            txtLastLogin.setText("Last Login : First Login");
+            Constants.onCoachMark(this,homeCoach);
+            if(languageSelected == 1)
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
+            else if(languageSelected == 2)
+                txtLastLogin.setText(getString(R.string.hindi_last_login)+" : "+getString(R.string.hindi_first_login));
+            else if(languageSelected == 3)
+                txtLastLogin.setText(getString(R.string.tamil_last_login)+" : "+getString(R.string.tamil_first_login));
+            else if(languageSelected == 4)
+                txtLastLogin.setText(getString(R.string.telugu_last_login)+" : "+getString(R.string.telugu_first_login));
+            else if(languageSelected == 5)
+                txtLastLogin.setText(getString(R.string.bengali_last_login)+" : "+getString(R.string.bengali_first_login));
+            else if(languageSelected == 6)
+                txtLastLogin.setText(getString(R.string.kannada_last_login)+" : "+getString(R.string.kannada_first_login));
         } else {
-            txtLastLogin.setText("Last Login : " + LastLogin);
+            if(languageSelected == 1)
+                txtLastLogin.setText(getString(R.string.last_login)+" : " + LastLogin);
+            else if(languageSelected == 2)
+                txtLastLogin.setText(getString(R.string.hindi_last_login)+" : " + LastLogin);
+            else if(languageSelected == 3)
+                txtLastLogin.setText(getString(R.string.tamil_last_login)+" : "+LastLogin);
+            else if(languageSelected == 4)
+                txtLastLogin.setText(getString(R.string.telugu_last_login)+" : "+LastLogin);
+            else if(languageSelected == 5)
+                txtLastLogin.setText(getString(R.string.bengali_last_login)+" : "+LastLogin);
+            else if(languageSelected == 6)
+                txtLastLogin.setText(getString(R.string.kannada_last_login)+" : "+LastLogin);
         }
 
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
 
-        if (timeOfDay >= 0 && timeOfDay < 12) {
-            txtUserName.setText("Good Morning " + user + "!");
-        } else if (timeOfDay >= 12 && timeOfDay < 16) {
-            txtUserName.setText("Good Afternoon " + user + "!");
-        } else if (timeOfDay >= 16 && timeOfDay < 24) {
-            txtUserName.setText("Good Evening " + user + "!");
+        switch (languageSelected) {
+            case 1:   if (timeOfDay >= 0 && timeOfDay < 12) {
+                            txtUserName.setText(getString(R.string.morning_text) + " " + user + "!");
+                        } else if (timeOfDay >= 12 && timeOfDay < 16) {
+                            txtUserName.setText(getString(R.string.afternoon_text) + " " + user + "!");
+                        } else if (timeOfDay >= 16 && timeOfDay < 24) {
+                            txtUserName.setText(getString(R.string.evening_text) + " " + user + "!");
+                        }
+                navigationItemList = getResources().getStringArray(R.array.navigation_menu);
+                break;
+
+            case 2:
+                txtUserName.setText(getString(R.string.hindi_welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.hindi_navigation_menu);
+                break;
+
+            case 3:
+                txtUserName.setText(getString(R.string.tamil_welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.tamil_navigation_menu);
+                break;
+
+            case 4:
+                txtUserName.setText(getString(R.string.telugu_welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.telugu_navigation_menu);
+                break;
+
+            case 5:
+                txtUserName.setText(getString(R.string.bengali_welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.bengali_navigation_menu);
+                break;
+
+            case 6:
+                txtUserName.setText(getString(R.string.kannada_welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.kannada_navigation_menu);
+                break;
         }
 
-        Constants.onCoachMark(this,homeCoach);
+        navigationItemAdapter = new NavigationItemAdapter();
+        mDrawerList.setAdapter(navigationItemAdapter);
+
         getMerchantDetails();
         getPromotionImages();
         getMVisaIDs();
@@ -182,7 +235,6 @@ public class Activity_Home extends AppCompatActivity implements View.OnClickList
 
         txtUserName = (TextView) findViewById(R.id.txtUserName);
         txtLastLogin = (TextView) findViewById(R.id.txtLastLogin);
-        navigationItemList = getResources().getStringArray(R.array.navigation_menu);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 

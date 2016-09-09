@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.View;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.Activity_Notification;
+import com.nxg.axismerchant.activity.AppActivity;
 import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
@@ -45,7 +45,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_ReferHome extends AppCompatActivity implements View.OnClickListener {
+public class Activity_ReferHome extends AppActivity implements View.OnClickListener {
 
     EditText edtIndividualName, edtBusinessEntityName, edtTypeOfBusiness, edtMobileNumber, edtLandlineNumber, edtAddress;
     String MOBILE, MID;

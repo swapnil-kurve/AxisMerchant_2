@@ -17,4 +17,23 @@
         <attr name="bengali_text" format="string"/>
     </declare-styleable>
 
+
+    <declare-styleable name="AppEdittext">
+        <attr name="hindi_hint_font_name" format="string"/>
+        <attr name="hindi_hint_text" format="string"/>
+
+        <attr name="tamil_hint_font_name" format="string"/>
+        <attr name="tamil_hint_text" format="string"/>
+
+        <attr name="telugu_hint_font_name" format="string"/>
+        <attr name="telugu_hint_text" format="string"/>
+
+        <attr name="kannada_hint_font_name" format="string"/>
+        <attr name="kannada_hint_text" format="string"/>
+
+        <attr name="bengali_hint_font_name" format="string"/>
+        <attr name="bengali_hint_text" format="string"/>
+    </declare-styleable>
+
+
 </resources>

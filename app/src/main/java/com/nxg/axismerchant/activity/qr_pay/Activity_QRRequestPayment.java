@@ -1,6 +1,8 @@
 package com.nxg.axismerchant.activity.qr_pay;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
@@ -62,8 +64,13 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         imgEditPrimaryID.setOnClickListener(this);
         imgEditSecondaryID.setOnClickListener(this);
 
-        int[] coachMarks = {R.drawable.qr_pay_3};
-        Constants.onCoachMark(this, coachMarks);
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+
+        String LastLogin = preferences.getString("LastLogin", "");
+        if(LastLogin.equals("firstLogin")) {
+            int[] coachMarks = {R.drawable.qr_pay_3};
+            Constants.onCoachMark(this, coachMarks);
+        }
 
         encryptDecryptRegister = new EncryptDecryptRegister();
 

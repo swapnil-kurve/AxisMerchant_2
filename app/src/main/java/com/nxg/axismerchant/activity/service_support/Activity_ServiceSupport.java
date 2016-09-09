@@ -1,7 +1,9 @@
 package com.nxg.axismerchant.activity.service_support;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -53,8 +55,13 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
 
         changeToServiceSupport();
 
-        int[] coachMarks = {R.drawable.service_support_01, R.drawable.service_support_2};
-        Constants.onCoachMark(this, coachMarks);
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+
+        String LastLogin = preferences.getString("LastLogin", "");
+        if(LastLogin.equals("firstLogin")) {
+            int[] coachMarks = {R.drawable.service_support_01, R.drawable.service_support_2};
+            Constants.onCoachMark(this, coachMarks);
+        }
     }
 
     @Override

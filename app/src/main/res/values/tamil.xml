@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="tamil_analytics">அனலிட்டிக்ஸ்</string>
+    <string name="tamil_pay">பே </string>
+    <string name="tamil_reports">ரிப்போர்ட்கள் மற்றும் </string>
+    <string name="tamil_service">சேவை</string>
+    <string name="tamil_support">ஆதரவு</string>
+    <string name="tamil_welcome_text">வணக்கம்</string>
+    <string name="tamil_last_login">கடைசி லாகின்</string>
+    <string name="tamil_first_login">முதல் உள்நுழைவு</string>
+
+    <string name="tamil_sms_pay">SMS பே</string>
+    <string name="tamil_qr_pay">QR-Code பே</string>
+    <string name="tamil_reports_mis">ரிப்போர்ட்கள் மற்றும் MIS</string>
+    <string name="tamil_service_support">சர்வீஸ் சப்போர்ட்</string>
+    <string name="tamil_offers_notices_">படைப்பு மற்றும் அறிவிப்புகள்</string>
+    <string name="tamil_profile">பதிவு செய்தது மேலாண்மை</string>
+    <string name="tamil_refer_merchant">ஒரு வியாபாரியை பரிந்துரை செய்யுங்கள்</string>
+    <string name="tamil_refer_friend">பார்க்கவும் ஒரு நண்பன்</string>
+    <string name="tamil_demo_video">டெமோ காணொளி</string>
+    <string name="tamil_logout">வெளியேறு</string>
+
+    <string name="tamil_Happy_with_our_services">எங்கள் சேவைகளால் ஆனந்தம் அடையுங்கள்</string>
+    <string name="tamil_Recommend_Axis">உங்கள் நண்பர்களுக்கு ஆக்ஸிஸ் பாங்க் பேமெண்ட் தீர்வுகளை பரிந்துரையுங்கள்!</string>
+    <string name="tamil_Your_friend_will_receive_a_call">எங்கள் ரிலேஷன்ஷிப் டீமிலிருந்து உங்கள் நண்பருக்கு ஒரு அழைப்பு வரும்.</string>
+    <string name="tamil_individual_name">தனி நபரின் பெயர்</string>
+    <string name="tamil_business_entity_name">வணிக அமைப்பின் பெயர்</string>
+    <string name="tamil_type_of_business">வணிகத்தின் வகை</string>
+    <string name="tamil_address">முகவரி</string>
+    <string name="tamil_mobile_number">மொபைல் எண்</string>
+    <string name="tamil_landline_no">லாண்ட்லைன் எண்</string>
+    <string name="tamil_submit">சமர்ப்பியுங்கள்</string>
+
+    <string-array name="tamil_navigation_menu">
+        <item>SMS பே</item>
+        <item>QR Code பே</item>
+        <item>சர்வீஸ் சப்போர்ட்</item>
+        <item>ரிப்போர்ட்கள் மற்றும் MIS</item>
+        <item>அனலிட்டிக்ஸ்</item>
+        <item>படைப்பு மற்றும் அறிவிப்புகள்</item>
+        <item>பதிவு செய்தது மேலாண்மை</item>
+        <item>பார்க்கவும் ஒரு நண்பன்</item>
+        <item>FAQ</item>
+        <item>டெமோ காணொளி</item>
+        <item>About App</item>
+        <item>வெளியேறு</item>
+    </string-array>
+
+</resources>

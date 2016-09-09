@@ -74,8 +74,13 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_epayment_new);
 
-        int[] coachMarks = {R.drawable._sms_pay_01};
-        Constants.onCoachMark(this, coachMarks);
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+
+        String LastLogin = preferences.getString("LastLogin", "");
+        if(LastLogin.equals("firstLogin")) {
+            int[] coachMarks = {R.drawable._sms_pay_01};
+            Constants.onCoachMark(this, coachMarks);
+        }
 
         i = 0;
         initialize();

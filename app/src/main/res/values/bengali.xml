@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bengali_analytics">অ্যানালিটিকস</string>
+    <string name="bengali_pay">পে</string>
+    <string name="bengali_reports">রিপোর্টস এবং </string>
+    <string name="bengali_service">সার্ভিস</string>
+    <string name="bengali_support">সাপোর্ট</string>
+    <string name="bengali_welcome_text">হ্যালো</string>
+    <string name="bengali_last_login">গত লগইন</string>
+    <string name="bengali_first_login">প্রথম লগইন</string>
+
+    <string name="bengali_sms_pay">SMS পে</string>
+    <string name="bengali_qr_pay">QR-Code পে</string>
+    <string name="bengali_reports_mis">রিপোর্টস এবং MIS</string>
+    <string name="bengali_service_support">সার্ভিস সাপোর্ট</string>
+    <string name="bengali_offers_notices_">অফারস এবং নোটিসেস</string>
+    <string name="bengali_profile">প্রোফাইল ম্যানেজমেন্ট</string>
+    <string name="bengali_refer_merchant">একজন মার্চেন্টকে রেফার ক্রুন</string>
+    <string name="bengali_refer_friend">রেফার এ ফ্রেঅ</string>
+    <string name="bengali_demo_video">ডেমো ভিডিও</string>
+    <string name="bengali_logout">লগ আউট</string>
+    <string name="bengali_Happy_with_our_services">আমাদের পরিষেবায় আপনি পরিতুষ্ট</string>
+
+    <string name="bengali_Recommend_Axis">অ্যাক্সিস ব্যাঙ্কের অর্থ জমা করার পদ্ধতি আপনার একজন বন্বুকে|</string>
+    <string name="bengali_Your_friend_will_receive_a_call">আপনার বন্বু আমাদের রিলেশনশিপ টিমের কাছ থেকে একটি ফোন কল পাবেন|</string>
+    <string name="bengali_individual_name">স্তঅ্ নাম</string>
+    <string name="bengali_business_entity_name">ব্যবসায়িক সংস্থার নাম</string>
+    <string name="bengali_type_of_business">ব্যবসার ধরণ</string>
+    <string name="bengali_address">ঠিকানা</string>
+    <string name="bengali_mobile_number">মোবাইল নম্বর</string>
+    <string name="bengali_landline_no">ল্যাঅলাইন নম্বর</string>
+    <string name="bengali_submit">জমা করুন</string>
+
+
+    <string-array name="bengali_navigation_menu">
+        <item>SMS পে</item>
+        <item>QR Code পে</item>
+        <item>সার্ভিস সাপোর্ট</item>
+        <item>রিপোর্টস এবং MIS</item>
+        <item>অ্যানালিটিকস</item>
+        <item>অফারস এবং নোটিসেস</item>
+        <item>প্রোফাইল ম্যানেজমেন্ট</item>
+        <item>রেফার এ ফ্রেঅ</item>
+        <item>FAQ</item>
+        <item>ডেমো ভিডিও</item>
+        <item>About App</item>
+        <item>লগ আউট</item>
+    </string-array>
+</resources>

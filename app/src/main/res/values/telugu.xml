@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="telugu_analytics">విశ్లేషాత్మకాలు</string>
+    <string name="telugu_pay">పే</string>
+    <string name="telugu_reports">రిపోర్టులు మరియు </string>
+    <string name="telugu_service">సర్వీసు</string>
+    <string name="telugu_support">సపోర్టు</string>
+    <string name="telugu_welcome_text">హలో</string>
+    <string name="telugu_last_login">చివరిసారి లాగిన్ అయ్యింది</string>
+    <string name="telugu_first_login">ప్రధమ లాగిన్</string>
+
+    <string name="telugu_sms_pay">SMS పే </string>
+    <string name="telugu_qr_pay">QR-Code పే </string>
+    <string name="telugu_reports_mis">రిపోర్టులు మరియు  MIS</string>
+    <string name="telugu_service_support">సర్వీసు సపోర్టు</string>
+    <string name="telugu_offers_notices_">ఆఫర్‌లు మరియు నోటీసులు</string>
+    <string name="telugu_profile">ప్రొఫైల్ మేనేజ్‌మెంట్</string>
+    <string name="telugu_refer_merchant">వ్యాపారిని పంపండి</string>
+    <string name="telugu_refer_friend">స్నేహితుడిని రిఫర్ చేయండి</string>
+    <string name="telugu_demo_video">డెమో వీడియో</string>
+    <string name="telugu_logout">లాగ్‌అవుట్</string>
+
+    <string name="telugu_Happy_with_our_services">మా సేవలతో సంతోషంగా ఉండండి</string>
+    <string name="telugu_Recommend_Axis">మీ స్నేహితులకు యాక్సిస్ బ్యాంక్ పేమెంట్ సొల్యూషన్స్‌ని సిఫారసు చేయండి!</string>
+    <string name="telugu_Your_friend_will_receive_a_call">మీ స్నేహితునికి మా రిలేషన్‌షిప్ టీమ్ నుంచి కాల్ వస్తుంది.</string>
+    <string name="telugu_individual_name">వ్యక్తి పేరు</string>
+    <string name="telugu_business_entity_name">వ్యాపార సంస్థ పేరు</string>
+    <string name="telugu_type_of_business">వ్యాపార రకం</string>
+    <string name="telugu_address">చిరునామా</string>
+    <string name="telugu_mobile_number">మొబైల్ నంబరు</string>
+    <string name="telugu_landline_no">ల్యాండ్‌లైన్ నంబరు</string>
+    <string name="telugu_submit">సమర్పించండి</string>
+
+
+    <string-array name="telugu_navigation_menu">
+        <item>SMS పే</item>
+        <item>QR Code పే</item>
+        <item>సర్వీసు సపోర్టు</item>
+        <item>రిపోర్టులు మరియు  MIS</item>
+        <item>విశ్లేషాత్మకాలు</item>
+        <item>ఆఫర్‌లు మరియు నోటీసులు</item>
+        <item>ప్రొఫైల్ మేనేజ్‌మెంట్</item>
+        <item>స్నేహితుడిని రిఫర్ చేయండి</item>
+        <item>FAQ</item>
+        <item>డెమో వీడియో</item>
+        <item>About App</item>
+        <item>లాగ్‌అవుట్</item>
+    </string-array>
+
+</resources>

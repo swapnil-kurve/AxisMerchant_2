@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="kannada_analytics">ಅನಾಲಿಟಿಕ್ಸ್</string>
+    <string name="kannada_pay">ಪೇ </string>
+    <string name="kannada_reports">ರಿಪೋರ್ಟ್ಸ್ಮತ್ತು</string>
+    <string name="kannada_service">ಸೇವೆ</string>
+    <string name="kannada_support">ಬೆಂಬಲ</string>
+    <string name="kannada_welcome_text">ಹಲೋ</string>
+    <string name="kannada_last_login">ಲಾಸ್ಟ್ಲಾಗಿನ್</string>
+    <string name="kannada_first_login">ಪ್ರಥಮ ಲಾಗಿನ್</string>
+
+    <string name="kannada_sms_pay">SMS ಪೇ </string>
+    <string name="kannada_qr_pay">QR-Code ಪೇ </string>
+    <string name="kannada_reports_mis">ರಿಪೋರ್ಟ್ಸ್ಮತ್ತುMIS</string>
+    <string name="kannada_service_support">ಸರ್ವಿಸ್ಸಪೋರ್ಟ್</string>
+    <string name="kannada_offers_notices_">ಆಫರ್ಸ್‌  ಮತ್ತುಸೂಚನೆಗಳು</string>
+    <string name="kannada_profile">ಪ್ರೊಫೈಲ್ಮ್ಯಾನೇಜ್‌ಮೆಂಟ್</string>
+    <string name="kannada_refer_merchant">ಬೇರೆಮರ್ಚಂಟನ್ನುರೆಫರ್ಮಾಡಿರಿ</string>
+    <string name="kannada_refer_friend">ರೆಫರ್ ಎ ಫ್ರೆಂಡ್</string>
+    <string name="kannada_demo_video">ಡೆಮೊವಿಡಿಯೊ</string>
+    <string name="kannada_logout">ಲಾಗ್‌ಔಟ್</string>
+
+    <string name="kannada_Happy_with_our_services">ನೀವುನಮ್ಮಸೇವೆಗಳಿಂದಸಂತುಷ್ಟರಾಗಿದ್ದಲ್ಲಿ,</string>
+    <string name="kannada_Recommend_Axis">ಎಕ್ಸಿಸ್ಬ್ಯಾಂಕ್ಪೇಮೆಂಟ್ಸೊಲ್ಯೂಶನ್‌ಗಳನ್ನುನಿಮ್ಮಮಿತ್ರರಿಗೂಶಿಫಾರಸುಮಾಡಿರಿ! </string>
+    <string name="kannada_Your_friend_will_receive_a_call">ನಮ್ಮರಿಲೇಶನ್‌ಶಿಪ್ಟೀಮ್‌ನವರುನಿಮ್ಮಮಿತ್ರನಿಗೆಕರೆಮಾಡುವರು.</string>
+    <string name="kannada_individual_name">ವ್ಯಕ್ತಿಯಹೆಸರು</string>
+    <string name="kannada_business_entity_name">ಬಿಸಿನೆಸ್ಎಂಟಿಟಿಹೆಸರು</string>
+    <string name="kannada_type_of_business">ಬಿಸಿನೆಸ್‌ನಸ್ವರೂಪ</string>
+    <string name="kannada_address">ವಿಳಾಸ</string>
+    <string name="kannada_mobile_number">ಮೊಬೈಲ್ನಂಬರ್</string>
+    <string name="kannada_landline_no">ಲ್ಯಾಂಡ್‌ಲೈನ್ನಂಬರ್</string>
+    <string name="kannada_submit">ಸಲ್ಲಿಸಿರಿ</string>
+
+
+    <string-array name="kannada_navigation_menu">
+        <item>SMS ಪೇ</item>
+        <item>QR Code ಪೇ</item>
+        <item>ಸರ್ವಿಸ್ಸಪೋರ್ಟ್</item>
+        <item>ರಿಪೋರ್ಟ್ಸ್ಮತ್ತುMIS</item>
+        <item>ಅನಾಲಿಟಿಕ್ಸ್</item>
+        <item>ಆಫರ್ಸ್‌  ಮತ್ತುಸೂಚನೆಗಳು</item>
+        <item>ಪ್ರೊಫೈಲ್ಮ್ಯಾನೇಜ್‌ಮೆಂಟ್</item>
+        <item>ರೆಫರ್ ಎ ಫ್ರೆಂಡ್</item>
+        <item>FAQ</item>
+        <item>ಡೆಮೊವಿಡಿಯೊ</item>
+        <item>About App</item>
+        <item>ಲಾಗ್‌ಔಟ್</item>
+    </string-array>
+
+</resources>
