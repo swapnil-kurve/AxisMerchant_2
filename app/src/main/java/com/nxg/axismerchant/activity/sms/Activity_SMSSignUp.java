@@ -287,9 +287,9 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new SendRequest().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addRequest", MID, MOBILE, "SMSPay");
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addRequest", MID, MOBILE, "SMSPay", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new SendRequest().execute(Constants.DEMO_SERVICE+"addRequest", MID, MOBILE, "SMSPay");
+                new SendRequest().execute(Constants.DEMO_SERVICE+"addRequest", MID, MOBILE, "SMSPay", Constants.SecretKey,Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -323,6 +323,10 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.requestFor), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);

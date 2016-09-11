@@ -109,9 +109,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetSMSXnDetails().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getMerchantUserTransById", Constants.MERCHANT_ID, Constants.MOBILE_NUM, xnID);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getMerchantUserTransById", Constants.MERCHANT_ID, Constants.MOBILE_NUM, xnID, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetSMSXnDetails().execute(Constants.DEMO_SERVICE + "getMerchantUserTransById", Constants.MERCHANT_ID, Constants.MOBILE_NUM, xnID);
+                new GetSMSXnDetails().execute(Constants.DEMO_SERVICE + "getMerchantUserTransById", Constants.MERCHANT_ID, Constants.MOBILE_NUM, xnID, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -174,9 +174,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         if (Constants.isNetworkConnectionAvailable(getApplicationContext())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new RefundTransactions().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "refundTransaction", Constants.MERCHANT_ID, Constants.MOBILE_NUM,urlCode );
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "refundTransaction", Constants.MERCHANT_ID, Constants.MOBILE_NUM,urlCode, Constants.SecretKey, Constants.AuthToken, Constants.IMEI );
             } else {
-                new RefundTransactions().execute(Constants.DEMO_SERVICE + "refundTransaction", Constants.MERCHANT_ID, Constants.MOBILE_NUM,urlCode );
+                new RefundTransactions().execute(Constants.DEMO_SERVICE + "refundTransaction", Constants.MERCHANT_ID, Constants.MOBILE_NUM,urlCode, Constants.SecretKey, Constants.AuthToken, Constants.IMEI );
 
             }
         } else {
@@ -188,9 +188,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         if (Constants.isNetworkConnectionAvailable(getApplicationContext())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new ResendURL().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "resendURL", Constants.MERCHANT_ID, Constants.MOBILE_NUM, XnID, custMobile);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "resendURL", Constants.MERCHANT_ID, Constants.MOBILE_NUM, XnID, custMobile, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new ResendURL().execute(Constants.DEMO_SERVICE + "resendURL", Constants.MERCHANT_ID, Constants.MOBILE_NUM, XnID, custMobile);
+                new ResendURL().execute(Constants.DEMO_SERVICE + "resendURL", Constants.MERCHANT_ID, Constants.MOBILE_NUM, XnID, custMobile, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -259,6 +259,10 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.transactionId), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -424,6 +428,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.transactionId), encryptDecrypt.encrypt(arg0[3])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.cust_number), encryptDecrypt.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[7])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -569,6 +576,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.urlCode), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

@@ -110,9 +110,9 @@ public class Fragment_SMSTransactionReport extends Fragment{
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetTransactions().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getlatestSMSTransSummary", MID, MOBILE, "Success");
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getlatestSMSTransSummary", MID, MOBILE, "Success", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetTransactions().execute(Constants.DEMO_SERVICE+"getlatestSMSTransSummary", MID, MOBILE, "Success");
+                new GetTransactions().execute(Constants.DEMO_SERVICE+"getlatestSMSTransSummary", MID, MOBILE, "Success", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -151,6 +151,9 @@ public class Fragment_SMSTransactionReport extends Fragment{
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.transStatus),fDate));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

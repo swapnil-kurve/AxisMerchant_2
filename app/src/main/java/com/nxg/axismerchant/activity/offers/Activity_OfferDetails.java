@@ -1,7 +1,9 @@
 package com.nxg.axismerchant.activity.offers;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -57,6 +59,7 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
     DBHelper dbHelper;
+    String MID,MOBILE;
     // This is a handle so that we can call methods on our service
     private ScheduleClient scheduleClient;
 
@@ -67,6 +70,10 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
 
         encryptDecryptRegister = new EncryptDecryptRegister();
         encryptDecrypt = new EncryptDecrypt();
+
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        MID = preferences.getString("MerchantID","0");
+        MOBILE = preferences.getString("MobileNum","0");
 
         tabs = getResources().getStringArray(R.array.offers_notices);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
@@ -212,9 +219,9 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new SetResponse().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addPromotionResponse", Constants.MERCHANT_ID, promotionID, status );
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addPromotionResponse",  MID, MOBILE, promotionID, status,Constants.SecretKey, Constants.AuthToken,Constants.IMEI );
             } else {
-                new SetResponse().execute(Constants.DEMO_SERVICE+"addPromotionResponse",Constants.MERCHANT_ID, promotionID, status);
+                new SetResponse().execute(Constants.DEMO_SERVICE+"addPromotionResponse", MID, MOBILE, promotionID, status,Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
         } else {
@@ -245,8 +252,11 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.promotion_id), encryptDecryptRegister.encrypt(arg0[2])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.promotion_response), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.promotion_id), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.promotion_response), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[7])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

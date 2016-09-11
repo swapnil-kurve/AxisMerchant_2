@@ -114,9 +114,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetSRStatusList().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLatestServiceRequest", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLatestServiceRequest", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetSRStatusList().execute(Constants.DEMO_SERVICE + "getLatestServiceRequest", MID, MOBILE);
+                new GetSRStatusList().execute(Constants.DEMO_SERVICE + "getLatestServiceRequest", MID, MOBILE, Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
 
@@ -201,9 +201,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new GetSRStatusList().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
                 } else {
-                    new GetSRStatusList().execute(Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate);
+                    new GetSRStatusList().execute(Constants.DEMO_SERVICE + "getrequestsBetweenDates", MID, MOBILE, fromDate, toDate, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
                 }
 
             }
@@ -216,9 +216,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new GetStatusListBySR().executeOnExecutor(AsyncTask
-                    .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNO, mTIDNo);
+                    .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNO, mTIDNo, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
         } else {
-            new GetStatusListBySR().execute(Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNO, mTIDNo);
+            new GetStatusListBySR().execute(Constants.DEMO_SERVICE + "searchSRService", MID, MOBILE, mSRNO, mTIDNo, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
         }
     }
@@ -266,6 +266,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
                 if(arg0.length > 3)
                 {
@@ -510,6 +513,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 String tid = encryptDecrypt.encrypt(arg0[4]);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.serviceRequestNumber),srno));

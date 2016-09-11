@@ -105,9 +105,9 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
             if (Constants.isNetworkConnectionAvailable(this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new SetMPIN().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"setMPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, regID, currentDateandTime);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"setMPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, regID, currentDateandTime, Constants.IMEI, "secretKey", Constants.AuthToken);
                 } else {
-                    new SetMPIN().execute(Constants.DEMO_SERVICE +"setMPin",Constants.MERCHANT_ID,Constants.MOBILE_NUM, Constants.MPIN, regID, currentDateandTime);
+                    new SetMPIN().execute(Constants.DEMO_SERVICE +"setMPin",Constants.MERCHANT_ID,Constants.MOBILE_NUM, Constants.MPIN, regID, currentDateandTime , Constants.IMEI, "secretKey", Constants.AuthToken);
 
                 }
             } else {
@@ -195,6 +195,9 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.verify), encryptDecryptRegister.encrypt(arg0[3])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.gcm_reg_id), encryptDecryptRegister.encrypt(arg0[4])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.currentTime),encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[7])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken),encryptDecryptRegister.encrypt(arg0[8])));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -245,9 +248,11 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
-                    } else {
-                        Constants.showToast(Activity_Set_mPIN.this, getString(R.string.network_error));
-                    }
+                    } else if(result.equalsIgnoreCase("Session Time Out")) {
+                        Constants.showToast(Activity_Set_mPIN.this, getString(R.string.session_expired));
+                    }else{
+                            Constants.showToast(Activity_Set_mPIN.this, getString(R.string.network_error));
+                        }
                 }else {
                     Constants.showToast(Activity_Set_mPIN.this, getString(R.string.network_error));
                 }

@@ -94,9 +94,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetUserList().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getMerchantAddedUsers", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getMerchantAddedUsers", MID, MOBILE, Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
             } else {
-                new GetUserList().execute(Constants.DEMO_SERVICE + "getMerchantAddedUsers", MID, MOBILE);
+                new GetUserList().execute(Constants.DEMO_SERVICE + "getMerchantAddedUsers", MID, MOBILE,Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
         } else {
@@ -237,9 +237,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new UpdateSubUser().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "updateUser", MID, MOBILE, userList.getMobileNo(), userList.getRegUsersID(), userList.getUserName(), userList.getEmailid(), userList.getAssignedMVisaID());
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "updateUser", MID, MOBILE, userList.getMobileNo(), userList.getRegUsersID(), userList.getUserName(), userList.getEmailid(), userList.getAssignedMVisaID(),Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
             } else {
-                new UpdateSubUser().execute(Constants.DEMO_SERVICE + "updateUser", MID, MOBILE, userList.getMobileNo(), userList.getRegUsersID(), userList.getUserName(), userList.getEmailid(), userList.getAssignedMVisaID());
+                new UpdateSubUser().execute(Constants.DEMO_SERVICE + "updateUser", MID, MOBILE, userList.getMobileNo(), userList.getRegUsersID(), userList.getUserName(), userList.getEmailid(), userList.getAssignedMVisaID(),Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
         } else {
@@ -251,9 +251,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new CreateSubUser().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addUser", MID, MOBILE, mUserName, mMobileNo, mEmailID, mMVisaId);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addUser", MID, MOBILE, mUserName, mMobileNo, mEmailID, mMVisaId,Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
             } else {
-                new CreateSubUser().execute(Constants.DEMO_SERVICE + "addUser", MID, MOBILE, mUserName, mMobileNo, mEmailID, mMVisaId);
+                new CreateSubUser().execute(Constants.DEMO_SERVICE + "addUser", MID, MOBILE, mUserName, mMobileNo, mEmailID, mMVisaId,Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
         } else {
@@ -335,6 +335,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecrypt.encrypt(arg0[4])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.email_id), encryptDecrypt.encrypt(arg0[5])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mvisa_id), encryptDecrypt.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[7])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[8])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[9])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -360,31 +363,37 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
             super.onPostExecute(data);
 
             try {
-                JSONObject object1 = new JSONObject(data);
-                JSONArray addUser = object1.getJSONArray("addUser");
+                if(data != null) {
+                    JSONObject object1 = new JSONObject(data);
+                    JSONArray addUser = object1.getJSONArray("addUser");
 
-                JSONObject obj = addUser.getJSONObject(0);
-                String result = obj.optString("result");
+                    JSONObject obj = addUser.getJSONObject(0);
+                    String result = obj.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
-                if (result.equals("Success")) {
-                    Constants.showToast(getActivity(), getString(R.string.sub_user_created));
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        Constants.showToast(getActivity(), getString(R.string.sub_user_created));
 
-                    getUserList();
+                        getUserList();
 
-                    lyCreateUser.setVisibility(View.GONE);
-                    lyUserList.setVisibility(View.VISIBLE);
+                        lyCreateUser.setVisibility(View.GONE);
+                        lyUserList.setVisibility(View.VISIBLE);
 
-                    edtUserName.setText("");
-                    edtMobileNo.setText("");
-                    edtEmailId.setText("");
+                        edtUserName.setText("");
+                        edtMobileNo.setText("");
+                        edtEmailId.setText("");
 
-                } else if (result.equals("Already exists")) {
-                    Constants.showToast(getActivity(), getString(R.string.sub_user_mobile_already_exists));
-                } else {
-                    Constants.showToast(getActivity(), getString(R.string.invalid_details));
+                    } else if (result.equalsIgnoreCase("Already exists")) {
+                        Constants.showToast(getActivity(), getString(R.string.sub_user_mobile_already_exists));
+                    } else if (result.equalsIgnoreCase("Invalid Merchantid and MobileNo")) {
+                        Constants.showToast(getActivity(), result);
+                    } else {
+                        Constants.showToast(getActivity(), getString(R.string.invalid_details));
+                    }
+                }else {
+                    progressDialog.dismiss();
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
-                progressDialog.dismiss();
             } catch (JSONException e) {
                 progressDialog.dismiss();
             }
@@ -417,6 +426,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -551,6 +563,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.emailid), encryptDecrypt.encrypt(arg0[6])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mvisa_id), encryptDecrypt.encrypt(arg0[7])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.isActive), encryptDecrypt.encrypt("Yes")));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[8])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[9])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[10])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

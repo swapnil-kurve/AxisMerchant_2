@@ -99,9 +99,9 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetQRXnDetails().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getMvisaTransactionById", Constants.MERCHANT_ID, Constants.MOBILE_NUM, xnID);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getMvisaTransactionById", Constants.MERCHANT_ID, Constants.MOBILE_NUM, xnID, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetQRXnDetails().execute(Constants.DEMO_SERVICE + "getMvisaTransactionById", Constants.MERCHANT_ID, Constants.MOBILE_NUM, xnID);
+                new GetQRXnDetails().execute(Constants.DEMO_SERVICE + "getMvisaTransactionById", Constants.MERCHANT_ID, Constants.MOBILE_NUM, xnID, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -301,6 +301,10 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.id), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);

@@ -142,9 +142,9 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
             if (Constants.isNetworkConnectionAvailable(this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new GetEPayData().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLatestMerchantUserTrans", MID, MOBILE, "All");//arrTitle[pageNO]);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLatestMerchantUserTrans", MID, MOBILE, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);//arrTitle[pageNO]);
                 } else {
-                    new GetEPayData().execute(Constants.DEMO_SERVICE + "getLatestMerchantUserTrans", MID, MOBILE, "All");//arrTitle[pageNO]);
+                    new GetEPayData().execute(Constants.DEMO_SERVICE + "getLatestMerchantUserTrans", MID, MOBILE, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);//arrTitle[pageNO]);
 
                 }
             } else {
@@ -185,9 +185,9 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetLastTransactionByMer().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLastMerchantUserTrans", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLastMerchantUserTrans", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetLastTransactionByMer().execute(Constants.DEMO_SERVICE + "getLastMerchantUserTrans", MID, MOBILE);
+                new GetLastTransactionByMer().execute(Constants.DEMO_SERVICE + "getLastMerchantUserTrans", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -387,6 +387,9 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -565,6 +568,10 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.transStatus), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);

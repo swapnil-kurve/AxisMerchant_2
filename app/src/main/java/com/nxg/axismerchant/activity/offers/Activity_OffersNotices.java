@@ -116,9 +116,9 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
             if (Constants.isNetworkConnectionAvailable(this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new GetLatestPromotions().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLatestPramotions", MID, MOBILE);//arrTitle[pageNO]);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLatestPramotions", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);//arrTitle[pageNO]);
                 } else {
-                    new GetLatestPromotions().execute(Constants.DEMO_SERVICE + "getLatestPramotions", MID, MOBILE);//arrTitle[pageNO]);
+                    new GetLatestPromotions().execute(Constants.DEMO_SERVICE + "getLatestPramotions", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);//arrTitle[pageNO]);
 
                 }
             } else {
@@ -323,6 +323,9 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);

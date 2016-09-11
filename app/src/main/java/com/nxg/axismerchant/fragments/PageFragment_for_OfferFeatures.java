@@ -82,9 +82,9 @@ public class PageFragment_for_OfferFeatures extends Fragment{
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetPromotionsByID().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getPromotionById", MID, MOBILE,mPromotionId);//arrTitle[pageNO]);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getPromotionById", MID, MOBILE,mPromotionId, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);//arrTitle[pageNO]);
             } else {
-                new GetPromotionsByID().execute(Constants.DEMO_SERVICE + "getPromotionById", MID, MOBILE,mPromotionId);//arrTitle[pageNO]);
+                new GetPromotionsByID().execute(Constants.DEMO_SERVICE + "getPromotionById", MID, MOBILE,mPromotionId, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);//arrTitle[pageNO]);
 
             }
         } else {
@@ -134,6 +134,9 @@ public class PageFragment_for_OfferFeatures extends Fragment{
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.promotionId), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

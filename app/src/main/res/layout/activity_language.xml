@@ -6,16 +6,47 @@
     android:background="@android:color/white"
     tools:context="com.nxg.axismerchant.activity.start.Activity_Language">
 
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/shadow"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgMenu"
+            android:layout_width="@dimen/toolbar_img_width"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:src="@mipmap/axis_trwhite" />
+
+        <com.nxg.axismerchant.custom.CustomTextViewLightBold
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/imgMenu"
+            android:gravity="center_vertical"
+            android:text="@string/title_activity_home"
+            android:paddingTop="5dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/toolbar_title_size" />
+
+
+    </RelativeLayout>
+
+
+
     <com.nxg.axismerchant.custom.CustomTextViewLightBold
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginTop="20dp"
         android:text="@string/title_select_language"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/toolbar_title_size" />
+        android:layout_below="@+id/toolbar"
+        android:paddingTop="5dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/heading_big" />
+
 
 
     <RadioGroup
@@ -23,16 +54,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/txtTitle"
-        android:layout_above="@+id/txtDone"
+        android:layout_above="@+id/txtProceed"
         android:paddingBottom="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         android:paddingTop="20dp">
 
         <RadioButton
             android:id="@+id/rdEnglish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/toolbar_title_size"
             android:text="@string/english" />
 
         <RadioButton
@@ -40,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textSize="@dimen/toolbar_title_size"
             android:text="@string/hindi" />
 
         <RadioButton
@@ -47,6 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textSize="@dimen/toolbar_title_size"
             android:text="@string/tamil" />
 
         <RadioButton
@@ -54,6 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textSize="@dimen/toolbar_title_size"
             android:text="@string/telugu" />
 
         <RadioButton
@@ -61,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textSize="@dimen/toolbar_title_size"
             android:text="@string/bengali" />
 
         <RadioButton
@@ -68,6 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textSize="@dimen/toolbar_title_size"
             android:text="@string/kannada" />
     </RadioGroup>
 

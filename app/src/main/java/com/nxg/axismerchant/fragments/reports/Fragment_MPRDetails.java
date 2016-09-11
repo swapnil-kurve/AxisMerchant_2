@@ -132,9 +132,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetMPRDetails().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getMPRDetailsForDate", MID, MOBILE,transDate);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getMPRDetailsForDate", MID, MOBILE,transDate, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetMPRDetails().execute(Constants.DEMO_SERVICE+"getMPRDetailsForDate", MID, MOBILE,transDate);
+                new GetMPRDetails().execute(Constants.DEMO_SERVICE+"getMPRDetailsForDate", MID, MOBILE,transDate, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -195,9 +195,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
             if (Constants.isNetworkConnectionAvailable(getActivity())) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new SendData().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addEmailRequest", MID, MOBILE,fromDate,toDate);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addEmailRequest", MID, MOBILE,fromDate,toDate, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
                 } else {
-                    new SendData().execute(Constants.DEMO_SERVICE+"addEmailRequest", MID, MOBILE,fromDate,toDate);
+                    new SendData().execute(Constants.DEMO_SERVICE+"addEmailRequest", MID, MOBILE,fromDate,toDate, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
                 }
             } else {
@@ -239,6 +239,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.fromdate), duration));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.todate), criteria));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[7])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -324,6 +327,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
                 nameValuePairs.add(new BasicNameValuePair("forDate", trans_date));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

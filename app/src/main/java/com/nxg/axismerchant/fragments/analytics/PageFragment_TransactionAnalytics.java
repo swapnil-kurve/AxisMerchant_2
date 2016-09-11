@@ -169,9 +169,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetMerchantData().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getMerchantLikeMe", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getMerchantLikeMe", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetMerchantData().execute(Constants.DEMO_SERVICE+"getMerchantLikeMe", MID, MOBILE);
+                new GetMerchantData().execute(Constants.DEMO_SERVICE+"getMerchantLikeMe", MID, MOBILE, Constants.SecretKey,Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -184,9 +184,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetMerchantGraphData().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getMerchantLikeMedataForGraph", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getMerchantLikeMedataForGraph", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetMerchantGraphData().execute(Constants.DEMO_SERVICE+"getMerchantLikeMedataForGraph", MID, MOBILE);
+                new GetMerchantGraphData().execute(Constants.DEMO_SERVICE+"getMerchantLikeMedataForGraph", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -199,9 +199,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetAnalyticsData().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getDataForAnalytics", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getDataForAnalytics", MID, MOBILE, Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
             } else {
-                new GetAnalyticsData().execute(Constants.DEMO_SERVICE+"getDataForAnalytics", MID, MOBILE);
+                new GetAnalyticsData().execute(Constants.DEMO_SERVICE+"getDataForAnalytics", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -213,9 +213,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetAnalyticsDataForFilter().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"filterDataForAnalytics", MID, MOBILE, duration, reportCriteria);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"filterDataForAnalytics", MID, MOBILE, duration, reportCriteria, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetAnalyticsDataForFilter().execute(Constants.DEMO_SERVICE+"filterDataForAnalytics", MID, MOBILE, duration, reportCriteria);
+                new GetAnalyticsDataForFilter().execute(Constants.DEMO_SERVICE+"filterDataForAnalytics", MID, MOBILE, duration, reportCriteria, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -277,6 +277,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -384,6 +387,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -566,6 +572,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -786,6 +795,9 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.duration_analytics), duration));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.rptCriteria), criteria));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[7])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

@@ -81,9 +81,9 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetSRStatusDetails().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRID);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRID, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetSRStatusDetails().execute(Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRID);
+                new GetSRStatusDetails().execute(Constants.DEMO_SERVICE + "getServiceByID", MID, MOBILE, mSRID, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
 
@@ -133,7 +133,9 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.serviceRequestNumber),srno));
-
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

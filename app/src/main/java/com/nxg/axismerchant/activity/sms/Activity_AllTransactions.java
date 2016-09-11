@@ -127,7 +127,6 @@ public class Activity_AllTransactions extends AppCompatActivity implements View.
     @Override
     public void onViewSelected(int type) {
         if(type == 1) {
-//            report_fragment.showBarChartXn();
             report_fragment = new Fragment_SMSTransactionReport();
             Bundle bundle = new Bundle();
             bundle.putInt(Fragment_SMSTransactionReport.ARG_OBJECT,type);
@@ -135,7 +134,6 @@ public class Activity_AllTransactions extends AppCompatActivity implements View.
             getSupportFragmentManager().beginTransaction().replace(R.id.xnContainer,report_fragment).commit();
         }
         else {
-//            report_fragment.showBarChartVolume();
             report_fragment = new Fragment_SMSTransactionReport();
             Bundle bundle = new Bundle();
             bundle.putInt(Fragment_SMSTransactionReport.ARG_OBJECT,type);

@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nxg.axismerchant.R;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.database.DBHelper;
 
 import java.io.BufferedReader;
@@ -40,7 +43,9 @@ public class Constants {
     public static String IMEI = "";
     public static String MERCHANT_ID = "";
     public static String MOBILE_NUM = "";
-    public static String secretekeyDatabase="";
+    public static String secretekeyDatabase = "";
+    public static String AuthToken = "";
+    public static String SecretKey = "secretKey";
 
     public static final String LoginPref = "LoginPref";
     public static final String UserDetails = "UserDetails";
@@ -52,9 +57,9 @@ public class Constants {
     public static String GOOGLE_PROJ_ID = "660348263150";
     public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
 
-//    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
+    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
 
-    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
+//    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
     public static final String DEMO_SERVICE_REFUND ="http://merchantportal.paycraftsol.com/";
 
 //    public static final String DEMO_SERVICE = "http://192.168.88.14:9006/mservices.asmx/";
@@ -248,4 +253,5 @@ public class Constants {
         });
         dialog.show();
     }
+
 }

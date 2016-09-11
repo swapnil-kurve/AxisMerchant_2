@@ -122,9 +122,9 @@ public class Fragment_for_TransactionReport extends Fragment {
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetTransactions().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE, mVisaId, "All");
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE, mVisaId, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetTransactions().execute(Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE, mVisaId, "All");
+                new GetTransactions().execute(Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE, mVisaId, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -164,6 +164,9 @@ public class Fragment_for_TransactionReport extends Fragment {
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mvisaId), mVisaId));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.Ttype), mTType));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[7])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

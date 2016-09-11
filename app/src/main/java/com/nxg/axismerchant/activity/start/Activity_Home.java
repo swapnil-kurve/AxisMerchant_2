@@ -93,7 +93,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     HomeBanner banner;
     EncryptDecryptRegister encryptDecryptRegister;
     private int[] images = {R.mipmap.smspay_menu, R.mipmap.qrpay_menu, R.mipmap.service_support_menu, R.mipmap.reports_menu,
-            R.mipmap.analytics, R.mipmap.offers, R.mipmap.profile_menu, R.mipmap.refer, R.mipmap.faq, R.mipmap.demo_video,R.mipmap.ver, R.mipmap.logout};
+            R.mipmap.analytics, R.mipmap.offers, R.mipmap.profile_menu, R.mipmap.refer, R.mipmap.translation, R.mipmap.faq, R.mipmap.demo_video,R.mipmap.ver, R.mipmap.logout};
 
     private int[] homeCoach = {R.drawable.home_profile, R.drawable.home_smspay, R.drawable.home_qr, R.drawable.home_reports, R.drawable.home_service_support};
 
@@ -198,9 +198,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetmVisaIds().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getAllMvisaIds", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getAllMvisaIds", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetmVisaIds().execute(Constants.DEMO_SERVICE + "getAllMvisaIds", MID, MOBILE);
+                new GetmVisaIds().execute(Constants.DEMO_SERVICE + "getAllMvisaIds", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -212,9 +212,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetPromotions().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getImagesForSlider", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getImagesForSlider", MID, MOBILE, Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
             } else {
-                new GetPromotions().execute(Constants.DEMO_SERVICE + "getImagesForSlider", MID, MOBILE);
+                new GetPromotions().execute(Constants.DEMO_SERVICE + "getImagesForSlider", MID, MOBILE, Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
         } else {
@@ -360,9 +360,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 if (Constants.isNetworkConnectionAvailable(this)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new CheckStatus().executeOnExecutor(AsyncTask
-                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "checkRequestStatus", MID, MOBILE, "SMSPay");
+                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "checkRequestStatus", MID, MOBILE, "SMSPay", Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
                     } else {
-                        new CheckStatus().execute(Constants.DEMO_SERVICE + "checkRequestStatus", MID, MOBILE, "SMSPay");
+                        new CheckStatus().execute(Constants.DEMO_SERVICE + "checkRequestStatus", MID, MOBILE, "SMSPay", Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
                     }
                 } else {
@@ -417,24 +417,24 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     break;
 
                 case 8:
-                    startActivity(new Intent(this, Activity_FAQ.class));
+                    Intent intent = new Intent(this, Activity_Language.class);
+                    intent.putExtra("FromHome",true);
+                    startActivity(intent);
                     break;
 
                 case 9:
-                    startActivity(new Intent(this, Activity_VideoDemo.class));
+                    startActivity(new Intent(this, Activity_FAQ.class));
                     break;
 
                 case 10:
+                    startActivity(new Intent(this, Activity_VideoDemo.class));
+                    break;
+
+                case 11:
                     startActivity(new Intent(this, Activity_Version.class));
                     break;
-                case 11:
-                    preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("KeepLoggedIn", "false");
-                    editor.apply();
-                    Constants.showToast(this,getString(R.string.sign_out));
-                    startActivity(new Intent(this, Activity_Main.class));
-                    finish();
+                case 12:
+                    logout();
                     break;
 
             }
@@ -476,6 +476,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -649,6 +652,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -814,6 +820,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.requestFor), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -902,9 +911,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         if (Constants.isNetworkConnectionAvailable(Activity_Home.this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetProfileDetails().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getProfileDetails", MID, MOBILE);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getProfileDetails", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetProfileDetails().execute(Constants.DEMO_SERVICE+"getProfileDetails", MID, MOBILE);
+                new GetProfileDetails().execute(Constants.DEMO_SERVICE+"getProfileDetails", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -937,6 +946,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -996,8 +1008,11 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                     editor.apply();
 
-                } else {
-                    Constants.showToast(Activity_Home.this, getString(R.string.no_internet));
+                }else if(result.equalsIgnoreCase("Failure")){
+                    Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
+                    logout();
+                }else {
+                    Constants.showToast(Activity_Home.this, getString(R.string.no_details));
                 }
                 progressDialog.dismiss();
                 }else {
@@ -1010,5 +1025,15 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }
     }
 
+    private void logout()
+    {
+        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Constants.showToast(this,getString(R.string.sign_out));
+        startActivity(new Intent(this, Activity_Main.class));
+        finish();
+    }
 
 }

@@ -205,9 +205,9 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 if (Constants.isNetworkConnectionAvailable(this)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new LoginProcess().executeOnExecutor(AsyncTask
-                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "registerAndSendVeriCode", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
+                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "registerAndSendVeriCode", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android", Constants.SecretKey);
                     } else {
-                        new LoginProcess().execute(Constants.DEMO_SERVICE + "registerAndSendVeriCode", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
+                        new LoginProcess().execute(Constants.DEMO_SERVICE + "registerAndSendVeriCode", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android", Constants.SecretKey);
 
                     }
                 } else {
@@ -242,9 +242,9 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
             if (Constants.isNetworkConnectionAvailable(this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new VerifyOTP().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"verifyOTP", Constants.MERCHANT_ID, Constants.MOBILE_NUM, mOTP);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"verifyOTP", Constants.MERCHANT_ID, Constants.MOBILE_NUM, mOTP, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
                 } else {
-                    new VerifyOTP().execute(Constants.DEMO_SERVICE+"verifyOTP",Constants.MERCHANT_ID,Constants.MOBILE_NUM,mOTP);
+                    new VerifyOTP().execute(Constants.DEMO_SERVICE+"verifyOTP",Constants.MERCHANT_ID,Constants.MOBILE_NUM,mOTP, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
                 }
             } else {
@@ -280,6 +280,10 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.verify), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -305,22 +309,24 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
             try {
                 if(s != null){
-                JSONObject object = new JSONObject(s);
-                JSONArray verifyOTP = object.getJSONArray("verifyOTP");
-                JSONObject object1 = verifyOTP.getJSONObject(0);
-                String result = object1.optString("result");
+                    JSONObject object = new JSONObject(s);
+                    JSONArray verifyOTP = object.getJSONArray("verifyOTP");
+                    JSONObject object1 = verifyOTP.getJSONObject(0);
+                    String result = object1.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
-                progressDialog.dismiss();
+                    result = encryptDecryptRegister.decrypt(result);
+                    progressDialog.dismiss();
 
-                if(result.equals("Success"))
-                {
-                   startActivity(new Intent(Activity_SetOTP.this, Activity_Set_mPIN.class));
-                }
-                else
-                {
-                    Constants.showToast(Activity_SetOTP.this, getString(R.string.incorrect_otp));
-                }
+                    if(result.equals("Success"))
+                    {
+                       startActivity(new Intent(Activity_SetOTP.this, Activity_Set_mPIN.class));
+                    }
+                    else if(result.equalsIgnoreCase("Session Time Out")){
+                        Constants.showToast(Activity_SetOTP.this, getString(R.string.session_expired));
+                    }else
+                    {
+                        Constants.showToast(Activity_SetOTP.this, getString(R.string.incorrect_otp));
+                    }
                 }else {
                     Constants.showToast(Activity_SetOTP.this, getString(R.string.network_error));
                 }
@@ -358,6 +364,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[3])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.deviceType), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -383,39 +390,42 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
             try{
                 if(data != null){
-                JSONObject object = new JSONObject(data);
-                JSONArray verifyOTP = object.getJSONArray("registerAndSendVeriCode");
-                JSONObject object1 = verifyOTP.getJSONObject(0);
-                String result = object1.optString("result");
-                String email = object1.optString("email");
-                String username = object1.optString("username");
-                String isAdmin = object1.optString("isAdmin");
+                    JSONObject object = new JSONObject(data);
+                    JSONArray verifyOTP = object.getJSONArray("registerAndSendVeriCode");
+                    JSONObject object1 = verifyOTP.getJSONObject(0);
+                    String result = object1.optString("result");
+                    String email = object1.optString("email");
+                    String username = object1.optString("username");
+                    String isAdmin = object1.optString("isAdmin");
+                    String authToken = object1.optString("authToken");
 
-                result = encryptDecryptRegister.decrypt(result);
-                progressDialog.dismiss();
+                    result = encryptDecryptRegister.decrypt(result);
+                    progressDialog.dismiss();
 
-                if(result.equals("Success") || result.equals("AlreadyRegistered"))
-                {
-                    email = encryptDecryptRegister.decrypt(email);
-                    username = encryptDecryptRegister.decrypt(username);
-                    isAdmin = encryptDecryptRegister.decrypt(isAdmin);
+                    if(result.equals("Success") || result.equals("AlreadyRegistered"))
+                    {
+                        email = encryptDecryptRegister.decrypt(email);
+                        username = encryptDecryptRegister.decrypt(username);
+                        isAdmin = encryptDecryptRegister.decrypt(isAdmin);
+                        authToken = encryptDecryptRegister.decrypt(authToken);
 
-                    preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("MerchantEmail",email);
-                    editor.putString("Username",username);
-                    editor.putString("isAdmin",isAdmin);
-                    editor.apply();
+                        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("MerchantEmail",email);
+                        editor.putString("Username",username);
+                        editor.putString("isAdmin",isAdmin);
+                        editor.apply();
+                        Constants.AuthToken = authToken;
+                    }
+                    else
+                    {
+                        Constants.showToast(Activity_SetOTP.this, "Details entered are not valid");
+                    }
+                    }else {
+                        Constants.showToast(Activity_SetOTP.this, getString(R.string.network_error));
+                    }
+                } catch (JSONException e) {
                 }
-                else
-                {
-                    Constants.showToast(Activity_SetOTP.this, "Details entered are not valid");
-                }
-                }else {
-                    Constants.showToast(Activity_SetOTP.this, getString(R.string.network_error));
-                }
-            } catch (JSONException e) {
-            }
 
         }
     }

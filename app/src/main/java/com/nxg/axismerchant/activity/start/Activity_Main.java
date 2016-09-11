@@ -49,7 +49,7 @@ public class Activity_Main extends AppActivity {
         Fabric.with(this, new Crashlytics());
 
 
-        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+       /* preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         if(preferences.contains("LoggedIn"))
         {
             String mSignUpStatus = preferences.getString("LoggedIn","false");
@@ -65,7 +65,17 @@ public class Activity_Main extends AppActivity {
                 }
             }
         }else
-            changeToSignUp();
+            changeToSignUp();*/
+
+        Bundle data = getIntent().getExtras();
+        if(data != null && data.containsKey("EntryType"))
+        {
+            String mEntryType = data.getString("EntryType");
+            if(mEntryType.equalsIgnoreCase("SignIn"))
+                changeToSignIn();
+            else
+                changeToSignUp();
+        }
 
 
         /**

@@ -120,9 +120,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new ForgotMPIN().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "forgotpin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "forgotpin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android",Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
             } else {
-                new ForgotMPIN().execute(Constants.DEMO_SERVICE + "forgotpin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
+                new ForgotMPIN().execute(Constants.DEMO_SERVICE + "forgotpin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android",Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
         } else {
@@ -159,9 +159,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             if (Constants.isNetworkConnectionAvailable(getActivity())) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new VerifyMPIN().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateandTime);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateandTime,Constants.SecretKey, Constants.AuthToken);
                 } else {
-                    new VerifyMPIN().execute(Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateandTime);
+                    new VerifyMPIN().execute(Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateandTime,Constants.SecretKey, Constants.AuthToken);
 
                 }
             } else {
@@ -198,6 +198,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mpin), encryptDecryptRegister.encrypt(arg0[3])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no1), encryptDecryptRegister.encrypt(arg0[4])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.currentTime), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[7])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -286,6 +289,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[3])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.deviceType), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);

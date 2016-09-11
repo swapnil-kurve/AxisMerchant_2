@@ -143,9 +143,9 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
             if (Constants.isNetworkConnectionAvailable(Activity_ReferHome.this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new SetReferral().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addReferralMerchant", MID, MOBILE, Name,BusinessName,typeOfBusiness,Address,MobileNumber,LandlineNumber);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addReferralMerchant", MID, MOBILE, Name,BusinessName,typeOfBusiness,Address,MobileNumber,LandlineNumber,Constants.SecretKey, Constants.AuthToken, Constants.IMEI );
                 } else {
-                    new SetReferral().execute(Constants.DEMO_SERVICE+"addReferralMerchant", MID, MOBILE, Name,BusinessName,typeOfBusiness,Address,MobileNumber,LandlineNumber);
+                    new SetReferral().execute(Constants.DEMO_SERVICE+"addReferralMerchant", MID, MOBILE, Name,BusinessName,typeOfBusiness,Address,MobileNumber,LandlineNumber, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
                 }
             } else {
@@ -238,6 +238,9 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.rAddress), mAdress));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.rMobileNo), mMobile));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.rLandlineNo), mLandline));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[9])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[10])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[11])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

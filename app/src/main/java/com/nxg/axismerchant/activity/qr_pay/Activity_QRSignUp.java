@@ -281,9 +281,9 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new SendRequest().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "");
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "");
+                new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -321,6 +321,9 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.visit_timing), encryptDecrypt.encrypt(arg0[7])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.contact_no), encryptDecrypt.encrypt(arg0[8])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.rolls_required), encryptDecrypt.encrypt(arg0[9])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[10])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[11])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[12])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

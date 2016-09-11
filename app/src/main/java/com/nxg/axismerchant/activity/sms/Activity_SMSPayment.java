@@ -277,9 +277,9 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
                 if (Constants.isNetworkConnectionAvailable(getApplicationContext())) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new InsertTransactions().executeOnExecutor(AsyncTask
-                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "insertTransaction", MID, MOBILE, custMobile, amount, remark);
+                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "insertTransaction", MID, MOBILE, custMobile, amount, remark, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
                     } else {
-                        new InsertTransactions().execute(Constants.DEMO_SERVICE + "insertTransaction", MID, MOBILE, custMobile, amount, remark);
+                        new InsertTransactions().execute(Constants.DEMO_SERVICE + "insertTransaction", MID, MOBILE, custMobile, amount, remark, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
                     }
                 } else {
@@ -369,6 +369,9 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
             nameValuePairs.add(new BasicNameValuePair(getString(R.string.cust_mobile), encryptDecrypt.encrypt(arg0[3])));
             nameValuePairs.add(new BasicNameValuePair(getString(R.string.cust_amount), encryptDecrypt.encrypt(arg0[4])));
             nameValuePairs.add(new BasicNameValuePair(getString(R.string.remark), encryptDecrypt.encrypt(arg0[5])));
+            nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[6])));
+            nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[7])));
+            nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[8])));
 
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

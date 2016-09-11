@@ -203,9 +203,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 if (Constants.isNetworkConnectionAvailable(getActivity())) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new LoginProcess().executeOnExecutor(AsyncTask
-                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "registerAndSendVeriCode", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
+                                .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "registerAndSendVeriCode", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android", "secretKey");
                     } else {
-                        new LoginProcess().execute(Constants.DEMO_SERVICE + "registerAndSendVeriCode", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android");
+                        new LoginProcess().execute(Constants.DEMO_SERVICE + "registerAndSendVeriCode", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.IMEI, "android", "secretKey");
 
                     }
                 } else {
@@ -243,6 +243,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[3])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.deviceType), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -276,6 +277,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     String username = object1.optString("username");
                     String isAdmin = object1.optString("isAdmin");
                     String veriPin = object1.optString("veriPin");
+                    String authToken = object1.optString("authToken");
 
                     result = encryptDecryptRegister.decrypt(result);
                     progressDialog.dismiss();
@@ -285,6 +287,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         username = encryptDecryptRegister.decrypt(username);
                         isAdmin = encryptDecryptRegister.decrypt(isAdmin);
                         veriPin = encryptDecryptRegister.decrypt(veriPin);
+                        authToken = encryptDecryptRegister.decrypt(authToken);
 
                         preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -292,6 +295,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         editor.putString("Username", username);
                         editor.putString("isAdmin", isAdmin);
                         editor.apply();
+                        Constants.AuthToken = authToken;
 
                         Intent intent = new Intent(getActivity(), Activity_SetOTP.class);
                         intent.putExtra("OTP", veriPin);

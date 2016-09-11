@@ -87,9 +87,9 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetQRPayData().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getlatestMvisaTransactions", MID, MOBILE, mVisa);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getlatestMvisaTransactions", MID, MOBILE, mVisa, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetQRPayData().execute(Constants.DEMO_SERVICE + "getlatestMvisaTransactions", MID, MOBILE, mVisa);
+                new GetQRPayData().execute(Constants.DEMO_SERVICE + "getlatestMvisaTransactions", MID, MOBILE, mVisa, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -167,6 +167,10 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mvisa_merchant_id), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);

@@ -198,9 +198,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetTransactions().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getTransactionBetDates", MID, MOBILE,type);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getTransactionBetDates", MID, MOBILE,type, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetTransactions().execute(Constants.DEMO_SERVICE+"getTransactionBetDates", MID, MOBILE,type);
+                new GetTransactions().execute(Constants.DEMO_SERVICE+"getTransactionBetDates", MID, MOBILE,type, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -214,9 +214,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetFilteredData().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"filterMPRTransactions", MID, MOBILE,duration,criteria,reportType);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"filterMPRTransactions", MID, MOBILE,duration,criteria,reportType, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetFilteredData().execute(Constants.DEMO_SERVICE+"filterMPRTransactions", MID, MOBILE,duration,criteria,reportType);
+                new GetFilteredData().execute(Constants.DEMO_SERVICE+"filterMPRTransactions", MID, MOBILE,duration,criteria,reportType, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -561,6 +561,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.duration), duration));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.rptCriteria), criteria));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.trans_type), trans_type));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[7])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[8])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -675,6 +678,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.fromdate), duration));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.todate), criteria));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
