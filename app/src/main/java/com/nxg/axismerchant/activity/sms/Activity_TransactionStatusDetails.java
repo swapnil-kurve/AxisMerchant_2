@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.Activity_Notification;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
@@ -378,6 +379,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                             refLayout.setVisibility(View.VISIBLE);
                         }
 
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.session_expired));
+                        logout();
                     } else {
                         Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.no_details));
                     }
@@ -503,6 +507,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         progressDialog.dismiss();
                         Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.url_sent));
                         finish();
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.session_expired));
+                        logout();
                     } else {
                         JSONObject object = transaction.getJSONObject(1);
                         JSONArray transactionBetDates = object.getJSONArray("insertTransaction");
@@ -626,6 +633,9 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                         Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.refund_successful));
                         finish();
 
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(Activity_TransactionStatusDetails.this, getString(R.string.session_expired));
+                        logout();
                     } else {
                         JSONObject object = transaction.getJSONObject(1);
                         JSONArray transactionBetDates = object.getJSONArray("refundTransaction");
@@ -698,5 +708,16 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         dialog.show();
     }
 
+    private void logout()
+    {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
 }

@@ -3,6 +3,7 @@ package com.nxg.axismerchant.fragments.reports;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.nxg.axismerchant.R;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
@@ -241,6 +243,9 @@ public class Fragment_for_TransactionReport extends Fragment {
 
                         progressDialog.dismiss();
 
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
                     } else {
                         progressDialog.dismiss();
                         Constants.showToast(getActivity(), getString(R.string.no_details));
@@ -254,4 +259,16 @@ public class Fragment_for_TransactionReport extends Fragment {
         }
     }
 
+
+    private void logout()
+    {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

@@ -235,8 +235,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                     progressDialog.dismiss();
                     if (result.equals("Success")) {
                         String lastLogin = object1.optString("lastLogin");
+                        String authToken = object1.optString("authToken");
 
                         lastLogin = encryptDecryptRegister.decrypt(lastLogin);
+                        authToken = encryptDecryptRegister.decrypt(authToken);
+
+                        Constants.AuthToken = authToken;
 
                         preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -246,7 +250,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                             editor.putString("KeepLoggedIn", "true");
                         editor.apply();
 
-                        startActivity(new Intent(getActivity(), Activity_Home.class));
+                        Intent intent = new Intent(getActivity(), Activity_Home.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                         getActivity().finish();
 
                     } else {
@@ -318,14 +324,22 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             try {
                 if (data != null) {
                     JSONArray transaction = new JSONArray(data);
-                    JSONObject object1 = transaction.getJSONObject(0);
+                    JSONObject object0 = transaction.getJSONObject(0);
 
-                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONArray rowResponse = object0.getJSONArray("rowsResponse");
                     JSONObject obj = rowResponse.getJSONObject(0);
                     String result = obj.optString("result");
 
                     result = encryptDecryptRegister.decrypt(result);
                     if (result.equals("Success")) {
+
+                        JSONObject object1 = transaction.getJSONObject(1);
+
+                        JSONArray forgotpin = object1.getJSONArray("forgotpin");
+                        JSONObject object = forgotpin.getJSONObject(0);
+
+                        String authToken = object.optString("authToken");
+                        Constants.AuthToken = encryptDecryptRegister.decrypt(authToken);
 
                         startActivity(new Intent(getActivity(), Activity_SetOTP.class));
                     } else {

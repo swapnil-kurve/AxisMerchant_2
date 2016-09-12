@@ -250,6 +250,7 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                         finish();
                     } else if(result.equalsIgnoreCase("Session Time Out")) {
                         Constants.showToast(Activity_Set_mPIN.this, getString(R.string.session_expired));
+                        logout();
                     }else{
                             Constants.showToast(Activity_Set_mPIN.this, getString(R.string.network_error));
                         }
@@ -260,5 +261,17 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
             }
 
         }
+    }
+
+    private void logout()
+    {
+        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

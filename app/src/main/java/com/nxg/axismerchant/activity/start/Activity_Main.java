@@ -67,6 +67,16 @@ public class Activity_Main extends AppActivity {
         }else
             changeToSignUp();*/
 
+        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        if(preferences.contains("LoggedIn"))
+        {
+            changeToSignIn();
+            (findViewById(R.id.layoutSignUp)).setVisibility(View.GONE);
+        }else
+        {
+            changeToSignUp();
+        }
+
         Bundle data = getIntent().getExtras();
         if(data != null && data.containsKey("EntryType"))
         {
@@ -227,30 +237,6 @@ public class Activity_Main extends AppActivity {
 
     }
 
-
-    /*// Check if Google Playservices is installed in Device or not
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(this);
-        // When Play services not found in device
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                // Show Error dialog to install Play services
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Constants.showToast(Activity_Main.this, "This device doesn't support Play services, App will not work normally");
-                finish();
-            }
-            return false;
-        } else {
-            *//*Toast.makeText(
-                    getApplicationContext(),
-                    "This device supports Play services, App will work normally",
-                    Toast.LENGTH_LONG).show();*//*
-        }
-        return true;
-    }*/
 
     private boolean checkPlayServices() {
         GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();

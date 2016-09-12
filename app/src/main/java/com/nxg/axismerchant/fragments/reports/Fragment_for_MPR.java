@@ -34,6 +34,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.mis_reports.Activity_FilterMIS;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.CustomListAdapterForMPR;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
@@ -346,6 +347,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
                 nameValuePairs.add(new BasicNameValuePair("TRANS_TYPE", trans_type));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -413,12 +417,14 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                         adapter = new CustomListAdapterForMPR(getActivity(), mprDataSet,screenInches);
                         listData.setAdapter(adapter);
 
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
                     } else {
-                        progressDialog.dismiss();
                         Constants.showToast(getActivity(), getString(R.string.no_details));
-
                     }
                 }
+                progressDialog.dismiss();
             } catch (JSONException e) {
                 progressDialog.dismiss();
             }
@@ -633,6 +639,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                     adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet, screenInches);
                     listData.setAdapter(adapter);
 
+                }else if(result.equalsIgnoreCase("SessionFailure")){
+                    Constants.showToast(getActivity(), getString(R.string.session_expired));
+                    logout();
                 }
                 else {
                     progressDialog.dismiss();
@@ -720,6 +729,9 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
                     progressDialog.dismiss();
                     ShowDialog("yes");
                     getActivity().onBackPressed();
+                }else if(result.equalsIgnoreCase("SessionFailure")){
+                    Constants.showToast(getActivity(), getString(R.string.session_expired));
+                    logout();
                 }
                 else {
                     progressDialog.dismiss();
@@ -807,6 +819,18 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         });
 
         dialog.show();
+    }
+
+    private void logout()
+    {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
     }
 
 }

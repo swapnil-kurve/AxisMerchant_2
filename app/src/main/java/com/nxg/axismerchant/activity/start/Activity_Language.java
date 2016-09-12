@@ -3,18 +3,20 @@ package com.nxg.axismerchant.activity.start;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
+import com.nxg.axismerchant.activity.Activity_Notification;
 import com.nxg.axismerchant.activity.AppActivity;
 import com.nxg.axismerchant.classes.Constants;
 
-public class Activity_Language extends AppActivity {
+public class Activity_Language extends AppActivity implements View.OnClickListener {
 
-//    RadioButton rdEnglish, rdHindi, rdTamil, rdTelugu, rdKannada, rdBengali;
     RadioGroup rdGrpLanguage;
     int i = 0;
     @Override
@@ -26,12 +28,17 @@ public class Activity_Language extends AppActivity {
         rdGrpLanguage = (RadioGroup) findViewById(R.id.radioGrpLangauage);
 
         TextView txtProceed = (TextView) findViewById(R.id.txtProceed);
+        ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
+
+        imgBack.setOnClickListener(this);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null && bundle.containsKey("FromHome"))
         {
             i = 1;
-
+            imgBack.setVisibility(View.VISIBLE);
+            View mToolbar = findViewById(R.id.toolbar);
+            mToolbar.setPadding(0,0,0,0);
         }else {
             checkLoginStatus();
         }
@@ -124,4 +131,14 @@ public class Activity_Language extends AppActivity {
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.imgBack:
+                onBackPressed();
+                break;
+
+        }
+    }
 }

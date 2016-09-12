@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.Activity_Notification;
 import com.nxg.axismerchant.activity.start.Activity_Home;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
@@ -369,6 +370,9 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
                         status = encryptDecrypt.decrypt(status);
                         reqId = encryptDecrypt.decrypt(reqId);
                         ShowDialog2("Success",status,reqId);
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(Activity_SMSSignUp.this, getString(R.string.session_expired));
+                        logout();
                     } else {
                         progressDialog.dismiss();
                         ShowDialog2(result, "Fail", "null");
@@ -451,5 +455,16 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
         dialog.show();
     }
 
+    private void logout()
+    {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
 }

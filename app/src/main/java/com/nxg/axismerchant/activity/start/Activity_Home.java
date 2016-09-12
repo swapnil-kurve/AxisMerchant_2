@@ -715,7 +715,10 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                         progressDialog.dismiss();
 
-                    } else {
+                    } else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
+                        logout();
+                    }else {
                         progressDialog.dismiss();
 
                     }
@@ -894,7 +897,10 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         }
                         progressDialog.dismiss();
 
-                    } else {
+                    } else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
+                        logout();
+                    }else {
                         progressDialog.dismiss();
                         startActivity(new Intent(Activity_Home.this, Activity_SMSSignUp.class));
                     }
@@ -1008,7 +1014,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                     editor.apply();
 
-                }else if(result.equalsIgnoreCase("Failure")){
+                }else if(result.equalsIgnoreCase("SessionFailure")){
                     Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
                     logout();
                 }else {
@@ -1031,8 +1037,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("KeepLoggedIn", "false");
         editor.apply();
-        Constants.showToast(this,getString(R.string.sign_out));
-        startActivity(new Intent(this, Activity_Main.class));
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 

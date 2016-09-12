@@ -320,9 +320,11 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                     if(result.equals("Success"))
                     {
                        startActivity(new Intent(Activity_SetOTP.this, Activity_Set_mPIN.class));
+                        finish();
                     }
-                    else if(result.equalsIgnoreCase("Session Time Out")){
+                    else if(result.equalsIgnoreCase("Session Time Out") || result.equalsIgnoreCase("Invalid authKey")){
                         Constants.showToast(Activity_SetOTP.this, getString(R.string.session_expired));
+                        logout();
                     }else
                     {
                         Constants.showToast(Activity_SetOTP.this, getString(R.string.incorrect_otp));
@@ -430,5 +432,17 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+
+    private void logout()
+    {
+        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
 }

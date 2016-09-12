@@ -300,6 +300,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         Intent intent = new Intent(getActivity(), Activity_SetOTP.class);
                         intent.putExtra("OTP", veriPin);
                         startActivity(intent);
+                        getActivity().finish();
                     }else {
                         Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }

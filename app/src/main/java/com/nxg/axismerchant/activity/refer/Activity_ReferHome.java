@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.Activity_Notification;
 import com.nxg.axismerchant.activity.AppActivity;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
@@ -279,11 +280,13 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
                 {
                     ShowDialog(1);
                     progressDialog.dismiss();
-                }
-                else if(result.equals("Fail")){
+                }else if(result.equals("Fail")){
                     progressDialog.dismiss();
                     ShowDialog(0);
 
+                }else if(result.equalsIgnoreCase("SessionFailure")){
+                    Constants.showToast(Activity_ReferHome.this, getString(R.string.session_expired));
+                    logout();
                 }
                 }else {
                     Constants.showToast(Activity_ReferHome.this, getString(R.string.network_error));
@@ -296,4 +299,15 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
         }
     }
 
+    private void logout()
+    {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 }

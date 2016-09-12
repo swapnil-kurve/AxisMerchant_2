@@ -34,6 +34,7 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.mis_reports.Activity_FilterMIS;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.CustomListAdapterForMPR;
 import com.nxg.axismerchant.classes.CustomListAdapterForMerchantLikeMe;
@@ -342,14 +343,18 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         adapter = new CustomListAdapterForMerchantLikeMe(getActivity(), likeMeArrayList);
                         listData.setAdapter(adapter);
 
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
                     } else {
                         lyTop.setVisibility(View.GONE);
                         lyInfo.setVisibility(View.VISIBLE);
-                        progressDialog.dismiss();
-
                     }
                 }else {
-                Constants.showToast(getActivity(), getString(R.string.network_error));
+//                Constants.showToast(getActivity(), getString(R.string.network_error));
+                    lyTop.setVisibility(View.GONE);
+                    lyInfo.setVisibility(View.VISIBLE);
+                    progressDialog.dismiss();
             }
             } catch (JSONException e) {
                 progressDialog.dismiss();
@@ -449,14 +454,17 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                     adapter = new CustomListAdapterForMerchantLikeMe(getActivity(),likeMeArrayList);
                     listData.setAdapter(adapter);
 
+                }else if(result.equalsIgnoreCase("SessionFailure")){
+                    Constants.showToast(getActivity(), getString(R.string.session_expired));
+                    logout();
                 }
                 else {
-                    progressDialog.dismiss();
                     Constants.showToast(getActivity(), getString(R.string.no_details));
                 }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
+                progressDialog.dismiss();
             } catch (JSONException e) {
                 progressDialog.dismiss();
             }
@@ -645,14 +653,17 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                     adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList, screenInches);
                     listData.setAdapter(adapterAnalytics);
 
+                }else if(result.equalsIgnoreCase("SessionFailure")){
+                    Constants.showToast(getActivity(), getString(R.string.session_expired));
+                    logout();
                 }
                 else {
-                    progressDialog.dismiss();
                     Constants.showToast(getActivity(), getString(R.string.no_details));
                 }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
+                progressDialog.dismiss();
             } catch (JSONException e) {
                 progressDialog.dismiss();
 
@@ -868,12 +879,14 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                     adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList, screenInches);
                     listData.setAdapter(adapterAnalytics);
 
+                }else if(result.equalsIgnoreCase("SessionFailure")){
+                    Constants.showToast(getActivity(), getString(R.string.session_expired));
+                    logout();
                 }
                 else {
-                    progressDialog.dismiss();
                     Constants.showToast(getActivity(), getString(R.string.no_details));
-
                 }
+                progressDialog.dismiss();
             } catch (JSONException e) {
                 progressDialog.dismiss();
             }
@@ -881,6 +894,16 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         }
     }
 
-
+    private void logout()
+    {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 
 }

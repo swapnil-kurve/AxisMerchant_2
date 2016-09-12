@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,6 +22,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
@@ -316,7 +318,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                         srStatuses.clear();
                         JSONObject object = transaction.getJSONObject(1);
                         JSONArray transactionBetDates;
-                        if(len > 3)
+                        if(len > 6)
                             transactionBetDates= object.getJSONArray("getrequestsBetweenDates");
                         else
                             transactionBetDates= object.getJSONArray("getLatestServiceRequest");
@@ -372,6 +374,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                         listSRStatus.setAdapter(adapter);
                         progressDialog.dismiss();
 
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
                     } else {
                         progressDialog.dismiss();
                         Constants.showToast(getActivity(), getString(R.string.no_details));
@@ -615,6 +620,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                         listSRStatus.setAdapter(adapter);
                         progressDialog.dismiss();
 
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
                     } else {
                         progressDialog.dismiss();
                         Constants.showToast(getActivity(), getString(R.string.no_details));
@@ -631,6 +639,17 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    private void logout()
+    {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 
 
 }

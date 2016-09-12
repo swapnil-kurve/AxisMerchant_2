@@ -3,6 +3,7 @@ package com.nxg.axismerchant.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.activity.start.Activity_UserProfile;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
@@ -26,9 +28,13 @@ import com.nxg.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +43,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Activity_FAQ extends AppCompatActivity implements View.OnClickListener {
@@ -46,6 +53,7 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
     FAQ faq;
     ArrayList<FAQ> faqArrayList;
     FAQAdapter adapter;
+    String MID,MOBILE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +72,18 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
         imgProfile.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
 
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        String user = preferences.getString("Username", "");
+        String LastLogin = preferences.getString("LastLogin", "");
+        MID = preferences.getString("MerchantID","0");
+        MOBILE = preferences.getString("MobileNum","0");
+
         if (Constants.isNetworkConnectionAvailable(Activity_FAQ.this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetFaq().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getFAQs");
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getFAQs", MID, MOBILE, Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
             } else {
-                new GetFaq().execute(Constants.DEMO_SERVICE+"getFAQs");
+                new GetFaq().execute(Constants.DEMO_SERVICE+"getFAQs", MID, MOBILE, Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
         } else {
@@ -116,9 +130,18 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
                 HTTPUtils utils = new HTTPUtils();
                 HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
                 URI newURI = URI.create(arg0[0]);
-                HttpGet httpGet = new HttpGet(newURI);
+                HttpPost httppost = new HttpPost(newURI);
 
-                HttpResponse response = httpclient.execute(httpGet);
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpclient.execute(httppost);
                 int stats = response.getStatusLine().getStatusCode();
 
                 if (stats == 200) {
@@ -126,10 +149,12 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
                     String data = EntityUtils.toString(entity);
                     str = data;
                 }
-            } catch (ParseException e1) {
+            } catch (org.apache.http.ParseException e1) {
                 progressDialog.dismiss();
+
             } catch (IOException e) {
                 progressDialog.dismiss();
+
             }
             return str;
         }
@@ -169,6 +194,9 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
                     adapter = new FAQAdapter(Activity_FAQ.this,faqArrayList);
                     listFAQ.setAdapter(adapter);
 
+                }else if(result.equalsIgnoreCase("SessionFailure")){
+                    Constants.showToast(Activity_FAQ.this, getString(R.string.session_expired));
+                    logout();
                 }
                 else {
                     progressDialog.dismiss();
@@ -259,5 +287,19 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
             return view;
         }
     }
+
+
+    private void logout()
+    {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 
 }
