@@ -64,13 +64,18 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
         imgEditPrimaryID.setOnClickListener(this);
         imgEditSecondaryID.setOnClickListener(this);
 
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
 
-        String LastLogin = preferences.getString("LastLogin", "");
-        if(LastLogin.equals("firstLogin")) {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        boolean mQRCoach = preferences.getBoolean("QRCoach1", true);
+        if(mQRCoach)
+        {
             int[] coachMarks = {R.drawable.qr_pay_3};
             Constants.onCoachMark(this, coachMarks);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("QRCoach1",false);
+            editor.apply();
         }
+
 
         encryptDecryptRegister = new EncryptDecryptRegister();
 

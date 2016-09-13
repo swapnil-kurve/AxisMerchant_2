@@ -55,12 +55,16 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
 
         changeToServiceSupport();
 
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
 
-        String LastLogin = preferences.getString("LastLogin", "");
-        if(LastLogin.equals("firstLogin")) {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        boolean mCoach = preferences.getBoolean("ServiceCoach", true);
+        if(mCoach)
+        {
             int[] coachMarks = {R.drawable.service_support_01, R.drawable.service_support_2};
             Constants.onCoachMark(this, coachMarks);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("ServiceCoach",false);
+            editor.apply();
         }
     }
 

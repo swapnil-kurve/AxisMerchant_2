@@ -57,11 +57,14 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         txtViewAllTransactions.setOnClickListener(this);
 
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-
-        String LastLogin = preferences.getString("LastLogin", "");
-        if(LastLogin.equals("firstLogin")) {
+        boolean mQRCoach = preferences.getBoolean("QRCoach", true);
+        if(mQRCoach)
+        {
             int[] coachMarks = {R.drawable.qr_1, R.drawable.qr_2};
             Constants.onCoachMark(this, coachMarks);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("QRCoach",false);
+            editor.apply();
         }
 
         getData();

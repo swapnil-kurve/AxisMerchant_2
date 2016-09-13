@@ -124,12 +124,16 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             type = bundle.getInt(ARG_OBJECT,0);
         }
         if(type == 0) {
-            SharedPreferences pref = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
 
-            String LastLogin = pref.getString("LastLogin", "");
-            if(LastLogin.equals("firstLogin")) {
+            SharedPreferences pref = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+            boolean mCoach = pref.getBoolean("MPRCoach", true);
+            if(mCoach)
+            {
                 int[] coachMarks = {R.drawable.reports_01, R.drawable.reports_02};
                 Constants.onCoachMark(getActivity(), coachMarks);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putBoolean("MPRCoach",false);
+                editor.apply();
             }
 
             getChartData("settled");

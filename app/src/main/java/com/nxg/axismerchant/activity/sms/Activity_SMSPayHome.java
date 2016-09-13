@@ -99,13 +99,18 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         txtSeeAllTransactions.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
 
-        SharedPreferences pref = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
 
-        String LastLogin = pref.getString("LastLogin", "");
-        if(LastLogin.equals("firstLogin")) {
+        SharedPreferences pref = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        boolean mCoach = pref.getBoolean("SMSCoach", true);
+        if(mCoach)
+        {
             int[] coachMarks = {R.drawable.sms_01, R.drawable.sms_02};
             Constants.onCoachMark(this, coachMarks);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("SMSCoach",false);
+            editor.apply();
         }
+
 
         /**
          * Run time permissions for Android M

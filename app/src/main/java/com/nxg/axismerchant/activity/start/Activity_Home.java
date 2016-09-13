@@ -110,6 +110,15 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         String LastLogin = preferences.getString("LastLogin", "");
         MID = preferences.getString("MerchantID","0");
         MOBILE = preferences.getString("MobileNum","0");
+        boolean mHomeCoach = preferences.getBoolean("HomeCoach", true);
+        if(mHomeCoach)
+        {
+            Constants.onCoachMark(this,homeCoach);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("HomeCoach",false);
+            editor.apply();
+        }
+
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
 
@@ -117,7 +126,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         int languageSelected = preferences.getInt("Selected_Language",0);
 
         if (LastLogin.equals("firstLogin")) {
-            Constants.onCoachMark(this,homeCoach);
             if(languageSelected == 1)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
             else if(languageSelected == 2)
