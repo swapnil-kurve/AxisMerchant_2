@@ -235,7 +235,7 @@ public class Fragment_RefundTransactions extends Fragment {
                                 transDate.replace("-","/");
 
                             transDate = transDate.split("\\s+")[0];
-                            smsPayStatus = new SMSPayStatus("",custMobile, transAmt, transactionId, transStatus, remark, Ttype,transDate);
+                            smsPayStatus = new SMSPayStatus(custMobile, transAmt, transactionId, transStatus, remark, Ttype,transDate);
                             statusArrayList.add(smsPayStatus);
                         }
 

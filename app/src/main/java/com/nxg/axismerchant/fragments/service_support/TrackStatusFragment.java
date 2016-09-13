@@ -518,9 +518,9 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[7])));
 
                 String tid = encryptDecrypt.encrypt(arg0[4]);
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.serviceRequestNumber),srno));
@@ -564,6 +564,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                         JSONObject object = transaction.getJSONObject(1);
                         JSONArray transactionBetDates;
 
+                        srStatuses.clear();
                         transactionBetDates = object.getJSONArray("searchSRService");
 
                         for (int i = 0; i < transactionBetDates.length(); i++) {

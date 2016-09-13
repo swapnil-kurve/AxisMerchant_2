@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
+import android.text.SpannableString;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -210,8 +211,8 @@ public class GCMNotificationIntentService extends IntentService {
             PugNotification.with(this)
                     .load()
                     .title(title)
-                    .message(SubTitle)
-                    .bigTextStyle(title)
+//                    .message(SubTitle)
+                    .bigTextStyle(SubTitle)
                     .smallIcon(R.mipmap.axis_tr)
                     .largeIcon(R.mipmap.axis_mnemonic)
                     .flags(Notification.DEFAULT_ALL)
@@ -223,8 +224,8 @@ public class GCMNotificationIntentService extends IntentService {
             PugNotification.with(this)
                     .load()
                     .title(title)
-                    .message(message)
-                    .bigTextStyle(title)
+//                    .message(message)
+                    .bigTextStyle(message)
                     .smallIcon(R.mipmap.axis_tr)
                     .largeIcon(R.mipmap.axis_mnemonic)
                     .flags(Notification.DEFAULT_ALL)
@@ -235,10 +236,6 @@ public class GCMNotificationIntentService extends IntentService {
         }
     }
 
-    private int getNotificationIcon() {
-        boolean useWhiteIcon = (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP);
-        return useWhiteIcon ? R.mipmap.axis_mnemonic : R.mipmap.axis_tr;
-    }
     /**
      * Update Refund Status of SMS Pay into Table
      * @param invNo

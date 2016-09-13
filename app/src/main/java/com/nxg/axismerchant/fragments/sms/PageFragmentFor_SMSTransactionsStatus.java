@@ -1,16 +1,18 @@
 package com.nxg.axismerchant.fragments.sms;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -19,13 +21,31 @@ import android.widget.TextView;
 
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.sms.Activity_TransactionStatusDetails;
+import com.nxg.axismerchant.activity.start.Activity_Main;
 import com.nxg.axismerchant.classes.Constants;
 import com.nxg.axismerchant.classes.EncryptDecrypt;
 import com.nxg.axismerchant.classes.EncryptDecryptRegister;
+import com.nxg.axismerchant.classes.HTTPUtils;
 import com.nxg.axismerchant.classes.SMSPayStatus;
 import com.nxg.axismerchant.database.DBHelper;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +64,7 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
     private String[] arrTitle;
     private String pageTitle, MID,MOBILE;
     int pageNO;
+    boolean loadingMore = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,10 +77,9 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
 
         pageNO = args.getInt(ARG_OBJECT, 0);
 
-        if(pageNO >0)
-        {
-            pageTitle = arrTitle[pageNO];
-        }
+
+        pageTitle = arrTitle[pageNO];
+
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         MID = preferences.getString("MerchantID","0");
@@ -67,10 +87,42 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
         Constants.getIMEI(getActivity());
         Constants.retrieveMPINFromDatabase(getActivity());
 
-        retrieveFromDatabase();
+//        retrieveFromDatabase();
+        grabURL("0");
+
+        listTransactions.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+
+                int lastInScreen = firstVisibleItem + visibleItemCount;
+                if((lastInScreen == totalItemCount) && !(loadingMore)){
+                    grabURL(statusArrayList.get(statusArrayList.size()-1).getInvoiceNum());
+                }
+            }
+        });
 
         return view;
 
+    }
+
+    private void grabURL(String transactionId) {
+        if (Constants.isNetworkConnectionAvailable(getActivity())) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new GetEPayData().executeOnExecutor(AsyncTask
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLatestMerchantUserTransWithId", MID, MOBILE, pageTitle, Constants.SecretKey, Constants.AuthToken, Constants.IMEI, transactionId);//arrTitle[pageNO]);
+            } else {
+                new GetEPayData().execute(Constants.DEMO_SERVICE + "getLatestMerchantUserTransWithId", MID, MOBILE, pageTitle, Constants.SecretKey, Constants.AuthToken, Constants.IMEI, transactionId);//arrTitle[pageNO]);
+
+            }
+        } else {
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -106,6 +158,7 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
     }
 
 
+/*
     private void retrieveFromDatabase() {
         dbHelper = new DBHelper(getActivity());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -141,6 +194,7 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
 
         dataAdapter.notifyDataSetChanged();
     }
+*/
 
 
     private class DataAdapter extends BaseAdapter {
@@ -216,5 +270,140 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
             }
             return view;
         }
+    }
+
+
+    private class GetEPayData extends AsyncTask<String, Void, String> {
+
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loadingMore = true;
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            String str = "";
+            try {
+                HTTPUtils utils = new HTTPUtils();
+                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
+                URI newURI = URI.create(arg0[0]);
+                HttpPost httppost = new HttpPost(newURI);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.transStatus), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.transactionId), encryptDecrypt.encrypt(arg0[7])));
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpclient.execute(httppost);
+                int stats = response.getStatusLine().getStatusCode();
+
+                if (stats == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    str = data;
+                }
+            } catch (ParseException e1) {
+                progressDialog.dismiss();
+            } catch (IOException e) {
+                progressDialog.dismiss();
+            }
+            return str;
+        }
+
+
+        @Override
+        protected void onPostExecute(String data) {
+            super.onPostExecute(data);
+
+            try{
+                if(!data.equals("")) {
+                    JSONArray jsonArray = new JSONArray(data);
+                    JSONObject object = jsonArray.getJSONObject(0);
+                    JSONArray rowsResponse = object.getJSONArray("rowsResponse");
+                    JSONObject obj = rowsResponse.getJSONObject(0);
+                    String result = obj.optString("result");
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object2 = jsonArray.getJSONObject(1);
+                        JSONArray getLatestMerchantUserTrans = object2.getJSONArray("getLatestMerchantUserTransWithId");
+
+                        for (int i = 0; i < getLatestMerchantUserTrans.length(); i++) {
+                            JSONObject object1 = getLatestMerchantUserTrans.getJSONObject(i);
+                            String transactionId = object1.optString("transactionId");
+                            String custMobile = object1.optString("custMobile");
+                            String transAmt = object1.optString("transAmt");
+                            String remark = object1.optString("remark");
+                            String transStatus = object1.optString("transStatus");
+                            String transDate = object1.optString("transDate");
+                            String isRefund = object1.optString("isRefund");
+
+                            transactionId = encryptDecrypt.decrypt(transactionId);
+                            custMobile = encryptDecrypt.decrypt(custMobile);
+                            transAmt = encryptDecrypt.decrypt(transAmt);
+                            remark = encryptDecrypt.decrypt(remark);
+                            transStatus = encryptDecrypt.decrypt(transStatus);
+                            transDate = encryptDecrypt.decrypt(transDate);
+                            isRefund = encryptDecrypt.decrypt(isRefund);
+
+                            if(transDate.contains("-"))
+                                transDate.replace("-","/");
+                            transDate = transDate.split("\\s+")[0];
+
+                            /*transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+
+                            smsPayStatus = new SMSPayStatus(custMobile, transAmt, transactionId, transStatus, remark,isRefund,transDate);
+                            statusArrayList.add(smsPayStatus);
+                        }
+
+                        dataAdapter = new DataAdapter(getActivity(), statusArrayList);
+                        listTransactions.setAdapter(dataAdapter);
+
+                        dataAdapter.notifyDataSetChanged();
+                        loadingMore = false;
+
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
+                    } else {
+//                        Constants.showToast(Activity_SMSPayHome.this, "No details found.");
+
+                    }
+                    progressDialog.dismiss();
+                }else {
+                    progressDialog.dismiss();
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
+                }
+            } catch (JSONException e) {
+                progressDialog.dismiss();
+                Constants.showToast(getActivity(),getString(R.string.network_error));
+            }
+
+        }
+    }
+
+
+    private void logout()
+    {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

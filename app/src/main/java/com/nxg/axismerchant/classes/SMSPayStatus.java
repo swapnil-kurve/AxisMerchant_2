@@ -9,8 +9,7 @@ public class SMSPayStatus implements Serializable {
 
     String custMobile, amount, invoiceNum, status, remark, uid, isRefund, transDate;
 
-    public SMSPayStatus(String uid, String custMobile, String amount, String invoiceNum, String status, String remark, String isRefund, String transDate) {
-        this.uid = uid;
+    public SMSPayStatus( String custMobile, String amount, String invoiceNum, String status, String remark, String isRefund, String transDate) {
         this.custMobile = custMobile;
         this.amount = amount;
         this.invoiceNum = invoiceNum;

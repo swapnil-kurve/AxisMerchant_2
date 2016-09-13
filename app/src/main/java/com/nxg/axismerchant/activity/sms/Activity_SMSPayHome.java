@@ -144,7 +144,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         simStatus = Constants.isSimSupport(Activity_SMSPayHome.this);
         isOnAirplane = Constants.isAirplaneModeOn(this);
 
-        if (!isTableExists()) {
+       /* if (!isTableExists()) {
             if (Constants.isNetworkConnectionAvailable(this)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new GetEPayData().executeOnExecutor(AsyncTask
@@ -160,7 +160,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         } else {
 
             retrieveFromDatabase();
-        }
+        }*/
 
         getLastTransaction();
 
@@ -552,6 +552,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     }
 
 
+/*
     private class GetEPayData extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
@@ -638,7 +639,9 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                                 transDate.replace("-","/");
                               transDate = transDate.split("\\s+")[0];
 
-                            /*transDate = Constants.splitDate(transDate.split("\\s+")[0]);*/
+                            */
+/*transDate = Constants.splitDate(transDate.split("\\s+")[0]);*//*
+
                             InsertIntoDatabase(custMobile, transAmt, remark, transactionId, transStatus,transDate,isRefund);
                         }
 
@@ -662,6 +665,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
         }
     }
+*/
 
 
     private void InsertIntoDatabase(String custMobile, String amount, String remark, String invoiceNum, String status, String transDate, String isRefund) {

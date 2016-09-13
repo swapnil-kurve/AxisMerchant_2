@@ -724,7 +724,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         progressDialog.dismiss();
 
                     } else if(result.equalsIgnoreCase("SessionFailure")){
-                        Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
                         logout();
                     }else {
                         progressDialog.dismiss();
@@ -906,7 +905,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         progressDialog.dismiss();
 
                     } else if(result.equalsIgnoreCase("SessionFailure")){
-                        Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
                         logout();
                     }else {
                         progressDialog.dismiss();
@@ -1023,7 +1021,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     editor.apply();
 
                 }else if(result.equalsIgnoreCase("SessionFailure")){
-                    Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
                     logout();
                 }else {
                     Constants.showToast(Activity_Home.this, getString(R.string.no_details));
@@ -1041,6 +1038,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
     private void logout()
     {
+        Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("KeepLoggedIn", "false");

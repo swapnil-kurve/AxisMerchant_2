@@ -160,7 +160,6 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
 
             case R.id.txtYes:
                 setResponse(mPromotionId,"Accepted");
-                Constants.showToast(this, getString(R.string.offer_accepted));
                 break;
         }
     }
@@ -292,6 +291,7 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
 
                     if(result.equals("Success"))
                     {
+                        Constants.showToast(Activity_OfferDetails.this, getString(R.string.offer_accepted));
                         updateStatus(pResponse,promotionID);
                     }else if(result.equalsIgnoreCase("SessionFailure")){
                         Constants.showToast(Activity_OfferDetails.this, getString(R.string.session_expired));
