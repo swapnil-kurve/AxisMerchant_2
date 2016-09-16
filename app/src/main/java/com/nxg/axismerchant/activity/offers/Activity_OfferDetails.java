@@ -269,9 +269,7 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
                     str = data;
                 }
             }catch (ParseException e1) {
-                e1.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
             }
             return str;
         }
@@ -306,7 +304,7 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
                 }
 
             } catch (JSONException e) {
-                e.printStackTrace();
+
             }
 
         }
