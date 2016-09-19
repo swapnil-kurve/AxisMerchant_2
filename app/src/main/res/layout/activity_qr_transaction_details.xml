@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="com.nxg.axismerchant.activity.qr_pay.Activity_QRTransactionDetails">
+    tools:context="com.axismerchant.activity.qr_pay.Activity_QRTransactionDetails">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -21,7 +21,7 @@
             android:src="@mipmap/back_arrow" />
 
 
-        <com.nxg.axismerchant.custom.CustomTextViewLightBold
+        <com.axismerchant.custom.CustomTextViewLightBold
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,7 +47,7 @@
                 android:padding="12dp"
                 android:src="@mipmap/notification" />
 
-            <com.nxg.axismerchant.custom.CustomTextViewHeavy
+            <com.axismerchant.custom.CustomTextViewHeavy
                 android:id="@+id/txtNotificationCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             android:layout_height="match_parent"
             android:padding="10dp">
 
-            <com.nxg.axismerchant.custom.CustomTextViewLightBold
+            <com.axismerchant.custom.CustomTextViewLightBold
                 android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                 android:textColor="@color/dark_gray"
                 android:textSize="@dimen/title_size" />
 
-            <com.nxg.axismerchant.custom.CustomTextViewLightBold
+            <com.axismerchant.custom.CustomTextViewLightBold
                 android:id="@+id/txtDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                 android:padding="5dp"
                 android:visibility="gone" />
 
-            <com.nxg.axismerchant.custom.CustomTextViewLight
+            <com.axismerchant.custom.CustomTextViewLight
                 android:id="@+id/txtStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,14 +137,14 @@
                     android:layout_marginTop="5dp"
                     android:orientation="vertical">
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/mVisaId"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:id="@+id/txtmVisaID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -159,14 +159,14 @@
                     android:layout_marginTop="15dp"
                     android:orientation="vertical">
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Auth code"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:id="@+id/txtAuthCode"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -182,14 +182,14 @@
                     android:layout_marginTop="15dp"
                     android:orientation="vertical">
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="RRN No."
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:id="@+id/rrnNo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -205,14 +205,14 @@
                     android:layout_marginTop="15dp"
                     android:orientation="vertical">
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/amount"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:id="@+id/amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -228,14 +228,14 @@
                     android:layout_marginTop="15dp"
                     android:orientation="vertical">
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Remark 1"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:id="@+id/remark1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -251,14 +251,14 @@
                     android:layout_marginTop="15dp"
                     android:orientation="vertical">
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Remark 2"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:id="@+id/remark2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -273,14 +273,14 @@
                     android:layout_marginTop="15dp"
                     android:orientation="vertical">
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Transaction Status"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:id="@+id/transactionStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -304,7 +304,7 @@
                         android:padding="5dp"
                         android:src="@mipmap/refund_status" />
 
-                    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+                    <com.axismerchant.custom.CustomTextViewLightBold
                         android:id="@+id/ref_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

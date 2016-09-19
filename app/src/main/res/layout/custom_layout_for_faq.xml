@@ -9,7 +9,7 @@
     android:paddingRight="10dp"
     android:paddingTop="10dp">
 
-    <com.nxg.axismerchant.custom.CustomTextViewHeavy
+    <com.axismerchant.custom.CustomTextViewHeavy
         android:id="@+id/txtQueNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/subtitle_size" />
 
-    <com.nxg.axismerchant.custom.CustomTextViewHeavy
+    <com.axismerchant.custom.CustomTextViewHeavy
         android:id="@+id/txtQue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         android:textColor="@android:color/black"
         android:textSize="@dimen/title_size" />
 
-    <com.nxg.axismerchant.custom.CustomTextViewLight
+    <com.axismerchant.custom.CustomTextViewLight
         android:id="@+id/txtAns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

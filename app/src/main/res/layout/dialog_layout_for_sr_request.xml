@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.nxg.axismerchant.custom.CustomTextViewMedium
+        <com.axismerchant.custom.CustomTextViewMedium
             android:id="@+id/txtResponseStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_margin="10dp"
             android:src="@drawable/happiness" />
 
-        <com.nxg.axismerchant.custom.CustomTextViewMedium
+        <com.axismerchant.custom.CustomTextViewMedium
             android:id="@+id/txtRequestNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:textColor="@android:color/black"
             android:textSize="@dimen/title_size" />
 
-        <com.nxg.axismerchant.custom.CustomTextViewMedium
+        <com.axismerchant.custom.CustomTextViewMedium
             android:id="@+id/txtDone"
             android:layout_width="120dp"
             android:layout_height="wrap_content"

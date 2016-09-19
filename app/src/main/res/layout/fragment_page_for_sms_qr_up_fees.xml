@@ -13,7 +13,7 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <com.nxg.axismerchant.custom.CustomTextViewMedium
+            <com.axismerchant.custom.CustomTextViewMedium
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -23,7 +23,7 @@
                 android:textSize="@dimen/title_size" />
 
 
-            <com.nxg.axismerchant.custom.CustomTextViewLight
+            <com.axismerchant.custom.CustomTextViewLight
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -45,7 +45,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/circular_textview" />
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                <com.axismerchant.custom.CustomTextViewLight
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -68,7 +68,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/circular_textview" />
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                <com.axismerchant.custom.CustomTextViewLight
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -91,7 +91,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/circular_textview" />
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                <com.axismerchant.custom.CustomTextViewLight
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -115,7 +115,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/circular_textview" />
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                <com.axismerchant.custom.CustomTextViewLight
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -139,7 +139,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/circular_textview" />
 
-                <com.nxg.axismerchant.custom.CustomTextViewLight
+                <com.axismerchant.custom.CustomTextViewLight
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

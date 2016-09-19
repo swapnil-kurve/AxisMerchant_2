@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context="com.nxg.axismerchant.activity.start.Activity_Language">
+    tools:context="com.axismerchant.activity.start.Activity_Language">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -30,7 +30,7 @@
             android:padding="4dp"
             android:src="@mipmap/axis_trwhite" />
 
-        <com.nxg.axismerchant.custom.CustomTextViewLightBold
+        <com.axismerchant.custom.CustomTextViewLightBold
             android:id="@+id/txt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,7 +54,7 @@
         android:layout_below="@+id/toolbar"
         android:layout_above="@+id/txtProceed">
 
-        <com.nxg.axismerchant.custom.CustomTextViewLightBold
+        <com.axismerchant.custom.CustomTextViewLightBold
             android:id="@+id/txtTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -179,7 +179,7 @@
         </RadioGroup>
     </RelativeLayout>
 
-    <com.nxg.axismerchant.custom.CustomTextViewLightBold
+    <com.axismerchant.custom.CustomTextViewLightBold
         android:id="@+id/txtProceed"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
