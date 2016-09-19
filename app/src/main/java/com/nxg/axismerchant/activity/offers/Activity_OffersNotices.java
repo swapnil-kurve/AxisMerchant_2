@@ -339,10 +339,9 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
                 }
             } catch (ParseException e1) {
                 progressDialog.dismiss();
-                e1.printStackTrace();
             } catch (IOException e) {
                 progressDialog.dismiss();
-                e.printStackTrace();
+
             }
             return str;
         }
@@ -422,7 +421,6 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
                 }
                 progressDialog.dismiss();
             } catch (JSONException e) {
-                e.printStackTrace();
                 progressDialog.dismiss();
             }
 

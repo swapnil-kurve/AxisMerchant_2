@@ -133,39 +133,4 @@ public class EncryptDecrypt
 
 	}
 
-	/*@SuppressWarnings("static-access")
-	public String encryptkey(String txt)
-	{
-		try
-		{
-			_crypt=new CryptLib();
-			iv=_crypt.generateRandomIV(16);
-			encrpttext = _crypt.encrypt(txt, CryptLib.key, iv);
-			finalString=encrpttext+"~"+iv;
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return finalString;
-	}
-	
-	@SuppressWarnings("static-access")
-	public String decryptkey(String txt)
-	{
-		try
-		{
-			_crypt=new CryptLib();
-			iv=_crypt.generateRandomIV(16);
-			decrypttext = _crypt.decrypt(txt, CryptLib.key, iv);
-			finalString=decrypttext+"~"+iv;
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return finalString;
-		
-	}*/
-
 }

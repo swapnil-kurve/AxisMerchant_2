@@ -217,13 +217,13 @@ public class HttpsPostConnection {
             sslContext.init(keyManagers, customTrustManager, new java.security.SecureRandom());
 
         } catch (CertificateException e) {
-            e.printStackTrace();
+
             throw new HttpException("Error in Certificate");
         } catch (Exception e) {
             if (e.getCause() != null) {
-                e.getCause().printStackTrace();
+
             } else {
-                e.printStackTrace();
+
             }
             throw new HttpException("Error in ssl context preparation");
         }
@@ -308,7 +308,7 @@ public class HttpsPostConnection {
         try {
             certificateChain = (X509Certificate[]) sslSession.getPeerCertificates();
         } catch (SSLPeerUnverifiedException e) {
-            e.printStackTrace();
+
             resp=false;
             return resp;
         }
@@ -318,10 +318,10 @@ public class HttpsPostConnection {
                 try {
                     certificateChain[0].checkValidity();
                 } catch (CertificateExpiredException e) {
-                    e.printStackTrace();
+
                     return resp;
                 } catch (CertificateNotYetValidException e) {
-                    e.printStackTrace();
+
                     return resp;
                 }
             }

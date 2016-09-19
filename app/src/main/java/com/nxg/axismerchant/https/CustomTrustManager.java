@@ -61,7 +61,7 @@ public class CustomTrustManager implements X509TrustManager {
         try {
             originalX509TrustManager.checkServerTrusted(chain, authType);
         } catch (CertificateException originalException) {
-            originalException.printStackTrace();
+
             try {
                 X509Certificate[] reorderedChain = reorderCertificateChain(chain);
                 CertPathValidator validator = CertPathValidator.getInstance("PKIX");
@@ -71,7 +71,7 @@ public class CustomTrustManager implements X509TrustManager {
                 params.setRevocationEnabled(false);
                 validator.validate(certPath, params);
             } catch (Exception ex) {
-                ex.printStackTrace();
+
                 throw originalException;
             }
         }
@@ -91,7 +91,7 @@ public class CustomTrustManager implements X509TrustManager {
          *           received.");
          *       }
          *   } catch (KeyStoreException e) {
-         *       e.printStackTrace();
+         *
          *   }
          */
 

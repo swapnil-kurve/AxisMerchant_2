@@ -220,7 +220,7 @@ public class Constants {
             System.out.println(newDateString);
             System.out.println(newDateString.split("/")[1]+newDateString.split("/")[0]+newDateString.split("/")[2]);
         } catch (ParseException e) {
-            e.printStackTrace();
+
         }
         return null;
     }

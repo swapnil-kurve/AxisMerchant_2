@@ -79,7 +79,7 @@ public static final String md5(final String inputString) {
         return hexString.toString();
 
     } catch (NoSuchAlgorithmException e) {
-        e.printStackTrace();
+
     }
     return "";
 }

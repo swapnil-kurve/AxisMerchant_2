@@ -2,6 +2,7 @@ package com.nxg.axismerchant.activity.start;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
@@ -23,6 +27,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.nxg.axismerchant.R;
 import com.nxg.axismerchant.activity.AppActivity;
 import com.nxg.axismerchant.classes.Constants;
+import com.nxg.axismerchant.classes.SanityCheckRootShell;
 import com.nxg.axismerchant.fragments.login.SignInFragment;
 import com.nxg.axismerchant.fragments.login.SignUpFragment;
 
@@ -32,7 +37,7 @@ import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
-public class Activity_Main extends AppActivity {
+public class Activity_Main extends SanityCheckRootShell {
 
     SharedPreferences preferences;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -40,9 +45,42 @@ public class Activity_Main extends AppActivity {
     String regId;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 1111;
 
+    @Override
+    public void ifPhoneRooted() {
+        ShowDialog();
+    }
+
+    @Override
+    public void ifPhoneNotRooted() {
+    }
+
+
+    private void ShowDialog()
+    {
+            // custom dialog
+            final Dialog dialog = new Dialog(this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.dialog_layout_for_info);
+            dialog.setCancelable(false);
+
+            TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+            // if button is clicked, close the custom dialog
+            txtConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    finish();
+                }
+            });
+
+            dialog.show();
+    }
+
+
     @TargetApi(Build.VERSION_CODES.M)
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
