@@ -17,8 +17,8 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.axismerchant.R;
+import com.bumptech.glide.Glide;
 import com.axismerchant.database.DBHelper;
 
 import java.io.BufferedReader;
@@ -117,10 +117,19 @@ public class Constants {
         DBHelper dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        Cursor crs = db.rawQuery("select DISTINCT "+ DBHelper.MPIN + " from " + DBHelper.TABLE_NAME_MPIN, null);
+        Cursor crs = null;
+        try{
+            crs = db.rawQuery("select DISTINCT "+ DBHelper.MPIN + " from " + DBHelper.TABLE_NAME_MPIN, null);
 
-        while (crs.moveToNext()) {
-            MPIN = crs.getString(crs.getColumnIndex(DBHelper.MPIN));
+            while (crs.moveToNext()) {
+                MPIN = crs.getString(crs.getColumnIndex(DBHelper.MPIN));
+            }
+        }catch (Exception e)
+        {
+
+        }finally {
+            crs.close();
+            db.close();
         }
 
     }
@@ -132,20 +141,30 @@ public class Constants {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Notification notification;
         String str = "Unread";
+        Cursor crs = null;
         ArrayList<Notification> notificationArrayList = new ArrayList<>();
 
-        Cursor crs = db.rawQuery("select DISTINCT "+ DBHelper.UID + ","+ DBHelper.MESSAGE +"," + DBHelper.READ_STATUS +","+ DBHelper.ON_DATE
-                + " from " + DBHelper.TABLE_NAME_NOTIFICATION +" where "+DBHelper.READ_STATUS +" = '"+str+"'", null);
+        try {
+            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.MESSAGE + "," + DBHelper.READ_STATUS + "," + DBHelper.ON_DATE
+                    + " from " + DBHelper.TABLE_NAME_NOTIFICATION + " where " + DBHelper.READ_STATUS + " = '" + str + "'", null);
 
-        while (crs.moveToNext()) {
-            String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
-            String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
-            String mDate = crs.getString(crs.getColumnIndex(DBHelper.ON_DATE));
-            String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));
+            while (crs.moveToNext()) {
+                String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
+                String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
+                String mDate = crs.getString(crs.getColumnIndex(DBHelper.ON_DATE));
+                String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));
 
-            notification = new Notification(mUID,mMessage,mDate,mReadStatus);
-            notificationArrayList.add(notification);
+                notification = new Notification(mUID, mMessage, mDate, mReadStatus);
+                notificationArrayList.add(notification);
+            }
+        }catch (Exception e)
+        {
+
+        }finally {
+            crs.close();
+            db.close();
         }
+
         return notificationArrayList;
     }
 

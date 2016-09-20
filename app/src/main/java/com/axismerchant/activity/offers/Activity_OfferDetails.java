@@ -318,6 +318,7 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
         values.put(DBHelper.STATUS, status);
 
         long id = db.update(DBHelper.TABLE_NAME_PROMOTIONS,values, DBHelper.PROMOTION_ID +" = "+promotionID, null);
+        db.close();
 
         onBackPressed();
     }

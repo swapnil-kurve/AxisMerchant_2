@@ -551,12 +551,11 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                         progressDialog.dismiss();
 
-                    } else {
-                        progressDialog.dismiss();
-
                     }
                 }
             } catch (JSONException e) {
+                progressDialog.dismiss();
+            }finally {
                 progressDialog.dismiss();
             }
         }

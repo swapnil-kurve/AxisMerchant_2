@@ -201,6 +201,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     }
 
 
+/*
     public boolean isTableExists() {
         dbHelper = new DBHelper(this);
         mDatabase = dbHelper.getReadableDatabase();
@@ -225,6 +226,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         }
         return false;
     }
+*/
 
 
     @Override
@@ -289,18 +291,25 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         favoriteArrayList.clear();
         dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor crs;
+        Cursor crs = null;
 
-        crs = db.rawQuery("select DISTINCT " + DBHelper.CUST_MOBILE + " from " + DBHelper.TABLE_NAME_E_PAYMENT+ " where " + DBHelper.IS_FAVORITE+" = ?", new String[] {"True"});
+        try {
+            crs = db.rawQuery("select DISTINCT " + DBHelper.CUST_MOBILE + " from " + DBHelper.TABLE_NAME_E_PAYMENT + " where " + DBHelper.IS_FAVORITE + " = ?", new String[]{"True"});
 
-        while (crs.moveToNext()) {
+            while (crs.moveToNext()) {
 
-            String mCustMobile = crs.getString(crs.getColumnIndex(DBHelper.CUST_MOBILE));
-            favoriteArrayList.add(mCustMobile);
+                String mCustMobile = crs.getString(crs.getColumnIndex(DBHelper.CUST_MOBILE));
+                favoriteArrayList.add(mCustMobile);
+            }
+
+            dataAdapter = new DataAdapter(this, favoriteArrayList);
+            listFavorites.setAdapter(dataAdapter);
+        }catch (Exception e)
+        {}
+        finally {
+            crs.close();
+            db.close();
         }
-
-        dataAdapter = new DataAdapter(this, favoriteArrayList);
-        listFavorites.setAdapter(dataAdapter);
     }
 
     @Override
@@ -667,6 +676,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 */
 
 
+/*
     private void InsertIntoDatabase(String custMobile, String amount, String remark, String invoiceNum, String status, String transDate, String isRefund) {
         dbHelper = new DBHelper(this);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -683,6 +693,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         long id = db.insert(DBHelper.TABLE_NAME_E_PAYMENT, null, values);
         Log.v("id", String.valueOf(id));
     }
+*/
 
     private void logout()
     {

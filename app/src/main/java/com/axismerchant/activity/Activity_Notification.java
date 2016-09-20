@@ -118,11 +118,17 @@ public class Activity_Notification extends AppCompatActivity implements View.OnC
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBHelper.READ_STATUS, "Read");
+        try {
+            values.put(DBHelper.READ_STATUS, "Read");
 
-        long id = db.update(DBHelper.TABLE_NAME_NOTIFICATION,values,null, null);
+            long id = db.update(DBHelper.TABLE_NAME_NOTIFICATION, values, null, null);
 
-        Log.e("Update Notifications",""+id);
+            Log.e("Update Notifications", "" + id);
+        }catch (Exception e)
+        {}
+        finally {
+            db.close();
+        }
     }
 
     private ArrayList retrieveFromDatabase(Context context, DBHelper dbHelper) {
@@ -130,19 +136,26 @@ public class Activity_Notification extends AppCompatActivity implements View.OnC
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Notification notification;
         String str = "Unread";
+        Cursor crs = null;
         ArrayList<Notification> notificationArrayList = new ArrayList<>();
 
-        Cursor crs = db.rawQuery("select DISTINCT "+ DBHelper.UID + ","+ DBHelper.MESSAGE +"," + DBHelper.READ_STATUS +","+ DBHelper.ON_DATE
-                + " from " + DBHelper.TABLE_NAME_NOTIFICATION +" order by CAST("+DBHelper.UID+" AS Integer) desc", null);
+        try {
+            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.MESSAGE + "," + DBHelper.READ_STATUS + "," + DBHelper.ON_DATE
+                    + " from " + DBHelper.TABLE_NAME_NOTIFICATION + " order by CAST(" + DBHelper.UID + " AS Integer) desc", null);
 
-        while (crs.moveToNext()) {
-            String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
-            String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
-            String mDate = crs.getString(crs.getColumnIndex(DBHelper.ON_DATE));
-            String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));
+            while (crs.moveToNext()) {
+                String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
+                String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
+                String mDate = crs.getString(crs.getColumnIndex(DBHelper.ON_DATE));
+                String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));
 
-            notification = new Notification(mUID,mMessage,mDate,mReadStatus);
-            notificationArrayList.add(notification);
+                notification = new Notification(mUID, mMessage, mDate, mReadStatus);
+                notificationArrayList.add(notification);
+            }
+        }catch (Exception e)
+        {}finally {
+            crs.close();
+            db.close();
         }
         return notificationArrayList;
     }

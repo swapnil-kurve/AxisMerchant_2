@@ -175,24 +175,29 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
     public boolean isTableExists() {
         dbHelper = new DBHelper(this);
         mDatabase = dbHelper.getReadableDatabase();
-
-        if (mDatabase == null || !mDatabase.isOpen()) {
-            mDatabase = dbHelper.getReadableDatabase();
-        }
-
-        if (!mDatabase.isReadOnly()) {
-            mDatabase.close();
-            mDatabase = dbHelper.getReadableDatabase();
-        }
-
-        Cursor cursor = mDatabase.rawQuery("select * from "+DBHelper.TABLE_NAME_PROMOTIONS, null);
-        if (cursor != null) {
-            Log.e("Data Count", "" + cursor.getCount());
-            if (cursor.getCount() > 0) {
-                cursor.close();
-                return true;
+        Cursor cursor = null;
+        try {
+            if (mDatabase == null || !mDatabase.isOpen()) {
+                mDatabase = dbHelper.getReadableDatabase();
             }
+
+            if (!mDatabase.isReadOnly()) {
+                mDatabase.close();
+                mDatabase = dbHelper.getReadableDatabase();
+            }
+
+            cursor = mDatabase.rawQuery("select * from " + DBHelper.TABLE_NAME_PROMOTIONS, null);
+            if (cursor != null) {
+                Log.e("Data Count", "" + cursor.getCount());
+                if (cursor.getCount() > 0) {
+                    cursor.close();
+                    return true;
+                }
+            }
+        }catch (Exception e)
+        {}finally {
             cursor.close();
+            mDatabase.close();
         }
         return false;
     }
@@ -262,29 +267,37 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
     private void retrieveFromDatabase() {
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-
+        Cursor crs = null;
         if(promotionsArrayList.size()>0)
             promotionsArrayList.clear();
 
-        Cursor crs = db.rawQuery("select DISTINCT "+ DBHelper.UID + ","+ DBHelper.PROMOTION_ID +"," + DBHelper.TITLE +","+ DBHelper.SUB_TITLE +","
-                + DBHelper.MESSAGE +"," + DBHelper.IMG_URL +","
-                + DBHelper.PROMOTION_TYPE+"," + DBHelper.WITH_OPTION +"," + DBHelper.READ_STATUS +"," +DBHelper.STATUS + " from " + DBHelper.TABLE_NAME_PROMOTIONS
-                +" order by CAST("+DBHelper.UID+" AS Integer) desc", null);
+        try {
+            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.PROMOTION_ID + "," + DBHelper.TITLE + "," + DBHelper.SUB_TITLE + ","
+                    + DBHelper.MESSAGE + "," + DBHelper.IMG_URL + ","
+                    + DBHelper.PROMOTION_TYPE + "," + DBHelper.WITH_OPTION + "," + DBHelper.READ_STATUS + "," + DBHelper.STATUS + " from " + DBHelper.TABLE_NAME_PROMOTIONS
+                    + " order by CAST(" + DBHelper.UID + " AS Integer) desc", null);
 
-        while (crs.moveToNext()) {
-            String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
-            String mPromotionID = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_ID));
-            String mTitle = crs.getString(crs.getColumnIndex(DBHelper.TITLE));
-            String mSubTitle = crs.getString(crs.getColumnIndex(DBHelper.SUB_TITLE));
-            String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
-            String mImgUrl = crs.getString(crs.getColumnIndex(DBHelper.IMG_URL));
-            String mPromotionType = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_TYPE));
-            String mWithOption = crs.getString(crs.getColumnIndex(DBHelper.WITH_OPTION));
-            String mStatus = crs.getString(crs.getColumnIndex(DBHelper.STATUS));
-            String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));
+            while (crs.moveToNext()) {
+                String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
+                String mPromotionID = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_ID));
+                String mTitle = crs.getString(crs.getColumnIndex(DBHelper.TITLE));
+                String mSubTitle = crs.getString(crs.getColumnIndex(DBHelper.SUB_TITLE));
+                String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
+                String mImgUrl = crs.getString(crs.getColumnIndex(DBHelper.IMG_URL));
+                String mPromotionType = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_TYPE));
+                String mWithOption = crs.getString(crs.getColumnIndex(DBHelper.WITH_OPTION));
+                String mStatus = crs.getString(crs.getColumnIndex(DBHelper.STATUS));
+                String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));
 
-            promotions = new Promotions(mUID,mTitle,mMessage,mSubTitle,mImgUrl,mPromotionType,mPromotionID,mWithOption,mStatus,mReadStatus,"");
-            promotionsArrayList.add(promotions);
+                promotions = new Promotions(mUID, mTitle, mMessage, mSubTitle, mImgUrl, mPromotionType, mPromotionID, mWithOption, mStatus, mReadStatus, "");
+                promotionsArrayList.add(promotions);
+            }
+        }catch (Exception e)
+        {
+
+        }finally {
+            crs.close();
+            db.close();
         }
     }
 
@@ -433,18 +446,23 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DBHelper.TITLE, title);
-        values.put(DBHelper.SUB_TITLE, SubTitle);
-        values.put(DBHelper.MESSAGE, message);
-        values.put(DBHelper.IMG_URL, imgPath);
-        values.put(DBHelper.PROMOTION_TYPE, promotionType);
-        values.put(DBHelper.PROMOTION_ID, promotionID);
-        values.put(DBHelper.WITH_OPTION, withOption);
-        values.put(DBHelper.STATUS, "Awaiting");
-        values.put(DBHelper.READ_STATUS, "Unread");
+        try {
+            values.put(DBHelper.TITLE, title);
+            values.put(DBHelper.SUB_TITLE, SubTitle);
+            values.put(DBHelper.MESSAGE, message);
+            values.put(DBHelper.IMG_URL, imgPath);
+            values.put(DBHelper.PROMOTION_TYPE, promotionType);
+            values.put(DBHelper.PROMOTION_ID, promotionID);
+            values.put(DBHelper.WITH_OPTION, withOption);
+            values.put(DBHelper.STATUS, "Awaiting");
+            values.put(DBHelper.READ_STATUS, "Unread");
 
-        long id = db.insert(DBHelper.TABLE_NAME_PROMOTIONS,null, values);
-        Log.v("id", String.valueOf(id));
+            long id = db.insert(DBHelper.TABLE_NAME_PROMOTIONS, null, values);
+            Log.v("id", String.valueOf(id));
+        }catch (Exception e)
+        {}finally {
+            db.close();
+        }
     }
 
     private void logout()

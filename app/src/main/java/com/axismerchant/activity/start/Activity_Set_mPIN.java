@@ -123,11 +123,15 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
         DBHelper dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        try {
+            values.put(DBHelper.MPIN, mMPIN);
 
-        values.put(DBHelper.MPIN, mMPIN);
-
-        long id = db.insert(DBHelper.TABLE_NAME_MPIN,null, values);
-        Log.v("id", String.valueOf(id));
+            long id = db.insert(DBHelper.TABLE_NAME_MPIN, null, values);
+            Log.v("id", String.valueOf(id));
+        }catch (Exception e)
+        {}finally {
+            db.close();
+        }
     }
 
     @Override
