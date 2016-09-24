@@ -69,7 +69,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     EncryptDecryptRegister encryptDecryptRegister;
     int simStatus;
     boolean isOnAirplane;
-    SQLiteDatabase mDatabase;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
 
     @Override
@@ -142,27 +141,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
         simStatus = Constants.isSimSupport(Activity_SMSPayHome.this);
         isOnAirplane = Constants.isAirplaneModeOn(this);
-
-       /* if (!isTableExists()) {
-            if (Constants.isNetworkConnectionAvailable(this)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    new GetEPayData().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getLatestMerchantUserTrans", MID, MOBILE, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);//arrTitle[pageNO]);
-                } else {
-                    new GetEPayData().execute(Constants.DEMO_SERVICE + "getLatestMerchantUserTrans", MID, MOBILE, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);//arrTitle[pageNO]);
-
-                }
-            } else {
-                Constants.showToast(this, getString(R.string.no_internet));
-            }
-
-        } else {
-
-            retrieveFromDatabase();
-        }*/
-
-        getLastTransaction();
-
     }
 
 
@@ -231,6 +209,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
     @Override
     protected void onResume() {
+        getLastTransaction();
         retrieveFromDatabase();
 
         Constants.retrieveMPINFromDatabase(this);
