@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -91,6 +92,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     ArrayList<HomeBanner> homeBanners;
     ArrayList<String> mvisaArrayList;
     HomeBanner banner;
+    private int session = 1;
     EncryptDecryptRegister encryptDecryptRegister;
     private int[] images = {R.mipmap.smspay_menu, R.mipmap.qrpay_menu, R.mipmap.service_support_menu, R.mipmap.reports_menu,
             R.mipmap.analytics, R.mipmap.offers, R.mipmap.profile_menu, R.mipmap.refer, R.mipmap.translation, R.mipmap.faq, R.mipmap.demo_video,R.mipmap.ver, R.mipmap.logout};
@@ -197,8 +199,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         mDrawerList.setAdapter(navigationItemAdapter);
 
         getMerchantDetails();
-        getPromotionImages();
-        getMVisaIDs();
 
     }
 
@@ -360,11 +360,11 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     private void gotoSMS() {
         SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
         String res = preferences.getString("SMSRequestValidated","No");
-        if(res.equalsIgnoreCase("Active"))
+        /*if(res.equalsIgnoreCase("Active"))
         {
             startActivity(new Intent(this, Activity_SMSPayHome.class));
         }else if(res.equalsIgnoreCase("No"))
-            {
+            {*/
                 if (Constants.isNetworkConnectionAvailable(this)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new CheckStatus().executeOnExecutor(AsyncTask
@@ -376,14 +376,14 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 } else {
                     Constants.showToast(this, getString(R.string.no_internet));
                 }
-            }else if(res.equalsIgnoreCase("Pending")){
+           /* }else if(res.equalsIgnoreCase("Pending")){
             Intent intent = new Intent(this, Activity_SMSSignUp.class);
             intent.putExtra("SMSRequestValidated","Pending");
             startActivity(intent);
         }else
         {
             startActivity(new Intent(this, Activity_SMSSignUp.class));
-        }
+        }*/
     }
 
     @Override
@@ -435,14 +435,15 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     break;
 
                 case 10:
-                    startActivity(new Intent(this, Activity_VideoDemo.class));
+//                    startActivity(new Intent(this, Activity_VideoDemo.class));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/1jVBpT0m8Wg")));
                     break;
 
                 case 11:
                     startActivity(new Intent(this, Activity_Version.class));
                     break;
                 case 12:
-                    logout();
+                    logout(1);
                     break;
 
             }
@@ -453,8 +454,10 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     public void onBackPressed() {
         if(mDrawerLayout.isDrawerOpen(mDrawerList))
             mDrawerLayout.closeDrawer(mDrawerList);
-        else
+        else {
             super.onBackPressed();
+//            System.exit(0);
+        }
     }
 
 
@@ -503,6 +506,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             } catch (IOException e) {
                 progressDialog.dismiss();
             }
+            CustomizedExceptionHandler.writeToFile(str);
             return str;
         }
 
@@ -552,6 +556,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         progressDialog.dismiss();
 
                     }
+                    getMVisaIDs();
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
@@ -680,6 +685,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 progressDialog.dismiss();
 
             }
+            CustomizedExceptionHandler.writeToFile(str);
             return str;
         }
 
@@ -723,12 +729,13 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         progressDialog.dismiss();
 
                     } else if(result.equalsIgnoreCase("SessionFailure")){
-                        logout();
+                        session = 0;
                     }else {
                         progressDialog.dismiss();
 
                     }
                 }
+                checkSessionVariable();
             } catch (JSONException e) {
                 progressDialog.dismiss();
 
@@ -736,8 +743,10 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }
     }
 
-
-
+    private void checkSessionVariable() {
+        if(session == 0)
+            logout(0);
+    }
 
 
     private class NavigationItemAdapter extends BaseAdapter
@@ -904,7 +913,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         progressDialog.dismiss();
 
                     } else if(result.equalsIgnoreCase("SessionFailure")){
-                        logout();
+                        session = 0;
                     }else {
                         progressDialog.dismiss();
                         startActivity(new Intent(Activity_Home.this, Activity_SMSSignUp.class));
@@ -960,6 +969,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
+
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -975,6 +985,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             } catch (IOException e) {
                 progressDialog.dismiss();
             }
+            CustomizedExceptionHandler.writeToFile(str);
             return str;
         }
 
@@ -1020,11 +1031,12 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     editor.apply();
 
                 }else if(result.equalsIgnoreCase("SessionFailure")){
-                    logout();
+                    session = 0;
                 }else {
                     Constants.showToast(Activity_Home.this, getString(R.string.no_details));
                 }
                 progressDialog.dismiss();
+                    getPromotionImages();
                 }else {
                     Constants.showToast(Activity_Home.this,getString(R.string.network_error));
                 }
@@ -1035,9 +1047,12 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }
     }
 
-    private void logout()
+    private void logout(int i)
     {
-        Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
+        if(i == 1)
+            Constants.showToast(Activity_Home.this, getString(R.string.sign_out));
+        else
+            Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("KeepLoggedIn", "false");

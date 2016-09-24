@@ -80,7 +80,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
     CustomListAdapterForMerchantLikeMe adapter;
     CustomListAdapterForMPR adapterAnalytics;
     BarChart layoutChart;
-    TextView txtDateDuration,txtGraphType, txtXn, txtVol, txtTicket;
+    TextView txtDateDuration,txtGraphType, txtXn, txtVol, txtTicket, txtMessage, txtHeaderText;
     View lyTop, lyInfo, lyTopMessages;
     double screenInches;
 
@@ -93,12 +93,14 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         listData = (ParallaxListView) view.findViewById(R.id.list_view);
         lyTop = view.findViewById(R.id.lyTop);
         lyInfo = view.findViewById(R.id.lyInfo);
+        txtMessage = (TextView) view.findViewById(R.id.txtMessage);
 
         View v = inflater.inflate(R.layout.fragment_transaction_report,null);
         layoutChart = (BarChart) v.findViewById(R.id.chartTransaction);
         txtDateDuration = (TextView) v.findViewById(R.id.txtDateDuration);
         txtGraphType = (TextView) v.findViewById(R.id.txtLeftText);
         lyTopMessages = v.findViewById(R.id.lyTopMessages);
+        txtHeaderText = (TextView) v.findViewById(R.id.txtHeader);
 
         txtXn = (TextView) v.findViewById(R.id.txtXn);
         txtVol = (TextView) v.findViewById(R.id.txtVol);
@@ -140,6 +142,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             txtXn.setVisibility(View.VISIBLE);
             txtVol.setVisibility(View.VISIBLE);
             txtTicket.setVisibility(View.VISIBLE);
+            txtHeaderText.setVisibility(View.VISIBLE);
         }
 
 
@@ -341,9 +344,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                             likeMeArrayList.add(merchantLikeMe);
                         }
 
-
                         getGraphData();
-                        progressDialog.dismiss();
                         adapter = new CustomListAdapterForMerchantLikeMe(getActivity(), likeMeArrayList);
                         listData.setAdapter(adapter);
 
@@ -354,8 +355,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                         lyTop.setVisibility(View.GONE);
                         lyInfo.setVisibility(View.VISIBLE);
                     }
+                    progressDialog.dismiss();
                 }else {
-//                Constants.showToast(getActivity(), getString(R.string.network_error));
                     lyTop.setVisibility(View.GONE);
                     lyInfo.setVisibility(View.VISIBLE);
                     progressDialog.dismiss();
@@ -463,7 +464,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                     logout();
                 }
                 else {
-                    Constants.showToast(getActivity(), getString(R.string.no_details));
+//                    Constants.showToast(getActivity(), getString(R.string.no_details));
                 }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
@@ -521,13 +522,13 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
 
         BarData data = new BarData(xValues, dataSets);
-        data.setValueTextSize(6);
+        data.setValueTextSize(8);
         data.setValueTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/futura_std_medium.otf"));
         data.setValueFormatter(new MyValueFormatter());
-        data.setGroupSpace(500f);
+        data.setGroupSpace(400f);
 
-        data.setGroupSpace(500f);
-        data.setGroupSpace(500f);
+        data.setGroupSpace(400f);
+        data.setGroupSpace(400f);
 
         chart.setData(data);
         chart.getXAxis().setTextSize(6);// hides horizontal grid lines inside chart
@@ -662,7 +663,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                     logout();
                 }
                 else {
-                    Constants.showToast(getActivity(), getString(R.string.no_details));
+//                    Constants.showToast(getActivity(), getString(R.string.no_details));
+                    txtMessage.setVisibility(View.VISIBLE);
                 }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));

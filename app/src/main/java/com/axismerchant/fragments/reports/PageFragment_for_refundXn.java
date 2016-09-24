@@ -35,6 +35,7 @@ public class PageFragment_for_refundXn extends Fragment {
     private String pageTitle;
     int pageNO;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,32 +63,35 @@ public class PageFragment_for_refundXn extends Fragment {
     @Override
     public void onResume() {
         ArrayList<SMSPayStatus> payStatuses = new ArrayList<>();
-        if(pageNO == 0)
+        if(statusArrayList.size() != 0) {
+            if (pageNO == 0) {
+                dataAdapter = new DataAdapter(getActivity(), statusArrayList);
+                listData.setAdapter(dataAdapter);
+                dataAdapter.notifyDataSetChanged();
+            } else if (pageNO == 1) {
+                pageTitle = "SMS";
+                for (int i = 0; i < statusArrayList.size(); i++) {
+                    if (statusArrayList.get(i).getIsRefund().equalsIgnoreCase("SMS")) {
+                        payStatuses.add(statusArrayList.get(i));
+                    }
+                }
+                dataAdapter = new DataAdapter(getActivity(), payStatuses);
+                listData.setAdapter(dataAdapter);
+                dataAdapter.notifyDataSetChanged();
+            } else if (pageNO == 2) {
+                pageTitle = "QR";
+                for (int i = 0; i < statusArrayList.size(); i++) {
+                    if (statusArrayList.get(i).getIsRefund().equalsIgnoreCase("QR")) {
+                        payStatuses.add(statusArrayList.get(i));
+                    }
+                }
+                dataAdapter = new DataAdapter(getActivity(), payStatuses);
+                listData.setAdapter(dataAdapter);
+                dataAdapter.notifyDataSetChanged();
+            }
+        }else
         {
-            dataAdapter = new DataAdapter(getActivity(),statusArrayList);
-            listData.setAdapter(dataAdapter);
-            dataAdapter.notifyDataSetChanged();
-        }else if(pageNO == 1) {
-            pageTitle = "SMS";
-            for (int i = 0; i < statusArrayList.size(); i++) {
-                if(statusArrayList.get(i).getIsRefund().equalsIgnoreCase("SMS")){
-                    payStatuses.add(statusArrayList.get(i));
-                }
-            }
-            dataAdapter = new DataAdapter(getActivity(),payStatuses);
-            listData.setAdapter(dataAdapter);
-            dataAdapter.notifyDataSetChanged();
-        }
-        else if(pageNO == 2) {
-            pageTitle = "QR";
-            for (int i = 0; i < statusArrayList.size(); i++) {
-                if(statusArrayList.get(i).getIsRefund().equalsIgnoreCase("QR")){
-                    payStatuses.add(statusArrayList.get(i));
-                }
-            }
-            dataAdapter = new DataAdapter(getActivity(),payStatuses);
-            listData.setAdapter(dataAdapter);
-            dataAdapter.notifyDataSetChanged();
+            listData.setVisibility(View.GONE);
         }
         super.onResume();
     }

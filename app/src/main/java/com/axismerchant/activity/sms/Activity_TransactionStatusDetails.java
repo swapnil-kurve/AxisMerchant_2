@@ -540,16 +540,21 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DBHelper.CUST_MOBILE, custMobile);
-        values.put(DBHelper.AMOUNT, amount);
-        values.put(DBHelper.REMARK, remark);
-        values.put(DBHelper.INVOICE_NO, invoiceNum);
-        values.put(DBHelper.IS_FAVORITE, isFavo);
-        values.put(DBHelper.STATUS, "Pending");
-        values.put(DBHelper.TRANS_DATE,currentDateandTime);
+        try {
+            values.put(DBHelper.CUST_MOBILE, custMobile);
+            values.put(DBHelper.AMOUNT, amount);
+            values.put(DBHelper.REMARK, remark);
+            values.put(DBHelper.INVOICE_NO, invoiceNum);
+            values.put(DBHelper.IS_FAVORITE, isFavo);
+            values.put(DBHelper.STATUS, "Pending");
+            values.put(DBHelper.TRANS_DATE, currentDateandTime);
 
-        long id = db.insert(DBHelper.TABLE_NAME_E_PAYMENT, null, values);
-        Log.v("id", String.valueOf(id));
+            long id = db.insert(DBHelper.TABLE_NAME_E_PAYMENT, null, values);
+            Log.v("id", String.valueOf(id));
+        }catch (Exception e){}
+        finally {
+            db.close();
+        }
 
     }
 
@@ -663,19 +668,29 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
     private void UpdateIntoEPay(String invNo, String refundStatus) {
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(DBHelper.IS_REFUND, refundStatus);
+        try {
+            ContentValues values = new ContentValues();
+            values.put(DBHelper.IS_REFUND, refundStatus);
 
-        long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT,values,DBHelper.INVOICE_NO +" = "+invNo, null);
+            long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT, values, DBHelper.INVOICE_NO + " = " + invNo, null);
+        }catch (Exception e)
+        {}finally {
+            db.close();
+        }
     }
 
     private void UpdateStatusIntoEPay(String invNo, String status) {
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBHelper.STATUS, status);
+        try {
+            values.put(DBHelper.STATUS, status);
 
-        long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT,values,DBHelper.INVOICE_NO +" = "+invNo, null);
+            long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT, values, DBHelper.INVOICE_NO + " = " + invNo, null);
+        }catch (Exception e)
+        {}finally {
+            db.close();
+        }
     }
 
 

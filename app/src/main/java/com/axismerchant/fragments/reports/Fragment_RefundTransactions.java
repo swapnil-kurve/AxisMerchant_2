@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.axismerchant.R;
@@ -59,11 +60,14 @@ public class Fragment_RefundTransactions extends Fragment {
     EncryptDecryptRegister encryptDecryptRegister;
     PagerSlidingTabStrip tabsStrip;
     Typeface typeFace;
+    TextView txtMessage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_refund_transactions, container, false);
+
+        txtMessage = (TextView) view.findViewById(R.id.txtMessage);
 
         statusArrayList = new ArrayList<>();
 
@@ -256,7 +260,9 @@ public class Fragment_RefundTransactions extends Fragment {
                         Constants.showToast(getActivity(), getString(R.string.session_expired));
                         logout();
                     } else {
-                        Constants.showToast(getActivity(), getString(R.string.no_details));
+//                        Constants.showToast(getActivity(), getString(R.string.no_details));
+                        viewPager.setVisibility(View.GONE);
+                        txtMessage.setVisibility(View.VISIBLE);
 
                     }
                     progressDialog.dismiss();

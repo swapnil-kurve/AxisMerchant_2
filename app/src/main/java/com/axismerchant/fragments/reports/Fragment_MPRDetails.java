@@ -168,7 +168,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref,Context.MODE_PRIVATE);
                 String email = preferences.getString("MerchantEmail","");
                 if(email.equalsIgnoreCase(""))
-                    ShowDialog("No");
+                    ShowDialog("No", "", "");
                 else
                     sendEmail();
                 break;
@@ -196,10 +196,10 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
             if (Constants.isNetworkConnectionAvailable(getActivity())) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    new SendData().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"addEmailRequest", MID, MOBILE,fromDate,toDate, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                    new SendRequest().executeOnExecutor(AsyncTask
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "STATEMENT REQUEST", "Statement request from "+fromDate+" to "+toDate, "", "", "", "", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
                 } else {
-                    new SendData().execute(Constants.DEMO_SERVICE+"addEmailRequest", MID, MOBILE,fromDate,toDate, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                    new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "STATEMENT REQUEST", "Statement request from "+fromDate+" to "+toDate, "", "", "", "", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
                 }
             } else {
@@ -210,7 +210,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
 
 
-    private class SendData extends AsyncTask<String, Void, String>
+    private class SendRequest extends AsyncTask<String, Void, String>
     {
         ProgressDialog progressDialog;
         @Override
@@ -232,19 +232,18 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 HttpPost httppost = new HttpPost(newURI);
 
                 List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                String mID = encryptDecryptRegister.encrypt(arg0[1]);
-                String mobile = encryptDecryptRegister.encrypt(arg0[2]);
-                String duration = encryptDecrypt.encrypt(arg0[3]);
-                String criteria = encryptDecrypt.encrypt(arg0[4]);
-
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.fromdate), duration));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.todate), criteria));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[7])));
-
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mer_mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.tid), encryptDecrypt.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.service_type), encryptDecrypt.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.prob_details), encryptDecrypt.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.off_days), encryptDecrypt.encrypt(arg0[6])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.visit_timing), encryptDecrypt.encrypt(arg0[7])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.contact_no), encryptDecrypt.encrypt(arg0[8])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.rolls_required), encryptDecrypt.encrypt(arg0[9])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[10])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[11])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[12])));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);
@@ -266,37 +265,63 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
         @Override
         protected void onPostExecute(String data) {
-            super.onPostExecute(data);
+            try {
+                if(!data.equals("")) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
 
-            try{
-                if(data != null){
-                JSONArray transaction = new JSONArray(data);
-                JSONObject object1 = transaction.getJSONObject(0);
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
 
-                JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                JSONObject obj = rowResponse.getJSONObject(0);
-                String result = obj.optString("result");
+                    result = encryptDecryptRegister.decrypt(result);
 
-                result = encryptDecryptRegister.decrypt(result);
-                if(result.equals("Success"))
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray addServiceRequest = object.getJSONArray("addServiceRequest");
+
+                        for (int i = 0; i < addServiceRequest.length(); i++) {
+                            JSONObject object2 = addServiceRequest.getJSONObject(i);
+                            String Request_Number = object2.optString("Request_Number");
+                            String Call_Status = object2.optString("Call_Status");
+
+                            Request_Number = encryptDecrypt.decrypt(Request_Number);
+                            Call_Status = encryptDecrypt.decrypt(Call_Status);
+
+                            progressDialog.dismiss();
+                            ShowDialog("Success",Request_Number,Call_Status);
+                        }
+                    }else if(result.equalsIgnoreCase("SessionFailure")){
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
+                    }else
+                    {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray addServiceRequest = object.getJSONArray("addServiceRequest");
+
+                        for (int i = 0; i < addServiceRequest.length(); i++) {
+                            JSONObject object2 = addServiceRequest.getJSONObject(i);
+                            String Request_Number = object2.optString("Request_Number");
+                            String Call_Status = object2.optString("Call_Status");
+
+                            Request_Number = encryptDecrypt.decrypt(Request_Number);
+                            Call_Status = encryptDecrypt.decrypt(Call_Status);
+
+                            progressDialog.dismiss();
+                            ShowDialog("Failed",Request_Number,Call_Status);
+                        }
+                    }
+                }else
                 {
-                    progressDialog.dismiss();
-                    ShowDialog("yes");
-                }else if(result.equalsIgnoreCase("SessionFailure")){
-                    Constants.showToast(getActivity(), getString(R.string.session_expired));
-                    logout();
-                }
-                else {
-                    progressDialog.dismiss();
-                    ShowDialog("no");
-                }
-                }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
+
+
             } catch (JSONException e) {
                 progressDialog.dismiss();
+                Constants.showToast(getActivity(), getString(R.string.network_error));
             }
-
+            progressDialog.dismiss();
         }
     }
 
@@ -473,7 +498,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
     }
 
 
-    private void ShowDialog(String val)
+    private void ShowDialog(String result, String requestNumber, String callStatus)
     {
         // custom dialog
         final Dialog dialog = new Dialog(getActivity());
@@ -489,10 +514,18 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         String email = preferences.getString("MerchantEmail","");
         textEmailId.setText(email);
 
-        if(val.equalsIgnoreCase("no"))
+        if(result.equalsIgnoreCase("No"))
         {
             textEmailId.setVisibility(View.GONE);
             textMessage.setText(getResources().getString(R.string.email_sent_failed));
+            txtConfirm.setText("OK");
+        }else if(result.equalsIgnoreCase("Success")){
+            textMessage.setText(getResources().getString(R.string.email_sent_success_new));
+            txtConfirm.setText("OK");
+        }else
+        {
+            textEmailId.setText(requestNumber);
+            textMessage.setText("Failed");
             txtConfirm.setText("OK");
         }
         // if button is clicked, close the custom dialog

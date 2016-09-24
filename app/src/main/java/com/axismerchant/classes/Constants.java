@@ -22,6 +22,8 @@ import com.bumptech.glide.Glide;
 import com.axismerchant.database.DBHelper;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
@@ -56,11 +58,11 @@ public class Constants {
 
 //    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
 
-//    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
-//    public static final String DEMO_SERVICE_REFUND ="http://merchantportal.paycraftsol.com/";
+    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
+    public static final String DEMO_SERVICE_REFUND ="http://merchantportal.paycraftsol.com/";
 
-    public static final String DEMO_SERVICE = "http://192.168.88.14:9006/mservices.asmx/";
-    public static final String DEMO_SERVICE_REFUND = "http://192.168.88.14:9006/";
+//    public static final String DEMO_SERVICE = "http://192.168.88.14:9006/mservices.asmx/";
+//    public static final String DEMO_SERVICE_REFUND = "http://192.168.88.14:9006/";
 
     public static final String[] FORCE_TLS_PROTOCOL = {"TLSv1.2"};
     public static String ServiceRef = "http://192.168.2.162:8094/";
@@ -270,4 +272,43 @@ public class Constants {
         dialog.show();
     }
 
+    public static boolean isRooted(){
+        //get build info
+        String buildTags = android.os.Build.TAGS;
+        if(buildTags != null && buildTags.contains("test-keys")){
+            return true;
+        }
+
+        // check if /system/app/Superuser.apk is present
+        try{
+            File file = new File("/system/app/Superuser.apk");
+            if(file.exists())
+            {
+                return true;
+            }
+        }catch (Exception e)
+        {
+            //ignore
+        }
+
+        //try executing commands
+        return canExecuteCommand("/system/xbin/which su")
+                || canExecuteCommand("/system/bin/which su") || canExecuteCommand("which su");
+    }
+
+    private static boolean canExecuteCommand(String command)
+    {
+        try{
+            int exitValue = Runtime.getRuntime().exec(command).waitFor();
+            if(exitValue != 0 )
+                return false;
+            else
+                return true;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

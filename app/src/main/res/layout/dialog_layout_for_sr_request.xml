@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxLines="2"
-            android:text="@string/success"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="@dimen/heading_big" />
 
@@ -28,15 +27,13 @@
             android:layout_width="@dimen/toolbar_img_width"
             android:layout_height="@dimen/toolbar_img_height"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:src="@drawable/happiness" />
+            android:layout_margin="10dp" />
 
         <com.axismerchant.custom.CustomTextViewMedium
             android:id="@+id/txtRequestNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/request_number"
             android:textColor="@android:color/black"
             android:textSize="@dimen/title_size" />
 
@@ -52,7 +49,7 @@
             android:background="@drawable/button_layout"
             android:gravity="center"
             android:padding="5dp"
-            android:text="Done"
+            android:text="OK"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/button_text_size" />

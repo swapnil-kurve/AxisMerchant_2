@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +25,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.axismerchant.R;
 import com.axismerchant.classes.Constants;
-import com.axismerchant.classes.SanityCheckRootShell;
 import com.axismerchant.fragments.login.SignInFragment;
 import com.axismerchant.fragments.login.SignUpFragment;
 
@@ -34,7 +34,7 @@ import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
-public class Activity_Main extends SanityCheckRootShell {
+public class Activity_Main extends AppCompatActivity {
 
     SharedPreferences preferences;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -42,14 +42,15 @@ public class Activity_Main extends SanityCheckRootShell {
     String regId;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 1111;
 
-    @Override
+    /*@Override
     public void ifPhoneRooted() {
         ShowDialog();
     }
 
     @Override
     public void ifPhoneNotRooted() {
-    }
+    }*/
+
 
 
     private void ShowDialog()
@@ -83,33 +84,18 @@ public class Activity_Main extends SanityCheckRootShell {
 
         Fabric.with(this, new Crashlytics());
 
-
-       /* preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        if(preferences.contains("LoggedIn"))
-        {
-            String mSignUpStatus = preferences.getString("LoggedIn","false");
-            if(mSignUpStatus.equals("true")) {
-
-                String status = preferences.getString("KeepLoggedIn","false");
-                if(status.equals("true")) {
-                    startActivity(new Intent(this, Activity_Home.class));
-                    finish();
-                }else {
-                    changeToSignIn();
-                    (findViewById(R.id.layoutSignUp)).setVisibility(View.GONE);
-                }
-            }
-        }else
-            changeToSignUp();*/
+        if(Constants.isRooted())
+            ShowDialog();
 
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         if(preferences.contains("LoggedIn"))
         {
             changeToSignIn();
-            (findViewById(R.id.layoutSignUp)).setVisibility(View.GONE);
+
         }else
         {
             changeToSignUp();
+
         }
 
         Bundle data = getIntent().getExtras();
@@ -143,7 +129,7 @@ public class Activity_Main extends SanityCheckRootShell {
             }
 
         }
-/************************/
+        /************************/
 
 
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
@@ -211,6 +197,7 @@ public class Activity_Main extends SanityCheckRootShell {
 
     private void changeToSignIn()
     {
+        (findViewById(R.id.layoutSignUp)).setVisibility(View.GONE);
         (findViewById(R.id.viewSignIn)).setBackgroundColor(Color.WHITE);
         (findViewById(R.id.viewSignUp)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
@@ -220,6 +207,7 @@ public class Activity_Main extends SanityCheckRootShell {
 
     private void changeToSignUp()
     {
+        (findViewById(R.id.layoutSignIn)).setVisibility(View.GONE);
         (findViewById(R.id.viewSignUp)).setBackgroundColor(Color.WHITE);
         (findViewById(R.id.viewSignIn)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 

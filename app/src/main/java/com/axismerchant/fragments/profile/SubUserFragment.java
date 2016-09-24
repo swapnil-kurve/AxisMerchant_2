@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.axismerchant.R;
 import com.axismerchant.activity.start.Activity_Main;
+import com.axismerchant.activity.start.CustomizedExceptionHandler;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
@@ -134,7 +135,12 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         //Retrieve the values
         Set<String> set = preferences.getStringSet("mVisaIds", null);
 
-        mVisaArrayList = new ArrayList<>(set);
+        if(set != null) {
+            mVisaArrayList = new ArrayList<>(set);
+        }else
+        {
+            mVisaArrayList = new ArrayList<>();
+        }
 
         setMVisaID();
         spinMVisaID.setOnItemSelectedListener(this);
@@ -239,9 +245,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new UpdateSubUser().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "updateUser", MID, MOBILE, userList.getMobileNo(), userList.getRegUsersID(), userList.getUserName(), userList.getEmailid(), userList.getAssignedMVisaID(),Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "updateUser", MID, MOBILE, userList.getMobileNo(), userList.getRegUsersID(), userList.getUserName(), userList.getEmailid(), mMVisaId,Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
             } else {
-                new UpdateSubUser().execute(Constants.DEMO_SERVICE + "updateUser", MID, MOBILE, userList.getMobileNo(), userList.getRegUsersID(), userList.getUserName(), userList.getEmailid(), userList.getAssignedMVisaID(),Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
+                new UpdateSubUser().execute(Constants.DEMO_SERVICE + "updateUser", MID, MOBILE, userList.getMobileNo(), userList.getRegUsersID(), userList.getUserName(), userList.getEmailid(), mMVisaId,Constants.SecretKey, Constants.AuthToken,Constants.IMEI);
 
             }
         } else {
@@ -356,6 +362,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
             } catch (IOException e) {
                 progressDialog.dismiss();
             }
+            CustomizedExceptionHandler.writeToFile(str);
             return str;
         }
 
@@ -392,6 +399,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                     } else {
                         Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }
+                    progressDialog.dismiss();
                 }else {
                     progressDialog.dismiss();
                     Constants.showToast(getActivity(), getString(R.string.network_error));
@@ -447,6 +455,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
             } catch (IOException e) {
                 progressDialog.dismiss();
             }
+            CustomizedExceptionHandler.writeToFile(str);
             return str;
         }
 
@@ -500,6 +509,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
 
                     }else if(result.equalsIgnoreCase("SessionFailure")){
                         Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        progressDialog.dismiss();
                         logout();
                     } else {
                         progressDialog.dismiss();
@@ -508,6 +518,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                         Constants.showToast(getActivity(), getString(R.string.no_subuser));
 
                     }
+                    progressDialog.dismiss();
                 }
             } catch (JSONException e) {
                 progressDialog.dismiss();
@@ -587,6 +598,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
             } catch (IOException e) {
                 progressDialog.dismiss();
             }
+            CustomizedExceptionHandler.writeToFile(str);
             return str;
         }
 

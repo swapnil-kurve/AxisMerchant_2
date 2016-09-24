@@ -84,36 +84,36 @@ public class PageFragment_for_TransactionReport extends Fragment {
         Constants.retrieveMPINFromDatabase(getActivity());
 
         ArrayList<TransactionReport> reportArrayList = new ArrayList<>();
-        if(pageNO == 0)
-        {
-            transactionReportAdapter = new TransactionReportAdapter(getActivity(),transactionReports);
-            listData.setAdapter(transactionReportAdapter);
-            transactionReportAdapter.notifyDataSetChanged();
+        if(transactionReports.size() != 0) {
+            if (pageNO == 0) {
+                transactionReportAdapter = new TransactionReportAdapter(getActivity(), transactionReports);
+                listData.setAdapter(transactionReportAdapter);
+                transactionReportAdapter.notifyDataSetChanged();
 
-            showBarChart(transactionReports);
-        }else if(pageNO == 1) {
-            for (int i = 0; i < transactionReports.size(); i++) {
-                if(transactionReports.get(i).gettType().equalsIgnoreCase("SMS")){
-                    reportArrayList.add(transactionReports.get(i));
+                showBarChart(transactionReports);
+            } else if (pageNO == 1) {
+                for (int i = 0; i < transactionReports.size(); i++) {
+                    if (transactionReports.get(i).gettType().equalsIgnoreCase("SMS")) {
+                        reportArrayList.add(transactionReports.get(i));
+                    }
                 }
-            }
-            transactionReportAdapter = new TransactionReportAdapter(getActivity(),reportArrayList);
-            listData.setAdapter(transactionReportAdapter);
-            transactionReportAdapter.notifyDataSetChanged();
+                transactionReportAdapter = new TransactionReportAdapter(getActivity(), reportArrayList);
+                listData.setAdapter(transactionReportAdapter);
+                transactionReportAdapter.notifyDataSetChanged();
 
-            showBarChart(reportArrayList);
-        }
-        else if(pageNO == 2) {
-            for (int i = 0; i < transactionReports.size(); i++) {
-                if(transactionReports.get(i).gettType().equalsIgnoreCase("QR")){
-                    reportArrayList.add(transactionReports.get(i));
+                showBarChart(reportArrayList);
+            } else if (pageNO == 2) {
+                for (int i = 0; i < transactionReports.size(); i++) {
+                    if (transactionReports.get(i).gettType().equalsIgnoreCase("QR")) {
+                        reportArrayList.add(transactionReports.get(i));
+                    }
                 }
-            }
-            transactionReportAdapter = new TransactionReportAdapter(getActivity(),reportArrayList);
-            listData.setAdapter(transactionReportAdapter);
-            transactionReportAdapter.notifyDataSetChanged();
+                transactionReportAdapter = new TransactionReportAdapter(getActivity(), reportArrayList);
+                listData.setAdapter(transactionReportAdapter);
+                transactionReportAdapter.notifyDataSetChanged();
 
-            showBarChart(reportArrayList);
+                showBarChart(reportArrayList);
+            }
         }
         super.onResume();
     }

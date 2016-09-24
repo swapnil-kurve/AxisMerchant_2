@@ -306,10 +306,15 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DBHelper.READ_STATUS, "Read");
+        try {
+            values.put(DBHelper.READ_STATUS, "Read");
 
-        long id = db.update(DBHelper.TABLE_NAME_PROMOTIONS,values,DBHelper.PROMOTION_ID +" = "+promotionID, null);
-        Log.v("id", String.valueOf(id));
+            long id = db.update(DBHelper.TABLE_NAME_PROMOTIONS, values, DBHelper.PROMOTION_ID + " = " + promotionID, null);
+            Log.v("id", String.valueOf(id));
+        }catch (Exception e)
+        {}finally {
+            db.close();
+        }
     }
 
 

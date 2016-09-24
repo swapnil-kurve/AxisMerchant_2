@@ -1,23 +1,27 @@
 package com.axismerchant.fragments.login;
 
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.axismerchant.R;
 import com.axismerchant.activity.start.Activity_Home;
+import com.axismerchant.activity.start.Activity_Main;
 import com.axismerchant.activity.start.Activity_SetOTP;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecryptRegister;
@@ -255,7 +259,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                         startActivity(intent);
                         getActivity().finish();
 
-                    } else {
+                    } else if(result.equalsIgnoreCase("Invalid IMEI No"))
+                    {
+                        ShowDialog();
+                    }else {
                         Constants.showToast(getActivity(), getString(R.string.wrong_mpin));
                     }
                 } else {
@@ -354,5 +361,39 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+
+    private void ShowDialog()
+    {
+        // custom dialog
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_sign_in);
+        dialog.setCancelable(false);
+
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        // if button is clicked, close the custom dialog
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                changeToSignUp();
+            }
+        });
+
+        dialog.show();
+    }
+
+
+    private void changeToSignUp()
+    {
+        (getActivity().findViewById(R.id.layoutSignIn)).setVisibility(View.GONE);
+        (getActivity().findViewById(R.id.layoutSignUp)).setVisibility(View.VISIBLE);
+        (getActivity().findViewById(R.id.viewSignUp)).setBackgroundColor(Color.WHITE);
+        (getActivity().findViewById(R.id.viewSignIn)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        SignUpFragment signUpFragment = new SignUpFragment();
+        getFragmentManager().beginTransaction().replace(R.id.container, signUpFragment).commit();
+    }
 
 }

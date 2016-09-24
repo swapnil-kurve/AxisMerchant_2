@@ -371,7 +371,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(this, Activity_Home.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
         finish();
     }

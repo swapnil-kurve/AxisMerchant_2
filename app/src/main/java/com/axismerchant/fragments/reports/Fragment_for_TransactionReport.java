@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.axismerchant.R;
@@ -58,11 +59,14 @@ public class Fragment_for_TransactionReport extends Fragment {
     ArrayList<TransactionReport> transactionReports;
     Typeface typeFace;
     PagerSlidingTabStrip tabsStrip;
+    TextView txtMessage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transactions_status, container, false);
+
+        txtMessage = (TextView) view.findViewById(R.id.txtMessage);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         MID = preferences.getString("MerchantID","0");
@@ -248,7 +252,9 @@ public class Fragment_for_TransactionReport extends Fragment {
                         logout();
                     } else {
                         progressDialog.dismiss();
-                        Constants.showToast(getActivity(), getString(R.string.no_details));
+//                        Constants.showToast(getActivity(), getString(R.string.no_details));
+                        viewPager.setVisibility(View.GONE);
+                        txtMessage.setVisibility(View.VISIBLE);
 
                     }
                 }

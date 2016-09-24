@@ -241,11 +241,16 @@ public class GCMNotificationIntentService extends IntentService {
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DBHelper.STATUS, transStatus);
-        if(transStatus.equalsIgnoreCase("Success"))
-            values.put(DBHelper.IS_REFUND, "0");
+        try {
+            values.put(DBHelper.STATUS, transStatus);
+            if (transStatus.equalsIgnoreCase("Success"))
+                values.put(DBHelper.IS_REFUND, "0");
 
-        long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT,values,DBHelper.INVOICE_NO +" = "+invNo, null);
+            long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT, values, DBHelper.INVOICE_NO + " = " + invNo, null);
+        }catch (Exception e){}
+        finally {
+            db.close();
+        }
     }
 
 
@@ -265,18 +270,23 @@ public class GCMNotificationIntentService extends IntentService {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DBHelper.TITLE, title);
-        values.put(DBHelper.SUB_TITLE, SubTitle);
-        values.put(DBHelper.MESSAGE, message);
-        values.put(DBHelper.IMG_URL, imgPath);
-        values.put(DBHelper.PROMOTION_TYPE, promotionType);
-        values.put(DBHelper.PROMOTION_ID, promotionID);
-        values.put(DBHelper.WITH_OPTION, withOption);
-        values.put(DBHelper.STATUS, "Awaiting");
-        values.put(DBHelper.READ_STATUS, "Unread");
+        try {
+            values.put(DBHelper.TITLE, title);
+            values.put(DBHelper.SUB_TITLE, SubTitle);
+            values.put(DBHelper.MESSAGE, message);
+            values.put(DBHelper.IMG_URL, imgPath);
+            values.put(DBHelper.PROMOTION_TYPE, promotionType);
+            values.put(DBHelper.PROMOTION_ID, promotionID);
+            values.put(DBHelper.WITH_OPTION, withOption);
+            values.put(DBHelper.STATUS, "Awaiting");
+            values.put(DBHelper.READ_STATUS, "Unread");
 
-        long id = db.insert(DBHelper.TABLE_NAME_PROMOTIONS,null, values);
-        Log.v("id", String.valueOf(id));
+            long id = db.insert(DBHelper.TABLE_NAME_PROMOTIONS, null, values);
+            Log.v("id", String.valueOf(id));
+        }catch (Exception e){}
+        finally {
+            db.close();
+        }
     }
 
 
@@ -290,12 +300,17 @@ public class GCMNotificationIntentService extends IntentService {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(DBHelper.ON_DATE,currentDate);
-        values.put(DBHelper.MESSAGE, message);
-        values.put(DBHelper.READ_STATUS, "Unread");
+        try {
+            values.put(DBHelper.ON_DATE, currentDate);
+            values.put(DBHelper.MESSAGE, message);
+            values.put(DBHelper.READ_STATUS, "Unread");
 
-        long id = db.insert(DBHelper.TABLE_NAME_NOTIFICATION,null, values);
-        Log.v("id", String.valueOf(id));
+            long id = db.insert(DBHelper.TABLE_NAME_NOTIFICATION, null, values);
+            Log.v("id", String.valueOf(id));
+        }catch (Exception e)
+        {}finally {
+            db.close();
+        }
     }
 
 }

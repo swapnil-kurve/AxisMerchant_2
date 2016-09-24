@@ -20,6 +20,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new CustomizedExceptionHandler("/mnt/sdcard/"));
 
         setContentView(R.layout.activity_language);
 
