@@ -3,6 +3,7 @@ package com.axismerchant.activity.start;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,9 +14,12 @@ import com.axismerchant.R;
 import com.axismerchant.activity.AppActivity;
 import com.axismerchant.classes.Constants;
 
+import java.util.Locale;
+
 public class Activity_Language extends AppActivity implements View.OnClickListener {
 
     RadioGroup rdGrpLanguage;
+    String currentLanguage;
     int i = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,31 +80,38 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
         {
             case R.id.rdEnglish:
                 anyLang = 1;
+                currentLanguage = "en";
                 break;
 
             case R.id.rdHindi:
                 anyLang = 2;
+                currentLanguage = "hi";
                 break;
 
             case R.id.rdTamil:
                 anyLang = 3;
+                currentLanguage = "ta";
                 break;
 
             case R.id.rdTelugu:
                 anyLang = 4;
+                currentLanguage = "te";
                 break;
 
             case R.id.rdKannada:
                 anyLang = 5;
+                currentLanguage = "kn";
                 break;
 
             case R.id.rdBengali:
                 anyLang = 6;
+                currentLanguage = "bn";
                 break;
 
         }
 
         editor.putInt("Selected_Language", anyLang);
+        editor.putString("CurrentLanguage", currentLanguage);
         editor.apply();
 
 

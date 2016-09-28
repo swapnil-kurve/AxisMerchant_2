@@ -109,8 +109,8 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         currentDateAndTime = sdf.format(new Date());
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
         Constants.retrieveMPINFromDatabase(getActivity());
         Constants.getIMEI(getActivity());
 

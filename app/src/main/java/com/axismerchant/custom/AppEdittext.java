@@ -2,6 +2,7 @@ package com.axismerchant.custom;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
@@ -11,10 +12,16 @@ import com.axismerchant.R;
 import com.axismerchant.activity.AppActivity;
 import com.axismerchant.classes.Constants;
 
+import java.util.Locale;
+
 /**
  * Created by user on 9/9/16.
  */
 public class AppEdittext extends EditText {
+    Configuration config;
+    Locale locale;
+    String currentLanguage;
+
     public AppEdittext(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -23,7 +30,39 @@ public class AppEdittext extends EditText {
             SharedPreferences preferences = activity.getSharedPreferences(Constants.LanguageData, Context.MODE_PRIVATE);
             int languageSelected = preferences.getInt("Selected_Language",0);
 
-            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AppEdittext);
+            currentLanguage = preferences.getString("CurrentLanguage","en");
+
+            locale = new Locale(currentLanguage);
+            Locale.setDefault(locale);
+            config = new Configuration();
+            config.locale = locale;
+            activity.getBaseContext().getResources().updateConfiguration(config,
+                    activity.getBaseContext().getResources().getDisplayMetrics());
+
+            switch (languageSelected)
+            {
+                case 2:
+                    this.setTypeface(Typeface.createFromAsset(activity.getAssets(), "fonts/mangal.ttf"));
+                    break;
+
+                case 3:
+                    this.setTypeface(Typeface.createFromAsset(activity.getAssets(), "fonts/tamil.TTF"));
+                    break;
+
+                case 4:
+                    this.setTypeface(Typeface.createFromAsset(activity.getAssets(), "fonts/telugu.TTF"));
+                    break;
+
+                case 5:
+                    this.setTypeface(Typeface.createFromAsset(activity.getAssets(), "fonts/kannada.TTF"));
+                    break;
+
+                case 6:
+                    this.setTypeface(Typeface.createFromAsset(activity.getAssets(), "fonts/bengali.TTF"));
+                    break;
+            }
+
+           /* TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AppEdittext);
             final int N = a.getIndexCount();
             for (int i = 0; i < N; ++i) {
                 int attr = a.getIndex(i);
@@ -112,7 +151,7 @@ public class AppEdittext extends EditText {
 
 
                 }
-            }
+            }*/
         } catch (Exception e) {
         }
 

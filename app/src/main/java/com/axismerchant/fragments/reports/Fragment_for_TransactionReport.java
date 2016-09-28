@@ -68,14 +68,14 @@ public class Fragment_for_TransactionReport extends Fragment {
 
         txtMessage = (TextView) view.findViewById(R.id.txtMessage);
 
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
-
         encryptDecryptRegister =  new EncryptDecryptRegister();
         encryptDecrypt = new EncryptDecrypt();
 
         transactionReports = new ArrayList<>();
+
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);

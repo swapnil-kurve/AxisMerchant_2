@@ -136,8 +136,8 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         encryptDecryptRegister = new EncryptDecryptRegister();
 
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         simStatus = Constants.isSimSupport(Activity_SMSPayHome.this);
         isOnAirplane = Constants.isAirplaneModeOn(this);
@@ -243,7 +243,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                     }
                 }else
                 {
-                    Constants.showToast(this,"You are on Airplane Mode");
+                    Constants.showToast(this, getString(R.string.airplane_mode));
                 }
                 break;
 
@@ -539,140 +539,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     }
 
 
-/*
-    private class GetEPayData extends AsyncTask<String, Void, String> {
-
-        ProgressDialog progressDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_SMSPayHome.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... arg0) {
-            String str = "";
-            try {
-                HTTPUtils utils = new HTTPUtils();
-                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
-                URI newURI = URI.create(arg0[0]);
-                HttpPost httppost = new HttpPost(newURI);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.transStatus), encryptDecryptRegister.encrypt(arg0[3])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
-
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpclient.execute(httppost);
-                int stats = response.getStatusLine().getStatusCode();
-
-                if (stats == 200) {
-                    HttpEntity entity = response.getEntity();
-                    String data = EntityUtils.toString(entity);
-                    str = data;
-                }
-            } catch (ParseException e1) {
-                progressDialog.dismiss();
-            } catch (IOException e) {
-                progressDialog.dismiss();
-            }
-            return str;
-        }
-
-
-        @Override
-        protected void onPostExecute(String data) {
-            super.onPostExecute(data);
-
-            try{
-                if(!data.equals("")) {
-                    JSONArray jsonArray = new JSONArray(data);
-                    JSONObject object = jsonArray.getJSONObject(0);
-                    JSONArray rowsResponse = object.getJSONArray("rowsResponse");
-                    JSONObject obj = rowsResponse.getJSONObject(0);
-                    String result = obj.optString("result");
-                    result = encryptDecryptRegister.decrypt(result);
-                    if (result.equals("Success")) {
-                        JSONObject object2 = jsonArray.getJSONObject(1);
-                        JSONArray getLatestMerchantUserTrans = object2.getJSONArray("getLatestMerchantUserTrans");
-
-                        for (int i = 0; i < getLatestMerchantUserTrans.length(); i++) {
-                            JSONObject object1 = getLatestMerchantUserTrans.getJSONObject(i);
-                            String transactionId = object1.optString("transactionId");
-                            String custMobile = object1.optString("custMobile");
-                            String transAmt = object1.optString("transAmt");
-                            String remark = object1.optString("remark");
-                            String transStatus = object1.optString("transStatus");
-                            String transDate = object1.optString("transDate");
-                            String isRefund = object1.optString("isRefund");
-
-                            transactionId = encryptDecrypt.decrypt(transactionId);
-                            custMobile = encryptDecrypt.decrypt(custMobile);
-                            transAmt = encryptDecrypt.decrypt(transAmt);
-                            remark = encryptDecrypt.decrypt(remark);
-                            transStatus = encryptDecrypt.decrypt(transStatus);
-                            transDate = encryptDecrypt.decrypt(transDate);
-                            isRefund = encryptDecrypt.decrypt(isRefund);
-
-                            if(transDate.contains("-"))
-                                transDate.replace("-","/");
-                              transDate = transDate.split("\\s+")[0];
-
-                            */
-/*transDate = Constants.splitDate(transDate.split("\\s+")[0]);*//*
-
-                            InsertIntoDatabase(custMobile, transAmt, remark, transactionId, transStatus,transDate,isRefund);
-                        }
-
-                        retrieveFromDatabase();
-                    }else if(result.equalsIgnoreCase("SessionFailure")){
-                        Constants.showToast(Activity_SMSPayHome.this, getString(R.string.session_expired));
-                        logout();
-                    } else {
-//                        Constants.showToast(Activity_SMSPayHome.this, "No details found.");
-
-                    }
-                    progressDialog.dismiss();
-                }else {
-                    progressDialog.dismiss();
-                    Constants.showToast(Activity_SMSPayHome.this, getString(R.string.network_error));
-                }
-            } catch (JSONException e) {
-                progressDialog.dismiss();
-                Constants.showToast(Activity_SMSPayHome.this,getString(R.string.network_error));
-            }
-
-        }
-    }
-*/
-
-
-/*
-    private void InsertIntoDatabase(String custMobile, String amount, String remark, String invoiceNum, String status, String transDate, String isRefund) {
-        dbHelper = new DBHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(DBHelper.CUST_MOBILE, custMobile);
-        values.put(DBHelper.AMOUNT, amount);
-        values.put(DBHelper.REMARK, remark);
-        values.put(DBHelper.INVOICE_NO, invoiceNum);
-        values.put(DBHelper.STATUS, status);
-        values.put(DBHelper.IS_REFUND, isRefund);
-        values.put(DBHelper.TRANS_DATE, transDate);
-
-        long id = db.insert(DBHelper.TABLE_NAME_E_PAYMENT, null, values);
-        Log.v("id", String.valueOf(id));
-    }
-*/
 
     private void logout()
     {

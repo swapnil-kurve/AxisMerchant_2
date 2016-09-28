@@ -211,7 +211,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
                     }
                 } else {
-                    Constants.showToast(this, "No internet available");
+                    Constants.showToast(this, getString(R.string.no_internet));
                 }
 
                 break;
@@ -248,7 +248,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
                 }
             } else {
-                Constants.showToast(this, "No internet available");
+                Constants.showToast(this, getString(R.string.no_internet));
             }
         }
 
@@ -421,7 +421,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                     }
                     else
                     {
-                        Constants.showToast(Activity_SetOTP.this, "Details entered are not valid");
+                        Constants.showToast(Activity_SetOTP.this, getString(R.string.invalid_details));
                     }
                     }else {
                         Constants.showToast(Activity_SetOTP.this, getString(R.string.network_error));

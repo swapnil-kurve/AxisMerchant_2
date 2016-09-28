@@ -95,12 +95,8 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         getInitialize(view);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
-
-        encryptDecryptRegister =  new EncryptDecryptRegister();
-        encryptDecrypt = new EncryptDecrypt();
-        mprDataSet = new ArrayList<>();
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         View v = inflater.inflate(R.layout.fragment_transaction_report,null);
         layoutChart = (BarChart) v.findViewById(R.id.chartTransaction);
@@ -174,6 +170,10 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
         imgFilter.setOnClickListener(this);
         txtMessage.setVisibility(View.GONE);
+
+        encryptDecryptRegister =  new EncryptDecryptRegister();
+        encryptDecrypt = new EncryptDecrypt();
+        mprDataSet = new ArrayList<>();
     }
 
     private void getChartData(String type) {

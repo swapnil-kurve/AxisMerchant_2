@@ -73,8 +73,8 @@ public class Activity_OfferDetails extends AppCompatActivity implements View.OnC
         encryptDecrypt = new EncryptDecrypt();
 
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         tabs = getResources().getStringArray(R.array.offers_notices);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);

@@ -70,11 +70,8 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         getInitialize(view);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
-
-        encryptDecryptRegister =  new EncryptDecryptRegister();
-        encryptDecrypt = new EncryptDecrypt();
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
         currentDateAndTime = sdf.format(new Date());
@@ -126,6 +123,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         txtToDate.setOnClickListener(this);
         txtConfirm.setOnClickListener(this);
         lyShowEmailButton.setOnClickListener(this);
+
+        encryptDecryptRegister =  new EncryptDecryptRegister();
+        encryptDecrypt = new EncryptDecrypt();
     }
 
 
@@ -166,7 +166,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
             case R.id.txtConfirm:
                 SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref,Context.MODE_PRIVATE);
-                String email = preferences.getString("MerchantEmail","");
+                String email = encryptDecryptRegister.decrypt(preferences.getString("MerchantEmail",""));
                 if(email.equalsIgnoreCase(""))
                     ShowDialog("No", "", "");
                 else
@@ -197,9 +197,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
             if (Constants.isNetworkConnectionAvailable(getActivity())) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new SendRequest().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "STATEMENT REQUEST", "Statement request from "+fromDate+" to "+toDate, "", "", "", "", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "STATEMENT REQUEST", "Statement request from "+fromDate+" to "+toDate, "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
                 } else {
-                    new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "STATEMENT REQUEST", "Statement request from "+fromDate+" to "+toDate, "", "", "", "", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                    new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "STATEMENT REQUEST", "Statement request from "+fromDate+" to "+toDate, "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
                 }
             } else {
@@ -511,7 +511,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         TextView textEmailId = (TextView) dialog.findViewById(R.id.txtEmailID);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref,Context.MODE_PRIVATE);
-        String email = preferences.getString("MerchantEmail","");
+        String email = encryptDecryptRegister.decrypt(preferences.getString("MerchantEmail",""));
         textEmailId.setText(email);
 
         if(result.equalsIgnoreCase("No"))

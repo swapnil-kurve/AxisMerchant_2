@@ -68,7 +68,7 @@
                 android:layout_toRightOf="@+id/img"
                 android:layout_weight="1"
                 android:paddingLeft="5dp"
-                android:text="Amount"
+                android:text="@string/amount"
                 android:textColor="@color/dark_gray"
                 android:textSize="@dimen/subtitle_size" />
 

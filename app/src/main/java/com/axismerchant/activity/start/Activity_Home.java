@@ -108,10 +108,10 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         getInitialize();
 
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        String user = preferences.getString("Username", "");
-        String LastLogin = preferences.getString("LastLogin", "");
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        String user = encryptDecryptRegister.decrypt(preferences.getString("Username", ""));
+        String LastLogin = encryptDecryptRegister.decrypt(preferences.getString("LastLogin", ""));
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
         boolean mHomeCoach = preferences.getBoolean("HomeCoach", true);
         if(mHomeCoach)
         {
@@ -131,33 +131,32 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             if(languageSelected == 1)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
             else if(languageSelected == 2)
-                txtLastLogin.setText(getString(R.string.hindi_last_login)+" : "+getString(R.string.hindi_first_login));
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
             else if(languageSelected == 3)
-                txtLastLogin.setText(getString(R.string.tamil_last_login)+" : "+getString(R.string.tamil_first_login));
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
             else if(languageSelected == 4)
-                txtLastLogin.setText(getString(R.string.telugu_last_login)+" : "+getString(R.string.telugu_first_login));
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
             else if(languageSelected == 5)
-                txtLastLogin.setText(getString(R.string.bengali_last_login)+" : "+getString(R.string.bengali_first_login));
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
             else if(languageSelected == 6)
-                txtLastLogin.setText(getString(R.string.kannada_last_login)+" : "+getString(R.string.kannada_first_login));
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
         } else {
             if(languageSelected == 1)
                 txtLastLogin.setText(getString(R.string.last_login)+" : " + LastLogin);
             else if(languageSelected == 2)
-                txtLastLogin.setText(getString(R.string.hindi_last_login)+" : " + LastLogin);
+                txtLastLogin.setText(getString(R.string.last_login)+" : " + LastLogin);
             else if(languageSelected == 3)
-                txtLastLogin.setText(getString(R.string.tamil_last_login)+" : "+LastLogin);
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+LastLogin);
             else if(languageSelected == 4)
-                txtLastLogin.setText(getString(R.string.telugu_last_login)+" : "+LastLogin);
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+LastLogin);
             else if(languageSelected == 5)
-                txtLastLogin.setText(getString(R.string.bengali_last_login)+" : "+LastLogin);
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+LastLogin);
             else if(languageSelected == 6)
-                txtLastLogin.setText(getString(R.string.kannada_last_login)+" : "+LastLogin);
+                txtLastLogin.setText(getString(R.string.last_login)+" : "+LastLogin);
         }
 
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
-
         switch (languageSelected) {
             case 1:   if (timeOfDay >= 0 && timeOfDay < 12) {
                             txtUserName.setText(getString(R.string.morning_text) + " " + user + "!");
@@ -170,28 +169,28 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 break;
 
             case 2:
-                txtUserName.setText(getString(R.string.hindi_welcome_text) + " " + user + "!");
-                navigationItemList = getResources().getStringArray(R.array.hindi_navigation_menu);
+                txtUserName.setText(getString(R.string.welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.navigation_menu);
                 break;
 
             case 3:
-                txtUserName.setText(getString(R.string.tamil_welcome_text) + " " + user + "!");
-                navigationItemList = getResources().getStringArray(R.array.tamil_navigation_menu);
+                txtUserName.setText(getString(R.string.welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.navigation_menu);
                 break;
 
             case 4:
-                txtUserName.setText(getString(R.string.telugu_welcome_text) + " " + user + "!");
-                navigationItemList = getResources().getStringArray(R.array.telugu_navigation_menu);
+                txtUserName.setText(getString(R.string.welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.navigation_menu);
                 break;
 
             case 5:
-                txtUserName.setText(getString(R.string.bengali_welcome_text) + " " + user + "!");
-                navigationItemList = getResources().getStringArray(R.array.bengali_navigation_menu);
+                txtUserName.setText(getString(R.string.welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.navigation_menu);
                 break;
 
             case 6:
-                txtUserName.setText(getString(R.string.kannada_welcome_text) + " " + user + "!");
-                navigationItemList = getResources().getStringArray(R.array.kannada_navigation_menu);
+                txtUserName.setText(getString(R.string.welcome_text) + " " + user + "!");
+                navigationItemList = getResources().getStringArray(R.array.navigation_menu);
                 break;
         }
 
@@ -343,7 +342,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
         if(preferences.contains("mvisaId"))
         {
-            String mVisaId = preferences.getString("mvisaId","");
+            String mVisaId = encryptDecryptRegister.decrypt(preferences.getString("mvisaId",""));
             if(mVisaId.equals("")  ||  mVisaId.equalsIgnoreCase("Null"))
             {
                 startActivity(new Intent(this, Activity_QRSignUp.class));
@@ -713,7 +712,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                             JSONObject object2 = getImagesForSlider.getJSONObject(i);
                             String mvisa_mid = object2.optString("mvisa_mid");
 
-                            mvisa_mid = encryptDecrypt.decrypt(mvisa_mid);
+//                            mvisa_mid = encryptDecrypt.decrypt(mvisa_mid);
 
                             mvisaArrayList.add(mvisa_mid);
                         }
@@ -1013,20 +1012,20 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     preferences = getSharedPreferences(Constants.ProfileInfo, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
-                    editor.putString("merchantId", encryptDecryptRegister.decrypt(object2.optString("merchantId")));
-                    editor.putString("username", encryptDecryptRegister.decrypt(object2.optString("username")));
-                    editor.putString("mobileNo", encryptDecryptRegister.decrypt(object2.optString("mobileNo")));
-                    editor.putString("regAdd", encryptDecryptRegister.decrypt(object2.optString("regAdd")));
-                    editor.putString("mCity", encryptDecryptRegister.decrypt(object2.optString("mCity")));
-                    editor.putString("state", encryptDecryptRegister.decrypt(object2.optString("state")));
-                    editor.putString("merchantCountry", encryptDecryptRegister.decrypt(object2.optString("merchantCountry")));
-                    editor.putString("mEmailId", encryptDecryptRegister.decrypt(object2.optString("mEmailId")));
-                    editor.putString("COUNTRY_Code", encryptDecryptRegister.decrypt(object2.optString("COUNTRY_Code")));
-                    editor.putString("mvisaId", encryptDecryptRegister.decrypt(object2.optString("mvisaId")));
-                    editor.putString("mcc", encryptDecryptRegister.decrypt(object2.optString("mcc")));
-                    editor.putString("merLegalName", encryptDecryptRegister.decrypt(object2.optString("merLegalName")));
-                    editor.putString("merMobileNO", encryptDecryptRegister.decrypt(object2.optString("merMobileNO")));
-                    editor.putString("currencyCode", encryptDecryptRegister.decrypt(object2.optString("currencyCode")));
+                    editor.putString("merchantId", object2.optString("merchantId"));
+                    editor.putString("username", object2.optString("username"));
+                    editor.putString("mobileNo", object2.optString("mobileNo"));
+                    editor.putString("regAdd", object2.optString("regAdd"));
+                    editor.putString("mCity", object2.optString("mCity"));
+                    editor.putString("state", object2.optString("state"));
+                    editor.putString("merchantCountry", object2.optString("merchantCountry"));
+                    editor.putString("mEmailId", object2.optString("mEmailId"));
+                    editor.putString("COUNTRY_Code", object2.optString("COUNTRY_Code"));
+                    editor.putString("mvisaId", object2.optString("mvisaId"));
+                    editor.putString("mcc", object2.optString("mcc"));
+                    editor.putString("merLegalName", object2.optString("merLegalName"));
+                    editor.putString("merMobileNO", object2.optString("merMobileNO"));
+                    editor.putString("currencyCode", object2.optString("currencyCode"));
 
                     editor.apply();
 

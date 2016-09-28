@@ -59,6 +59,9 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refer_home);
 
+        encryptDecrypt = new EncryptDecrypt();
+        encryptDecryptRegister = new EncryptDecryptRegister();
+
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
@@ -77,11 +80,8 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
         imgNotification.setOnClickListener(this);
 
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
-
-        encryptDecrypt = new EncryptDecrypt();
-        encryptDecryptRegister = new EncryptDecryptRegister();
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         InputFilter[] numFilter = new InputFilter[1];
         numFilter[0] = new InputFilter() {

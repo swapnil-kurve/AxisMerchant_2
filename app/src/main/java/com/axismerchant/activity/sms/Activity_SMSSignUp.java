@@ -84,8 +84,8 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
         encryptDecryptRegister = new EncryptDecryptRegister();
 
         SharedPreferences pref = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = pref.getString("MerchantID","0");
-        MOBILE = pref.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(pref.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(pref.getString("MobileNum","0"));
 
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);

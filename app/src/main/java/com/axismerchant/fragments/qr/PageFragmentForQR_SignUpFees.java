@@ -13,8 +13,6 @@ import com.axismerchant.R;
 
 public class PageFragmentForQR_SignUpFees extends Fragment {
     public static final String ARG_OBJECT = "object";
-    Spinner spinDescription;
-    TextView txtRegular01, txtPremium01, txtBlended01, txtSetupFee,txtNetBanking;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

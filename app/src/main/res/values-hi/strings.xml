@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ऐक्सिि बकैं मर्चेन्ट एप्प </string>
+
+    <string name="sign_up">साइन अप </string>
+
+    <string name="submit">प्रस्तुत</string>
+
+    <string name="keep_me">मुझे लॉग्ड इन रखें </string>
+
+    <string name="enter_valid_details">कृपया मान्य वििरण दर्ज करें </string>
+
+    <string name="enter_valid_mobile">कृपया मान्य मोबाइल नंबर दर्ज करें </string>
+
+    <string name="enter_valid_mid">कृपया मान्य मर्चेन्ट आईडी दर्ज करें </string>
+
+    <string name="invalid_details">दर्ज किए गए विवरण मान्य नहीं हैं</string>
+
+    <string name="sign_in">साइन इन </string>
+
+    <string name="forgot">MPIN भूल गए ? </string>
+
+    <string name="OTP">OTP </string>
+
+    <!--<string name="enter_otp">OTP दर्ज करें </string>-->
+
+    <string name="sent_on_mobile">रजिस्टर्ड मोबाइल नंबर पर भेजा गया है</string>
+
+    <string name="not_recieved">अभी तक नहीं मिला ?</string>
+
+    <string name="resend_otp">OTP दोबारा भेजें</string>
+
+    <string name="enter_otp">कृपया वन टाइम पासवर्ड (OTP) दर्ज करें</string>
+
+    <string name="incorrect_otp">क्षमा कीजिए! OTP मेल नहीं खा रहा है. फिर से कोशिश करें या OTP दोबारा भेजें पर क्लिक करें</string>
+
+    <string name="MPIN">MPIN </string>
+
+    <string name="title_activity_set_m_pin">MPIN दर्ज करें</string>
+
+    <string name="congo">बधाई हो</string>
+
+    <string name="verified">अकाउन्ट का सत्यापन सफल हुआ!</string>
+
+    <string name="confirm">सेट और पुष्टि करें</string>
+
+    <string name="set_mpin">कृपया अपने अकाउन्ट के लिए mPIN सेट करें</string>
+
+    <string name="mpin_not_provide">कृपया mPIN दर्ज करें! </string>
+
+    <string name="mpin_not_matching">पुष्टि किया गया mPIN सेट किए गए mPIN से मेल नहीं खा रहा है!</string>
+
+    <string name="mpin_less_digit">mPIN 4 अक्षरों का होना र्चाहहए! </string>
+
+    <string name="confirm_mpin">कृपया mPIN की पुक्टट करें! </string>
+
+    <string name="wrong_mpin">कृपया मान्य mPIN प्रदान करें </string>
+
+    <string name="Home_Page">होम पेज </string>
+
+    <string name="title_activity_activity_epayment">SMS भुगतान </string>
+
+    <string name="qr_code_payment">QR- कोड भुगतान </string>
+
+    <string name="Reports_MIS">रिपोर्ट्सि और MIS </string>
+
+    <string name="service_support">सर्विस सपोर्ट</string>
+
+    <string name="Profile">प्रोफाइल</string>
+
+    <string name="title_activity_user_profile">मेरा प्रोफाइल</string>
+
+    <string name="businessDetails">बिजनेस का विवरण</string>
+
+    <string name="sub_user">उप-इस्तेमालकर्ता</string>
+
+    <string name="merchantid">मर्चेन्ट आईडी </string>
+
+    <string name="mobileNo">मोबाइल नंबर </string>
+
+    <string name="registred_mobile_no">मोबाइल नंबर </string>
+
+    <string name="Address">पता  </string>
+
+    <string name="SubUser1">सि यूजर </string>
+
+    <string name="createNewUser">नया यूजर बनाएं</string>
+
+    <string name="no_subuser">कोई सब यूजर नहीं मिला</string>
+
+    <string name="sub_user_mobile_already_exists">यह यूजर पहले से मौजूद है</string>
+
+    <string name="sub_user_created">सब यूजर बनाया गया है</string>
+
+    <string name="sub_user_not_entered">कृपया विवरण दर्ज करें</string>
+
+    <string name="create">बनाएं </string>
+
+    <string name="SMS_on_Boarding">SMS ऑन बोर्डिंग</string>
+
+    <string name="SMS_Pay_signUp">SMS भुगतान साइन अप</string>
+
+    <string name="Thank_you_for_placing">SMS भुगतान साइन अप के लिए अनुरोध करने के लिए धन्यवाद. एक्टिवेशन पर, आपको एक नोटिफिकेशन मिलेगा </string>
+
+    <string name="request_cannot_process">क्षमा कीजिए! अनुरोध पर इस समय कार्यवाही नहीं हो सकती है. थोड़ी देर बाद कोशिश करें.</string>
+
+    <string name="Thank_you_for_placing_your_request_for_SMS_PaySignup">SMS भुगतान साइन अप के लिए अनुरोध करने के लिए धन्यवाद. एक्टिवेशन पर, आपको एक नोटिफिकेशन मिलेगा </string>
+
+    <string name="grow_business">ऐक्सिस बैंक के साथ अपने बिजनेस को बढ़ाइए</string>
+
+    <string name="grow_business2">कार्ड्स से भुगतान स्वीकार करके अपने बिजनेस को बढ़ाइए</string>
+
+    <string name="axis_fees_qr">ऐक्सिस बैंक आपको दिलाता है भुगतान स्वीकार करने के नए तरीके.</string>
+
+    <string name="pt1">आसानी से तालमेल, शीघ्र और बिना झंझट भुगतान स्वीकार करने की सक्षमता</string>
+
+    <string name="pt2">अद्भुत अप-टाइम और उपलब्धता, उचित लागत</string>
+
+    <string name="pt3">इंडस्ट्री के बेस्ट स्टैण्ड्डेस के साथ अनुकूलता</string>
+
+    <string name="pt4">128 एन्क्रिप्शन के साथ अच्छी सुरक्षा</string>
+
+    <string name="pt5">तेज-ट्रांजेक्शन-प्रोसेसिग स्पीड, इसलिए बिजनेस गंवाने का जोखिम कम</string>
+
+    <string name="pt6">यूजर फ्रैंडली मर्चेन्ट पोर्टल के ज़रिए वास्तविक समय पर डेटा तक पहुंच</string>
+
+    <string name="features">विशिष्टताएं</string>
+
+    <string name="fees">फीस और प्रभार</string>
+
+    <string name="SMS_pay_Home">SMS भुगतान होम </string>
+
+    <string name="last_transaction">पिछला लेन-देन</string>
+
+    <string name="view_all">सभी लेन-देन देखें</string>
+
+    <string name="title_activity_activity_all_transactions">सभी लेन-देन</string>
+
+    <string name="request_payment">नए भुगतान का अनुरोध </string>
+
+    <string name="SMS_Request_Payment">SMS अनुरोध भुगतान </string>
+
+    <string name="request">अनुरोध</string>
+    <string name="payment">भुगतान </string>
+
+    <string name="proceed">आगे बढ़ें </string>
+
+    <string name="Add_to_favorites_for_future_Payments">भविष्य के भुगतानों के लिए फेवरेट्स जोड़ें</string>
+
+    <string name="no_mobile_and_amount">कृपया मोबाइल नंबर और रामि दर्ज करें                  </string>
+
+    <string name="no_amount">कृपया भुगतान की रामि दर्ज करें                        </string>
+
+    <string name="no_mobile_number">मोबाइल नंबर अनिवार्य है</string>
+
+    <string name="invalid_mobile_number">10 अंक का मान्य मोबाइल नंबर दर्ज करें                  </string>
+
+    <string name="airplane_mode">आप एयरोप्लेन मोड में हैं. कृपया नेटिकज िे कनेसट हों और किर िे कोमिि करें   </string>
+
+
+    <string name="url_not_sent">SMS भुगतान लिंक नहीं भेजा गया है. कृपया फिर से कोशिश करें.</string>
+
+    <string name="zero_amount">राशि 0 नहीं होनी चाहिए</string>
+
+
+    <string name="amount_exceeds_200000">रु.2,00,000 से अधिक का भुगतान स्वीकार नहीं किया जाता है.</string>
+
+    <string name="url_sent">भुगतान लिंक सफलतापूर्वक भेजा गया है</string>
+
+    <string name="refund_payment">क्या सचमुच आप इस भुगतान को लौटाना चाहते हैं?</string>
+
+    <string name="refund_successful">लौटाना सफल</string>
+
+    <string name="SMS_All_Transactions_Transaction_status">SMS सभी ट्रांजेक्शन्स (ट्रांजेक्शन की स्थिति)</string>
+
+
+    <string name="all_transactions">सभी ट्रांजेक्शन</string>
+
+
+    <string name="transactions_status">ट्रांजेक्शन की स्थिति</string>
+
+    <string name="transaction_report">ट्रांजेक्शन रिपोर्ट</string>
+
+    <string name="All">सभी</string>
+
+    <string name="pending">बाकी</string>
+
+    <string name="success">सफल</string>
+
+    <string name="failed">विफल</string>
+
+
+    <string name="SMS_All_Transactions_Transaction_report">SMS सभी ट्रांजेक्शन्स (ट्रांजेक्शन की स्थिति)</string>
+
+    <string name="data_for_60_days">डेटा 60 दिनों के लिए उपलब्ध</string>
+
+    <string name="transactions">ट्रांजेक्शन </string>
+
+    <string name="volme">मात्रा</string>
+
+    <string name="QR_on_boarding">QR ऑन बोर्डिंग</string>
+
+    <string name="QR_Pay_SignUp">QR भुगतान साइन अप</string>
+
+    <string name="qr_on_boarding_pop_up.">QR भुगतान साइन अप के लिए अनुरोध करने के लिए धन्यवाद. एक्टिवेशन पर, आपको एक नोटिफिकेशन मिलेगा</string>
+
+    <string name="axis_offer_qr">ऐक्सिस बैंक पेश करते हैं QR कोड भुगतान-ऐक्सिस मर्चेन्ट्स के लिए एक टर्मिनल रहित भुगतान स्वीकृति का नया तरीका</string>
+
+    <string name="axis_offer">ऐक्सिस बैंक आपको दिलाता है भुगतान स्वीकार करने के नए तरीके</string>
+
+    <string name="Benef_its_for_Merchants">मर्चेन्र्टि के मलए िायदे                                  </string>
+
+    <string name="Benefits_for_Customers">ग्राहकों के मलए िायदे                                       </string>
+
+    <string name="No_Terminal_cost_and_no_cash_cardhandling_cost">कोई टममनजल लागत नह ं और कोई कैि/काडज हैंडमलगं लागत नह ं                                                                                  </string>
+
+
+
+    <string name="Instant_payment_notifications">भुगतान की तुरन्त िूर्चना                                 </string>
+
+    <string name="Reduced_charge_back">कम र्चार्ज-बैक                                               </string>
+
+    <string name="Auto_settlement">ऑटो िेटलमेन्ट                                                   </string>
+
+
+
+    <string name="Easy_Sales_tracking_on_App">एप्प पर िेल्ि की रैककंग आिान                                    </string>
+
+    <string name="CashCard_lessexperience">कैि/काडज-रहहत अनुभि                                   </string>
+
+    <string name="Safe_and_secure_payment_witstant_notification">तुरन्त िूर्चना के िाथ िुरक्षक्षत और िंरक्षक्षत भुगतान                    </string>
+
+    <string name="No_risk_off_raud">धोखेधड़ी का कोई र्ोखखम नह ं                                      </string>
+
+    <string name="QR_Home">QR होम  </string>
+
+    <string name="QR_Code_Pay">QR- कोड भुगतान  </string>
+
+
+
+
+    <string name="mVisa">mVisa </string>
+
+    <string name="QR_cod_epay">QR- कोड भुगतान  </string>
+
+    <string name="createQr">QR- कोड बनाएं </string>
+
+    <string name="generate_qr">QR- कोड बनाएं </string>
+
+    <string name="scan_qr">उपरोक्त QR कोड को स्कैन करें</string>
+
+    <string name="QR_Request_Payment">QR अनुरोध भुगतान </string>
+
+    <string name="Request">अनुरोध </string>
+
+    <string name="Payment">भुगतान </string>
+
+    <string name="Create_QR_Code">QR- कोड की रर्चना करें                                        </string>
+
+    <string name="Please_enter_primary_ID">कृपया प्राइमर  आईडी दर्ज करें                            </string>
+
+    <string name="Your_request_numberis">आपका अनुरोध नंबर है </string>
+
+
+    <string name="invalid_email_id">अमान्य ईमेल आईडी </string>
+
+    <string name="offer_remind_later">अपने आगम के लिए धन्यवाद</string>
+
+
+    <string name="offer_accepted">आपके प्रतिसाद के लिए धन्यवाद, हमारे रिलेशनशिप मैनेजर आपसे सम्पर्क करेंगे</string>
+
+    <string name="MIS_Reports">MIS और ररपोर्ट्स        </string>
+
+    <string name="no_details">कोई विवरण नहीं मिला</string>
+
+    <string name="title_activity_reports">रिपोर्ट्स और MIS</string>
+
+    <string name="merchant_pay">मर्चेन्ट भुगतान</string>
+
+    <string name="report">रिपोर्ट्स (POS) </string>
+
+
+
+    <string name="transaction">ट्रांजेक्शन</string>
+
+    <string name="pos">सेटल न हुआ POS</string>
+
+    <string name="refund">लौटाया जाने वाला ट्रांजेक्शन</string>
+
+
+
+    <string name="reports">रिपोर्ट्स</string>
+
+    <string name="MPR_includes_data_forvPOS_terminals">MPR में POS टर्मिनल्स और mVisa ट्रांजेक्शन्स के लिए डेटा शामिल है</string>
+
+
+<string name="all">सभी</string>
+    <string name="SMSPay">SMS भुगतान </string>
+
+    <string name="QRPay">QR भुगतान </string>
+
+    <string name="Merchant_Payment_Reports">मर्चेन्ट भुगतान रिपोर्ट्सि                  </string>
+
+
+
+
+    <string name="Transaction_Reports">रांर्ेसिन रिपोर्ट्सि  </string>
+
+
+    <string name="refund_pay">भुगतान लौटाए</string>
+
+    <string name="Unsettled_POS_Transaction">िेटल न हुआ POS रांर्ेसिन                                </string>
+
+    <string name="Refund_Transaction_Report">लौटाए र्ाने िाले रांर्ेसिन की ररपोटज                           </string>
+
+    <string name="Service_support_Home">सविस्ेस सपोर्् होम                                            </string>
+
+
+    <string name="track_status">स्थिति को ट्रैक करना</string>
+
+
+    <string name="quick">शीघ्र</string>
+
+    <string name="links">लिंक्स</string>
+
+    <string name="terminal">टर्मिनल</string>
+
+
+    <string name="hw_issue">हार्डवेयर संबंधी मुद्दे</string>
+
+    <string name="app_issue">एप्लिकेशन संबंधी मुद्दे</string>
+
+    <string name="account">अकाउन्ट</string>
+
+    <string name="management">मैनेजमेन्ट/प्रबंधन</string>
+
+    <string name="others">अन्य  </string>
+
+    <string name="roll_required">रोल अपेक्षित</string>
+
+
+    <string name="training_required">प्रशिक्षण अपेक्षित</string>
+
+    <string name="adapter_problem">एडॉप्टर की समस्या</string>
+
+    <string name="base_problem">बेस की समस्या</string>
+
+    <string name="battery_problem">बैटरी की समस्या</string>
+
+    <string name="card_reader_problem">कार्ड रीडर की समस्या</string>
+
+
+
+    <string name="display_problm">डिस्प्ले की समस्या</string>
+
+
+    <string name="key_problem">कीज़ काम नहीं कर रही हैं</string>
+
+    <string name="power_card_problem">पावर कार्ड की समस्या</string>
+
+    <string name="printer_problem">प्रिंटर की समस्या</string>
+
+    <string name="settlement_Problem">सेटलमेन्ट की समस्या</string>
+
+
+    <string name="terminal_sw_currpted">टर्मिनल सॉफ़्टवेयर करप्ट हो गया है</string>
+
+
+    <string name="axis_no">ऐक्सिस अकाउन्ट नं.</string>
+
+    <string name="neft">NEFT/RTGS</string>
+
+    <string name="dba">DBA नाम</string>
+
+    <string name="legal_name">कानूनी नाम</string>
+
+    <string name="address_change">पते में परिवर्तन</string>
+
+
+
+    <string name="phone_no">फ़ोन नं.</string>
+
+    <string name="new_loc">नया स्थान </string>
+
+
+    <string name="asset_swapping">एसेट स्वैपिंग</string>
+
+    <string name="dcc">DCC</string>
+
+    <string name="additional_dcc">अतिरिक्त DCC</string>
+
+
+    <string name="cash_pos">CASH @ POS</string>
+
+    <string name="apply_for_mvisa">mVISA के लिए आवेदन</string>
+
+
+
+    <string name="mpr_request">MPR विवरणी का अनुरोध</string>
+
+
+    <string name="call_issues">कॉल की समस्याएं</string>
+
+    <string name="payement_inquiry">भुगतान संबंधी पूछताछ</string>
+
+
+    <string name="pick_up_card">पिक अप कार्ड</string>
+
+    <string name="decline_card">डेक्लाइन कार्ड</string>
+
+    <string name="card_swipe_error">कार्ड स्वाइप त्रुटि</string>
+
+
+
+
+    <string name="Analytics">विश्लेषणात्मक</string>
+
+
+
+
+    <string name="Transaction_Analytics">ट्रांजेक्शन विश्‍लेषणात्मक</string>
+
+    <string name="Merchant_like_me">मेरे जैसा मर्चेन्ट</string>
+
+    <string name="Analytics_includes_dat_for_PoSterminals">विश्‍लेषणात्मक में POS टर्मिनल्स और mVisa ट्रांजेक्शन्स के लिए डेटा शामिल है</string>
+
+    <string name="Showing_Ticket_size_Monthly_All_criterias">दिखा रहा है: टिकट साइज, मंथली, सभी क्राइटेरियाज</string>
+
+    <string name="Offers_Notices">ऑफ़र्स और नोटिस</string>
+
+    <string name="terms">नियम और शर्तें</string>
+
+    <string name="remind_later">बाद में स्मरण कराएं</string>
+
+    <string name="offer_accept_yes">हां  </string>
+
+    <string name="Promotion_response_updated">प्रमोशन रेस्पॉन्स अपडेट किया गया है</string>
+
+
+
+
+
+
+    <string name="title_activity_refer">मित्र को संदर्भ करें</string>
+
+    <string name="refer1">हमारी सेवाओं से खुश</string>
+
+    <string name="refer2">अपने मित्रों से ऐक्सिस बैंक भुगतान समाधान की सिफारिश करें</string>
+
+    <string name="refer3">आपके मित्र को हमारी रिलेशनशिप टीम कॉल करेगी.</string>
+
+
+    <string name="mandatory_details">कृपया अनिवार्य विवरण दर्ज करें</string>
+
+
+
+    <string name="thank_you_refer">आपकी सिफारिश के लिए धन्यवाद</string>
+
+    <string name="Internet">इंटरनेट</string>
+
+    <string name="no_internet">इंटरनेट कनेक्शन उपलब्ध नहीं है.</string>
+
+    <string name="network_error">नेटिकज की त्रुहट हुई है. कृपया बाद में कोमिि करें  </string>
+
+    <string name="Remaining">शेष है  </string>
+
+<string name="sms_pay">SMS भुगतान </string>
+
+
+    <string name="QRCodePay">QR कोड भुगतान </string>
+
+
+
+    <string name="Report_MIS">ररपोटज और MIS </string>
+
+
+
+    <string name="Profile_Management">प्रोिाइल मैनेर्मेन्ट  </string>
+
+
+
+    <string name="Refera_friend">ममत्र को रेिर करें    </string>
+
+
+    <string name="Demo_Video">डमेो िीडडयो            </string>
+
+    <string name="About_App">एप्प के बारे में   </string>
+
+    <string name="Logout">लॉगआउट </string>
+
+    <string name="sign_out">सफलतापूर्वक साइनआउट किया</string>
+    <string name="Welcome_Merchant">मर्चेन्ट का स्वागत</string>
+
+    <string name="Customer_Details">ग्राहक का विवरण</string>
+
+    <string name="Customer_Name">ग्राहक का नाम </string>
+
+    <string name="Customer_Email_ID">ग्राहक की ईमेल आईडी         </string>
+
+    <string name="Customer_MobileNo">ग्राहक का मोबाइल नं.  </string>
+
+    <string name="Mobile_Number">मोबाइल नंबर </string>
+
+    <string name="Remarks">टिप्पणियां </string>
+
+
+
+
+    <string name="Invoice_Number">इन्वॉयस नंबर</string>
+
+    <string name="Date">तिथि</string>
+
+    <string name="Total_Volume">कुल वॉल्यूम</string>
+
+    <string name="Total_Amount">कुल राशि  </string>
+
+    <string name="amount">राशि</string>
+
+
+
+    <string name="Average_Size">औसत साइज</string>
+
+    <string name="Custom_Search">कस्टम सर्च</string>
+
+    <string name="Next">अगला  </string>
+
+    <string name="Axis_Bank">ऐक्सिस बैंक</string>
+
+    <string name="email">ईमेल आईडी </string>
+
+    <string name="added_on">पर जोड़ा गया</string>
+
+    <string name="transaction_id">ट्रांजेक्शन आईडी</string>
+
+
+    <string name="accept_terms">मुझे स्वीकार है</string>
+
+    <string name="done">मुझे स्वीकार है</string>
+
+    <string name="Paymen_Date">भुगतान की नतचथ </string>
+
+    <string name="Count_Of_Transactions">ट्रांजेक्शन आईडी</string>
+
+    <string name="Net_Amount">शुद्ध राशि</string>
+
+    <string name="Gross_Amount">सकल राशि</string>
+
+    <string name="MDR">MDR </string>
+
+
+
+
+
+    <string name="Service_Tax">सर्विस टैक्स</string>
+
+
+    <string name="Hold_Amounty">हदन के मलए धाररत रामि  </string>
+
+    <string name="Adjustments">िमायोर्न </string>
+
+    <string name="Cash_POS">Cash@POS </string>
+
+    <string name="TotaholdamounaonToday">आर् के मलए कुल धाररत रामि  </string>
+
+
+
+
+    <string name="Email_Me_Merchant_Payment_Report">मुझे मर्चेन्ट ररपोटज ईमेल करें </string>
+
+    <string name="sign_up_msg1">कृपया ऐक्सिस बैंक कॉल सेन्टर के सम्पर्क 1800 209 5577/1800 103 5577 से अपने एरिया के रिलेशनशिप मैनेजर से सम्पर्क करें</string>
+
+    <string name="sign_up_msg2">यह ट्रांजेक्शन चार्ज स्लिप और MPR विवरणियों पर मुद्रित मर्चेन्ट आइडेन्टिफिकेशन कोड होगा.</string>
+
+    <string name="filter">फिल्टर  </string>
+
+    <string name="report_type">ररपोटज का प्रकार </string>
+
+    <string name="Duration">अवधि</string>
+
+
+
+
+
+    <string name="ReportCriteria">रिपोर्ट का मापदंड</string>
+
+    <string name="clear">क्लियर</string>
+
+    <string name="apply">आवेदन</string>
+
+    <string name="faq">अक्सर पूछे जाने वाले सवाल</string>
+
+    <string name="TRANS_TYPE">ट्रांस-प्रकार</string>
+    <string name="Low_Interchang">कम इंटरचेंज</string>
+
+    <string name="Description">विवरण</string>
+
+    <string name="Debit">डेबिट</string>
+
+    <string name="Domestic_Cards">डोमेस्टिक कार्ड्स</string>
+
+    <string name="International">इंटरनेशनल</string>
+
+    <string name="Setup_Fee_Monthly_rental">स्थापित करने की फीस/मासिक किराया</string>
+
+    <string name="Net_Banking">नेट बैंकिंग</string>
+
+    <string name="High_Inter_change">उच्च इंटरचेंज</string>
+
+
+
+    <string name="Utility_Government_Insurance_Education_Universities">युटिलिटी/सरकार/इंश्योरेन्स/शिक्षा/विश्‍वविद्यालय</string>
+
+    <string name="Transaction_Value">ट्रांजेक्शन मूल्य</string>
+
+    <string name="Rs.5000Rs.500">रु. 5000/रु.500  </string>
+
+    <string name="Rs.15">रु.15 </string>
+
+    <string name="Allother_MCCs">िभी अन्य MCCs </string>
+
+    <string name="Email_request_fo_Merchan_Payment_Report">मर्चेन्ट भुगतान ररपोटज के मलए ईमेल अनुरोध </string>
+
+    <string name="MIDNumber">MID नंबर  </string>
+
+    <string name="Select_Date_Range">डेटा रेंज चुनें</string>
+
+    <string name="Minimum_criteria_of_number_of_merchant_in_same">समान श्रेणी में मचेन्ट की संख्या का न्यूनतम मापदंड उपलब्ध नहीं है</string>
+
+    <string name="No_offers_for_you">आपके लिए कोई ऑफ़र्स नहीं</string>
+
+    <string name="OK">OK </string>
+
+    <string name="View_all_Transaction">सभी ट्रांजेक्शन्स देखें</string>
+
+    <string name="Static_QR_Code">स्टेटिक QR कोड</string>
+
+    <string name="Dynamic_QR_Code">डायनामिक QR कोड</string>
+
+    <string name="Confirm">पुष्टि  </string>
+
+    <string name="title_activity_notification">अधिसूचना</string>
+
+    <string name="QRTransaction">QR ट्रांजेक्शन</string>
+
+    <string name="mVisaId">mVisa आईडी </string>
+
+
+
+
+    <string name="rrn">RRN नं </string>
+
+    <string name="service_Request_Number">सर्विस अनुरोध नंबर</string>
+
+    <string name="Activity_QR_All_Transaction">एक्सटविट  - QRA11 ट्रांजेक्शन                          </string>
+
+    <string name="Total_of_SMS_Qpay">SMS और QR भुगतान का कुल  </string>
+
+
+    <string name="optional">वैकल्पिक</string>
+
+    <string name="We_have_sent_you_the_Merchantv_Payment_Report_on_your">हमने आपको आपके रजिस्टर्ड ईमेल आईडी पर मर्चेन्ट भुगतान रिपोर्ट भेज दी है</string>
+
+    <string name="SORRYyouremail_is_not_registered">क्षमा कीजिए! आपका ईमेल हमारे यहां रजिस्टर्ड नहीं है, कृपया अपना ईमेल आईडी रजिस्टर कराएं</string>
+
+    <string name="version">वर्जन 3.0.3</string>
+
+
+    <string name="mvisa_id">mvisa_id </string>
+
+    <string name="Sorry_request_cannot_be_process_at_thi_time">क्षमा कीजिए, इस समय अनुरोध पर कार्यवाही नहीं हो सकती है</string>
+
+    <string name="enter_amount">कृपया रामि दर्ज करें  </string>
+
+    <string name="cannot_refund">इस ट्रांजेक्शन को लौटाया नहीं जा सकता</string>
+
+    <string name="search_by_date">तिथि अनुसार खोज</string>
+
+    <string name="search_by_sr">SR/TID No अनुसार खोज</string>
+
+
+    <string name="title_activity_analytics">विश्‍लेषणात्मक</string>
+    <string name="pay">भुगतान</string>
+    <!--<string name="reports">रिपोर्ट्स तथा </string>-->
+    <string name="service">सर्विस</string>
+    <string name="support">सपोर्ट</string>
+    <string name="welcome_text">नमस्ते</string>
+    <string name="last_login">पिछला लॉगइन</string>
+    <string name="first_login">प्रथम लॉगइन</string>
+
+    <!--<string name="sms_pay">SMS पे </string>-->
+    <string name="qr_pay">QR-Code भुगतान </string>
+    <string name="reports_mis">रिपोर्ट्स तथा MIS</string>
+    <!--<string name="service_support">सर्विस सपोर्ट</string>-->
+    <string name="offers_notices">ऑफ़र्स और नोटिस</string>
+    <string name="profile">प्रोफाइल मैनेजमेंट</string>
+
+    <string name="refer_friend">रेफर अ फ्रैंड</string>
+    <string name="demo_video">डेमो वीडियो</string>
+    <string name="logout">लॉगआउट</string>
+
+    <string name="individual_name">व्यक्ति का नाम</string>
+    <string name="business_entity_name">बिजनेस इकाई का नाम</string>
+    <string name="type_of_business">बिजनेस का प्रकार</string>
+    <string name="address">पता</string>
+    <!--<string name="service">मोबाइल नंबर</string>-->
+    <string name="landline_no">लैंडलाइन नंबर</string>
+    <string name="set_mpin_hint">mPIN सेट करें</string>
+    <string name="confirm_mpin_hint">mPIN पुष्टि करें</string>
+    <string name="reprt">रिपोर्ट्स और </string>
+    <string name="username">उपयोगकर्ता का नाम</string>
+    <string name="email_id_hint">ईमेल आईडी</string>
+    <string name="enter_mpin_hint">mPIN दर्ज करें</string>
+    <string name="tran">ट्रांजेक्शन</string>
+    <string name="auth_code">Auth code</string>
+    <string name="remark1">टिप्पणि 1</string>
+    <string name="remark2">टिप्पणि 2</string>
+    <string name="search">खोज</string>
+
+
+    <string-array name="navigation_menu">
+        <item>SMS भुगतान </item>
+        <item>QR-Code भुगतान </item>
+        <item>सर्विस सपोर्ट</item>
+        <item>रिपोर्ट्स तथा MIS</item>
+        <item>विश्‍लेषणात्मक</item>
+        <item>ऑफर्स तथा नोटिसेस</item>
+        <item>प्रोफाइल मैनेजमेंट</item>
+        <item>मित्र को संदर्भ करें</item>
+        <item>Change language</item>
+        <item>अक्सर पूछे जाने वाले सवाल</item>
+        <item>डेमो वीडियो</item>
+        <item>एप्प के बारे में</item>
+        <item>लॉगआउट</item>
+    </string-array>
+
+
+    <string-array name="sms_pay_status_arr">
+        <item>सभी</item>
+        <item>बाकी</item>
+        <item>सफल</item>
+        <item>विफल</item>
+    </string-array>
+
+    <string-array name="all_xn_report_mis">
+        <item>सभी</item>
+        <item>SMS भुगतान</item>
+        <item>QR भुगतान</item>
+    </string-array>
+
+    <string-array name="sms_pay_sign_up">
+        <item>फीचर्स</item>
+        <item>फीस और प्रभार</item>
+    </string-array>
+
+    <string-array name="offers_notices">
+        <item>फीचर्स</item>
+        <item>नियम और शर्तें</item>
+    </string-array>
+
+    <string-array name="array_analytics">
+        <item>ट्रांजेक्शन विश्‍लेषणात्मक</item>
+        <item>मेरे जैसा मर्चेन्ट</item>
+    </string-array>
+
+    <string-array name="report_type_array">
+        <item>मर्चेन्ट भुगतान रिपोर्ट्स</item>
+        <item>ट्रांजेक्शन रिपोर्ट्स</item>
+        <item>सेटल न हुआ POS ट्रांजेक्शन</item>
+        <item>लौटाए जाने वाले ट्रांजेक्शन की रिपोर्ट</item>
+    </string-array>
+
+</resources>

@@ -194,9 +194,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             Constants.getIMEI(getActivity());
             preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("MerchantID", Constants.MERCHANT_ID);
-            editor.putString("MobileNum", Constants.MOBILE_NUM);
-            editor.putString("IMEI", Constants.IMEI);
+            editor.putString("MerchantID", encryptDecryptRegister.encrypt(Constants.MERCHANT_ID));
+            editor.putString("MobileNum", encryptDecryptRegister.encrypt(Constants.MOBILE_NUM));
+            editor.putString("IMEI", encryptDecryptRegister.encrypt(Constants.IMEI));
             editor.putInt("KeepFlag",flag);
             editor.apply();
 
@@ -283,9 +283,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     progressDialog.dismiss();
 
                     if (result.equals("Success") || result.equals("AlreadyRegistered")) {
-                        email = encryptDecryptRegister.decrypt(email);
+                        /*email = encryptDecryptRegister.decrypt(email);
                         username = encryptDecryptRegister.decrypt(username);
-                        isAdmin = encryptDecryptRegister.decrypt(isAdmin);
+                        isAdmin = encryptDecryptRegister.decrypt(isAdmin);*/
                         veriPin = encryptDecryptRegister.decrypt(veriPin);
                         authToken = encryptDecryptRegister.decrypt(authToken);
 
@@ -295,6 +295,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         editor.putString("Username", username);
                         editor.putString("isAdmin", isAdmin);
                         editor.apply();
+
                         Constants.AuthToken = authToken;
 
                         Intent intent = new Intent(getActivity(), Activity_SetOTP.class);

@@ -73,8 +73,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         });
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        Constants.MERCHANT_ID = preferences.getString("MerchantID", "");
-        Constants.MOBILE_NUM = preferences.getString("MobileNum", "");
+        Constants.MERCHANT_ID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID", ""));
+        Constants.MOBILE_NUM = encryptDecryptRegister.decrypt(preferences.getString("MobileNum", ""));
         Constants.getIMEI(getActivity());
         Constants.retrieveMPINFromDatabase(getActivity());
 
@@ -154,7 +154,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
             SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("MPIN", mMPIN);
+            editor.putString("MPIN", encryptDecryptRegister.encrypt(mMPIN));
             editor.apply();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a");
@@ -249,7 +249,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                         preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("LoggedIn", "true");
-                        editor.putString("LastLogin", lastLogin);
+                        editor.putString("LastLogin", encryptDecryptRegister.encrypt(lastLogin));
                         if (flag == 1)
                             editor.putString("KeepLoggedIn", "true");
                         editor.apply();

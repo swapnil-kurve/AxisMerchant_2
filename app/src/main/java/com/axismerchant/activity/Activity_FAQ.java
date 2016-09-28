@@ -71,10 +71,10 @@ public class Activity_FAQ extends AppCompatActivity implements View.OnClickListe
         imgNotification.setOnClickListener(this);
 
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        String user = preferences.getString("Username", "");
-        String LastLogin = preferences.getString("LastLogin", "");
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        String user = encryptDecryptRegister.decrypt(preferences.getString("Username", ""));
+        String LastLogin = encryptDecryptRegister.decrypt(preferences.getString("LastLogin", ""));
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         if (Constants.isNetworkConnectionAvailable(Activity_FAQ.this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {

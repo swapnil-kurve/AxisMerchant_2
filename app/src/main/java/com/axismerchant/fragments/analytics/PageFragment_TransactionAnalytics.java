@@ -89,6 +89,11 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_transaction_analytics, container, false);
 
+        encryptDecryptRegister =  new EncryptDecryptRegister();
+        encryptDecrypt = new EncryptDecrypt();
+        likeMeArrayList = new ArrayList<>();
+        analyticsArrayList = new ArrayList<>();
+
         ImageView imgFilter = (ImageView) view.findViewById(R.id.imgFilter);
         listData = (ParallaxListView) view.findViewById(R.id.list_view);
         lyTop = view.findViewById(R.id.lyTop);
@@ -109,13 +114,8 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         listData.addParallaxedHeaderView(v);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
-
-        encryptDecryptRegister =  new EncryptDecryptRegister();
-        encryptDecrypt = new EncryptDecrypt();
-        likeMeArrayList = new ArrayList<>();
-        analyticsArrayList = new ArrayList<>();
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         imgFilter.setOnClickListener(this);
 

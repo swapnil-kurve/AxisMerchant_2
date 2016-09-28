@@ -50,7 +50,7 @@ public class Constants {
     public static final String UserDetails = "UserDetails";
     public static final String ProfileInfo = "ProfileInfo";
     public static final String EPaymentData = "EPaymentData";
-    public static final String QRPaymentData = "QRPaymentData";
+//    public static final String QRPaymentData = "QRPaymentData";
     public static final String LanguageData = "LanguageData";
 
     public static String GOOGLE_PROJ_ID = "660348263150";
@@ -118,13 +118,14 @@ public class Constants {
     public static void retrieveMPINFromDatabase(Context context) {
         DBHelper dbHelper = new DBHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+        EncryptDecryptRegister encryptDecryptRegister = new EncryptDecryptRegister();
 
         Cursor crs = null;
         try{
             crs = db.rawQuery("select DISTINCT "+ DBHelper.MPIN + " from " + DBHelper.TABLE_NAME_MPIN, null);
 
             while (crs.moveToNext()) {
-                MPIN = crs.getString(crs.getColumnIndex(DBHelper.MPIN));
+                MPIN = encryptDecryptRegister.decrypt(crs.getString(crs.getColumnIndex(DBHelper.MPIN)));
             }
         }catch (Exception e)
         {
@@ -226,22 +227,6 @@ public class Constants {
     }
 
 
-    //  To change format of Date
-    public static String changeDateFormat(String date)
-    {
-        String startDateString = date;
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        Date startDate;
-        try {
-            startDate = df.parse(startDateString);
-            String newDateString = df.format(startDate);
-            System.out.println(newDateString);
-            System.out.println(newDateString.split("/")[1]+newDateString.split("/")[0]+newDateString.split("/")[2]);
-        } catch (ParseException e) {
-
-        }
-        return null;
-    }
 
 
     public static void onCoachMark(final Context context, final int[] coachMarks){

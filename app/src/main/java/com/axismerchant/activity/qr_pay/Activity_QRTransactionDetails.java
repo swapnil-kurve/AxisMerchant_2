@@ -78,8 +78,8 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        Constants.MERCHANT_ID = preferences.getString("MerchantID","0");
-        Constants.MOBILE_NUM = preferences.getString("MobileNum","0");
+        Constants.MERCHANT_ID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        Constants.MOBILE_NUM = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null && bundle.containsKey("XnId"))

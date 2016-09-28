@@ -42,17 +42,6 @@ public class Activity_Main extends AppCompatActivity {
     String regId;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 1111;
 
-    /*@Override
-    public void ifPhoneRooted() {
-        ShowDialog();
-    }
-
-    @Override
-    public void ifPhoneNotRooted() {
-    }*/
-
-
-
     private void ShowDialog()
     {
             // custom dialog

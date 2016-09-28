@@ -93,10 +93,10 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
         }else if(mMPIN.equals(mConfirmedMPIN))
         {
             Constants.MPIN = mMPIN;
-            saveMPINToDB(mMPIN);
+            saveMPINToDB(encryptDecryptRegister.encrypt(mMPIN));
             preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("MPIN", mMPIN);
+            editor.putString("MPIN", encryptDecryptRegister.encrypt(mMPIN));
             editor.apply();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a");
@@ -242,7 +242,7 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("LoggedIn", "true");
-                        editor.putString("LastLogin", lastLogin);
+                        editor.putString("LastLogin", encryptDecryptRegister.encrypt(lastLogin));
                         int flag = preferences.getInt("KeepFlag",0);
                         if (flag == 1)
                             editor.putString("KeepLoggedIn", "true");

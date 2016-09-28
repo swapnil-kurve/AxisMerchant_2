@@ -33,15 +33,15 @@ public class BusinessDetailsFragment extends Fragment {
         Constants.retrieveMPINFromDatabase(getActivity());
         Constants.getIMEI(getActivity());
         SharedPreferences pref = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        Constants.MERCHANT_ID = pref.getString("MerchantID", "");
-        Constants.MOBILE_NUM = pref.getString("MobileNum", "");
+        Constants.MERCHANT_ID = encryptDecryptRegister.decrypt(pref.getString("MerchantID", ""));
+        Constants.MOBILE_NUM = encryptDecryptRegister.decrypt(pref.getString("MobileNum", ""));
 
         preferences = getActivity().getSharedPreferences(Constants.ProfileInfo, Context.MODE_PRIVATE);
         if(preferences.contains("merLegalName"))
         {
-            txtName.setText(preferences.getString("merLegalName",""));
-            txtMobileNo.setText(preferences.getString("merMobileNO",""));
-            txtAddress.setText(preferences.getString("regAdd",""));
+            txtName.setText(encryptDecryptRegister.decrypt(preferences.getString("merLegalName","")));
+            txtMobileNo.setText(encryptDecryptRegister.decrypt(preferences.getString("merMobileNO","")));
+            txtAddress.setText(encryptDecryptRegister.decrypt(preferences.getString("regAdd","")));
             txtMerchantID.setText(Constants.MERCHANT_ID);
         }
 

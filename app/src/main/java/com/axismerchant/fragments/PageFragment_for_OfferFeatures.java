@@ -61,9 +61,15 @@ public class PageFragment_for_OfferFeatures extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_for_offer_features, container, false);
 
+        viewButtonLayout = getActivity().findViewById(R.id.buttonLayout);
+        txtText = (TextView) view.findViewById(R.id.txtText);
+
+        encryptDecryptRegister = new EncryptDecryptRegister();
+        encryptDecrypt = new EncryptDecrypt();
+
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
         Constants.retrieveMPINFromDatabase(getActivity());
         Constants.getIMEI(getActivity());
 
@@ -73,12 +79,6 @@ public class PageFragment_for_OfferFeatures extends Fragment{
             mPromotionId = bundle.getString("PromotionId");
             pos = Integer.parseInt(bundle.getString("Position"));
         }
-        
-        viewButtonLayout = getActivity().findViewById(R.id.buttonLayout);
-        txtText = (TextView) view.findViewById(R.id.txtText);
-
-        encryptDecryptRegister = new EncryptDecryptRegister();
-        encryptDecrypt = new EncryptDecrypt();
 
 
         if (Constants.isNetworkConnectionAvailable(getActivity())) {

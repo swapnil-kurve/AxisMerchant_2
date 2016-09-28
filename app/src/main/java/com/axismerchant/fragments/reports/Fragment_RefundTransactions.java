@@ -75,8 +75,8 @@ public class Fragment_RefundTransactions extends Fragment {
         encryptDecryptRegister = new EncryptDecryptRegister();
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
         Constants.getIMEI(getActivity());
         Constants.retrieveMPINFromDatabase(getActivity());
 

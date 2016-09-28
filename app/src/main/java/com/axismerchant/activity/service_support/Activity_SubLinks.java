@@ -75,6 +75,9 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sublinks);
 
+        encryptDecrypt = new EncryptDecrypt();
+        encryptDecryptRegister = new EncryptDecryptRegister();
+
         TextView txtSubmitRequest = (TextView) findViewById(R.id.txtSubmitRequest);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgNotification = (ImageView) findViewById(R.id.imgNotification);
@@ -100,8 +103,8 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         txtCurrentDate.setText(currentDateandTime + "hrs");
 
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
@@ -115,9 +118,6 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         spinnerVisitingTime.setOnItemSelectedListener(this);
 
         edtProblemDetails.setMaxLines(3);
-
-        encryptDecrypt = new EncryptDecrypt();
-        encryptDecryptRegister = new EncryptDecryptRegister();
 
         InputFilter[] filter = new InputFilter[2];
         filter[0] = new InputFilter() {
@@ -735,7 +735,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         {
             txtResponseStatus.setText("Fail");
             txtResponseStatus.setTextColor(Color.RED);
-            txtRequestNumber.setText(getString(R.string.try_later));
+            txtRequestNumber.setText(response_code+"\n"+getString(R.string.try_later));
             imgResponse.setImageResource(R.mipmap.fail);
         }
 

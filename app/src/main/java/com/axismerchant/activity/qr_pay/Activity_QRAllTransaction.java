@@ -79,8 +79,8 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
         qrTransactionsList = new ArrayList<>();
 
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         SharedPreferences pref = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
         mVisa = pref.getString("mvisaId","");

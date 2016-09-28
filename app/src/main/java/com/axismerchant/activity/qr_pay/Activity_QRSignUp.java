@@ -83,8 +83,8 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
         encryptDecryptRegister = new EncryptDecryptRegister();
 
         SharedPreferences pref = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = pref.getString("MerchantID","0");
-        MOBILE = pref.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(pref.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(pref.getString("MobileNum","0"));
 
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
@@ -282,9 +282,9 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new SendRequest().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {

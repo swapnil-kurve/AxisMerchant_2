@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.axismerchant.classes.EncryptDecryptRegister;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.axismerchant.R;
@@ -39,10 +40,14 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
     String checkIdLength, checkNameLength, check_mccLength, checkCityLength, checkCountryCodeLength, checkCurrencyCodeLength, checkAmountLength, checkPrimaryIdLength, checkSecondaryLength;
     ArrayList<String> alphanumeric;
 
+    EncryptDecryptRegister encryptDecryptRegister;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_generated);
+
+        encryptDecryptRegister = new EncryptDecryptRegister();
 
         TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
         DBHelper dbHelper = new DBHelper(this);
@@ -189,12 +194,12 @@ public class Activity_QRCodeGenerated extends Activity implements View.OnClickLi
         SharedPreferences pref = getSharedPreferences(Constants.ProfileInfo, Context.MODE_PRIVATE);
         if(pref.contains("merLegalName"))
         {
-            id = pref.getString("mvisaId","");
-            name = pref.getString("merLegalName","");
-            mcc = pref.getString("mcc","");
-            city = pref.getString("mCity","");
-            countryCode = pref.getString("COUNTRY_Code","");
-            currencyCode = pref.getString("currencyCode","");
+            id = encryptDecryptRegister.decrypt(pref.getString("mvisaId",""));
+            name = encryptDecryptRegister.decrypt(pref.getString("merLegalName",""));
+            mcc = encryptDecryptRegister.decrypt(pref.getString("mcc",""));
+            city = encryptDecryptRegister.decrypt(pref.getString("mCity",""));
+            countryCode = encryptDecryptRegister.decrypt(pref.getString("COUNTRY_Code",""));
+            currencyCode = encryptDecryptRegister.decrypt(pref.getString("currencyCode",""));
 
             if(id.length() > 15)
                 id = id.substring(0,15);

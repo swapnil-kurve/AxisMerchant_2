@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.axismerchant.classes.EncryptDecryptRegister;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.axismerchant.R;
@@ -44,6 +45,7 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
     private int flag = 0;
     private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
     SubUserFragment userFragment;
+    EncryptDecryptRegister encryptDecryptRegister;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,8 +136,10 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
         layoutBusinessDetails.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
+        encryptDecryptRegister = new EncryptDecryptRegister();
+
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        if(preferences.getString("isAdmin","False").equals("True")){
+        if(encryptDecryptRegister.decrypt(preferences.getString("isAdmin","False")).equals("True")){
             layoutSubUser.setOnClickListener(this);
         }else{
             (findViewById(R.id.layoutSubUser)).setVisibility(View.GONE);

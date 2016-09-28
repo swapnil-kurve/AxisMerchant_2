@@ -29,7 +29,7 @@
             android:layout_toLeftOf="@+id/lyNot"
             android:layout_toRightOf="@+id/imgBack"
             android:gravity="center_vertical"
-            android:text="@string/title_activity_transaction_details"
+            android:text="@string/QRTransaction"
             android:textColor="@android:color/white"
             android:textSize="@dimen/toolbar_title_size" />
 
@@ -162,7 +162,7 @@
                     <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Auth code"
+                        android:text="@string/auth_code"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
@@ -185,7 +185,7 @@
                     <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="RRN No."
+                        android:text="@string/rrn"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
@@ -231,7 +231,7 @@
                     <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Remark 1"
+                        android:text="@string/remark1"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
@@ -254,7 +254,7 @@
                     <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Remark 2"
+                        android:text="@string/remark2"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
@@ -276,7 +276,7 @@
                     <com.axismerchant.custom.CustomTextViewLightBold
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Transaction Status"
+                        android:text="@string/transactions_status"
                         android:textColor="@color/dark_gray"
                         android:textSize="@dimen/subtitle_size" />
 
@@ -313,7 +313,7 @@
                         android:layout_toRightOf="@+id/img"
                         android:maxLines="1"
                         android:padding="5dp"
-                        android:text="Refund Payment"
+                        android:text="@string/refund_pay"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/subtitle_size" />
                 </RelativeLayout>

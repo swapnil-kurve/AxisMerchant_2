@@ -81,8 +81,8 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         getInitialize(view);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID", "0");
-        MOBILE = preferences.getString("MobileNum", "0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID", "0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum", "0"));
         Constants.getIMEI(getActivity());
         Constants.retrieveMPINFromDatabase(getActivity());
 
@@ -182,7 +182,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         ArrayList mVisaList = new ArrayList();
         mVisaList.add("mVisa Id");
         for (int i = 0; i < mVisaArrayList.size(); i++) {
-            mVisaList.add(mVisaArrayList.get(i));
+            mVisaList.add(encryptDecrypt.decrypt(mVisaArrayList.get(i)));
         }
 
         ArrayAdapter<String> dataAdapter = adapterForSpinner(mVisaList);
@@ -301,6 +301,10 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         switch (adapterView.getId()) {
             case R.id.spinnermVisaId:
                 mMVisaId = spinMVisaID.getSelectedItem().toString().trim();
+                if(mMVisaId.equalsIgnoreCase("mVisa Id"))
+                {
+                    mMVisaId = "";
+                }
                 break;
         }
     }

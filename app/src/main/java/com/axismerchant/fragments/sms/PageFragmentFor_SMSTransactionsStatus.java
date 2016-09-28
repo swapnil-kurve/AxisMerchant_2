@@ -57,11 +57,10 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
     TextView txtMessage;
     ArrayList<SMSPayStatus> statusArrayList;
     SMSPayStatus smsPayStatus;
-    DBHelper dbHelper;
     DataAdapter dataAdapter;
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
-    private String[] arrTitle;
+    private String[] arrTitle = {"All", "Pending","Success", "Failed"};
     private String pageTitle, MID,MOBILE;
     int pageNO;
     boolean loadingMore = false;
@@ -82,12 +81,11 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
 
 
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
         Constants.getIMEI(getActivity());
         Constants.retrieveMPINFromDatabase(getActivity());
 
-//        retrieveFromDatabase();
         grabURL("0");
 
         listTransactions.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -140,8 +138,6 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
         statusArrayList = new ArrayList<>();
 
         listTransactions.setOnItemClickListener(this);
-
-        arrTitle = getResources().getStringArray(R.array.sms_pay_status_arr);
 
         txtMessage = (TextView) view.findViewById(R.id.txtMessage);
 

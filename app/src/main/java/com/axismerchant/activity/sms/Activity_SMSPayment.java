@@ -119,8 +119,8 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
     @Override
     protected void onResume() {
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        MID = preferences.getString("MerchantID","0");
-        MOBILE = preferences.getString("MobileNum","0");
+        MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
+        MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
 
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
