@@ -31,7 +31,7 @@
             android:src="@mipmap/axis_trwhite" />
 
         <com.axismerchant.custom.CustomTextViewLightBold
-            android:id="@+id/txt"
+            android:id="@+id/txtLabel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
@@ -176,6 +176,8 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@android:color/black" />
+
+
         </RadioGroup>
     </RelativeLayout>
 

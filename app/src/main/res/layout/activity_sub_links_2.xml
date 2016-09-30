@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/button">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/toolbar_img_width"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@mipmap/back_arrow" />
+
+
+        <com.axismerchant.custom.CustomTextViewLightBold
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/lyNot"
+            android:layout_toRightOf="@+id/imgBack"
+            android:gravity="center_vertical"
+            android:text="@string/service_support"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/toolbar_title_size" />
+
+        <RelativeLayout
+            android:id="@+id/lyNot"
+            android:layout_width="@dimen/toolbar_img_width"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/imgProfile">
+
+            <ImageView
+                android:id="@+id/imgNotification"
+                android:layout_width="@dimen/toolbar_img_width"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:src="@mipmap/notification" />
+
+            <com.axismerchant.custom.CustomTextViewHeavy
+                android:id="@+id/txtNotificationCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/circular_textview_black"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="@dimen/toolbar_img_width"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:src="@mipmap/profile" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/lyTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/soft_gray"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="10dp">
+
+            <com.axismerchant.custom.CustomTextViewHeavy
+                android:id="@+id/txtHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/roll_required"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <com.axismerchant.custom.CustomTextViewMedium
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="MID Number"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/subtitle_size" />
+
+            <com.axismerchant.custom.CustomTextViewLightBold
+                android:id="@+id/txtMID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_size" />
+
+
+            <com.axismerchant.custom.CustomTextViewMedium
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Date"
+                android:textColor="@color/dark_gray"
+                android:textSize="@dimen/subtitle_size" />
+
+            <com.axismerchant.custom.CustomTextViewLightBold
+                android:id="@+id/txtCurrentDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/lyTop">
+
+            <com.axismerchant.custom.CustomTextViewHeavy
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:text="Request Details"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="10dp">
+
+                <com.axismerchant.custom.CustomTextViewLight
+                    android:id="@+id/imgSubcode"
+                    android:layout_width="@dimen/edt_left_icon_width"
+                    android:layout_height="@dimen/edt_left_icon_height"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="xxx"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/title_size" />
+
+
+                <com.axismerchant.custom.CustomTextViewLightBold
+                    android:id="@+id/txtSubcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toRightOf="@+id/imgSubcode"
+                    android:background="@android:color/transparent"
+                    android:hint="Problem Sub-code"
+                    android:maxLines="1"
+                    android:padding="7dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@color/stroke_gray"
+                    android:textSize="@dimen/subtitle_size" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:id="@+id/imgAmount"
+                    android:layout_width="@dimen/edt_left_icon_width"
+                    android:layout_height="@dimen/edt_left_icon_height"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:padding="11dp"
+                    android:src="@mipmap/remark_id" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/imgAmount">
+
+                    <com.axismerchant.custom.CustomEditTextLightBold
+                        android:id="@+id/edtProblemDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/edtCustMobile"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:hint="Problem Description"
+                        android:maxLength="500"
+                        android:maxLines="3"
+                        android:padding="7dp"
+                        android:textColor="@android:color/black"
+                        android:textColorHint="@color/stroke_gray"
+                        android:textSize="@dimen/edtittext_size" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/imgStar2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@drawable/star" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/darker_gray" />
+
+
+        </LinearLayout>
+
+
+        <com.axismerchant.custom.CustomTextViewLightBold
+            android:id="@+id/txtSubmitRequest"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_layout"
+            android:gravity="center"
+            android:text="Submit Request"
+            android:textColor="@color/button"
+            android:textSize="@dimen/button_text_size" />
+
+    </RelativeLayout>
+</LinearLayout>

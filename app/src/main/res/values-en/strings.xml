@@ -1,0 +1,528 @@
+<resources>
+    <string name="app_name">Axis Bank Merchant App</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="submit">Submit</string>
+
+    <string name="merchant_id">merchantId</string>
+    <string name="mobile_no">mobileNo</string>
+    <string name="deviceType">deviceType</string>
+    <string name="imei_no">IMEINo</string>
+    <string name="imei_no1">imeiNo</string>
+    <string name="verify">veriPin</string>
+    <string name="mpin">mPin</string>
+    <string name="plain_text">plainText</string>
+
+    <string name="gcm_reg_id">gcmRegID</string>
+    <string name="merchant_mobile_no">merchantMobileNo</string>
+    <string name="userName">userName</string>
+    <string name="email_id">emailid</string>
+    <string name="promotion_id">promotionId</string>
+    <string name="promotion_response">pResponse</string>
+    <string name="from_date">fromDate</string>
+    <string name="to_date">toDate</string>
+    <string name="payment_scheme">paymentScheme</string>
+    <string name="card_type">cardType</string>
+    <string name="transaction_type">transType</string>
+    <string name="filter_by">filterBy</string>
+    <string name="promotionId">promotionId</string>
+    <string name="terms">Terms &amp; conditions</string>
+    <string name="transactionId">transactionId</string>
+    <string name="oldNumber">oldNumber</string>
+    <string name="newNumber">newNumber</string>
+    <string name="custNumber">custNumber</string>
+    <string name="transStatus">transStatus</string>
+    <string name="requestFor">requestFor</string>
+
+    <string name="invoice_no">invoiceNo</string>
+    <string name="cust_name">custName</string>
+    <string name="cust_email">custEmail</string>
+    <string name="cust_mobile">custMobile</string>
+    <string name="cust_amount">transAmt</string>
+    <string name="remark">reamrk</string>
+    <string name="welcome_message">Welcome Merchant</string>
+    <string name="Rs">\u20B9</string>
+
+    <string name="hint_cust_info_epayment">Customer Details</string>
+    <string name="hint_cust_name_epayment">Customer Name</string>
+    <string name="hint_cust_email_epayment">Customer Email ID</string>
+    <string name="hint_cust_mobile_epayment">Customer Mobile No</string>
+    <string name="text_cust_mobile_epayment">Mobile Number</string>
+    <string name="hint_remark_epayment">Remarks</string>
+
+    <string name="hint_invoice_no_epayment">Invoice Number</string>
+
+    <string name="date">Date</string>
+    <string name="volume">Total\nVolume</string>
+    <string name="total_amount">Total\nAmount</string>
+    <string name="amount">Amount</string>
+    <string name="average">Average\nSize</string>
+    <string name="custom_search">Custom Search</string>
+    <string name="next">Next</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="keep_me">Keep me logged in</string>
+    <string name="title_activity_home">Axis Bank</string>
+    <string name="title_activity_otp">Enter OTP</string>
+    <string name="title_activity_set_m_pin">Enter mPIN</string>
+    <string name="confirm"><![CDATA[Set & Confirm]]></string>
+    <string name="congo">Congratulations</string>
+    <string name="verified">Account verified successfully!</string>
+    <string name="set_mpin">Please set mPIN for your account.</string>
+    <string name="title_activity_user_profile">My Profile</string>
+    <string name="title_activity_reports">Reports &amp; MIS</string>
+    <string name="title_activity_activity_epayment">SMS Pay</string>
+    <string name="title_activity_activity_SMS_sign_up">SMS Pay Sign Up</string>
+    <string name="all_transactions">All Transactions</string>
+    <string name="transactions_status">Transaction Status</string>
+    <string name="transaction_report">Transaction Report</string>
+    <string name="businessDetails">Business Details</string>
+    <string name="sub_user">Sub User</string>
+    <string name="merchantid">Merchant ID</string>
+    <string name="mobileNo">Mobile Number</string>
+    <string name="address">Address</string>
+    <string name="create">Create</string>
+    <string name="createNewUser">Create New User</string>
+    <string name="email">Email id</string>
+    <string name="added_on">Added On</string>
+    <string name="proceed">Proceed</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="grow_business">Grow your business with Axis Bank</string>
+    <string name="grow_business2">Grow your business by accepting payments through cards.</string>
+    <string name="axis_offer">Axis Bank offers new ways to accept the payments.</string>
+    <string name="pt1">Easy integration, rapid and hassle free enablement of payment acceptance.</string>
+    <string name="pt2">Enviable up-time and availability, competitive cost.</string>
+    <string name="pt3">Keeps Pace with the industry best standards.</string>
+    <string name="pt4">High on security, with 128 bit encryption.</string>
+    <string name="pt5">Fast transaction-processing speed, and therefore much lower risk of business loss.</string>
+    <string name="pt6">Real time access to data through user friendly merchant portal.</string>
+
+    <string name="refer1">Happy with our services</string>
+    <string name="refer2">Recommend Axis Bank Payment solution to your friends!</string>
+    <string name="refer3">Your friend will receive a call from our Relationship Team.</string>
+
+    <string name="mer_mobile_no">merMobileNo</string>
+    <string name="rName">rName</string>
+    <string name="busiEntityName">busiEntityName</string>
+    <string name="busiType">busiType</string>
+    <string name="rAddress">rAddress</string>
+    <string name="rMobileNo">rMobileNo</string>
+    <string name="rLandlineNo">rLandlineNo</string>
+
+    <string name="accept_terms">I accept</string>
+    <string name="Offers_Notices">Offers &amp; Notices</string>
+    <string name="title_activity_refer">Refer a Friend</string>
+    <string name="merchant_pay">Merchant Payment</string>
+    <string name="report">report (POS)</string>
+    <string name="transaction">Transaction</string>
+    <string name="pos">Unsettled POS</string>
+    <string name="refund">Refund Transaction</string>
+    <string name="mpr_msg1">*MPR includes data for POS terminals and mVisa transactions</string>
+    <string name="pay_date">Payment Date</string>
+    <string name="count_of_xn">Count Of Transactions</string>
+    <string name="net_amount">Net Amount</string>
+    <string name="gross_amount">Gross Amount</string>
+    <string name="mdr">MDR</string>
+    <string name="service_tax">Service Tax</string>
+    <string name="hold_amnt">Hold Amount for the day</string>
+    <string name="adjustments">Adjustments</string>
+    <string name="cashPOS">Cash@POS</string>
+    <string name="total_hold_amount">Total hold amount as on Today</string>
+    <string name="email_msg">E-mail Me Merchant Payment Report</string>
+    <string name="sign_up_msg1">Kindly contact Relationship Manager of your area of contact of Axis Bank call center @ <b>1800 209 5577 / 1800 103 5577</b></string>
+    <string name="sign_up_msg2">This will be the Merchant Identification code printed on transaction charge slip and MPR statements</string>
+    <string name="filter">Filter</string>
+    <string name="report_type">Report Type</string>
+    <string name="reports">reports</string>
+    <string name="duration">Duration</string>
+    <string name="duration_analytics">duration</string>
+    <string name="report_criteria">Report Criteria</string>
+    <string name="clear">Clear</string>
+    <string name="apply">Apply</string>
+
+    <string name="faq">FAQ</string>
+    <string name="rptCriteria">rptCriteria</string>
+    <string name="trans_type">TRANS_TYPE</string>
+
+    <string name="fees_title1">MDR / Interchange</string>
+    <string name="fees_description">Description</string>
+    <string name="fees_debit">Debit</string>
+    <string name="fees_domestic_cards">Domestic Cards</string>
+    <string name="fees_international">International</string>
+    <string name="fees_setup">Setup Fee/Monthly rental</string>
+    <string name="fees_net_banking">Net Banking</string>
+
+    <string name="fees_title2">High Interchange</string>
+    <string name="fees_description1">Utility/Government/Insurance/Education/Universities</string>
+    <string name="fees_debit1">Transaction Value \u003c\u003d 2000 : 0.75%\nTransaction Value \u003E 2000 : 1%</string>
+    <string name="fees_domestic_cards_diff11">1.05%</string>
+    <string name="fees_domestic_cards_diff12">1.05%</string>
+    <string name="fees_domestic_cards_blended1">1.05%</string>
+    <string name="fees_international1">DCC / Non DCC 0.99% / 2.50%</string>
+    <string name="fees_setup1">Rs.5000 / Rs.500</string>
+    <string name="fees_net_banking1">Rs.15</string>
+
+    <string name="fees_description2">All other MCCs</string>
+    <string name="fees_debit2">Transaction Value \u003c\u003d 2000 : 0.75%\nTransaction Value \u003E 2000 : 1%</string>
+    <string name="fees_domestic_cards_diff21">1.85%</string>
+    <string name="fees_domestic_cards_diff22">2.20%</string>
+    <string name="fees_domestic_cards_blended2">2.15%</string>
+    <string name="fees_international2">DCC / Non DCC 0.99% / 2.50%</string>
+    <string name="fees_setup2">Rs.10000 / Rs.750</string>
+    <string name="fees_net_banking2">1.80%</string>
+    <string name="done">I Accept</string>
+    <string name="title_activity_analytics">Analytics</string>
+    <string name="email_header">Email request for Merchant Payment Report</string>
+    <string name="mid_title">MID Number</string>
+    <string name="select_date_range">Select Date Range</string>
+    <string name="forgot">Forgot MPIN?</string>
+    <string name="like_me_info_msg">Minimum criteria of number of merchant in same category is not available</string>
+    <string name="no_offers">No offers for you.</string>
+
+    <string name="service_support">Service Support</string>
+    <string name="qr_code_payment">QR-Code Pay</string>
+    <string name="ok">OK</string>
+    <string name="viewalltransaction">View all Transaction</string>
+    <string name="staticqrcode">Static QR Code</string>
+    <string name="dynamicqrcode">Dynamic QR Code</string>
+    <string name="confirmqr">Confirm</string>
+    <string name="tid">tid</string>
+    <string name="service_type">serviceType</string>
+    <string name="prob_details">probDetails</string>
+    <string name="off_days">offDays</string>
+    <string name="visit_timing">visitTiming</string>
+    <string name="contact_no">contactNo</string>
+    <string name="rolls_required">rollsRequired</string>
+    <string name="cust_number">custNumber</string>
+    <string name="urlCode">urlCode</string>
+    <string name="currentTime">currentTime</string>
+    <string name="submitReq">Submit Request</string>
+    <string name="fromdate">fromdate</string>
+    <string name="todate">todate</string>
+
+    <string-array name="navigation_menu">
+        <item>SMS Pay</item>
+        <item>QR Code Pay</item>
+        <item>Service Support</item>
+        <item>Report &amp; MIS</item>
+        <item>Analytics</item>
+        <item>Offers &amp; Notices</item>
+        <item>Profile Management</item>
+        <item>Refer a friend</item>
+        <item>Change language</item>
+        <item>FAQ</item>
+        <item>Demo Video</item>
+        <item>About App</item>
+        <item>Logout</item>
+    </string-array>
+
+    <string-array name="sms_pay_status_arr">
+        <item>All</item>
+        <item>Pending</item>
+        <item>Success</item>
+        <item>Failed</item>
+    </string-array>
+
+    <string-array name="all_xn_report_mis">
+        <item>All</item>
+        <item>SMS Pay</item>
+        <item>QR Pay</item>
+    </string-array>
+
+    <string-array name="sms_pay_sign_up">
+        <item>Features</item>
+        <item>Fees &amp; Charges</item>
+    </string-array>
+
+    <string-array name="offers_notices">
+        <item>Features</item>
+        <item>Terms &amp; Conditions</item>
+    </string-array>
+
+    <string-array name="array_analytics">
+        <item>Transaction Analytics</item>
+        <item>Merchant like me</item>
+    </string-array>
+
+    <string-array name="report_type_array">
+        <item>Merchant Payment Reports</item>
+        <item>Transaction Reports</item>
+        <item>Unsettled POS Transaction</item>
+        <item>Refund Transaction Report</item>
+    </string-array>
+
+    <string name="features">Features</string>
+    <string name="fees">Fees &amp; Charges</string>
+    <string name="title_activity_notification">Notification</string>
+    <string name="QRTransaction">QR Transaction</string>
+    <string name="id">id</string>
+    <string name="mvisa_merchant_id">mvisa_merchant_id</string>
+    <string name="mVisaId">mVisa ID</string>
+    <string name="rrn">RRN No</string>
+    <string name="serviceRequestNumber">serviceRequestNumber</string>
+    <string name="createQr">Create QR-Code</string>
+    <string name="scan_qr">Scan above QR Code</string>
+    <string name="title_activity_qr_sign_up">QR Pay Sign Up</string>
+    <string name="title_activity_activity__qrall_transaction">Activity_QRAllTransaction</string>
+    <string name="no_transation">No transaction found</string>
+    <string name="fromDate">fromDate</string>
+    <string name="toDate">toDate</string>
+    <string name="refund_all_text"><![CDATA[Total of SMS & QR pay]]></string>
+    <string name="optional">Optional</string>
+    <string name="analytics_heading1">*Analytics includes data for PoS terminals and mVisa transactions</string>
+    <string name="analytics_heading2">Showing: Ticket size, Monthly, All criterias</string>
+    <string name="email_sent_success">We have sent you the Merchant Payment Report on your registered email ID</string>
+    <string name="email_sent_success_new">We have taken your request.\nStatement shall be mailed to</string>
+    <string name="email_sent_failed">SORRY! your email is not registered with us\\nKindly register your email ID</string>
+
+
+    <string name="axis_offer_qr">Axis Bank introduces QR Code Pay - A Terminal less payment acceptance innovation for Axis Merchants.</string>
+    <string name="qr_feature_title1">Benifits for Merchants</string>
+    <string name="qr_feature_title2">Benifits for Customers</string>
+    <string name="qr_pt1">No Terminal cost and no cash/card handling cost</string>
+    <string name="qr_pt2">Instant payment notifications</string>
+    <string name="qr_pt3">Reduced charge-back</string>
+    <string name="qr_pt4">Auto settlement</string>
+    <string name="qr_pt5">Easy Sales tracking on App</string>
+    <string name="qr_pt6">Cash/ Card-less experience</string>
+    <string name="qr_pt7">Safe and secure payemnt with instant notification</string>
+    <string name="qr_pt8">No risk of fraud</string>
+
+    <string name="version">Version UAT-40</string>
+    <!--<string name="version">Version 3.0.3</string>-->
+    <string name="mvisa_id">mvisa_id</string>
+    <string name="userMobileNo">userMobileNo</string>
+    <string name="regUsersId">regUsersId</string>
+    <string name="emailid">emailid</string>
+    <string name="isActive">isActive</string>
+    <string name="success">Success</string>
+    <string name="failed">Failed</string>
+
+    <string name="sent_on_mobile">sent on registered mobile number</string>
+    <string name="not_recieved">Not yet received?</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="Customer_MobileNo">Customer Mobile No.</string>
+    <string name="Amount">Amount</string>
+    <string name="Remarks">Remarks</string>
+
+    /**********************************************************************************
+    ******************************* Toast Messages *********************************
+    **********************************************************************************/
+
+    //Sign Up//
+    <string name="enter_valid_details">Please enter valid details</string>
+    <string name="enter_valid_mobile">Please enter valid mobile number</string>
+    <string name="enter_valid_mid">Please enter valid Merchant ID</string>
+    <string name="invalid_details">Details entered are not valid</string>
+    //OTP//
+    <string name="enter_otp">Please enter One Time Password (OTP)!</string>
+    <string name="incorrect_otp">Sorry! OTP does not match. Try again, or Click on \'Resend OTP\'.</string>
+    //MPIN//
+    <string name="mpin_not_provide">Please enter MPIN!</string>
+    <string name="mpin_not_matching">Confirm MPIN is not matching with Set MPIN!</string>
+    <string name="mpin_less_digit">MPIN should be of 4 characters!</string>
+    <string name="confirm_mpin">Please confirm MPIN!</string>
+    <string name="wrong_mpin">Please provide valid MPIN!</string>
+    //Internet//
+    <string name="no_internet">No internet connection available!</string>
+    <string name="network_error">Network error occurred. Please try again later.</string>
+    //SubUser//
+    <string name="no_subuser">No sub user found</string>
+    <string name="sub_user_mobile_already_exists">This user already exists.</string>
+    <string name="sub_user_created">Sub User has been created.</string>
+    <string name="sub_user_updated">Sub User has been updated.</string>
+    <string name="sub_user_not_entered">Please enter details.</string>
+    //SMS onBoarding//
+    <string name="sms_on_boarding_pop_up_submit">Thank you for placing your request for SMS Pay Sign up. On activation, you will receive a notification.</string>
+    <string name="sms_on_boarding_pop_up_submit_fail">Sorry! Request cannot be processed at this moment. Please try after some time.</string>
+    //SMS Request Payment//
+    <string name="no_mobile_and_amount">Please enter mobile no and amount.</string>
+    <string name="no_amount">Please enter payment amount.</string>
+    <string name="no_mobile_number">Mobile number is mandatory</string>
+    <string name="invalid_mobile_number">Enter a valid 10 digit mobile no.</string>
+    <string name="airplane_mode">You are on Airplane mode. Please connect to network and try again.</string>
+    <string name="url_not_sent">SMS Payment link not sent. Please try again.</string>
+    <string name="zero_amount">Amount should not be 0</string>
+    <string name="amount_exceeds_200000">Payment more than Rs.2,00,000 is not accepted!</string>
+    <string name="url_sent">Payment link sent successfully!</string>
+    <string name="refund_payment">Are you sure you want to refund this payment?</string>
+    <string name="refund_successful">Refund Successful</string>
+    //MIS and Reports//
+    <string name="no_details">No details found</string>
+
+    //Offers and Notices
+    <string name="promo_response">Promotion response updated</string>
+    //Refer a friend
+    <string name="mandatory_details">Please enter mandatory details.</string>
+    <string name="thank_you_refer">Thank you for your recommendation</string>
+
+    <string name="sign_out">Signed out successfully</string>
+
+    <string name="individual_name">Individual Name</string>
+    <string name="business_entity_name">Business Entity Name</string>
+    <string name="type_of_business">Type of Business</string>
+    <string name="landline_no">Landline Number</string>
+
+    //QR on boarding
+    <string name="qr_on_boarding_pop_up">Thank you for placing your request for QR Pay Sign up. On activation, you will receive a notification.</string>
+    //QR payment request
+    <string name="enter_primary_id">Please enter primary ID</string>
+
+    <string name="request_number">Your request number is</string>
+
+    <string name="invalid_email_id">Invalid email id</string>
+
+    <string name="offer_remind_later">Thank you for your inputs.</string>
+
+    <string name="offer_accepted">Thank you for your feedback, Our relationship manager will get back to you.</string>
+
+    <string name="request_cannot_process">Sorry, request cannot be process at this time.</string>
+    <string name="enter_amount">Please enter amount</string>
+    <string name="cannot_refund">Cannot refund this transaction</string>
+    <string name="search_by_date">Search By Date</string>
+    <string name="search_by_sr">Search By SR/TID No</string>
+
+    <string name="mvisaId">mvisaId</string>
+    <string name="Ttype">Ttype</string>
+    <string name="mvisaID">mvisaID</string>
+    <string name="sms">SMS</string>
+    <string name="qr">QR-Code</string>
+    <string name="reprt"><![CDATA[Reports &]]></string>
+    <string name="service">Service</string>
+    <string name="support">support</string>
+    <string name="pay">pay</string>
+    <string name="mis">MIS</string>
+    <string name="last_transaction">Last Transaction</string>
+    <string name="view_all">View\nAll Transactions</string>
+    <string name="request_payment">Request\nNew Payment</string>
+    <string name="data_for_60_days">Data Available for last 60 Days</string>
+    <string name="transactions">Transactions</string>
+    <string name="volme">Volume</string>
+    <string name="request">Request</string>
+    <string name="payment">Payment</string>
+    <string name="add_to_fav">Add to favorites for future Payments</string>
+    <string name="mVisa">mVisa</string>
+    <string name="qr_pay">QR code pay</string>
+    <string name="generate_qr">Generate\n QR-Code</string>
+    <string name="track_status">Track Status</string>
+    <string name="quick">Quick</string>
+    <string name="links">links</string>
+    <string name="terminal">Terminal</string>
+    <string name="hw_issue">hardware issues</string>
+    <string name="app_issue">application issues</string>
+    <string name="account">Account</string>
+    <string name="management">management</string>
+    <string name="others">Others</string>
+    <string name="roll_required">Roll Required</string>
+    <string name="training_required">Training Required</string>
+    <string name="adapter_problem">Adapter Problem</string>
+    <string name="base_problem">Base Problem</string>
+    <string name="battery_problem">Battery Problem</string>
+    <string name="card_reader_problem">Card Reader Problem</string>
+    <string name="display_problm">Display Problem</string>
+    <string name="key_problem">Keys Not Working</string>
+    <string name="power_card_problem">Power Cord Problem</string>
+    <string name="printer_problem">Printer Problem</string>
+    <string name="settlement_Problem">Settlement Problem</string>
+    <string name="terminal_sw_currpted">Terminal Software Corrupted</string>
+
+    <!--<string name="axis_no">AXIS A/C NO</string>
+    <string name="neft">NEFT/RTGS</string>
+    <string name="dba">DBA Name</string>
+    <string name="legal_name">Legal Name</string>
+    <string name="address_change">Address Change</string>
+    <string name="phone_no">Phone No.</string>
+    <string name="new_loc">New Location</string>
+    <string name="asset_swapping">Asset Swapping</string>
+    <string name="dcc">DCC</string>
+    <string name="additional_dcc">Additional DCC</string>
+    <string name="cash_pos">CASH @ POS</string>
+    <string name="apply_for_mvisa">Apply For mVISA</string>
+    <string name="mpr_request">MPR Statement Request</string>-->
+
+    <string name="axis_no">Change in payment mode - Axis A/C No</string>
+    <string name="neft">Change in payment mode - NEFT/RTGS</string>
+    <string name="dba">Update details - DBA Name</string>
+    <string name="legal_name">Update details - Legal name</string>
+    <string name="address_change">Update details - Address Change</string>
+    <string name="phone_no">Update details - Phone no.</string>
+    <string name="new_loc">Update details - New Location</string>
+    <string name="asset_swapping">Update details - Asset Swapping</string>
+    <string name="dcc">Merchant Creation - DCC</string>
+    <string name="additional_dcc">Merchant Creation - Additional DCC</string>
+    <string name="cash_pos">CASH @ POS</string>
+    <string name="apply_for_mvisa">Apply For mVISA</string>
+    <string name="mpr_request">MPR Statement Request</string>
+
+    <string name="call_issues">Call Issues</string>
+    <string name="payement_inquiry">Payment Inquiry</string>
+    <string name="pick_up_card">Pick Up Card</string>
+    <string name="decline_card">Decline Card</string>
+    <string name="card_swipe_error">Card Swipe Error</string>
+    <string name="remind_later">Remind Later</string>
+    <string name="offer_accept_yes">Yes</string>
+    <string name="invalid_id">Please enter valid Terminal ID</string>
+    <string name="invalid_problem_desc">Problem description is mandatory</string>
+    <string name="null_visit_time">Please provide visiting time</string>
+    <string name="null_week_off">Please provide weekly off</string>
+    <string name="no_of_rolls">Please provide required roll</string>
+    <string name="proceedTerms"><![CDATA[View Terms & Conditions to proceed]]></string>
+    <string name="termsDataSMS"><![CDATA[<body style=\"text-align:justify\"><p><b>Terms and Conditions for Internet Payment Gateway Services (‘IPG’) through SMS Pay on Axis Merchant App</b></p> <p><big><big>•</big></big> In using IPG Facility, the Merchant agrees: <p>(i) Not to use the Facility in any manner, or in furtherance of any activity, which constitutes a violation of any law or regulation or which may result in fraud on any person or which may cause the Bank to be subject to investigation, prosecution or legal action.<\p><p> (ii) To use information regarding a Cardholder (including name, address, e-mail address, telephone numbers, and data regarding Bank accounts or financial instruments) conveyed to Merchant by consumer software designed to access the Facility only for the purpose of completing the transactions for which it was furnished, and not to sell or otherwise furnish such information to others unless the Merchant has an independent source of such information or obtains the express consent of such Cardholder.<\p><p> (iii) To use the software in accordance with the terms on which the software has been provided to the Merchant and not to attempt to modify, translate, disassemble, decompile or reverse engineer the software, or use it for any purpose other than for the utilisation of the Facility</p><p> <big><big>•</big></big> The Merchant shall provide a commercially reasonable level of Cardholder support to the Cardholder’s with respect to sales using the Facility. Such support shall include appropriate notice to the Cardholder’s of: <p>(i) a means of contacting Merchant in the event the Cardholder has questions regarding the nature or quality of the goods or services that Merchant offers for sale and<\p><p> (ii) procedures for resolving disputes. If the Bank determines in good faith that the Merchant\'s failure to comply with this paragraph is causing an unacceptable burden on its Cardholder support facilities, the Bank may suspend or terminate this Agreement<\p><p> <big><big>•</big></big> If for any reason the Facility or any component of the Facility becomes, or in the Bank\'s opinion is likely to become, the subject of a claim of infringement, the Bank reserves the right to, at its option and expense, either<\p><p> (i) to revoke the right of the Merchant to continue using the Facility as permitted in this Agreement, or <\p><p>(ii) to replace or modify Facility or the infringing component of the Facility so that it becomes non-infringing. If, after using commercially reasonable efforts, the Bank is unable to cure the infringement, any of the Parties may terminate this Agreement on written notice to the other Party</p><p> <big><big>•</big></big> The Merchant shall not accept any Order for which payment is to be made through a Valid Credit / Debit Card unless the transaction is authorised by the Payment Gateway </p><p><big><big>•</big></big> If the Merchant is unable to deliver any part of the Cardholder’s Order within 5 calendar days from the date on which the Order was placed, or as mutually agreed between the Merchant and the Cardholder, Merchant shall cancel the Order and refund Cardholder </p><p><big><big>•</big></big> Deliver to the Cardholder a bill including mentioned of charges covered in the payment received from the Cardholder through the Payment Gateway</p><p> <big><big>•</big></big> The Bank reserves the right to impose limits on the number of Transactions undertaken using a particular Valid Credit / Debit Card and the value of a single transaction during any time period, and reserves the right to refuse to make payments in respect of transactions exceeding such limit </p><p><big><big>•</big></big> The Merchant hereby expressly agrees not to directly or indirectly deal in the following product/s or service/s at any time during the tenure of this Agreement. Without prejudice whatsoever to the Bank’s other rights & privileges, the Merchant binds himself unequivocally to be solely liable for including but not limited to any legal actions and suits, and to make good to the Bank immediately upon demand damages suffered by the Bank directly or owing to claims by any third party, levy of assessment fees or fines, penal actions taken by Card Association, the Reserve Bank of India and any other statutory or competent authorities for any breach of any terms of this Agreement, including the dealing in with goods/services in the \"Banned Category List\". For the full list kindly refer to <a href = "http://google.co.in/" target = "_blank"> Banned Category List.</a></p></body>]]></string>
+    <string name="termsDataQR"><![CDATA[<body style=\"text-align:justify\"><p>The Merchant agrees and confirms that signing up for mVisa (QR code based payments) is to avail additional services from the bank. The arrangement for mVisa shall not have any effect of over riding all of any of the provisions as contained in Principal Agreement Signed. It is understood that for mVisa arrangement, the Principal Agreement stands in force and this additional services shall always be read  as forming part and parcel of Agreement.</p></body>]]></string>
+    <string name="regular01">1.85%</string>
+    <string name="blended01">2.15%</string>
+    <string name="premium01">2.20%</string>
+    <string name="update">Update User</string>
+    <string name="axis_fees_qr">Axis bank offers new ways to accept the payments. Expand your business by accepting payments through cards.</string>
+    <string name="qr_fees_pt1">Initial Setup fees Waived off</string>
+    <string name="qr_fees_pt2">Rentals fees - Waived off</string>
+    <string name="qr_fees_pt3">LTC / NTC - Waived off</string>
+    <string name="qr_fees_pt4">MDR to be considered same as that agreed upon for POS transactions.</string>
+    <string name="qr_fees_pt5">All the charges / fees agreed upon  for POS will remain as is.</string>
+
+
+    <string name="title_select_language">Select Language</string>
+    <string name="hindi">Hindi</string>
+    <string name="english">English</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="bengali">Bengali</string>
+    <string name="kannada">Kannada</string>
+
+    <string name="morning_text">Good Morning</string>
+    <string name="afternoon_text">Good Afternoon</string>
+    <string name="evening_text">Good Evening</string>
+    <string name="last_login">Last Login</string>
+    <string name="first_login">First Login</string>
+    <string name="secretKey">secretKey</string>
+    <string name="authToken">authToken</string>
+    <string name="session_expired">Session Expired</string>
+    <string name="root_msg">This device is rooted. You cannot proceed further.</string>
+    <string name="try_later">Please try again later.</string>
+    <string name="request_raised">Ticket successfully raised.</string>
+    <string name="performance_of_merchants">Performance of top 10 Merchants</string>
+    <string name="invalid_login">You have already signed up with other device.</string>
+    <string name="registred_mobile_no">Registered Mobile No.</string>
+    <string name="set_mpin_hint">Set mPIN</string>
+    <string name="confirm_mpin_hint">Confirm mPIN</string>
+    <string name="username">Username</string>
+    <string name="email_id_hint">Email-id</string>
+    <string name="enter_mpin_hint">Enter mPIN</string>
+    <string name="tran">transaction</string>
+    <string name="auth_code">Auth code</string>
+    <string name="remark1">Remark 1</string>
+    <string name="remark2">Remark 2</string>
+    <string name="refund_pay">Refund Payment</string>
+    <string name="search">Search</string>
+    <string name="pending">Pending</string>
+    <string name="select_from_date">Please provide from date</string>
+    <string name="select_to_date">Please provide to date</string>
+    <string name="enter_one_of_the_obove">Please enter at least one of the above field</string>
+    <string name="from_date_should_not_less">From date should be less than today\'s date</string>
+    <string name="invalid_date">Enter valid date</string>
+    <string name="no_last_transaction">No Last Transaction Found</string>
+    <string name="select_language">Please select language</string>
+</resources>

@@ -1,0 +1,577 @@
+<resources>
+    <!--================================================================================================-->
+    <!--==========================================   ID's  =============================================-->
+    <!--================================================================================================-->
+
+    <string name="version">Version UAT-40</string>
+    <!--<string name="version">Version 3.0.2</string>-->
+    <string name="mvisa_id">mvisa_id</string>
+    <string name="userMobileNo">userMobileNo</string>
+    <string name="regUsersId">regUsersId</string>
+    <string name="emailid">emailid</string>
+    <string name="isActive">isActive</string>
+    <string name="mvisaId">mvisaId</string>
+    <string name="Ttype">Ttype</string>
+    <string name="mvisaID">mvisaID</string>
+    <string name="tid">tid</string>
+    <string name="service_type">serviceType</string>
+    <string name="prob_details">probDetails</string>
+    <string name="off_days">offDays</string>
+    <string name="visit_timing">visitTiming</string>
+    <string name="contact_no">contactNo</string>
+    <string name="rolls_required">rollsRequired</string>
+    <string name="cust_number">custNumber</string>
+    <string name="urlCode">urlCode</string>
+    <string name="currentTime">currentTime</string>
+    <string name="fromdate">fromdate</string>
+    <string name="todate">todate</string>
+    <string name="mer_mobile_no">merMobileNo</string>
+    <string name="rName">rName</string>
+    <string name="busiEntityName">busiEntityName</string>
+    <string name="busiType">busiType</string>
+    <string name="rAddress">rAddress</string>
+    <string name="rMobileNo">rMobileNo</string>
+    <string name="rLandlineNo">rLandlineNo</string>
+    <string name="transactionId">transactionId</string>
+    <string name="oldNumber">oldNumber</string>
+    <string name="newNumber">newNumber</string>
+    <string name="custNumber">custNumber</string>
+    <string name="transStatus">transStatus</string>
+    <string name="requestFor">requestFor</string>
+    <string name="invoice_no">invoiceNo</string>
+    <string name="cust_name">custName</string>
+    <string name="cust_email">custEmail</string>
+    <string name="cust_mobile">custMobile</string>
+    <string name="cust_amount">transAmt</string>
+    <string name="remark">reamrk</string>
+    <string name="gcm_reg_id">gcmRegID</string>
+    <string name="merchant_mobile_no">merchantMobileNo</string>
+    <string name="userName">userName</string>
+    <string name="email_id">emailid</string>
+    <string name="promotion_id">promotionId</string>
+    <string name="promotion_response">pResponse</string>
+    <string name="from_date">fromDate</string>
+    <string name="to_date">toDate</string>
+    <string name="payment_scheme">paymentScheme</string>
+    <string name="card_type">cardType</string>
+    <string name="transaction_type">transType</string>
+    <string name="filter_by">filterBy</string>
+    <string name="promotionId">promotionId</string>
+    <string name="deviceType">deviceType</string>
+    <string name="imei_no">IMEINo</string>
+    <string name="imei_no1">imeiNo</string>
+    <string name="verify">veriPin</string>
+    <string name="mpin">mPin</string>
+    <string name="plain_text">plainText</string>
+    <string name="fromDate">fromDate</string>
+    <string name="toDate">toDate</string>
+
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+
+
+    <string name="app_name">యూక్సిస్ బ్యాంక్ మర్చంట్ యూప్</string>
+
+    <string name="sign_in">సైన్ ఇన్</string>
+    <string name="sign_up">సైన్ అప్</string>
+    <string name="submit">సమర్పించండి</string>
+
+    <string name="merchant_id">మర్చంట్ ఐడి</string>
+    <string name="mobile_no">మెుబైల్ నంబరు</string>
+
+
+    <string name="welcome_text">హలో</string>
+
+
+    <string name="terms">నియువు నిబంధనలు</string>
+
+    <string name="welcome_message">మర్చంట్కి స్వాగతం
+</string>
+    <string name="Rs">\u20B9</string>
+
+    <string name="hint_cust_info_epayment">కస్టమర్ వివరాలు</string>
+    <string name="hint_cust_name_epayment">కస్టమర్ పేరు</string>
+    <string name="hint_cust_email_epayment">కస్టమర్ ఈమెయిల్ ఐడి</string>
+    <string name="hint_cust_mobile_epayment">కస్టవుర్ మెుబైల్ నం.</string>
+    <string name="text_cust_mobile_epayment">మెుబైల్ నంబరు</string>
+    <string name="hint_remark_epayment">రిమార్కులు</string>
+
+    <string name="hint_invoice_no_epayment">ఇన్వాయిస్ నంబరు</string>
+
+    <string name="date">తేదీ</string>
+    <string name="volume">మెుత్తం పరివూణం</string>
+    <string name="total_amount">మెుత్తం రాశి</string>
+    <string name="amount">రాశి</string>
+    <string name="average">సగటు సైజు</string>
+    <string name="custom_search">కస్టమ్ సెర్చ్</string>
+    <string name="next">తరువాత</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="keep_me">నన్ను లాగ్డ్ ఇన్గా ఉంచండి
+</string>
+    <string name="title_activity_home">యూక్సిస్ బ్యాంక్</string>
+    <string name="title_activity_otp">OTPనమోదు చేయుండి</string>
+    <string name="title_activity_set_m_pin">MPINనమోదు చేయుండి</string>
+    <string name="confirm">సెట్ చేయుండి మరియు ధవీకరించండి.</string>
+    <string name="congo">అభినందనలు</string>
+    <string name="verified">అకౌంట్ విజయువంతంగా నిర్ధారించబడింది</string>
+    <string name="set_mpin">మీ అకౌంట్ కోసం దయచేసి MPINసెట్ చేయండి.</string>
+    <string name="title_activity_user_profile">నా ప్రొఫైల్</string>
+    <string name="title_activity_reports">రిపోర్టులు మరియుుMIS</string>
+    <string name="title_activity_activity_epayment">SMSచెల్లింపు</string>
+    <string name="title_activity_activity_SMS_sign_up">SMSచెల్లింపు సైన్ అప్</string>
+    <string name="title_activity_activity_all_transactions">లావాదేవీలన్నీ</string>
+    <string name="transactions_status">లావాదేవీ స్థితి</string>
+    <string name="transaction_report">లావాదేవీ రిపోర్టు</string>
+    <string name="businessDetails">వ్యాపార వివరాలు</string>
+    <string name="sub_user">ఉప-వాడకందారు</string>
+    <string name="merchantid">మర్చంట్ ఐడి</string>
+    <string name="mobileNo">మెుబైల్ నంబరు</string>
+    <string name="address">చిరునామా</string>
+    <string name="create">తయారుచేయండి</string>
+    <string name="createNewUser">కొత్త వాడకందారుని తయూరు చేయుండి</string>
+    <string name="email">ఈమెయిల్ ఐడి</string>
+    <string name="added_on">మీద చేర్చబడినవి</string>
+    <string name="proceed">ముందుకు వెళ్ళండి</string>
+    <string name="transactionId_title">లావాదేవీ ఐడి</string>
+    <string name="grow_business">యూక్సిస్ బ్యాంక్తో మీ వ్యాపారం పెంచుకోండి
+</string>
+    <string name="grow_business2">కార్డుల ద్వారా చెల్లింపులను అంగీకరించడంద్వారా మీ వ్యాపారం పెంచుకోండి.</string>
+    <string name="axis_offer">చెల్లింపులను అంగీకరించేందుకు  యూక్సిస్ బ్యాంక్కొత్త వూర్గం అందిస్తోంది.</string>
+    <string name="pt1">సులభంగా ఏకీకరణ, వేగంగా వురియుు ఇబ్బందులులేకుండా చెల్లింపులను అంగీకరించే సదుపాయుం</string>
+    <string name="pt2">అద్భుతమైన అప్-టైమ్ వురియుు లభ్యత,పోటీ ధర</string>
+    <string name="pt3">పరిశ్రవులోని ఉత్తవు ప్రవూణాలకు అనుగుణమైనది</string>
+    <string name="pt4">128 బిట్ ఎన్క్రిప్షన్తో అత్యధిక సురక్షిత
+</string>
+    <string name="pt5">వేగంగా ట్రాన్సాక్షన్-ప్రాసెసింగ్ స్పీడ్, కాబట్టి వ్యాపారంలో నష్టం కలిగే ప్రవూదం తక్కువగాఉంటుంది.</string>
+    <string name="pt6">యుూజర్ ఫ్రెండ్లీ వుర్చంట్ పోర్టల్ ద్వారా
+వాస్తవిక సవుయుంలో డేటాకు ప్రవేశసౌలభ్యం
+</string>
+
+    <string name="refer1">వూ సేవలతో సంతోషంగా ఉన్నారు</string>
+    <string name="refer2">యూక్సిస్ బ్యాక్ చెల్లింపు పరిష్కారాన్ని మీ స్నేహితులకుసిఫారసు చేయుండి.
+
+</string>
+    <string name="refer3">మీ స్నేహితునికి వూ రిలేషన్షిప్ టీమ్ నుంచి కాల్ వస్తుంది.
+</string>
+
+
+
+    <string name="submitReq">సమర్పించండి అభ్యర్థన</string>
+    <string name="accept_terms">నేను స్వీకరిస్తున్నాను</string>
+    <string name="title_activity_activity_offers">ఆఫర్లు మరియు నోటీసులన్నీ
+</string>
+    <string name="title_activity_refer">స్నేహితుడిని పంపండి</string>
+    <string name="merchant_pay">మర్చంట్ చెల్లింపు</string>
+    <string name="report">రిపోర్టు (POS)</string>
+    <string name="transaction">లావాదేవీ</string>
+    <string name="pos">సెటిల్ చేయునిPOS</string>
+    <string name="refund">వాపసు ఇవ్వవలసిన లావాదేవీ</string>
+    <string name="mpr_msg1">MPRలో టెర్మినల్స్ మరియుుPOSలావాదేవీల కోసం డేటా ఉంటాయి</string>
+    <string name="pay_date">చెల్లింపు తేదీ</string>
+    <string name="count_of_xn">లావాదేవీల గణన</string>
+    <string name="net_amount">నికర మెుత్తం</string>
+    <string name="gross_amount">స్థూల మెుత్తం</string>
+    <string name="mdr">MDR</string>
+    <string name="service_tax">సర్వీసు ట్యాక్స్</string>
+    <string name="hold_amnt">సొమ్మును ఒక రోజు ఉంచండి</string>
+    <string name="adjustments">సర్దుబాట్లు</string>
+    <string name="cashPOS">Cash@POS</string>
+    <string name="total_hold_amount">ఈ రోజు వరకు ఉంచిన మెుత్తం సొమ్మఈ రోజు వరకు ఉంచిన మెుత్తం సొమ్మ</string>
+    <string name="email_msg">మర్చంట్ చెల్లింపు రిపోర్టును నాకు ఈమెయిల్ చేయుండి</string>
+    <string name="sign_up_msg1">దయుచేసి మీ ప్రాంతంలో గల రిలేషన్షిప్ మేనేజర్కి యూక్సిస్ బ్యాంక్ కాల్ సెంటర్కి 1800 209 5577/1800 103 5577కి కాల్ చేయుండి.</string>
+    <string name="sign_up_msg2">ఇది లావాదేవీ చార్జ్ స్లిప్ మరియుుMPR స్టేట్మెంట్లపై ముద్రించిన మర్చంట్ గుర్తింపు కార్డు అవుతుంది</string>
+    <string name="filter">ఫిల్టర్</string>
+    <string name="report_type">రిపోర్టు రకం</string>
+    <string name="reports">రిపోర్టులు</string>
+    <string name="duration">వ్యవధి</string>
+    <string name="duration_analytics">వ్యవధి</string>
+    <string name="report_criteria">రిపోర్టు ప్రామాణికత</string>
+    <string name="clear">క్లియర్</string>
+    <string name="apply">వర్తింపజేయుండి</string>
+
+    <string name="title_activity_faq">తరచూ అడిగే ప్రశ్నలు</string>
+    <string name="rptCriteria">రిపోర్టు ప్రావూణికత</string>
+    <string name="trans_type">ట్రాన్స్-రకం</string>
+
+    <string name="fees_title1">MDR / Interchange</string>
+    <string name="fees_description">వివరాలు</string>
+    <string name="fees_debit">డెబిట్</string>
+    <string name="fees_domestic_cards">డొమెస్కి కార్డులు</string>
+    <string name="fees_international">ఇంటర్నేషనల్</string>
+    <string name="fees_setup">స్థాపించడానికి ఫీజు/నెలవారి అద్దె</string>
+    <string name="fees_net_banking">నెట్ బ్యాంకింగ్</string>
+
+    <string name="fees_title2">అధిక ఇంటర్చేంజ్
+</string>
+    <string name="fees_description1">యుుటిలిటి/ప్రభుత్వం/బీవూ/విద్య/ విశ్వవిద్యాలయూలు</string>
+    <string name="fees_debit1">Transaction Value \u003c\u003d 2000 : 0.75%\nTransaction Value \u003E 2000 : 1%</string>
+    <string name="fees_domestic_cards_diff11">1.05%</string>
+    <string name="fees_domestic_cards_diff12">1.05%</string>
+    <string name="fees_domestic_cards_blended1">1.05%</string>
+    <string name="fees_international1">DCC / Non DCC 0.99% / 2.50%</string>
+    <string name="fees_setup1">రూ. 5000/రూ. 500</string>
+    <string name="fees_net_banking1">రూ. 15</string>
+
+    <string name="fees_description2">ఇతరMCCsఅన్నీ</string>
+    <string name="fees_debit2">Transaction Value \u003c\u003d 2000 : 0.75%\nTransaction Value \u003E 2000 : 1%</string>
+    <string name="fees_domestic_cards_diff21">1.85%</string>
+    <string name="fees_domestic_cards_diff22">2.20%</string>
+    <string name="fees_domestic_cards_blended2">2.15%</string>
+    <string name="fees_international2">DCC / Non DCC 0.99% / 2.50%</string>
+    <string name="fees_setup2">Rs.10000 / Rs.750</string>
+    <string name="fees_net_banking2">1.80%</string>
+    <string name="done">నేను స్వీకరిస్తున్నాను</string>
+    <string name="title_activity_analytics">విశ్లేషణలు</string>
+    <string name="email_header">మర్చంట్ చెల్లింపు రిపోర్టు కోసం ఈమెయిల్ అభ్యర్థన</string>
+    <string name="mid_title">MID నంబరు</string>
+    <string name="select_date_range">డేటా శ్రేణిని ఎంపికచేయుండి</string>
+    <string name="forgot">MPIN మరిచిపోయూరా?</string>
+    <string name="like_me_info_msg">సమాన శ్రేణిలో మర్చంట్  సంఖ్యకు
+కనీస ప్రావూణికత లభించడం లేదు</string>
+    <string name="no_offers">మీకు ఆఫర్లు లేవు
+</string>
+
+    <string name="service_support">సర్వీసు సపోర్టు</string>
+    <string name="qr_code_payment">QR కోడ్ చెల్లింపు</string>
+    <string name="ok">OK</string>
+    <string name="viewalltransaction">లావాదేవీలన్నిటినీ చూడండి</string>
+    <string name="staticqrcode">స్టాటిక్QR కోడ్
+
+</string>
+    <string name="dynamicqrcode">డైనమిక్QRకోడ్
+
+</string>
+    <string name="confirmqr">ధవీకరించండి</string>
+
+
+    <string-array name="navigation_menu">
+        <item>SMSచెల్లింపు</item>
+        <item>QR కోడ్ చెల్లింపు</item>
+        <item>సర్వీసు సపోర్టు</item>
+        <item>రిపోర్టు మరియుు MIS</item>
+        <item>విశ్లేషణలు</item>
+        <item>ఆఫర్లు మరియు నోటీసులన్నీ
+</item>
+        <item>ప్రొఫైల్ నిర్వహణ</item>
+        <item>స్నేహితుడిని పంపండి</item>
+        <item>Change language</item>
+        <item>తరచూ అడిగే ప్రశ్నలు</item>
+        <item>డెమో వీడియో</item>
+        <item>యూప్ గురించి</item>
+        <item>లాగ్అవుట్
+</item>
+    </string-array>
+
+    <string-array name="sms_pay_status_arr">
+        <item>అన్నీ</item>
+        <item>పెండింగులో ఉన్నవి</item>
+        <item>విజయువంతమైనవి</item>
+        <item>విఫలమైనవి</item>
+    </string-array>
+
+    <string-array name="all_xn_report_mis">
+        <item>అన్నీ</item>
+        <item>SMSచెల్లింపు</item>
+        <item>QR చెల్లింపు</item>
+    </string-array>
+
+    <string-array name="sms_pay_sign_up">
+        <item>ప్రత్యేకతలు</item>
+        <item>ఫీజు వురియుు ఖర్చులు</item>
+    </string-array>
+
+    <string-array name="offers_notices">
+        <item>ప్రత్యేకతలు</item>
+        <item>నియువు నిబంధనలు</item>
+    </string-array>
+
+    <string-array name="array_analytics">
+        <item>లావాదేవీ విశ్లేషణలు</item>
+        <item>నా లాంటి వుర్చంట్</item>
+    </string-array>
+
+    <string-array name="report_type_array">
+        <item>మర్చంట్ చెల్లింపు రిపోర్టులు</item>
+        <item>లావాదేవీ రిపోర్టులు</item>
+        <item>సెటిల్ కాని -- లావాదేవీ</item>
+        <item>వాపసు ఇచ్చే లావాదేవీ రిపోర్టు</item>
+    </string-array>
+
+    <string name="features">ప్రత్యేకతలు</string>
+    <string name="fees">ఫీజు వురియుు ఖర్చులు</string>
+    <string name="title_activity_notification">నోటిఫికేషన్</string>
+    <string name="title_activity_transaction_details">QRలావాదేవీ
+
+</string>
+    <string name="id"> ఐడి </string>
+    <string name="mvisa_merchant_id">mvisa_merchant_id</string>
+    <string name="mVisaId">mVisaఐడి</string>
+    <string name="rrn">RRNనం.</string>
+    <string name="serviceRequestNumber">సర్వీసు అభ్యర్థన నంబరు</string>
+    <string name="createQr">QR-కోడ్ తయూరుచేయుండి</string>
+    <string name="scan_qr">పైQRకోడ్ని స్కాన్ చేయుండి
+</string>
+    <string name="title_activity_qr_sign_up">QR చెల్లింపు సైన్ అప్</string>
+    <string name="title_activity_activity__qrall_transaction">యూక్టివిటిQRAllలావాదేవీ</string>
+    <string name="no_transation">No transaction found</string>
+
+
+    <string name="refund_all_text">SMS మరియుు QRచెల్లింపు మెుత్తం</string>
+    <string name="optional">ఐచ్ఛికం</string>
+    <string name="analytics_heading1">*విశ్లేషయలో PoSటెర్మినల్స్ కోసం డేటా మరియు mVisaవాదేవీలు</string>
+    <string name="analytics_heading2">చూపించబడుతున్నవి: టిక్కెట్ సైజు, నెలవారి,ప్రావూణికతలన్నీ</string>
+    <string name="email_sent_success">మేము మీ రిజిస్టర్డు ఈమెరుుల్ ఐడికి మర్చంట్ చెల్లింపు రిపోర్టును మీకు పంపాము</string>
+    <string name="email_sent_success_new">We have taken your request.\nStatement shall be mailed to</string>
+    <string name="email_sent_failed">క్షమించండి! మీ ఈమెయిల్ మా వద్ద రిజిస్టరు చేయులేదు. దయుచేసి మీ ఈమెరుుల్ ఐడిని రిజిస్టరు చేయుండి</string>
+
+
+    <string name="axis_offer_qr">యూక్సిస్ బ్యాంక్ సమర్పిస్తోంది QR కోడ్ చెల్లింపు-యూక్సిస్ మర్చంట్స్ కోసం టెర్మినల్ లేని చెల్లింపునుస్వీకరించే కొత్త పద్ధతి</string>
+    <string name="qr_feature_title1">మర్చంట్స్కి కలిగే లాభాలు
+</string>
+    <string name="qr_feature_title2">కస్టమర్లకు కలిగే లాభాలు
+</string>
+    <string name="qr_pt1">టెర్మినల్ వ్యయుం ఉండదు వురియుు నగదు/కార్డు నిర్వహణ వ్యయుం ఉండదు</string>
+    <string name="qr_pt2">తక్షణ చెల్లింపు నోటిఫికేషన్లు
+</string>
+    <string name="qr_pt3">తక్కువ చార్జ్-బ్యాక్</string>
+    <string name="qr_pt4">ఆటో సెటిల్మెంట్
+</string>
+    <string name="qr_pt5">యూప్పై విక్రయూలను సులభంగా తెలుసుకోవచ్చు
+</string>
+    <string name="qr_pt6">నగదు/కార్డు లేని అనుభవం
+
+</string>
+    <string name="qr_pt7">త Oణ నోటిఫికేషన్తో సురక్షితంగా మరియుుభద్రంగా చెల్లింపు
+</string>
+    <string name="qr_pt8">మోసపోయే ప్రవూదం ఉండదు</string>
+
+
+
+    <string name="success">విజయువంతమైనవి</string>
+
+    <string name="sent_on_mobile">రిజిస్టర్డు మొబైల్ నంబరుకు పంపండి</string>
+    <string name="not_recieved">ఇంకా అందలేదా?</string>
+    <string name="resend_otp">OTP మళ్ళీ పంపండి</string>
+    <string name="Customer_MobileNo">కస్టవుర్ మెుబైల్ నం.</string>
+    <string name="Amount">రాశి</string>
+    <string name="Remarks">రిమార్కులు</string>
+
+    /**********************************************************************************
+    ******************************* Toast Messages *********************************
+    **********************************************************************************/
+
+    //Sign Up//
+    <string name="enter_valid_details">దయుచేసి చెల్లుబాటయ్యే వివరాలు నమోదు చేయుండి</string>
+    <string name="enter_valid_mobile">దయుచేసి చెల్లుబాటయ్యే నంబరు నమోదు చేయుండి</string>
+    <string name="enter_valid_mid">దయుచేసి చెల్లుబాటయ్యే మర్చంట్  ఐడి
+నమోదు చేయుండి
+</string>
+    <string name="invalid_details">నమోదు చేసిన వివరాలు చెల్లుబాటు కావు</string>
+    //OTP//
+    <string name="enter_otp">దయుచేసి ఒన్ టైమ్ పాస్వర్డ్ OTPనమోదు చేయుండి
+</string>
+    <string name="incorrect_otp">క్షమించండి! OTPసరిపోలడం లేదు.
+మళ్ళీ ప్రయుత్నించండి, లేదా OTP మళ్ళీ పంపండిపై క్లిక్ చేయుండి
+</string>
+    //MPIN//
+    <string name="mpin_not_provide">దయుచేసిMPINనమోదు చేయుండి!</string>
+    <string name="mpin_not_matching">సెట్చేసినMPINతో  MPINసరిపోలడం లేదా అనే విషయుం ధవీకరించండి.
+</string>
+    <string name="mpin_less_digit">MPINలో 4అక్షరాలుతప్పకుండా ఉండాలి.</string>
+    <string name="confirm_mpin">దయుచేసిMPINధృవీకరించండి</string>
+    <string name="wrong_mpin">దయుచేసి చెల్లుబాటయ్యేMPINఇవ్వండి</string>
+    //Internet//
+    <string name="no_internet">ఇంటర్నెట్ కనెక్షన్ అందుబాటులో లేదు</string>
+    <string name="network_error">నెట్వర్క్లో లోపం ఏర్పడింది. దయుచేసి కొద్ది సేపటి తరువాత మళ్ళీ ప్రయుత్నించండి.
+</string>
+    //SubUser//
+    <string name="no_subuser">ఉపవాడకందారు లభించలేదు</string>
+    <string name="sub_user_mobile_already_exists">ఈ వాడకందారు ఇప్పటికే ఉన్నారు</string>
+    <string name="sub_user_created">ఉప-వాడకందారుని తయారు చేశారు</string>
+    <string name="sub_user_updated">Sub User has been updated.</string>
+    <string name="sub_user_not_entered">దయచేసి వివరాలు ఇవ్వండి.</string>
+    //SMS onBoarding//
+    <string name="sms_on_boarding_pop_up_submit">చెల్లింపు సైన్ అప్ కోసం మీరు అభ్యర్థించినందుకు మీకు ధన్యవాదాలు. యూక్టివేట్ అరుునప్పుడు,
+మీకు నోటిఫికేషన్ అందుతుంది.
+</string>
+    <string name="sms_on_boarding_pop_up_submit_fail">క్షమించండి! అభ్యర్థనను ఇప్పుడు ప్రాసెస్
+చేయులేము. దయుచేసి కొద్ది సేపటి తరువాతప్రయుత్నించండి.
+</string>
+    //SMS Request Payment//
+    <string name="no_mobile_and_amount">దయుచేసి మెుబైల్ నంబరు మరియుు మెుత్తంనమోదు చేయుండి.</string>
+    <string name="no_amount">దయుచేసి చెల్లింపు మెుత్తాన్ని నమోదు చేయుండి</string>
+    <string name="no_mobile_number">మెుబైల్ నంబరు తప్పనిసరి</string>
+    <string name="invalid_mobile_number">10 అంకెల మెుబైల్ నంబరు నమోదు చేయుండి</string>
+    <string name="airplane_mode">మీరు ఏరోప్లేన్ మోడ్లో ఉన్నారు. దయుచేసి నెట్వర్క్కి కనెక్ట్ చేయుండి మరియుు మళ్ళీప్రయుత్నించండి.</string>
+    <string name="url_not_sent">చెల్లింపు లింకు పంపలేదు. దయుచేసి
+మళ్ళీ ప్రయుత్నించండి.
+</string>
+    <string name="zero_amount">మెుత్తం 0 అయివుండకూడదు</string>
+    <string name="amount_exceeds_200000">రూ. 2,00,000 కంటే ఎక్కువ చెల్లింపు
+అంగీకరించబడదు!
+</string>
+    <string name="url_sent">చెల్లింపు లింకు విజయువంతంగా పంపబడింది!</string>
+    <string name="refund_payment">మీరు ఈ చెల్లింపును ఖచ్చితంగా వాపసు
+చేయూలనుకుంటున్నారా?
+</string>
+    <string name="refund_successful">వాపసుచేయుడం విజయువంతమైంది</string>
+    //MIS and Reports//
+    <string name="no_details">వివరాలు లభించలేదు</string>
+
+    //Offers and Notices
+    <string name="promo_response">ప్రమోషన్ స్పందన అప్డేట్ చేయుబడింది
+</string>
+    //Refer a friend
+    <string name="mandatory_details">దయుచేసి తప్పనిసరి వివరాలను నమోదు చేయుండి</string>
+    <string name="thank_you_refer">మీరు సిఫారసు చేసినందుకు మీకు
+ధన్యవాదాలు
+</string>
+
+    <string name="sign_out">విజయువంతంగా సైన్ అవుట్ చేశారు</string>
+
+    //QR on boarding
+    <string name="qr_on_boarding_pop_up">QRచెల్లింపు సైన్ అప్ కోసం మీరు అభ్యర్థించినందుకు మీకు ధన్యవాదాలు. యూక్టివేట్ చేసినప్పుడు,
+మీకు నోటిఫికేషన్ అందుతుంది.
+</string>
+    //QR payment request
+    <string name="enter_primary_id">దయుచేసి ప్రాథమిక ఐడి నమోదు చేయుండి</string>
+
+    <string name="request_number">మీరు అభ్యర్థించిన నంబరు</string>
+
+    <string name="invalid_email_id">చెల్లని ఈమెరుుల్ ఐడి</string>
+
+    <string name="offer_remind_later">మీరు సలహా సూచనలు ఇచ్చినందుకు మీకు ధన్యవాదాలు</string>
+
+    <string name="offer_accepted">మీరు సలహాలు సూచనలు ఇచ్చినందుకు,మీకు ధన్యవాదాలు, మా రిలేషన్షిప్ మేనేజర్
+మీతో వూట్లాడతారు.
+</string>
+
+    <string name="request_cannot_process">క్షమించండి, అభ్యర్థనను ఇప్పుడు ప్రాసెస్ చేయులేము.</string>
+    <string name="enter_amount">దయుచేసి మెుత్తాన్ని నమోదు చేయుండి</string>
+    <string name="cannot_refund">ఈ లావాదేవీని వాపసు చేయులేము</string>
+    <string name="search_by_date">తేదీని బట్టి వెతకండి</string>
+    <string name="search_by_sr">SR/TID Noప్రకారం వెతకండి</string>
+
+
+    <string name="sms">SMS</string>
+    <string name="qr">QR-Code</string>
+    <string name="reprt"><![CDATA[Reports &]]></string>
+    <string name="service">Service</string>
+    <string name="support">support</string>
+    <string name="pay">pay</string>
+    <string name="mis">MIS</string>
+    <string name="last_transaction">చివరి లావాదేవీ</string>
+    <string name="view_all">లావాదేవీలన్నిటినీ చూడండి</string>
+    <string name="request_payment">కొత్త చెల్లింపు కోసం అభ్యర్థన</string>
+    <string name="data_for_60_days">గత 60 రోజులకు లావాదేవీ లభిస్తుంది</string>
+    <string name="transactions">లావాదేవీలు</string>
+    <string name="volme">పరిమాణం</string>
+    <string name="request">అభ్యర్థన</string>
+    <string name="payment">చెల్లింపు</string>
+    <string name="add_to_fav">భవిష్యత్తు చెల్లింపుల కోసం ఫేవరెట్స్కి
+కలపండి
+</string>
+    <string name="mVisa">mVisa</string>
+    <string name="qr_pay">QR కోడ్ చెల్లింపు</string>
+    <string name="generate_qr">QR కోడ్ని తయూరుచేయుండి
+</string>
+    <string name="track_status">స్థితిని తెలుసుకొనుట</string>
+    <string name="quick">త్వరిత</string>
+    <string name="links">లింక్స్</string>
+    <string name="terminal">టెర్మినల్</string>
+    <string name="hw_issue">హార్డ్వేర్ సంబంధ విషయూలు
+</string>
+    <string name="app_issue">అప్లికేషన్ సంబంధ విషయూలు</string>
+    <string name="account">అకౌంట్</string>
+    <string name="management">మేనేజ్మెంట్/నిర్వహణ
+</string>
+    <string name="others">ఇతరవి</string>
+    <string name="roll_required">రోల్ కావాలి</string>
+    <string name="training_required">శి‘ణ కావాలి</string>
+    <string name="adapter_problem">అడాప్టర్ సవుస్య</string>
+    <string name="base_problem">బేస్ సమస్య</string>
+    <string name="battery_problem">బ్యాటరీ సమస్య</string>
+    <string name="card_reader_problem">కార్డు రీడర్ సమస్య</string>
+    <string name="display_problm">డిస్ప్లే సమస్య
+</string>
+    <string name="key_problem">కీస్ పని చేయుడం లేదు</string>
+    <string name="power_card_problem">పవర్ కార్డు సమస్య</string>
+    <string name="printer_problem">ప్రింటర్ సమస్య</string>
+    <string name="settlement_Problem">సెటిల్మెంట్ సమస్య
+</string>
+    <string name="terminal_sw_currpted">టెర్మినల్ సాఫ్ట్వేర్ కరప్ట్ అరుు్యంది
+</string>
+    <string name="axis_no">యూక్సిస్ అకౌంట్ నం.</string>
+    <string name="neft">NEFT/RTGS</string>
+    <string name="dba">DBAపేరు</string>
+    <string name="legal_name">చట్టబద్ధ పేరు</string>
+    <string name="address_change">చిరునామా మార్పు</string>
+    <string name="phone_no">ఫోన్ నం.</string>
+    <string name="new_loc">కొత్త ప్రాంతం</string>
+    <string name="asset_swapping">ఎసెట్ స్వాపింగ్</string>
+    <string name="dcc">DCC</string>
+    <string name="additional_dcc">అదనపుDCC</string>
+    <string name="cash_pos">CASH @ POS</string>
+    <string name="apply_for_mvisa">mVISAకోసం దరఖాస్తు చేయుండి</string>
+    <string name="mpr_request">స్టేట్మెంట్ అభ్యర్థన
+</string>
+    <string name="call_issues">కాల్ సమస్యలు</string>
+    <string name="payement_inquiry">చెల్లింపు విచారణ</string>
+    <string name="pick_up_card">పిక్ అప్ కార్డు</string>
+    <string name="decline_card">డిక్లైన్కార్డు</string>
+    <string name="card_swipe_error">కార్డు స్వైప్దోషం</string>
+    <string name="remind_later">తరువాత గుర్తుచేయుండి</string>
+    <string name="offer_accept_yes">అవును</string>
+    <string name="invalid_id">Please enter valid Terminal ID</string>
+    <string name="invalid_problem_desc">Problem description is mandatory</string>
+    <string name="null_visit_time">Please provide visiting time</string>
+    <string name="null_week_off">Please provide weekly off</string>
+    <string name="no_of_rolls">Please provide required roll</string>
+    <string name="proceedTerms"><![CDATA[View Terms & Conditions to proceed]]></string>
+    <string name="termsDataSMS"><![CDATA[<body style=\"text-align:justify\"><p><b>Terms and Conditions for Internet Payment Gateway Services (‘IPG’) through SMS Pay on Axis Merchant App</b></p> <p><big><big>•</big></big> In using IPG Facility, the Merchant agrees: <p>(i) Not to use the Facility in any manner, or in furtherance of any activity, which constitutes a violation of any law or regulation or which may result in fraud on any person or which may cause the Bank to be subject to investigation, prosecution or legal action.<\p><p> (ii) To use information regarding a Cardholder (including name, address, e-mail address, telephone numbers, and data regarding Bank accounts or financial instruments) conveyed to Merchant by consumer software designed to access the Facility only for the purpose of completing the transactions for which it was furnished, and not to sell or otherwise furnish such information to others unless the Merchant has an independent source of such information or obtains the express consent of such Cardholder.<\p><p> (iii) To use the software in accordance with the terms on which the software has been provided to the Merchant and not to attempt to modify, translate, disassemble, decompile or reverse engineer the software, or use it for any purpose other than for the utilisation of the Facility</p><p> <big><big>•</big></big> The Merchant shall provide a commercially reasonable level of Cardholder support to the Cardholder’s with respect to sales using the Facility. Such support shall include appropriate notice to the Cardholder’s of: <p>(i) a means of contacting Merchant in the event the Cardholder has questions regarding the nature or quality of the goods or services that Merchant offers for sale and<\p><p> (ii) procedures for resolving disputes. If the Bank determines in good faith that the Merchant\'s failure to comply with this paragraph is causing an unacceptable burden on its Cardholder support facilities, the Bank may suspend or terminate this Agreement<\p><p> <big><big>•</big></big> If for any reason the Facility or any component of the Facility becomes, or in the Bank\'s opinion is likely to become, the subject of a claim of infringement, the Bank reserves the right to, at its option and expense, either<\p><p> (i) to revoke the right of the Merchant to continue using the Facility as permitted in this Agreement, or <\p><p>(ii) to replace or modify Facility or the infringing component of the Facility so that it becomes non-infringing. If, after using commercially reasonable efforts, the Bank is unable to cure the infringement, any of the Parties may terminate this Agreement on written notice to the other Party</p><p> <big><big>•</big></big> The Merchant shall not accept any Order for which payment is to be made through a Valid Credit / Debit Card unless the transaction is authorised by the Payment Gateway </p><p><big><big>•</big></big> If the Merchant is unable to deliver any part of the Cardholder’s Order within 5 calendar days from the date on which the Order was placed, or as mutually agreed between the Merchant and the Cardholder, Merchant shall cancel the Order and refund Cardholder </p><p><big><big>•</big></big> Deliver to the Cardholder a bill including mentioned of charges covered in the payment received from the Cardholder through the Payment Gateway</p><p> <big><big>•</big></big> The Bank reserves the right to impose limits on the number of Transactions undertaken using a particular Valid Credit / Debit Card and the value of a single transaction during any time period, and reserves the right to refuse to make payments in respect of transactions exceeding such limit </p><p><big><big>•</big></big> The Merchant hereby expressly agrees not to directly or indirectly deal in the following product/s or service/s at any time during the tenure of this Agreement. Without prejudice whatsoever to the Bank’s other rights & privileges, the Merchant binds himself unequivocally to be solely liable for including but not limited to any legal actions and suits, and to make good to the Bank immediately upon demand damages suffered by the Bank directly or owing to claims by any third party, levy of assessment fees or fines, penal actions taken by Card Association, the Reserve Bank of India and any other statutory or competent authorities for any breach of any terms of this Agreement, including the dealing in with goods/services in the \"Banned Category List\". For the full list kindly refer to <a href = "http://google.co.in/" target = "_blank"> Banned Category List.</a></p></body>]]></string>
+    <string name="termsDataQR"><![CDATA[<body style=\"text-align:justify\"><p>The Merchant agrees and confirms that signing up for mVisa (QR code based payments) is to avail additional services from the bank. The arrangement for mVisa shall not have any effect of over riding all of any of the provisions as contained in Principal Agreement Signed. It is understood that for mVisa arrangement, the Principal Agreement stands in force and this additional services shall always be read  as forming part and parcel of Agreement.</p></body>]]></string>
+    <string name="regular01">1.85%</string>
+    <string name="blended01">2.15%</string>
+    <string name="premium01">2.20%</string>
+    <string name="update">Update User</string>
+    <string name="axis_fees_qr">Axis bank offers new ways to accept the payments. Expand your business by accepting payments through cards.</string>
+    <string name="qr_fees_pt1">Initial Setup fees Waived off</string>
+    <string name="qr_fees_pt2">Rentals fees - Waived off</string>
+    <string name="qr_fees_pt3">LTC / NTC - Waived off</string>
+    <string name="qr_fees_pt4">MDR to be considered same as that agreed upon for POS transactions.</string>
+    <string name="qr_fees_pt5">All the charges / fees agreed upon  for POS will remain as is.</string>
+
+
+    <string name="title_select_language">Select Language</string>
+    <string name="hindi">Hindi</string>
+    <string name="english">English</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="bengali">Bengali</string>
+    <string name="kannada">Kannada</string>
+
+    <string name="morning_text">Good Morning</string>
+    <string name="afternoon_text">Good Afternoon</string>
+    <string name="evening_text">Good Evening</string>
+    <string name="last_login">Last Login</string>
+    <string name="first_login">First Login</string>
+    <string name="secretKey">secretKey</string>
+    <string name="authToken">authToken</string>
+    <string name="session_expired">Session Expired</string>
+    <string name="root_msg">This device is rooted. You cannot proceed further.</string>
+    <string name="try_later">నెట్వర్క్లో లోపం ఏర్పడింది. దయుచేసి కొద్ది సేపటి తరువాత మళ్ళీ ప్రయుత్నించండి.
+.</string>
+    <string name="request_raised">Ticket successfully raised.</string>
+    <string name="performance_of_merchants">Performance of top 10 Merchants</string>
+    <string name="invalid_login">You have already signed up with other device.</string>
+    <string name="registred_mobile_no">Registered Mobile No.</string>
+    <string name="set_mpin_hint">Set mPIN</string>
+    <string name="confirm_mpin_hint">Confirm mPIN</string>
+    <string name="username">Username</string>
+    <string name="email_id_hint">ఈమెయిల్ ఐడి</string>
+    <string name="enter_mpin_hint">MPINనమోదు చేయుండి</string>
+</resources>

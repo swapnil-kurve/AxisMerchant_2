@@ -71,6 +71,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     Calendar myCalendar = Calendar.getInstance();
     View lyTID, lyDate;
     TextView txtSearchByDate, txtSearchBySR;
+    private int flag = 0;
 
     @Nullable
     @Override
@@ -173,7 +174,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         {
             if(edtSrNo.getText().toString().trim().equals("") && edtTidNo.getText().toString().trim().equals(""))
             {
-                Constants.showToast(getActivity(), "Please enter at least one of the above field");
+                Constants.showToast(getActivity(), getString(R.string.enter_one_of_the_obove));
             }else if(!edtSrNo.getText().toString().trim().equals("") && edtTidNo.getText().toString().trim().equals(""))
             {
                 mSRNO = edtSrNo.getText().toString().trim();
@@ -192,12 +193,13 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         {
             if(txtFromDate.getText().toString().equals(""))
             {
-                Constants.showToast(getActivity(),"Please provide from date");
+                Constants.showToast(getActivity(),getString(R.string.select_from_date));
             }else if(txtToDate.getText().toString().equals(""))
             {
-                Constants.showToast(getActivity(),"Please provide to date");
+                Constants.showToast(getActivity(),getString(R.string.select_to_date));
             }else if(!txtFromDate.getText().toString().equals("") && !txtToDate.getText().toString().equals("")) {
 
+                flag = 1;
                 String fromDate = txtFromDate.getText().toString().trim();
                 String toDate = txtToDate.getText().toString().trim();
 
@@ -268,17 +270,22 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
 
-                if(arg0.length > 3)
+                if(flag != 0)
                 {
                     String mFromDate = encryptDecrypt.encrypt(arg0[3]);
                     String mToDate = encryptDecrypt.encrypt(arg0[4]);
 
                     nameValuePairs.add(new BasicNameValuePair(getString(R.string.fromDate), mFromDate));
                     nameValuePairs.add(new BasicNameValuePair(getString(R.string.toDate), mToDate));
+                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[6])));
+                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[7])));
+                }else
+                {
+                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                    nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
                 }
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -428,7 +435,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             TextView txtDocketID = (TextView) convertView.findViewById(R.id.txtDocketID);
             TextView txtProblemCode = (TextView) convertView.findViewById(R.id.txtProblemCode);
 
-            txtDate.setText(srStatuses.get(position).getRequestDate());
+            txtDate.setText("Requested on "+srStatuses.get(position).getRequestDate().split("\\s+")[0]);
             txtProblemCode.setText(srStatuses.get(position).getProblemSubCode());
 
             if(srStatuses.get(position).getDocketId().equalsIgnoreCase(""))
@@ -471,16 +478,16 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
                     txtFromDate.setText(sdf.format(myCalendar.getTime()));
 
                 } else {
-                    Constants.showToast(getActivity(), "From date should be less than today's date");
+                    Constants.showToast(getActivity(), getString(R.string.from_date_should_not_less));
                 }
             } else {
                 if(txtFromDate.getText().toString().equals("")){
-                    Constants.showToast(getActivity(), "Please enter from date");
+                    Constants.showToast(getActivity(), getString(R.string.select_from_date));
                 }else {
                     if (sdf.parse(calDate).after(sdf.parse(txtFromDate.getText().toString())) && !sdf.parse(calDate).after(sdf.parse(currentDateAndTime))) {
                         txtToDate.setText(sdf.format(myCalendar.getTime()));
                     } else {
-                        Constants.showToast(getActivity(), "Enter valid date");
+                        Constants.showToast(getActivity(), getString(R.string.invalid_date));
                     }
                 }
             }

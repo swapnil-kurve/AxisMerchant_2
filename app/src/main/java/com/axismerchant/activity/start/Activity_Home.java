@@ -339,7 +339,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     }
 
     private void gotoQR() {
-        SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
+        /*SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
         if(preferences.contains("mvisaId"))
         {
             String mVisaId = encryptDecryptRegister.decrypt(preferences.getString("mvisaId",""));
@@ -351,9 +351,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 startActivity(new Intent(this, Activity_QRPayHome.class));
             }
         }else
-        {
+        {*/
             startActivity(new Intent(this, Activity_QRSignUp.class));
-        }
+//        }
     }
 
     private void gotoSMS() {
@@ -555,6 +555,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         progressDialog.dismiss();
 
                     }
+                    progressDialog.dismiss();
                     getMVisaIDs();
                 }
             } catch (JSONException e) {
@@ -734,6 +735,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                     }
                 }
+                progressDialog.dismiss();
                 checkSessionVariable();
             } catch (JSONException e) {
                 progressDialog.dismiss();

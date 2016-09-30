@@ -842,55 +842,55 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             super.onPostExecute(data);
 
             try{
-                JSONArray transaction = new JSONArray(data);
-                JSONObject object1 = transaction.getJSONObject(0);
+                if(data != null) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
 
-                JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                JSONObject obj = rowResponse.getJSONObject(0);
-                String result = obj.optString("result");
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
-                if(result.equals("Success"))
-                {
-                    analyticsArrayList.clear();
-                    txtDateDuration.setText("");
-                    String date = "";
-                    JSONObject object = transaction.getJSONObject(1);
-                    JSONArray transactionBetDates = object.getJSONArray("filterDataForAnalytics");
-                    for (int i = 0; i < transactionBetDates.length(); i++) {
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        analyticsArrayList.clear();
+                        txtDateDuration.setText("");
+                        String date = "";
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray transactionBetDates = object.getJSONArray("filterDataForAnalytics");
+                        for (int i = 0; i < transactionBetDates.length(); i++) {
 
-                        JSONObject object2 = transactionBetDates.getJSONObject(i);
-                        String Transactions = object2.optString("Transactions");
-                        String AvgTicketSize = object2.optString("AvgTicketSize");
-                        String TxnVolume = object2.optString("TxnVolume");
-                        String transDate = object2.optString("transDate");
-                        String tDate = object2.optString("tDate");
+                            JSONObject object2 = transactionBetDates.getJSONObject(i);
+                            String Transactions = object2.optString("Transactions");
+                            String AvgTicketSize = object2.optString("AvgTicketSize");
+                            String TxnVolume = object2.optString("TxnVolume");
+                            String transDate = object2.optString("transDate");
+                            String tDate = object2.optString("tDate");
 
-                        Transactions = encryptDecrypt.decrypt(Transactions);
-                        AvgTicketSize = encryptDecrypt.decrypt(AvgTicketSize);
-                        TxnVolume = encryptDecrypt.decrypt(TxnVolume);
-                        transDate = encryptDecrypt.decrypt(transDate);
-                        tDate = encryptDecrypt.decrypt(tDate);
+                            Transactions = encryptDecrypt.decrypt(Transactions);
+                            AvgTicketSize = encryptDecrypt.decrypt(AvgTicketSize);
+                            TxnVolume = encryptDecrypt.decrypt(TxnVolume);
+                            transDate = encryptDecrypt.decrypt(transDate);
+                            tDate = encryptDecrypt.decrypt(tDate);
 
-                        if(mDuration.equalsIgnoreCase("Daily"))
-                            transDate = transDate.split("\\s+")[0];
+                            if (mDuration.equalsIgnoreCase("Daily"))
+                                transDate = transDate.split("\\s+")[0];
 
-                        mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
-                        analyticsArrayList.add(mis_mpr);
+                            mis_mpr = new MIS_MPR(Transactions, AvgTicketSize, TxnVolume, transDate, tDate);
+                            analyticsArrayList.add(mis_mpr);
+                        }
+
+                        txtDateDuration.setText(date);
+                        showBarChart();
+                        progressDialog.dismiss();
+                        adapterAnalytics = new CustomListAdapterForMPR(getActivity(), analyticsArrayList, screenInches);
+                        listData.setAdapter(adapterAnalytics);
+
+                    } else if (result.equalsIgnoreCase("SessionFailure")) {
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
+                    } else {
+                        Constants.showToast(getActivity(), getString(R.string.no_details));
                     }
-
-                    txtDateDuration.setText(date);
-                    showBarChart();
-                    progressDialog.dismiss();
-                    adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList, screenInches);
-                    listData.setAdapter(adapterAnalytics);
-
-                }else if(result.equalsIgnoreCase("SessionFailure")){
-                    Constants.showToast(getActivity(), getString(R.string.session_expired));
-                    logout();
-                }
-                else {
-                    Constants.showToast(getActivity(), getString(R.string.no_details));
                 }
                 progressDialog.dismiss();
             } catch (JSONException e) {

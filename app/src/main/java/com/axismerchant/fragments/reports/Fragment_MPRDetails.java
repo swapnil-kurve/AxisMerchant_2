@@ -185,10 +185,10 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
     private void sendEmail() {
         if(txtFromDate.getText().toString().equals(""))
         {
-            Constants.showToast(getActivity(),"Please provide from date");
+            Constants.showToast(getActivity(),getString(R.string.select_from_date));
         }else if(txtToDate.getText().toString().equals(""))
         {
-            Constants.showToast(getActivity(),"Please provide to date");
+            Constants.showToast(getActivity(),getString(R.string.select_to_date));
         }else
         {
             String fromDate = txtFromDate.getText().toString().trim();
@@ -477,16 +477,16 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                     txtFromDate.setText(sdf.format(myCalendar.getTime()));
 
                 } else {
-                    Constants.showToast(getActivity(), "From date should be less than today's date");
+                    Constants.showToast(getActivity(), getString(R.string.from_date_should_not_less));
                 }
             } else {
                 if(txtFromDate.getText().toString().equals("")){
-                    Constants.showToast(getActivity(), "Please enter from date");
+                    Constants.showToast(getActivity(), getString(R.string.select_from_date));
                 }else {
                     if (sdf.parse(calDate).after(sdf.parse(txtFromDate.getText().toString())) && !sdf.parse(calDate).after(sdf.parse(currentDateAndTime))) {
                         txtToDate.setText(sdf.format(myCalendar.getTime()));
                     } else {
-                        Constants.showToast(getActivity(), "Enter valid date");
+                        Constants.showToast(getActivity(), getString(R.string.invalid_date));
                     }
                 }
             }

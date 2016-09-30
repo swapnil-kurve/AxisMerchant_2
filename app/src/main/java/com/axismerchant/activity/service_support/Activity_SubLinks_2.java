@@ -1,6 +1,5 @@
 package com.axismerchant.activity.service_support;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,15 +8,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -54,26 +51,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by vismita.jain on 7/1/16.
- */
-public class Activity_SubLinks extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnClickListener {
+
     ImageView imgBack, imgNotification, imgProfile;
     TextView txtHeading;
     TextView txtSubCode,txtCurrentDate, txtMID;
     String MID,MOBILE, mServiceType = "";
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
-    EditText edtTID, edtProblemDetails, edtContactNumber;//, edtVisitTime;
-    Spinner spinNoOfRolls, spinnerVisitingTime;
-    Spinner spinWeeklyOff;
-    String mTotalRollsRequired, weeklyOff, visitingTime;
-    private String blockCharacterSet = "~#^|$%&*!()-+?,.<>@:;";
+    EditText edtProblemDetails;//, edtVisitTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sublinks);
+        setContentView(R.layout.activity_sub_links_2);
 
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
@@ -87,15 +78,8 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         txtHeading = (TextView) findViewById(R.id.txtHeading);
         txtCurrentDate = (TextView) findViewById(R.id.txtCurrentDate);
 
-        edtTID = (EditText) findViewById(R.id.edtTID);
         txtSubCode = (TextView) findViewById(R.id.txtSubcode);
         edtProblemDetails = (EditText) findViewById(R.id.edtProblemDescription);
-        edtContactNumber = (EditText) findViewById(R.id.edtCustMobile);
-
-        spinNoOfRolls = (Spinner) findViewById(R.id.spinnerNoOfRoll);
-        spinWeeklyOff = (Spinner) findViewById(R.id.spinnerWeeklyOff);
-        spinnerVisitingTime = (Spinner) findViewById(R.id.spinnerVisitingTime);
-
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy | HH:mm");
         String currentDateandTime = sdf.format(new Date());
@@ -109,47 +93,8 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         Constants.retrieveMPINFromDatabase(this);
         Constants.getIMEI(this);
 
-        settotalRollsRequired();
-        setMerchantWeekOff();
-        setVisitingTime();
-
-        spinNoOfRolls.setOnItemSelectedListener(this);
-        spinWeeklyOff.setOnItemSelectedListener(this);
-        spinnerVisitingTime.setOnItemSelectedListener(this);
 
         edtProblemDetails.setMaxLines(3);
-
-        InputFilter[] filter = new InputFilter[2];
-        filter[0] = new InputFilter() {
-
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-                if (source != null && blockCharacterSet.contains(("" + source))) {
-                    return "";
-                }
-                return null;
-            }
-        };
-        filter[1] = new InputFilter.LengthFilter(10);
-
-        edtContactNumber.setFilters(filter);
-
-        InputFilter[] filterTID = new InputFilter[2];
-        filterTID[0] = new InputFilter() {
-
-            @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-                if (source != null && blockCharacterSet.contains(("" + source))) {
-                    return "";
-                }
-                return null;
-            }
-        };
-        filterTID[1] = new InputFilter.LengthFilter(8);
-
-        edtTID.setFilters(filterTID);
 
         txtMID.setText(MID);
 
@@ -157,193 +102,99 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         if(bundle!= null)
         {
             String heading = bundle.getString("Heading");
-            if(heading.equalsIgnoreCase("RollsRequired")) {
-                txtSubCode.setText("Roll Required");
-                txtHeading.setText("Quick Links");
-                findViewById(R.id.lyNoOfRolls).setVisibility(View.VISIBLE);
-                mServiceType = "ROLLS TO BE DELIVERED PROACTIVELY";
-            }else
-            if(heading.equalsIgnoreCase("TrainingRequired")) {
-                txtSubCode.setText("Training Required");
-                txtHeading.setText("Quick Links");
-                mServiceType = "TRAINING REQUIRED";
-            }else
-            if(heading.equalsIgnoreCase("AdaptorProblem")) {
-                txtSubCode.setText("Adaptor Problem");
-                txtHeading.setText("Terminal Hardware Issues");
-                mServiceType = "ADAPTOR PROBLEM";
-            }else
-            if(heading.equalsIgnoreCase("BaseProblem")){
-                txtSubCode.setText("Base Problem");
-                txtHeading.setText("Terminal Hardware Issues");
-                mServiceType = "BASE PROBLEM";
-            }else
-            if(heading.equalsIgnoreCase("BatteryProblem")){
-                txtSubCode.setText("Battery Problem");
-                txtHeading.setText("Terminal Hardware Issues");
-                mServiceType = "BATTERY PROBLEM";
-            }else
-            if(heading.equalsIgnoreCase("CardReaderProblem")){
-                txtSubCode.setText("Card Reader Problem");
-                txtHeading.setText("Terminal Hardware Issues");
-                mServiceType = "CARD READER PROBLEM";
-            }else
-            if(heading.equalsIgnoreCase("DisplayProblem")){
-                txtSubCode.setText("Display Problem");
-                txtHeading.setText("Terminal Hardware Issues");
-                mServiceType = "DISPLAY PROBLEM";
-            }else
-            if(heading.equalsIgnoreCase("KeysNotWorking")){
-                txtSubCode.setText("Keys Not Working");
-                txtHeading.setText("Terminal Hardware Issues");
-                mServiceType = "KEYS NOT WORKING";
-            }else
-            if(heading.equalsIgnoreCase("PowerCardProblem")){
-                txtSubCode.setText("Power Card Problem");
-                txtHeading.setText("Terminal Hardware Issues");
-                mServiceType = "POWER CORD PROBLEM";
-            }else
-            if(heading.equalsIgnoreCase("PrinterProblem")){
-                txtSubCode.setText("Printer Problem");
-                txtHeading.setText("Terminal Hardware Issues");
-                mServiceType = "PRINTER PROBLEM";
-            }else
-            if(heading.equalsIgnoreCase("SettlementProblem")){
-                txtSubCode.setText("Settlement Problem");
-                txtHeading.setText("Terminal Application Issues");
-                mServiceType = "SETTLEMENT PROBLEM";
-            }else
-            if(heading.equalsIgnoreCase("TerminalSoftwareCorrupted")){
-                txtSubCode.setText("Terminal Software Corrupted");
-                txtHeading.setText("Terminal Application Issues");
-                mServiceType = "TERMINAL SOFTWARE CORRUPTED";
-            }
 
-           /* if(heading.equalsIgnoreCase("CallIssues")){
+            if(heading.equalsIgnoreCase("CallIssues")){
                 txtSubCode.setText("Call Issues");
                 txtHeading.setText("Other Issues");
                 mServiceType = "CALL ISSUES";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("PaymentInquiry")){
                 txtSubCode.setText("Payment Inquiry");
                 txtHeading.setText("Other Issues");
                 mServiceType = "PAYMENT INQUIRY";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("PickUpCard")){
                 txtHeading.setText("Pick Up Card");
                 txtHeading.setText("Other Issues");
                 mServiceType = "PICK UP CARD";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("DeclineCard")){
                 txtSubCode.setText("Decline Card");
                 txtHeading.setText("Other Issues");
                 mServiceType = "DECLINE CARD";
-            }
-*/
+            }else
             if(heading.equalsIgnoreCase("CardSwipeError")){
                 txtSubCode.setText("Card Swipe Error");
                 txtHeading.setText("Other Issues");
                 mServiceType = "CARD SWIPE ERROR";
-            }
-
-           /* if(heading.equalsIgnoreCase("AxisAccNo")){
+            }else
+            if(heading.equalsIgnoreCase("AxisAccNo")){
                 txtSubCode.setText("Axis Account No.");
                 txtHeading.setText("Account Management");
                 mServiceType = "AXIS A/C NO";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("NeftRtgs")){
                 txtSubCode.setText("Neft Rtgs");
                 txtHeading.setText("Account Management");
                 mServiceType = "NEFT/RTGS";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("DbaName")){
                 txtSubCode.setText("Dba Name");
                 txtHeading.setText("Account Management");
                 mServiceType = "DBA NAME";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("LegalName")){
                 txtSubCode.setText("Legal Name");
                 txtHeading.setText("Account Management");
                 mServiceType = "LEGAL NAME";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("AddressChange")){
                 txtSubCode.setText("Address Change");
                 txtHeading.setText("Account Management");
                 mServiceType = "ADDRESS CHANGE";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("PhoneNo")){
                 txtSubCode.setText("Phone No");
                 txtHeading.setText("Account Management");
                 mServiceType = "MOBILE NO";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("NewLocation")){
                 txtSubCode.setText("New Location");
                 txtHeading.setText("Account Management");
                 mServiceType = "NEW LOCATION";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("AssetSwapping")){
                 txtSubCode.setText("Asset Swapping");
                 txtHeading.setText("Account Management");
                 mServiceType = "ASSET SWAPPING";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("Dcc")){
                 txtSubCode.setText("Dcc");
                 txtHeading.setText("Account Management");
                 mServiceType = "DCC";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("AdditionalDcc")){
                 txtSubCode.setText("Additional Dcc");
                 txtHeading.setText("Account Management");
                 mServiceType = "ADDITIONAL DCC";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("CashPos")){
                 txtSubCode.setText("Cash Pos");
                 txtHeading.setText("Account Management");
                 mServiceType = "CASH POS";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("Apply_mVisa")){
                 txtSubCode.setText("Apply mVisa");
                 txtHeading.setText("Account Management");
                 mServiceType = "APPLY MVISA";
-            }
-
+            }else
             if(heading.equalsIgnoreCase("MprStatmentRequest")){
                 txtSubCode.setText("Mpr Statement Request");
                 txtHeading.setText("Account Management");
                 mServiceType = "MPR STATEMENT REQUEST";
-            }*/
+            }
         }
 
-        /*if(txtHeading.getText().toString().trim().equalsIgnoreCase("Account Management") ||
-                txtHeading.getText().toString().trim().equalsIgnoreCase("Other Issues"))
-        {
-            findViewById(R.id.imgStar1).setVisibility(View.GONE);
-            findViewById(R.id.imgStar3).setVisibility(View.GONE);
-            findViewById(R.id.imgStar4).setVisibility(View.GONE);
-            findViewById(R.id.imgStar5).setVisibility(View.GONE);
-
-            findViewById(R.id.lyTerminal).setVisibility(View.GONE);
-            findViewById(R.id.lyContact).setVisibility(View.GONE);
-            findViewById(R.id.lyVisiting).setVisibility(View.INVISIBLE);
-            findViewById(R.id.lyWeeklyOff).setVisibility(View.INVISIBLE);
-            findViewById(R.id.viewContact).setVisibility(View.GONE);
-            findViewById(R.id.viewVisit).setVisibility(View.GONE);
-            findViewById(R.id.viewWeekly).setVisibility(View.GONE);
-        }*/
         imgBack.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
@@ -351,63 +202,6 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
 
     }
-
-    private void settotalRollsRequired() {
-
-        // Spinner Drop down elements
-        ArrayList<String> totalRollsRequired = new ArrayList<String>();
-        totalRollsRequired.add("No. Of Rolls");
-        totalRollsRequired.add("1");
-        totalRollsRequired.add("2");
-        totalRollsRequired.add("3");
-        totalRollsRequired.add("4");
-        totalRollsRequired.add("5");
-
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = adapterForSpinner(totalRollsRequired);
-
-        // attaching data adapter to spinner
-        spinNoOfRolls.setAdapter(dataAdapter);
-
-    }
-
-    private void setMerchantWeekOff()
-    {
-
-        ArrayList<String> merchantWeekOff = new ArrayList<String>();
-        merchantWeekOff.add("Merchant Week-Off");
-        merchantWeekOff.add("No Week-Off");
-        merchantWeekOff.add("Monday");
-        merchantWeekOff.add("Tuesday");
-        merchantWeekOff.add("Wednesday");
-        merchantWeekOff.add("Thursday");
-        merchantWeekOff.add("Friday");
-        merchantWeekOff.add("Saturday");
-        merchantWeekOff.add("Sunday");
-
-        ArrayAdapter<String> dataAdapter = adapterForSpinner(merchantWeekOff);
-
-        // attaching data adapter to spinner
-        spinWeeklyOff.setAdapter(dataAdapter);
-    }
-
-    private void setVisitingTime() {
-
-        // Spinner Drop down elements
-        ArrayList<String> visitingTime = new ArrayList<String>();
-        visitingTime.add("Visiting Time");
-        visitingTime.add("9AM-12NOON");
-        visitingTime.add("12NOON-4PM");
-        visitingTime.add("4PM-7PM");
-
-
-        ArrayAdapter<String> dataAdapter = adapterForSpinner(visitingTime);
-
-        // attaching data adapter to spinner
-        spinnerVisitingTime.setAdapter(dataAdapter);
-
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -432,6 +226,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         }
     }
 
+
     @Override
     protected void onResume() {
         TextView txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
@@ -448,75 +243,32 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         super.onResume();
     }
 
+
     private void sendRequest() {
 
-        /*if(!txtHeading.getText().toString().trim().equalsIgnoreCase("Account Management") && !txtHeading.getText().toString().trim().equalsIgnoreCase("Other Issues"))
-        {*/
-            /*if (edtTID.getText().toString().trim().length() == 0 || edtProblemDetails.getText().toString().trim().length() == 0
-                    || edtContactNumber.getText().toString().trim().length() == 0)
-            {
-                Constants.showToast(this, "Please fill required details");
-            } else*/
-            if(edtTID.getText().toString().trim().length() == 0)
-            {
-                Constants.showToast(this, getString(R.string.invalid_id));
-                edtTID.setError("");
-            } else if(edtProblemDetails.getText().toString().trim().length() == 0)
-            {
-                Constants.showToast(this, getString(R.string.invalid_problem_desc));
-                edtProblemDetails.setError("");
-            } else if (edtContactNumber.getText().toString().trim().length() < 10)
-            {
-                Constants.showToast(this, getString(R.string.invalid_mobile_number));
-                edtContactNumber.setError("");
-            } else if (visitingTime.equals("") || visitingTime.equalsIgnoreCase("Visiting Time"))
-            {
-                Constants.showToast(this, getString(R.string.null_visit_time));
-            } else if (weeklyOff.equals("") || weeklyOff.equalsIgnoreCase("Merchant Week-Off"))
-            {
-                Constants.showToast(this, getString(R.string.null_week_off));
-            } else if (txtSubCode.getText().toString().equalsIgnoreCase("Roll Required"))
-            {
-                if (mTotalRollsRequired.equals("") || mTotalRollsRequired.equalsIgnoreCase("No. Of Rolls"))
-                {
-                    Constants.showToast(this, getString(R.string.no_of_rolls));
-                } else
-                {
-                    callService();
-                }
-            } else {
-                callService();
-            }
-       /* }else{
-            if(edtProblemDetails.getText().toString().trim().length() == 0)
-            {
-                Constants.showToast(this, getString(R.string.invalid_problem_desc));
-                edtProblemDetails.setError("");
-            }else {
-                callService();
-            }
-        }*/
+        if(edtProblemDetails.getText().toString().trim().length() == 0)
+        {
+            Constants.showToast(this, getString(R.string.invalid_problem_desc));
+            edtProblemDetails.setError("");
+        }else {
+            callService();
+        }
     }
 
+
     private void callService() {
-        String tid = edtTID.getText().toString().trim();
+
         String ProblemDetails = edtProblemDetails.getText().toString().trim();
-        String contactNumber = edtContactNumber.getText().toString().trim();
-        String VisitingTime = visitingTime;//edtVisitTime.getText().toString().trim();
-        String RollRequired ;
-        if(txtSubCode.getText().toString().equalsIgnoreCase("Roll Required"))
-            RollRequired = mTotalRollsRequired;
-        else
-            RollRequired = "0";
-        String WeeklyOff = weeklyOff.substring(0,3);
+        String RollRequired = "0";
+
         String serviceType = mServiceType;
 
         if (Constants.isNetworkConnectionAvailable(getApplicationContext())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetData().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, tid, serviceType, ProblemDetails, WeeklyOff, VisitingTime, contactNumber, RollRequired, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", serviceType, ProblemDetails, "", "", "", RollRequired, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetData().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, tid, serviceType, ProblemDetails, WeeklyOff, VisitingTime, contactNumber, RollRequired, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                new GetData().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", serviceType, ProblemDetails, "", "", "", RollRequired, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -524,37 +276,12 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getId())
-        {
-            case R.id.spinnerNoOfRoll:
-                mTotalRollsRequired = spinNoOfRolls.getSelectedItem().toString().trim();
-                Log.e("mtotalroll required", mTotalRollsRequired);
-                break;
-
-            case R.id.spinnerWeeklyOff:
-                weeklyOff = spinWeeklyOff.getSelectedItem().toString().trim();
-                Log.e("weeklyOff", ""+weeklyOff);
-                break;
-
-            case R.id.spinnerVisitingTime:
-                visitingTime = spinnerVisitingTime.getSelectedItem().toString().trim();
-                Log.e("visitingTime", visitingTime);
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 
     public class GetData extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(Activity_SubLinks.this);
+            progressDialog = new ProgressDialog(Activity_SubLinks_2.this);
             progressDialog.setMessage("Please wait...");
             progressDialog.setCancelable(false);
             progressDialog.show();
@@ -638,7 +365,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                                 ShowDialogReponse("Success", Request_Number, docket_id, responseCode);
                         }
                     }else if(result.equalsIgnoreCase("SessionFailure")){
-                        Constants.showToast(Activity_SubLinks.this, getString(R.string.session_expired));
+                        Constants.showToast(Activity_SubLinks_2.this, getString(R.string.session_expired));
                         logout();
                     }else
                     {
@@ -654,55 +381,17 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                     }
                 }else
                 {
-                    Constants.showToast(Activity_SubLinks.this, getString(R.string.network_error));
+                    Constants.showToast(Activity_SubLinks_2.this, getString(R.string.network_error));
                 }
 
 
             } catch (JSONException e) {
                 progressDialog.dismiss();
-                Constants.showToast(Activity_SubLinks.this, getString(R.string.network_error));
+                Constants.showToast(Activity_SubLinks_2.this, getString(R.string.network_error));
             }
             progressDialog.dismiss();
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-
-    private  ArrayAdapter<String> adapterForSpinner(ArrayList<String> list)
-    {
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list)
-        {
-            @Override
-            public boolean isEnabled(int position) {
-                return position != 0;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if(position == 0){
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                }
-                else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        return dataAdapter;
-    }
-
 
 
     private void ShowDialogReponse(String response, String request_Number, String docket_id, String response_code)
@@ -759,5 +448,6 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         startActivity(intent);
         finish();
     }
+
 
 }

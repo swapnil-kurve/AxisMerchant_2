@@ -1,0 +1,571 @@
+<resources>
+    <!--================================================================================================-->
+    <!--==========================================   ID's  =============================================-->
+    <!--================================================================================================-->
+
+    <string name="version">Version UAT-40</string>
+    <!--<string name="version">Version 3.0.2</string>-->
+    <string name="mvisa_id">Mvisa ஐடி</string>
+    <string name="userMobileNo">userMobileNo</string>
+    <string name="regUsersId">regUsersId</string>
+    <string name="emailid">emailid</string>
+    <string name="isActive">isActive</string>
+    <string name="mvisaId">mvisaId</string>
+    <string name="Ttype">Ttype</string>
+    <string name="mvisaID">mvisaID</string>
+    <string name="tid">tid</string>
+    <string name="service_type">serviceType</string>
+    <string name="prob_details">probDetails</string>
+    <string name="off_days">offDays</string>
+    <string name="visit_timing">visitTiming</string>
+    <string name="contact_no">contactNo</string>
+    <string name="rolls_required">rollsRequired</string>
+    <string name="cust_number">custNumber</string>
+    <string name="urlCode">urlCode</string>
+    <string name="currentTime">currentTime</string>
+    <string name="submitReq">Submit Request</string>
+    <string name="fromdate">fromdate</string>
+    <string name="todate">todate</string>
+    <string name="mer_mobile_no">merMobileNo</string>
+    <string name="rName">rName</string>
+    <string name="busiEntityName">busiEntityName</string>
+    <string name="busiType">busiType</string>
+    <string name="rAddress">rAddress</string>
+    <string name="rMobileNo">rMobileNo</string>
+    <string name="rLandlineNo">rLandlineNo</string>
+    <string name="merchant_id">merchantId</string>
+    <string name="mobile_no">mobileNo</string>
+    <string name="deviceType">deviceType</string>
+    <string name="imei_no">IMEINo</string>
+    <string name="imei_no1">imeiNo</string>
+    <string name="verify">veriPin</string>
+    <string name="mpin">mPin</string>
+    <string name="plain_text">plainText</string>
+    <string name="gcm_reg_id">gcmRegID</string>
+    <string name="merchant_mobile_no">merchantMobileNo</string>
+    <string name="userName">userName</string>
+    <string name="email_id">emailid</string>
+    <string name="promotion_id">promotionId</string>
+    <string name="promotion_response">pResponse</string>
+    <string name="from_date">fromDate</string>
+    <string name="to_date">toDate</string>
+    <string name="payment_scheme">paymentScheme</string>
+    <string name="card_type">cardType</string>
+    <string name="transaction_type">transType</string>
+    <string name="filter_by">filterBy</string>
+    <string name="promotionId">promotionId</string>
+    <string name="transactionId">transactionId</string>
+    <string name="oldNumber">oldNumber</string>
+    <string name="newNumber">newNumber</string>
+    <string name="custNumber">custNumber</string>
+    <string name="transStatus">transStatus</string>
+    <string name="requestFor">requestFor</string>
+    <string name="invoice_no">invoiceNo</string>
+    <string name="cust_name">custName</string>
+    <string name="cust_email">custEmail</string>
+    <string name="cust_mobile">custMobile</string>
+    <string name="cust_amount">transAmt</string>
+    <string name="remark">reamrk</string>
+
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+
+    <string name="app_name">ஆக்ஸிஸ் பாங்க் மர்ச்சென்ட் ஆப்</string>
+
+    <string name="sign_in">சைன் இன்</string>
+    <string name="sign_up">சைன் அப்</string>
+    <string name="submit">வழங்குதல்</string>
+    <string name="welcome_text">வணக்கம்</string>
+
+
+    <string name="terms">விதிகள் மற்றும் நிபந்தனைகள்</string>
+
+    <string name="welcome_message">வியாபாரிக்கு நல்வரவு</string>
+    <string name="Rs">\u20B9</string>
+
+    <string name="hint_cust_info_epayment">வாடிக்கையாளரின் விபரங்கள்</string>
+    <string name="hint_cust_name_epayment">வாடிக்கையாளரின் பெயர்</string>
+    <string name="hint_cust_email_epayment">வாடிக்கையாளரின் ஈமெயில் ஐடி</string>
+    <string name="hint_cust_mobile_epayment">வாடிக்கையாளரின் மொபைல் எண்</string>
+    <string name="text_cust_mobile_epayment">மொபைல் எண்</string>
+    <string name="hint_remark_epayment">குறிப்புக்கள்</string>
+
+    <string name="hint_invoice_no_epayment">இன்வாஸ் நம்பர்</string>
+
+    <string name="date">தேதி</string>
+    <string name="volume">மொத்த அளவு</string>
+    <string name="total_amount">மொத்த தொகை,</string>
+    <string name="amount">தொகை,</string>
+    <string name="average">சராசரி அளவு</string>
+    <string name="custom_search">முறையான தேடுதல்</string>
+    <string name="next">அடுத்து</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="keep_me">என்னை தொடர்ந்து  லாக் நிலையில் வையுங்கள்</string>
+    <string name="title_activity_home">ஆக்ஸிஸ் பாங்க்</string>
+    <string name="title_activity_otp">OTP  என்டர் செய்யுங்கள்</string>
+    <string name="title_activity_set_m_pin">MPIN என்டர் செய்யுங்கள். கணக்கு வெற்றிகரமாக சரிபார்க்கப்பட்டுள்ளது</string>
+    <string name="confirm">செட் செய்து உறுதியளியுங்கள்.</string>
+    <string name="congo">பாராட்டுக்கள்</string>
+    <string name="verified">கணக்கு வெற்றிகரமாக சரிபார்க்கப்பட்டுள்ளது!</string>
+    <string name="set_mpin">தயவுசெய்து உங்கள் கணக்குக்காக   mPIN செட் செய்யுங்கள்.</string>
+    <string name="title_activity_user_profile">மை ஃப்ரொஃபைல்,</string>
+    <string name="title_activity_reports">ரிப்போர்ட்கள் மற்றும்
+MIS
+</string>
+    <string name="title_activity_activity_epayment">SMS கட்டணம்</string>
+    <string name="title_activity_activity_SMS_sign_up">SMS கட்டணம் சைன் அப்</string>
+    <string name="title_activity_activity_all_transactions">அனைத்து பரிவர்த்தனைகள்</string>
+    <string name="transactions_status">பரிவர்த்தனை நிலை</string>
+    <string name="transaction_report">பரிவர்த்தனை அறிக்கை</string>
+    <string name="businessDetails">வணிகத்தின் விபரங்கள்</string>
+    <string name="sub_user">உப பயனர்</string>
+    <string name="merchantid">வியாபாரியின் ஐடி </string>
+    <string name="mobileNo">மொபைல் எண்</string>
+    <string name="address">முகவரி</string>
+    <string name="create">உருவாக்குங்கள்</string>
+    <string name="createNewUser">உப பயனர் உருவாக்குங்கள். </string>
+    <string name="email">மின்னஞ்சல் சேர்க்கப்பட்டுள்ளது ----- பரிவர்த்தனை ஐடி நான் ஏற்கிறேன்,</string>
+    <string name="added_on">-ல் சேர்க்கப்பட்டுள்ளது</string>
+    <string name="proceed">செயல்படுத்துதல்</string>
+    <string name="transactionId_title">பரிவர்த்தனை ஐடி</string>
+    <string name="grow_business">ஆக்ஸிஸ் பாங்க் மூலம் உங்கள்
+வியாபாரத்தை பெருக்குங்கள்.</string>
+    <string name="grow_business2">கார்டுகள் மூலம் பேமென்ட்கள் பெற்று
+உங்கள் வியாபாரத்தை பெருக்குங்கள்.</string>
+    <string name="axis_offer">ஆக்ஸிஸ் பாங்க் பேமென்ட்களை
+ஏற்க புதிய வழிகளை வழங்குகிறது</string>
+    <string name="pt1">சுலபமான ஒருங்கிணைப்பு, விரைவான
+மற்றும் சிக்கலற்ற விதத்தில் பேமெண்ட்</string>
+    <string name="pt2">வசதியான அப்-டைம் மற்றும் கிடைக்கும்
+விதம், அருமையான கட்டணத்தில்</string>
+    <string name="pt3">தொழிற்சாலையில் மிகச் சிறந்த
+தரநிலைகளுக்கு ஏற்ற நிலையில் இருக்கிறது.
+</string>
+    <string name="pt4">அதிக பாதுகாப்பு, 128 பிட் என்கிரிப்ஷன்</string>
+    <string name="pt5">விரைவான பரிவர்த்தனை -செயல்முறை  செயல்முறை வேகம். இதனால் வியாபார நஷ்ட அபாயம் மிகவும் குறைவு</string>
+    <string name="pt6">பயன்படுத்த சுலபமான மர்ச்சென்ட்
+போர்ட்டல் மூலம் டேட்டாவை
+எளிதாக உடனே தொடர்பு கொள்தல்.
+
+</string>
+
+    <string name="refer1">எங்களின் சேவைகளில் மகிழ்ச்சிதானே</string>
+    <string name="refer2">உங்கள் நண்பர்களுக்கு ஆக்ஸிஸ் பாங்க் பேமெண்ட் தீர்வை பரிந்துரையுங்கள்!</string>
+    <string name="refer3">எங்களின் ரிலேஷன்ஷிப் டீமிலிருந்து
+உங்கள் நண்பருக்கு ஒரு அழைப்பு வரும்
+</string>
+
+
+
+    <string name="accept_terms">நான் ஏற்கிறேன்</string>
+    <string name="title_activity_activity_offers">சலுகைகள் மற்றும் அறிவிப்புக்கள்</string>
+    <string name="title_activity_refer">ஒரு நண்பரை பரிந்துரை செய்யுங்கள்</string>
+    <string name="merchant_pay">வியாபாரிக்கான பேமெண்ட்</string>
+    <string name="report">அறிக்கை (Pos) பரிவர்த்தனை. செட்டில் செயப்படாத Pos</string>
+    <string name="transaction">பரிவர்த்தனை</string>
+    <string name="pos">செட்டில் செயப்படாத Pos</string>
+    <string name="refund">ரிஃபண்ட் பரிவர்த்தனை,</string>
+    <string name="mpr_msg1">MPR-ல். POS டெர்மினல்களுக்கான
+டேட்டா மற்றும் mVisa
+பரிவர்த்தனைகளின் தகவல்
+</string>
+    <string name="pay_date">பேமெண்ட் தேதி</string>
+    <string name="count_of_xn">பரிவர்த்தனைகளின் எண்ணிக்கை</string>
+    <string name="net_amount">நிகர தொகை</string>
+    <string name="gross_amount">மொத்த தொகை</string>
+    <string name="mdr">எம்டிஆர்</string>
+    <string name="service_tax">சேவை வரி</string>
+    <string name="hold_amnt">அந்த நாளுக்கான தொகையை இருப்பு வைத்திருத்தல்</string>
+    <string name="adjustments">அட்ஜஸ்ட்மெண்ட்கள்</string>
+    <string name="cashPOS">கேஷ் @ POS</string>
+    <string name="total_hold_amount">தற்போது இருப்பு வைத்துள்ள மொத்த தொகை
+
+</string>
+    <string name="email_msg">ஈ-மெயில் மீ மெர்ச்சன்ட் பேமெண்ட் அறிக்கை</string>
+    <string name="sign_up_msg1">உங்கள் பகுதி ஆக்ஸஸ் பாங்க் கால் சென்டரின்  தொடர்பு பகுதியில்   ரிலேஷன்ஷிப் மேனேஜரை 1800 209 5577 / 1800 103 5577வில் தொடர்பு கொள்ளுங்கள்.</string>
+    <string name="sign_up_msg2">இது மெர்ச்சன்ட் அடையாள கோடு. பரிவர்த்தனை கட்டண சிலிப் மற்றும்  MPR அறிக்கைகளில் அச்சிடப்பட்டதாக இருக்கும்
+
+</string>
+    <string name="filter">ஃபில்டர்</string>
+    <string name="report_type">அறிக்கை வகை,</string>
+    <string name="reports">அறிக்கைகள்</string>
+    <string name="duration">காலவரம்பு</string>
+    <string name="duration_analytics">duration</string>
+    <string name="report_criteria">ரிபோர்ட் தகுதி வரம்பு</string>
+    <string name="clear">தெளிவானது</string>
+    <string name="apply">பயன்படுத்துதல்</string>
+
+    <string name="title_activity_faq">அடிக்கடி கேட்கப்படும் கேள்விகள்</string>
+    <string name="rptCriteria">ரிபோர்ட் தகுதி வரம்பு</string>
+    <string name="trans_type">டிரான்ஸ் டைப்</string>
+
+    <string name="fees_title1">MDR / Interchange</string>
+    <string name="fees_description">விபரம்</string>
+    <string name="fees_debit">கழித்தல்</string>
+    <string name="fees_domestic_cards">டொமஸ்டிக் கார்டுகள்</string>
+    <string name="fees_international">சர்வதேசம்</string>
+    <string name="fees_setup">செட்அப் கட்டணம்/ மாதாந்திர வாடகை,</string>
+    <string name="fees_net_banking">நெட் பேங்கிங்,அதிக இன்டர்சேஞ்ச்</string>
+
+    <string name="fees_title2">அதிக இன்டர்சேஞ்ச்</string>
+    <string name="fees_description1">யுடிலிடி/அரசு காப்பீடு/ கல்வி/ பல்கலை கழகங்கள்</string>
+    <string name="fees_debit1">Transaction Value \u003c\u003d 2000 : 0.75%\nTransaction Value \u003E 2000 : 1%</string>
+    <string name="fees_domestic_cards_diff11">1.05%</string>
+    <string name="fees_domestic_cards_diff12">1.05%</string>
+    <string name="fees_domestic_cards_blended1">1.05%</string>
+    <string name="fees_international1">DCC / Non DCC 0.99% / 2.50%</string>
+    <string name="fees_setup1">ரூ. 5000,  ரூ 500</string>
+    <string name="fees_net_banking1">ரூ.15</string>
+
+    <string name="fees_description2">இதர அனைத்து எம்சிசிக்கள் </string>
+    <string name="fees_debit2">Transaction Value \u003c\u003d 2000 : 0.75%\nTransaction Value \u003E 2000 : 1%</string>
+    <string name="fees_domestic_cards_diff21">1.85%</string>
+    <string name="fees_domestic_cards_diff22">2.20%</string>
+    <string name="fees_domestic_cards_blended2">2.15%</string>
+    <string name="fees_international2">DCC / Non DCC 0.99% / 2.50%</string>
+    <string name="fees_setup2">Rs.10000 / Rs.750</string>
+    <string name="fees_net_banking2">1.80%</string>
+    <string name="done">நான் ஏற்கிறேன்</string>
+    <string name="title_activity_analytics">பகுப்பாய்வு</string>
+    <string name="email_header">மெர்ச்சன்ட் பேமெண்ட் அறிக்கைக்காக ஈமெயில் கோரிக்கை.</string>
+    <string name="mid_title">MID எண்,</string>
+    <string name="select_date_range">தேர்ந்தெடுக்கப்படும் டேட்டா வரிசை</string>
+    <string name="forgot">MPIN மறந்துவிட்டதா?</string>
+    <string name="like_me_info_msg">ஒரே வகையில், மெர்ச்சன்ட் எண்ணிக்கை கிடைக்காவிட்டால் குறைந்தபட்ச வரம்பு.
+
+</string>
+    <string name="no_offers">உங்களுக்காக எந்த சலுகையும் இல்லை</string>
+
+    <string name="service_support">சேவை ஆதரவு</string>
+    <string name="qr_code_payment">QR-கோடு கட்டணம்</string>
+    <string name="ok">ஒகே</string>
+    <string name="viewalltransaction">அனைத்து பரிவர்த்தனைகளையும் பாருங்கள்.</string>
+    <string name="staticqrcode">ஸ்டாடிக் QR கோட்</string>
+    <string name="dynamicqrcode">டைனமிக் QR கோட்</string>
+    <string name="confirmqr">உறுதி செய்தல்</string>
+
+
+
+
+    <string-array name="navigation_menu">
+        <item>SMS கட்டணம்</item>
+        <item>QR கோட் கட்டணம்</item>
+        <item>சேவை ஆதரவு</item>
+        <item>அறிவிப்பு மற்றும் MIS</item>
+        <item>பகுப்பாய்வு</item>
+        <item>சலுகைகள் மற்றும் அறிவிப்புக்கள்</item>
+        <item>ப்ரொஃபைல் நிர்வாகம்</item>
+        <item>ஒரு நண்பரை பரிந்துரை செய்யுங்கள்</item>
+        <item>Change language</item>
+        <item>அடிக்கடி கேட்கப்படும் கேள்விகள்
+
+</item>
+        <item>டெமோ வீடியோ</item>
+        <item>ஆப் பற்றி</item>
+        <item>லாக் அவுட்</item>
+    </string-array>
+
+    <string-array name="sms_pay_status_arr">
+        <item>அனைத்து</item>
+        <item>நிலுவையில்,</item>
+        <item>வெற்றி,</item>
+        <item>தோல்வியாகி விட்டது</item>
+    </string-array>
+
+    <string-array name="all_xn_report_mis">
+        <item>அனைத்தும்</item>
+        <item>SMS கட்டணம்</item>
+        <item>QR கட்டணம் வியாபாரி பேமென்ட் அறிக்கைகள், பரிவர்த்தனை அறிக்கைகள்,  செட்டில்மென்ட் செயப்படாத POS  பரிவர்த்தனை,
+        </item>
+    </string-array>
+
+    <string-array name="sms_pay_sign_up">
+        <item>அம்சங்கள்</item>
+        <item>ஃபீஸ் மற்றும் கட்டணங்கள்</item>
+    </string-array>
+
+    <string-array name="offers_notices">
+        <item>அம்சங்கள்</item>
+        <item>விதிகள் மற்றும் நிபந்தனைகள்</item>
+    </string-array>
+
+    <string-array name="array_analytics">
+        <item>பரிவர்த்தனை  பகுப்பாய்வு</item>
+        <item>என்னைப் போன்ற வியாபாரி</item>
+    </string-array>
+
+    <string-array name="report_type_array">
+        <item>வியாபாரி பேமெண்ட் அறிக்கைகள்</item>
+        <item>பரிவர்த்தனை அறிக்கைகள்</item>
+        <item>செட்டில்மென்ட் செயப்படாத
+POS பரிவர்த்தனை,
+</item>
+        <item>ரீஃபண்ட் பரிவர்த்தனை அறிக்கை,	</item>
+    </string-array>
+
+    <string name="features">அம்சங்கள்</string>
+    <string name="fees">ஃபீஸ் மற்றும் கட்டணங்கள்</string>
+    <string name="title_activity_notification">அறிவிப்பு</string>
+    <string name="title_activity_transaction_details">QR பரிவர்த்தனை</string>
+    <string name="id">id</string>
+    <string name="mvisa_merchant_id">mvisa_merchant_id</string>
+    <string name="mVisaId">mVisa ஐடி</string>
+    <string name="rrn">RRN நம்பர்</string>
+    <string name="serviceRequestNumber">சேவை கோரிக்கை</string>
+    <string name="createQr">QR கோடு உருவாக்குங்கள்
+    </string>
+    <string name="scan_qr">மேற்கண்ட QR கோடை ஸ்கேன் செய்யுங்கள்.</string>
+    <string name="title_activity_qr_sign_up">QR கட்டணம் சைன் அப்.</string>
+    <string name="title_activity_activity__qrall_transaction">Activity_QRAllTransaction</string>
+    <string name="no_transation">No transaction found</string>
+    <string name="fromDate">fromDate</string>
+    <string name="toDate">toDate</string>
+    <string name="refund_all_text">மொத்த SMS மற்றும் QR கட்டணம்</string>
+    <string name="optional">விருப்பத் தேர்வுக்குரியது</string>
+    <string name="analytics_heading1">பகுப்பாய்வில் PoS டெர்மினல்ஸ் மற்றும் எம்விசா பரிவர்த்தனைகள் உட்பட்டது. காட்டுகிறது. காட்டுதல் டிக்  ஒரு நண்பரை பரிந்துரை செய்யுங்கள்</string>
+    <string name="analytics_heading2">காட்டுதல்: டிக்கெட் அளவு, மாதாந்திரம், அனைத்து தகுதி வரம்புகள்</string>
+    <string name="email_sent_success">நாங்கள் நீங்கள் பதிவு செய் துள்ள மின்னஞ்சல் ஐடிக்கு வியாபாரி பேமெண்ட் அறிக்கையை அனுப்பியுள்ளோம். உங்களின் மின்னஞ்சல் எங்களிடம் பதிவு செய்யப்படவில்லை</string>
+    <string name="email_sent_success_new">We have taken your request.\nStatement shall be mailed to</string>
+    <string name="email_sent_failed">உங்களின் மின்னஞ்சல் எங்களிடம் பதிவு செயப்படவில்லை. தயவுசெய் து உங்கள் மின்னஞ்சல் ஐடியை பதிவு செய்யுங்கள்.</string>
+
+
+    <string name="axis_offer_qr">ஆக்ஸிஸ் பாங்க் அறிமுகப்படுத்துகிறது
+QR கோட் பே - இது ஆக்ஸிஸ்
+வியாபாரிகளுக்காக குறைவான பேமெண்ட்டை ஏற்றுக் கொள்ளும் டெர்மினல் புதுமை.</string>
+    <string name="qr_feature_title1">வியாபாரிகளுக்கான நன்மைகள்</string>
+    <string name="qr_feature_title2">வாடிக்கையாளர்களுக்கான நன்மைகள்.</string>
+    <string name="qr_pt1">டெர்மினல் கட்டணம் இல்லை மற்றும்
+கேஷ் கார்டு கையாளும் கட்டணம் இல்லை
+</string>
+    <string name="qr_pt2">உடனடியாக பேமெண்ட் அறிவிப்புகள்</string>
+    <string name="qr_pt3">குறைக்கப்படும் சார்ஜ்-பேக்.</string>
+    <string name="qr_pt4">ஆட்டோ செட்டில்மெண்ட்</string>
+    <string name="qr_pt5">ஆப்-ல் சுலபமான விற்பனை கண்காணிப்பு</string>
+    <string name="qr_pt6">கேஷ்/ கார்டு இல்லாத அனுபவம்.</string>
+    <string name="qr_pt7">உடனடி அறிவிப்புகளுடன்
+பாதுகாப்பான பேமெண்ட்
+</string>
+    <string name="qr_pt8">மோசடி அபாயம் இல்லை</string>
+
+
+    <string name="success">வெற்றி,</string>
+
+    <string name="sent_on_mobile">பதிவு செய்த மொபைல் எண் மூலம் அனுப்புங்கள்</string>
+    <string name="not_recieved">கிடைக்கவில்லையா?
+
+</string>
+    <string name="resend_otp">மீண்டும் OTP அனுப்புதல்</string>
+    <string name="Customer_MobileNo">வாடிக்கையாளரின் மொபைல் எண்</string>
+    <string name="Amount">தொகை,</string>
+    <string name="Remarks">குறிப்புக்கள்</string>
+
+    /**********************************************************************************
+    ******************************* Toast Messages *********************************
+    **********************************************************************************/
+
+    //Sign Up//
+    <string name="enter_valid_details">தயவுசெய்து தகுந்த விவரங்களை என்டர் செய்யுங்கள்.</string>
+    <string name="enter_valid_mobile">தயவுசெய்து சரியான மொபைல் எண்ணை என்டர் செய்யுங்கள்</string>
+    <string name="enter_valid_mid">தயவுசெய்து சரியான மெர்ச்சன்ட் ஐடியை என்டர் செய்யுங்கள்</string>
+    <string name="invalid_details">என்டர் செயப்பட்டுள்ள விவரங்கள் பொருத்தமற்றவை</string>
+    //OTP//
+    <string name="enter_otp">தயவு செய்து ஒன் வேர்ட் பாஸ்வேர்டை
+என்டர் செய்யுங்கள்.
+</string>
+    <string name="incorrect_otp">வருந்துகிறோம்! ஓடிபி பொருந்தவில்லை  மீண்டும் முயற்சி செய்யுங்கள் அல்லது ரீசென்ட் OTP -ஐ கிளிக் செய்யுங்கள்.</string>
+    //MPIN//
+    <string name="mpin_not_provide">தயவுசெய்து MPIN என்டர் செயுங்கள்.</string>
+    <string name="mpin_not_matching">செட் செய்த  MPIN உடன் ஒத்துப் போகவில்லை என்பதை உறுதி செய்யுங்கள். </string>
+    <string name="mpin_less_digit">MPIN 4 கேரக்டர்கள் கொண்டதாக இருக்க வேண்டும்.!</string>
+    <string name="confirm_mpin">தயவு செய்து MPIN உறுதி செய்யுங்கள்.</string>
+    <string name="wrong_mpin">தயவு  செய்து சரியான MPIN   அளியுங்கள்.</string>
+    //Internet//
+    <string name="no_internet">இன்டர்நெட் இணைப்பு கிடைப்பதில்லை</string>
+    <string name="network_error">நெட்ஒர்க் தவறு ஏற்பட்டுள்ளது. தயவுசெய்து பின்னர் முயற்சியுங்கள்.</string>
+    //SubUser//
+    <string name="no_subuser">உப பயனர் எதுவும் அறியப்படவில்லை</string>
+    <string name="sub_user_mobile_already_exists">இந்த யூஸர் ஏற்கனவே உள்ளது</string>
+    <string name="sub_user_created">உப பயனர் உருவாக்கப்பட்டுள்ளது</string>
+    <string name="sub_user_updated">Sub User has been updated.</string>
+    <string name="sub_user_not_entered">தயவுசெய்து விவரங்களை என்டர் செய்யுங்கள்</string>
+    //SMS onBoarding//
+    <string name="sms_on_boarding_pop_up_submit">SMS கட்டணம் சைன் அப்-க்காக
+கோரிக்கை செய்ததற்கு நன்றி.
+செயல்படுத்தப்பட்டதும் உங்களுக்கு
+ஒரு தகவல் கிடைக்கும்.</string>
+    <string name="sms_on_boarding_pop_up_submit_fail">வருந்துகிறோம். இந்த தருணத்தில்
+கோரிக்கையை பரிசீக்க இயலாது. தயவுசெய்து சிறிது நேரம் கழித்து முயற்சி செய்யுங்கள்.</string>
+    //SMS Request Payment//
+    <string name="no_mobile_and_amount">தயவுசெய்து மொபைல் எண்
+மற்றும் தொகையை என்டர் செய்யுங்கள்.</string>
+    <string name="no_amount">தயவு செய்து பேமெண்ட் தொகையை
+என்டர் செய்யுங்கள்.
+</string>
+    <string name="no_mobile_number">மொபைல் நம்பர் கட்டாயம்</string>
+    <string name="invalid_mobile_number">ஒரு சரியான 10 இலக்க மொபைல் எண்  என்டர் செய்யுங்கள்</string>
+    <string name="airplane_mode">நீங்கள் ஏர்ப்ளேன் மோடில் உள்ளீர்கள்.
+தயவு செய்து நெட்வொர்க்கில்
+இணைந்து மீண்டும் முயற்சி செய்யுங்கள்.</string>
+    <string name="url_not_sent">SMS பேமெண்ட் லிங்க் அனுப்பப்படவில்லை.
+தயவுசெய்து மீண்டும் முயற்சி செய்யுங்கள்.</string>
+    <string name="zero_amount">தொகை 0-வாக இருக்கக்கூடாது.</string>
+    <string name="amount_exceeds_200000">ரூபா 200,000க்கு அதிகமான பேமெண்ட் ஏற்றுக் கொள்ளப்படுவதில்லை.</string>
+    <string name="url_sent">பேமெண்ட் லிங்க் வெற்றிகரமாக
+அனுப்பப்பட்டுள்ளது</string>
+    <string name="refund_payment">இந்த பேமெண்டை ரீஃபண்ட் செய
+நீங்கள் விரும்புவது உறுதிதானா?
+</string>
+    <string name="refund_successful">வெற்றிகரமான ரீஃபண்ட்.</string>
+    //MIS and Reports//
+    <string name="no_details">விவரங்கள் ஏதும் கிடைக்கவில்லை</string>
+
+    //Offers and Notices
+    <string name="promo_response">ப்ரமோஷனுக்கான ஆதரவு அப்டேட் செயயப்பட்டுள்ளது</string>
+    //Refer a friend
+    <string name="mandatory_details">தயவுசெய்து கட்டாயமான விபரங்களை என்டர் செய்யுங்கள்</string>
+    <string name="thank_you_refer">தங்கள் பரிந்துரைக்கு நன்றி.</string>
+
+    <string name="sign_out">வெற்றிகரமான சைன்-அவுட்.</string>
+
+    //QR on boarding
+    <string name="qr_on_boarding_pop_up">QR கட்டணம் சைன் அப்.-க்காக நீங்கள்
+கோரிக்கை அளித்திருப்பதற்கு நன்றி.
+செயல்படுத்தப்பட்டதும் உங்களுக்கு
+ஒரு தகவல் கிடைக்கும்.</string>
+    //QR payment request
+    <string name="enter_primary_id">தயவுசெய்து பிரைமரி ஐடி என்டர் செய்யுங்கள்</string>
+
+    <string name="request_number">உங்கள் கோரிக்கை எண்</string>
+
+    <string name="invalid_email_id">பொருத்தமற்ற மின் அஞ்சல் ஐடி</string>
+
+    <string name="offer_remind_later">உங்கள் கருத்துகளுக்கு நன்றி.	</string>
+
+    <string name="offer_accepted">உங்கள் விமர்சனத்துக்கு நன்றி. எங்களின்
+ரிலேஷன்ஷிப் மேனேஜர் உங்களை
+மீண்டும் தொடர்பு கொள்வார்</string>
+
+    <string name="request_cannot_process">வருந்துகிறோம், இந்த தருணத்தில் கோரிக்கையை பரிசீலிக்க இயலவில்லை.</string>
+    <string name="enter_amount">தயவுசெய்து தொகையை என்டர் செய்யுங்கள்</string>
+    <string name="cannot_refund">இந்த பரிவர்த்தனையை ரீஃபண்ட் செய்ய இயலாது.</string>
+    <string name="search_by_date">தேதி வாரியாக தேடுதல்.</string>
+    <string name="search_by_sr">SR/TID எண் மூலம் தேடுதல்.</string>
+
+
+    <string name="sms">SMS</string>
+    <string name="qr">QR கோட்</string>
+    <string name="reprt">அறிக்கைகள்</string>
+    <string name="service">சேவை</string>
+    <string name="support">ஆதரவு</string>
+    <string name="pay">கட்டணம்</string>
+    <string name="mis">MIS</string>
+    <string name="last_transaction">கடைசி பரிவர்த்தனை</string>
+    <string name="view_all">அனைத்து பரிவர்த்தனைகளையும் பாருங்கள்.</string>
+    <string name="request_payment">புதிய பேமெண்டுக்கான கோரிக்கை.</string>
+    <string name="data_for_60_days">கடந்த 60 நாட்களுக்காக  கிடைக்கும் டேட்டா.</string>
+    <string name="transactions">பரிவர்த்தனைகள்
+
+</string>
+    <string name="volme">அளவு</string>
+    <string name="request">கோரிக்கை பேமென்ட், QR கோடு உருவாக்கு</string>
+    <string name="payment">பேமெண்ட்</string>
+    <string name="add_to_fav">வருங்கால பேமெண்டுகளுக்காக
+ஃபேவரைட்டுகளுக்கு சேருங்கள்.</string>
+    <string name="mVisa">mVisa</string>
+    <string name="qr_pay">QR கோட் கட்டணம் </string>
+    <string name="generate_qr">QR -கோட் உருவாக்குங்கள்.</string>
+    <string name="track_status">கண்காணிப்பு நிலை</string>
+    <string name="quick">விரைவு</string>
+    <string name="links">தொடர்புகள்,</string>
+    <string name="terminal">டெர்மினல்</string>
+    <string name="hw_issue">ஹார்டுவேர் பிரச்சினைகள்.
+
+</string>
+    <string name="app_issue">விண்ணப்ப பிரச்சினைகள்</string>
+    <string name="account">கணக்கு</string>
+    <string name="management">நிர்வாகம்</string>
+    <string name="others">மற்றவை</string>
+    <string name="roll_required">தேவைப்படும் பங்கு,</string>
+    <string name="training_required">தேவைப்படும் பயிற்சி, </string>
+    <string name="adapter_problem">அடாப்டர் பிரச்சினை</string>
+    <string name="base_problem">அடிப்படை பிரச்சினை </string>
+    <string name="battery_problem">பேட்டரி பிரச்சினை</string>
+    <string name="card_reader_problem">கார்டு ரீடர் பிரச்சினை</string>
+    <string name="display_problm">டிஸ்பிளே பிரச்சினை</string>
+    <string name="key_problem">கீ-க்கள் செயல்படுவதில்லை</string>
+    <string name="power_card_problem">பவர் கார்டு பிரச்சினை</string>
+    <string name="printer_problem">பிரிண்டர் பிரச்சினை,</string>
+    <string name="settlement_Problem">செட்டில்மெண்ட் பிரச்சினை</string>
+    <string name="terminal_sw_currpted">டெர்மினல் சாஃப்ட்வேர் பழுதாகி விட்டது</string>
+    <string name="axis_no">ஆக்ஸிஸ் கணக்கு எண்</string>
+    <string name="neft">NEFT/RTGS</string>
+    <string name="dba">DBA பெயர்</string>
+    <string name="legal_name">Legal Name</string>
+    <string name="address_change">முகவரி மாற்றம்</string>
+    <string name="phone_no">தொலைபேசி எண்</string>
+    <string name="new_loc">புதிய பகுதி</string>
+    <string name="asset_swapping">சொத்தை மாற்றிக் கொள்தல்</string>
+    <string name="dcc">DCC</string>
+    <string name="additional_dcc">கூடுதல் DCC</string>
+    <string name="cash_pos">கேஷ் @ POS</string>
+    <string name="apply_for_mvisa">mVISAக்கான விண்ணப்பம்,</string>
+    <string name="mpr_request">MPR அறிக்கை கோரிக்கை</string>
+    <string name="call_issues">அழைப்பு பிரச்சினைகள்</string>
+    <string name="payement_inquiry">பேமெண்ட் விசாரணை</string>
+    <string name="pick_up_card">பிக் அப் கார்டு</string>
+    <string name="decline_card">கார்டை மறுத்து விடவும்</string>
+    <string name="card_swipe_error">கார்ட் ஸ்வைப் தவறு</string>
+    <string name="remind_later">பின்னர் நினைவுபடுத்தவும்</string>
+    <string name="offer_accept_yes">ஆமாம்</string>
+    <string name="invalid_id">Please enter valid Terminal ID</string>
+    <string name="invalid_problem_desc">Problem description is mandatory</string>
+    <string name="null_visit_time">Please provide visiting time</string>
+    <string name="null_week_off">Please provide weekly off</string>
+    <string name="no_of_rolls">Please provide required roll</string>
+    <string name="proceedTerms"><![CDATA[View Terms & Conditions to proceed]]></string>
+    <string name="termsDataSMS"><![CDATA[<body style=\"text-align:justify\"><p><b>Terms and Conditions for Internet Payment Gateway Services (‘IPG’) through SMS Pay on Axis Merchant App</b></p> <p><big><big>•</big></big> In using IPG Facility, the Merchant agrees: <p>(i) Not to use the Facility in any manner, or in furtherance of any activity, which constitutes a violation of any law or regulation or which may result in fraud on any person or which may cause the Bank to be subject to investigation, prosecution or legal action.<\p><p> (ii) To use information regarding a Cardholder (including name, address, e-mail address, telephone numbers, and data regarding Bank accounts or financial instruments) conveyed to Merchant by consumer software designed to access the Facility only for the purpose of completing the transactions for which it was furnished, and not to sell or otherwise furnish such information to others unless the Merchant has an independent source of such information or obtains the express consent of such Cardholder.<\p><p> (iii) To use the software in accordance with the terms on which the software has been provided to the Merchant and not to attempt to modify, translate, disassemble, decompile or reverse engineer the software, or use it for any purpose other than for the utilisation of the Facility</p><p> <big><big>•</big></big> The Merchant shall provide a commercially reasonable level of Cardholder support to the Cardholder’s with respect to sales using the Facility. Such support shall include appropriate notice to the Cardholder’s of: <p>(i) a means of contacting Merchant in the event the Cardholder has questions regarding the nature or quality of the goods or services that Merchant offers for sale and<\p><p> (ii) procedures for resolving disputes. If the Bank determines in good faith that the Merchant\'s failure to comply with this paragraph is causing an unacceptable burden on its Cardholder support facilities, the Bank may suspend or terminate this Agreement<\p><p> <big><big>•</big></big> If for any reason the Facility or any component of the Facility becomes, or in the Bank\'s opinion is likely to become, the subject of a claim of infringement, the Bank reserves the right to, at its option and expense, either<\p><p> (i) to revoke the right of the Merchant to continue using the Facility as permitted in this Agreement, or <\p><p>(ii) to replace or modify Facility or the infringing component of the Facility so that it becomes non-infringing. If, after using commercially reasonable efforts, the Bank is unable to cure the infringement, any of the Parties may terminate this Agreement on written notice to the other Party</p><p> <big><big>•</big></big> The Merchant shall not accept any Order for which payment is to be made through a Valid Credit / Debit Card unless the transaction is authorised by the Payment Gateway </p><p><big><big>•</big></big> If the Merchant is unable to deliver any part of the Cardholder’s Order within 5 calendar days from the date on which the Order was placed, or as mutually agreed between the Merchant and the Cardholder, Merchant shall cancel the Order and refund Cardholder </p><p><big><big>•</big></big> Deliver to the Cardholder a bill including mentioned of charges covered in the payment received from the Cardholder through the Payment Gateway</p><p> <big><big>•</big></big> The Bank reserves the right to impose limits on the number of Transactions undertaken using a particular Valid Credit / Debit Card and the value of a single transaction during any time period, and reserves the right to refuse to make payments in respect of transactions exceeding such limit </p><p><big><big>•</big></big> The Merchant hereby expressly agrees not to directly or indirectly deal in the following product/s or service/s at any time during the tenure of this Agreement. Without prejudice whatsoever to the Bank’s other rights & privileges, the Merchant binds himself unequivocally to be solely liable for including but not limited to any legal actions and suits, and to make good to the Bank immediately upon demand damages suffered by the Bank directly or owing to claims by any third party, levy of assessment fees or fines, penal actions taken by Card Association, the Reserve Bank of India and any other statutory or competent authorities for any breach of any terms of this Agreement, including the dealing in with goods/services in the \"Banned Category List\". For the full list kindly refer to <a href = "http://google.co.in/" target = "_blank"> Banned Category List.</a></p></body>]]></string>
+    <string name="termsDataQR"><![CDATA[<body style=\"text-align:justify\"><p>The Merchant agrees and confirms that signing up for mVisa (QR code based payments) is to avail additional services from the bank. The arrangement for mVisa shall not have any effect of over riding all of any of the provisions as contained in Principal Agreement Signed. It is understood that for mVisa arrangement, the Principal Agreement stands in force and this additional services shall always be read  as forming part and parcel of Agreement.</p></body>]]></string>
+    <string name="regular01">1.85%</string>
+    <string name="blended01">2.15%</string>
+    <string name="premium01">2.20%</string>
+    <string name="update">Update User</string>
+    <string name="axis_fees_qr">Axis bank offers new ways to accept the payments. Expand your business by accepting payments through cards.</string>
+    <string name="qr_fees_pt1">Initial Setup fees Waived off</string>
+    <string name="qr_fees_pt2">Rentals fees - Waived off</string>
+    <string name="qr_fees_pt3">LTC / NTC - Waived off</string>
+    <string name="qr_fees_pt4">MDR to be considered same as that agreed upon for POS transactions.</string>
+    <string name="qr_fees_pt5">All the charges / fees agreed upon  for POS will remain as is.</string>
+
+
+    <string name="title_select_language">Select Language</string>
+    <string name="hindi">Hindi</string>
+    <string name="english">English</string>
+    <string name="tamil">Tamil</string>
+    <string name="telugu">Telugu</string>
+    <string name="bengali">Bengali</string>
+    <string name="kannada">Kannada</string>
+
+    <string name="morning_text">Good Morning</string>
+    <string name="afternoon_text">Good Afternoon</string>
+    <string name="evening_text">Good Evening</string>
+    <string name="last_login">Last Login</string>
+    <string name="first_login">First Login</string>
+    <string name="secretKey">secretKey</string>
+    <string name="authToken">authToken</string>
+    <string name="session_expired">Session Expired</string>
+    <string name="root_msg">This device is rooted. You cannot proceed further.</string>
+    <string name="try_later">தயவுசெய்து பின்னர் முயற்சியுங்கள்.</string>
+    <string name="request_raised">Ticket successfully raised.</string>
+    <string name="performance_of_merchants">Performance of top 10 Merchants</string>
+    <string name="invalid_login">You have already signed up with other device.</string>
+    <string name="registred_mobile_no">Registered Mobile No.</string>
+    <string name="set_mpin_hint">Set mPIN</string>
+    <string name="confirm_mpin_hint"> செய்த  MPIN </string>
+    <string name="username">Username</string>
+    <string name="email_id_hint">மின்னஞ்சல் சேர்க்கப்பட்டுள்ளது ----- பரிவர்த்தனை ஐடி நான் ஏற்கிறேன்,</string>
+    <string name="enter_mpin_hint">MPIN என்டர் செய்யுங்கள். கணக்கு வெற்றிகரமாக சரிபார்க்கப்பட்டுள்ளது</string>
+</resources>

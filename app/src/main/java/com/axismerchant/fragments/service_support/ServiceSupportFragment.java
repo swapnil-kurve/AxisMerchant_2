@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.axismerchant.R;
 import com.axismerchant.activity.service_support.Activity_SubLinks;
+import com.axismerchant.activity.service_support.Activity_SubLinks_2;
 
 /**
  * Created by vismita.jain on 7/1/16.
@@ -250,22 +251,22 @@ public class ServiceSupportFragment extends Fragment implements View.OnClickList
                 break;
 
             case R.id.txtCallIssuer:
-                Intent inCallIssuer = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inCallIssuer = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inCallIssuer.putExtra("Heading", "CallIssues");
                 startActivity(inCallIssuer);
                 break;
             case R.id.txtPaymentInquiry:
-                Intent inPaymentInquiry = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inPaymentInquiry = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inPaymentInquiry.putExtra("Heading", "PaymentInquiry");
                 startActivity(inPaymentInquiry);
                 break;
             case R.id.txtPickUpCard:
-                Intent inPickUpCard = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inPickUpCard = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inPickUpCard.putExtra("Heading", "PickUpCard");
                 startActivity(inPickUpCard);
                 break;
             case R.id.txtDeclineCard:
-                Intent inDeclineCard = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inDeclineCard = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inDeclineCard.putExtra("Heading", "DeclineCard");
                 startActivity(inDeclineCard);
                 break;
@@ -276,67 +277,67 @@ public class ServiceSupportFragment extends Fragment implements View.OnClickList
                 break;
 
             case R.id.txtAxisAccNo:
-                Intent inAxisAccNo = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inAxisAccNo = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inAxisAccNo.putExtra("Heading", "AxisAccNo");
                 startActivity(inAxisAccNo);
                 break;
             case R.id.txtNeftRtgs:
-                Intent inNeftRtgs = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inNeftRtgs = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inNeftRtgs.putExtra("Heading", "NeftRtgs");
                 startActivity(inNeftRtgs);
                 break;
             case R.id.txtDbaName:
-                Intent inDbaName = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inDbaName = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inDbaName.putExtra("Heading", "DbaName");
                 startActivity(inDbaName);
                 break;
             case R.id.txtLegalName:
-                Intent inLegalName = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inLegalName = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inLegalName.putExtra("Heading", "LegalName");
                 startActivity(inLegalName);
                 break;
             case R.id.txtAddressChange:
-                Intent inAddressChange = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inAddressChange = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inAddressChange.putExtra("Heading", "AddressChange");
                 startActivity(inAddressChange);
                 break;
             case R.id.txtPhoneNo:
-                Intent inPhoneNo = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inPhoneNo = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inPhoneNo.putExtra("Heading", "PhoneNo");
                 startActivity(inPhoneNo);
                 break;
             case R.id.txtNewLocation:
-                Intent inNewLocation = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inNewLocation = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inNewLocation.putExtra("Heading", "NewLocation");
                 startActivity(inNewLocation);
                 break;
             case R.id.txtAssetSwapping:
-                Intent inAssetSwapping = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inAssetSwapping = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inAssetSwapping.putExtra("Heading", "AssetSwapping");
                 startActivity(inAssetSwapping);
                 break;
             case R.id.txtDcc:
-                Intent inDcc = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inDcc = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inDcc.putExtra("Heading", "Dcc");
                 startActivity(inDcc);
                 break;
             case R.id.txtAdditionalDcc:
-                Intent inAdditionalDcc = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inAdditionalDcc = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inAdditionalDcc.putExtra("Heading", "AdditionalDcc");
                 startActivity(inAdditionalDcc);
                 break;
             case R.id.txtCashPos:
-                Intent inCashPos = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inCashPos = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inCashPos.putExtra("Heading", "CashPos");
                 startActivity(inCashPos);
                 break;
             case R.id.txtApply_mVisa:
-                Intent inApply_mVisa = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inApply_mVisa = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inApply_mVisa.putExtra("Heading", "Apply_mVisa");
                 startActivity(inApply_mVisa);
                 break;
             case R.id.txtMprStatmentRequest:
-                Intent inMprStatmentRequest = new Intent(getActivity(), Activity_SubLinks.class);
+                Intent inMprStatmentRequest = new Intent(getActivity(), Activity_SubLinks_2.class);
                 inMprStatmentRequest.putExtra("Heading", "MprStatmentRequest");
                 startActivity(inMprStatmentRequest);
                 break;

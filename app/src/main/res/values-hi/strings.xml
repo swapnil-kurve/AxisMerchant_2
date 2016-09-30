@@ -525,7 +525,7 @@
 
     <string name="Next">अगला  </string>
 
-    <string name="Axis_Bank">ऐक्सिस बैंक</string>
+    <string name="title_activity_home">ऐक्सिस बैंक</string>
 
     <string name="email">ईमेल आईडी </string>
 
@@ -663,8 +663,8 @@
 
     <string name="SORRYyouremail_is_not_registered">क्षमा कीजिए! आपका ईमेल हमारे यहां रजिस्टर्ड नहीं है, कृपया अपना ईमेल आईडी रजिस्टर कराएं</string>
 
-    <string name="version">वर्जन 3.0.3</string>
-
+    <!--<string name="version">वर्जन 3.0.3</string>-->
+    <string name="version">वर्जन UAT-40</string>
 
     <string name="mvisa_id">mvisa_id </string>
 
@@ -716,6 +716,13 @@
     <string name="remark1">टिप्पणि 1</string>
     <string name="remark2">टिप्पणि 2</string>
     <string name="search">खोज</string>
+    <string name="select_from_date">Please provide from date</string>
+    <string name="select_to_date">Please provide to date</string>
+    <string name="enter_one_of_the_obove">Please enter at least one of the above field</string>
+    <string name="from_date_should_not_less">From date should be less than today\'s date</string>
+    <string name="invalid_date">Enter valid date</string>
+    <string name="no_last_transaction">No Last Transaction Found</string>
+    <string name="select_language">Please select language</string>
 
 
     <string-array name="navigation_menu">

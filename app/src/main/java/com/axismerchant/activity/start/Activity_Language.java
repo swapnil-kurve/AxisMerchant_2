@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,11 +17,14 @@ import com.axismerchant.classes.Constants;
 
 import java.util.Locale;
 
-public class Activity_Language extends AppActivity implements View.OnClickListener {
+public class Activity_Language extends AppActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     RadioGroup rdGrpLanguage;
     String currentLanguage;
+    Configuration config;
+    TextView txtProceed, txtLabel, txtTitle;
     int i = 0;
+    Typeface kannadaFont,teluguFont, hindiFont, bengaliFont, tamilFont;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +32,22 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
 
         setContentView(R.layout.activity_language);
 
-        rdGrpLanguage = (RadioGroup) findViewById(R.id.radioGrpLangauage);
+        /**
+         * Initialize the fonts.
+         */
+        hindiFont = Typeface.createFromAsset(getAssets(), "fonts/mangal.ttf");
+        tamilFont = Typeface.createFromAsset(getAssets(), "fonts/tamil.TTF");
+        bengaliFont = Typeface.createFromAsset(getAssets(), "fonts/bengali.TTF");
+        teluguFont = Typeface.createFromAsset(getAssets(), "fonts/telugu.TTF");
+        kannadaFont = Typeface.createFromAsset(getAssets(), "fonts/kannada.TTF");
 
-        TextView txtProceed = (TextView) findViewById(R.id.txtProceed);
+        rdGrpLanguage = (RadioGroup) findViewById(R.id.radioGrpLangauage);
+        rdGrpLanguage.setOnCheckedChangeListener(this);
+
+        txtProceed = (TextView) findViewById(R.id.txtProceed);
+        txtLabel = (TextView) findViewById(R.id.txtLabel);
+        txtTitle = (TextView) findViewById(R.id.txtTitle);
+
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
 
         imgBack.setOnClickListener(this);
@@ -49,9 +66,9 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
         txtProceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectLanguage();
+//                selectLanguage();
                 if(anyLang == 0)
-                    Constants.showToast(Activity_Language.this, "Please select language");
+                    Constants.showToast(Activity_Language.this, getString(R.string.select_language));
                 else {
                     if(i==0){
                         Intent intent = new Intent(Activity_Language.this, Activity_Main.class);
@@ -67,53 +84,6 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                 }
             }
         });
-
-    }
-
-    private void selectLanguage() {
-        int selectedId = rdGrpLanguage.getCheckedRadioButtonId();
-
-        SharedPreferences preferences = getSharedPreferences(Constants.LanguageData, MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-
-        switch (selectedId)
-        {
-            case R.id.rdEnglish:
-                anyLang = 1;
-                currentLanguage = "en";
-                break;
-
-            case R.id.rdHindi:
-                anyLang = 2;
-                currentLanguage = "hi";
-                break;
-
-            case R.id.rdTamil:
-                anyLang = 3;
-                currentLanguage = "ta";
-                break;
-
-            case R.id.rdTelugu:
-                anyLang = 4;
-                currentLanguage = "te";
-                break;
-
-            case R.id.rdKannada:
-                anyLang = 5;
-                currentLanguage = "kn";
-                break;
-
-            case R.id.rdBengali:
-                anyLang = 6;
-                currentLanguage = "bn";
-                break;
-
-        }
-
-        editor.putInt("Selected_Language", anyLang);
-        editor.putString("CurrentLanguage", currentLanguage);
-        editor.apply();
-
 
     }
 
@@ -150,5 +120,115 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                 break;
 
         }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+
+        switch (i)
+        {
+            case R.id.rdEnglish:
+                anyLang = 1;
+                currentLanguage = "en";
+
+                Locale locale = new Locale(currentLanguage);
+                Locale.setDefault(locale);
+
+                config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
+                txtProceed.setText(getString(R.string.proceed));
+                break;
+
+            case R.id.rdHindi:
+                anyLang = 2;
+                currentLanguage = "hi";
+                locale = new Locale(currentLanguage);
+                Locale.setDefault(locale);
+
+                config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
+                txtProceed.setText(getString(R.string.proceed));
+                txtProceed.setTypeface(hindiFont);
+                break;
+
+            case R.id.rdTamil:
+                anyLang = 3;
+                currentLanguage = "ta";
+
+                locale = new Locale(currentLanguage);
+                Locale.setDefault(locale);
+
+                config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
+                txtProceed.setText(getString(R.string.proceed));
+                txtProceed.setTypeface(tamilFont);
+
+                break;
+
+            case R.id.rdTelugu:
+                anyLang = 4;
+                currentLanguage = "te";
+
+                locale = new Locale(currentLanguage);
+                Locale.setDefault(locale);
+
+                config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
+                txtProceed.setText(getString(R.string.proceed));
+                txtProceed.setTypeface(teluguFont);
+                break;
+
+            case R.id.rdKannada:
+                anyLang = 5;
+                currentLanguage = "kn";
+
+                locale = new Locale(currentLanguage);
+                Locale.setDefault(locale);
+
+                config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
+                txtProceed.setText(getString(R.string.proceed));
+                txtProceed.setTypeface(kannadaFont);
+                break;
+
+            case R.id.rdBengali:
+                anyLang = 6;
+                currentLanguage = "bn";
+
+                locale = new Locale(currentLanguage);
+                Locale.setDefault(locale);
+
+                config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config,
+                        getBaseContext().getResources().getDisplayMetrics());
+
+                txtProceed.setText(getString(R.string.proceed));
+                txtProceed.setTypeface(bengaliFont);
+                break;
+
+
+        }
+
+        SharedPreferences preferences = getSharedPreferences(Constants.LanguageData, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("Selected_Language", anyLang);
+        editor.putString("CurrentLanguage", currentLanguage);
+        editor.apply();
     }
 }

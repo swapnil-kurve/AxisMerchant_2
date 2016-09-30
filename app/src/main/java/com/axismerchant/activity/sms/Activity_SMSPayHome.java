@@ -458,7 +458,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                     } else if(result.equalsIgnoreCase("Failure")){
                         progressDialog.dismiss();
                         lyBottom.setVisibility(View.GONE);
-                        txtLabel.setText("No Last Transaction Found");
+                        txtLabel.setText(getString(R.string.no_last_transaction));
 
                     }else if(result.equalsIgnoreCase("SessionFailure")){
                         Constants.showToast(Activity_SMSPayHome.this, getString(R.string.session_expired));

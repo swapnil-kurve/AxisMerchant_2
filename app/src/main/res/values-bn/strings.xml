@@ -1,12 +1,36 @@
 <resources>
-    <string name="app_name">অ্যাক্সিস ব্যাঙ্ক মার্চেন্ট অ্যাপ </string>
+    <!--================================================================================================-->
+    <!--==========================================   ID's  =============================================-->
+    <!--================================================================================================-->
 
-    <string name="action_settings">Settings</string>
-    <string name="sign_in">সাইন ইন</string>
-    <string name="sign_up">সাইন করুন</string>
-    <string name="submit">জমা করুন</string>
-    <string name="welcome_text">হ্যালো</string>
-
+    <string name="version">Version UAT-40</string>
+    <!--<string name="version">Version 3.0.3</string>-->
+    <string name="mvisa_id">mvisa_id</string>
+    <string name="userMobileNo">userMobileNo</string>
+    <string name="regUsersId">regUsersId</string>
+    <string name="emailid">emailid</string>
+    <string name="isActive">isActive</string>
+    <string name="mvisaId">mvisaId</string>
+    <string name="Ttype">Ttype</string>
+    <string name="mvisaID">mvisaID</string>
+    <string name="secretKey">secretKey</string>
+    <string name="authToken">authToken</string>
+    <string name="fromDate">fromDate</string>
+    <string name="toDate">toDate</string>
+    <string name="id">id</string>
+    <string name="tid">tid</string>
+    <string name="service_type">serviceType</string>
+    <string name="prob_details">probDetails</string>
+    <string name="off_days">offDays</string>
+    <string name="visit_timing">visitTiming</string>
+    <string name="contact_no">contactNo</string>
+    <string name="rolls_required">rollsRequired</string>
+    <string name="cust_number">custNumber</string>
+    <string name="urlCode">urlCode</string>
+    <string name="currentTime">currentTime</string>
+    <string name="submitReq">Submit Request</string>
+    <string name="fromdate">fromdate</string>
+    <string name="todate">todate</string>
     <string name="merchant_id">merchantId</string>
     <string name="mobile_no">mobileNo </string>
     <string name="deviceType">deviceType</string>
@@ -15,7 +39,6 @@
     <string name="verify">veriPin</string>
     <string name="mpin">MPIN</string>
     <string name="plain_text">plainText</string>
-
     <string name="gcm_reg_id">gcmRegID</string>
     <string name="merchant_mobile_no">merchantMobileNo</string>
     <string name="userName">userName</string>
@@ -29,20 +52,34 @@
     <string name="transaction_type">transType</string>
     <string name="filter_by">filterBy</string>
     <string name="promotionId">promotionId</string>
-    <string name="terms">Terms &amp; conditions</string>
     <string name="transactionId">transactionId</string>
     <string name="oldNumber">oldNumber</string>
     <string name="newNumber">newNumber</string>
     <string name="custNumber">custNumber</string>
     <string name="transStatus">transStatus</string>
     <string name="requestFor">requestFor</string>
-
     <string name="invoice_no">invoiceNo</string>
     <string name="cust_name">custName</string>
     <string name="cust_email">custEmail</string>
     <string name="cust_mobile">custMobile</string>
     <string name="cust_amount">transAmt</string>
     <string name="remark">reamrk</string>
+
+
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <string name="app_name">অ্যাক্সিস ব্যাঙ্ক মার্চেন্ট অ্যাপ </string>
+
+    <string name="sign_in">সাইন ইন</string>
+    <string name="sign_up">সাইন করুন</string>
+    <string name="submit">জমা করুন</string>
+    <string name="welcome_text">হ্যালো</string>
+
+
+    <string name="terms">Terms &amp; conditions</string>
+
     <string name="welcome_message">মার্চেন্টকে সাগত </string>
     <string name="Rs">\u20B9</string>
 
@@ -64,7 +101,6 @@
     <string name="next">পরবর্তী</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="keep_me">আমাকে লগ-ইন রাখুন</string>
     <string name="title_activity_home">অ্যাক্সিস ব্যাঙ্ক্</string>
     <string name="title_activity_otp">OTP এন্টার করুন</string>
@@ -190,19 +226,8 @@
     <string name="staticqrcode">QR কোড স্ট্যাটিক</string>
     <string name="dynamicqrcode">ডায়ানামিক QR কোড</string>
     <string name="confirmqr">নিশ্চিত করুন</string>
-    <string name="tid">tid</string>
-    <string name="service_type">serviceType</string>
-    <string name="prob_details">probDetails</string>
-    <string name="off_days">offDays</string>
-    <string name="visit_timing">visitTiming</string>
-    <string name="contact_no">contactNo</string>
-    <string name="rolls_required">rollsRequired</string>
-    <string name="cust_number">custNumber</string>
-    <string name="urlCode">urlCode</string>
-    <string name="currentTime">currentTime</string>
-    <string name="submitReq">Submit Request</string>
-    <string name="fromdate">fromdate</string>
-    <string name="todate">todate</string>
+
+
 
     <string-array name="navigation_menu">
         <item>SMS প্রদান</item>
@@ -259,7 +284,7 @@
     <string name="fees">ফীস এবং শুঅ</string>
     <string name="title_activity_notification">নোটিফিকেশন</string>
     <string name="title_activity_transaction_details">কিউআর ট্রানস্যাকশান</string>
-    <string name="id">id</string>
+
     <string name="mvisa_merchant_id">mvisa_merchant_id</string>
     <string name="mVisaId">এমভিসা আইডি</string>
     <string name="rrn">RRN নং.</string>
@@ -269,8 +294,6 @@
     <string name="title_activity_qr_sign_up">QR প্রদান সাইন আপ </string>
     <string name="title_activity_activity__qrall_transaction">Activity_QRAllTransaction</string>
     <string name="no_transation">No transaction found</string>
-    <string name="fromDate">fromDate</string>
-    <string name="toDate">toDate</string>
     <string name="refund_all_text"><![CDATA[Total of SMS & QR pay]]></string>
     <string name="optional">বৈকল্পিক</string>
     <string name="analytics_heading1">বিশ্লেশষাত্মক-এর অন্তর্ভুক্ত POS টার্মিনালসের ডেটা এবং এমভিসা ট্রান্স্যাকশানস লেনদেন</string>
@@ -294,13 +317,7 @@
 </string>
     <string name="qr_pt8">জাল হওযার কোন ঝুঁকি নেই</string>
 
-    <!--<string name="version">Version UAT-39</string>-->
-    <string name="version">Version 3.0.3</string>
-    <string name="mvisa_id">mvisa_id</string>
-    <string name="userMobileNo">userMobileNo</string>
-    <string name="regUsersId">regUsersId</string>
-    <string name="emailid">emailid</string>
-    <string name="isActive">isActive</string>
+
     <string name="success">সফল</string>
 
     <string name="sent_on_mobile">রেজিস্টার্ড মোবাইল নমরে প্রেরণ করা হযেছে </string>
@@ -382,9 +399,7 @@
     <string name="search_by_date">তারিখ অনুসারে সন্ধান করুন </string>
     <string name="search_by_sr">SR/TID নং অনুসারে সার্চ করুন</string>
 
-    <string name="mvisaId">mvisaId</string>
-    <string name="Ttype">Ttype</string>
-    <string name="mvisaID">mvisaID</string>
+
     <string name="sms">SMS</string>
     <string name="qr">QR-Code</string>
     <string name="reprt"><![CDATA[Reports &]]></string>
@@ -465,16 +480,6 @@
     <string name="qr_fees_pt5">All the charges / fees agreed upon  for POS will remain as is.</string>
 
 
-    <string name="mangal_font">fonts/mangal.ttf</string>
-    <string name="bengali_font">fonts/bengali.TTF</string>
-    <string name="tamil_font">fonts/tamil.TTF</string>
-    <string name="telugu_font">fonts/telugu.TTF</string>
-    <string name="kannada_font">fonts/kannada.TTF</string>
-
-    <string name="lightbold">fonts/Futura_LightBold.ttf</string>
-    <string name="light">fonts/futura_light.TTF</string>
-
-
     <string name="title_select_language">Select Language</string>
     <string name="hindi">Hindi</string>
     <string name="english">English</string>
@@ -488,8 +493,7 @@
     <string name="evening_text">Good Evening</string>
     <string name="last_login">Last Login</string>
     <string name="first_login">First Login</string>
-    <string name="secretKey">secretKey</string>
-    <string name="authToken">authToken</string>
+
     <string name="session_expired">Session Expired</string>
     <string name="root_msg">This device is rooted. You cannot proceed further.</string>
     <string name="try_later">Please try again later.</string>
@@ -502,4 +506,11 @@
     <string name="username">Username</string>
     <string name="email_id_hint">Email-id</string>
     <string name="enter_mpin_hint">Enter mPIN</string>
+    <string name="select_from_date">Please provide from date</string>
+    <string name="select_to_date">Please provide to date</string>
+    <string name="enter_one_of_the_obove">Please enter at least one of the above field</string>
+    <string name="from_date_should_not_less">From date should be less than today\'s date</string>
+    <string name="invalid_date">Enter valid date</string>
+    <string name="no_last_transaction">No Last Transaction Found</string>
+    <string name="select_language">Please select language</string>
 </resources>

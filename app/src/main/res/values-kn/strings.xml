@@ -1,21 +1,47 @@
 <resources>
-    <string name="app_name">ಎಕ್ಸಿಸ್ ಬ್ಯಾಂಕ್ ಮರ್ಚಂಟ್ ಆ್ಯಪ್</string>
+    <!--================================================================================================-->
+    <!--==========================================   ID's  =============================================-->
+    <!--================================================================================================-->
 
-    <string name="action_settings">Settings</string>
-    <string name="sign_in">ಸೈನ್ ಇನ್</string>
-    <string name="sign_up">ಸೈನ್ ಅಪ್ </string>
-    <string name="submit">ಸಲ್ಲಿಸಿ</string>
-
-    <string name="merchant_id">merchantId</string>
-    <string name="mobile_no">mobileNo</string>
-    <string name="deviceType">deviceType</string>
-    <string name="imei_no">IMEINo</string>
-    <string name="imei_no1">imeiNo</string>
-    <string name="verify">veriPin</string>
-    <string name="mpin">mPin</string>
-    <string name="plain_text">plainText</string>
-    <string name="welcome_text">ಹಲೋ</string>
-
+    <string name="version">Version UAT-40</string>
+    <!--<string name="version">Version 3.0.3</string>-->
+    <string name="mvisa_id">mvisa_id</string>
+    <string name="userMobileNo">userMobileNo</string>
+    <string name="regUsersId">regUsersId</string>
+    <string name="emailid">emailid</string>
+    <string name="isActive">isActive</string>
+    <string name="tid">tid</string>
+    <string name="service_type">serviceType</string>
+    <string name="prob_details">probDetails</string>
+    <string name="off_days">offDays</string>
+    <string name="visit_timing">visitTiming</string>
+    <string name="contact_no">contactNo</string>
+    <string name="rolls_required">rollsRequired</string>
+    <string name="cust_number">custNumber</string>
+    <string name="urlCode">urlCode</string>
+    <string name="currentTime">currentTime</string>
+    <string name="submitReq">Submit Request</string>
+    <string name="fromdate">fromdate</string>
+    <string name="todate">todate</string>
+    <string name="mer_mobile_no">merMobileNo</string>
+    <string name="rName">rName</string>
+    <string name="busiEntityName">busiEntityName</string>
+    <string name="busiType">busiType</string>
+    <string name="rAddress">rAddress</string>
+    <string name="rMobileNo">rMobileNo</string>
+    <string name="rLandlineNo">rLandlineNo</string>
+    <string name="transactionId">transactionId</string>
+    <string name="oldNumber">oldNumber</string>
+    <string name="newNumber">newNumber</string>
+    <string name="custNumber">custNumber</string>
+    <string name="transStatus">transStatus</string>
+    <string name="requestFor">requestFor</string>
+    <string name="invoice_no">invoiceNo</string>
+    <string name="cust_name">custName</string>
+    <string name="cust_email">custEmail</string>
+    <string name="cust_mobile">custMobile</string>
+    <string name="cust_amount">transAmt</string>
+    <string name="remark">reamrk</string>
     <string name="gcm_reg_id">gcmRegID</string>
     <string name="merchant_mobile_no">merchantMobileNo</string>
     <string name="userName">userName</string>
@@ -29,20 +55,38 @@
     <string name="transaction_type">transType</string>
     <string name="filter_by">filterBy</string>
     <string name="promotionId">promotionId</string>
-    <string name="terms">Terms &amp; conditions</string>
-    <string name="transactionId">transactionId</string>
-    <string name="oldNumber">oldNumber</string>
-    <string name="newNumber">newNumber</string>
-    <string name="custNumber">custNumber</string>
-    <string name="transStatus">transStatus</string>
-    <string name="requestFor">requestFor</string>
+    <string name="merchant_id">merchantId</string>
+    <string name="mobile_no">mobileNo</string>
+    <string name="deviceType">deviceType</string>
+    <string name="imei_no">IMEINo</string>
+    <string name="imei_no1">imeiNo</string>
+    <string name="verify">veriPin</string>
+    <string name="mpin">mPin</string>
+    <string name="plain_text">plainText</string>
+    <string name="id">id</string>
+    <string name="fromDate">fromDate</string>
+    <string name="toDate">toDate</string>
+    <string name="secretKey">secretKey</string>
+    <string name="authToken">authToken</string>
+    <string name="mvisaId">mvisaId</string>
+    <string name="Ttype">Ttype</string>
+    <string name="mvisaID">mvisaID</string>
+    <string name="duration_analytics">duration</string>
 
-    <string name="invoice_no">invoiceNo</string>
-    <string name="cust_name">custName</string>
-    <string name="cust_email">custEmail</string>
-    <string name="cust_mobile">custMobile</string>
-    <string name="cust_amount">transAmt</string>
-    <string name="remark">reamrk</string>
+
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+    <!--================================================================================================-->
+
+    <string name="app_name">ಎಕ್ಸಿಸ್ ಬ್ಯಾಂಕ್ ಮರ್ಚಂಟ್ ಆ್ಯಪ್</string>
+
+    <string name="sign_in">ಸೈನ್ ಇನ್</string>
+    <string name="sign_up">ಸೈನ್ ಅಪ್ </string>
+    <string name="submit">ಸಲ್ಲಿಸಿ</string>
+
+    <string name="welcome_text">ಹಲೋ</string>
+
     <string name="welcome_message">ವೆಲ್ಕಮ್ ಮರ್ಚಂಟ್</string>
     <string name="Rs">\u20B9</string>
 
@@ -65,7 +109,6 @@
     <string name="next">ನೆಕ್ಸ್ಟ್</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="keep_me">ನನ್ನನ್ನು  ಲಾಗ್ಡ್ಇನ್ ಆಗಿ ಇರಿಸಿ</string>
     <string name="title_activity_home">ಎಕ್ಸಿಸ್ ಬ್ಯಾಂಕ್</string>
     <string name="title_activity_otp">OTP ನಮೂದಿಸಿ</string>
@@ -109,13 +152,6 @@
     <string name="refer3">ನಮ್ಮ  ರಿಲೇಶನ್ಶಿಪ್ ಟೀಮ್ ನಿಮ್ಮ  ಮಿತ್ರನಿಗೆ ಕರೆ ಮಾಡುವರು
 </string>
 
-    <string name="mer_mobile_no">merMobileNo</string>
-    <string name="rName">rName</string>
-    <string name="busiEntityName">busiEntityName</string>
-    <string name="busiType">busiType</string>
-    <string name="rAddress">rAddress</string>
-    <string name="rMobileNo">rMobileNo</string>
-    <string name="rLandlineNo">rLandlineNo</string>
 
     <string name="accept_terms">ನಾನು ಸ್ವೀಕರಿಸುತ್ತೇನೆ</string>
     <string name="title_activity_activity_offers">Offers &amp; Notices</string>
@@ -148,7 +184,7 @@
 </string>
     <string name="reports"> ರಿಪೋರ್ಟ್ಸ್</string>
     <string name="duration">ಕಾಲಾವ </string>
-    <string name="duration_analytics">duration</string>
+
     <string name="report_criteria">ರಿಪೋರ್ಟ್ ಮಾನದಂಡ </string>
     <string name="clear">ಕ್ಲಿಯರ್ </string>
     <string name="apply">ಅಪ್ಲೈ </string>
@@ -200,19 +236,6 @@
     <string name="staticqrcode">ಸ್ಟಾಟಿಕ್ ಕ್ಕಿ ಕೋಡ್</string>
     <string name="dynamicqrcode">ಡೈನಾಮಿಕ್ ಕ್ಕಿ ಕೋಡ್</string>
     <string name="confirmqr">ದೃಢೀಕರಿಸಿ</string>
-    <string name="tid">tid</string>
-    <string name="service_type">serviceType</string>
-    <string name="prob_details">probDetails</string>
-    <string name="off_days">offDays</string>
-    <string name="visit_timing">visitTiming</string>
-    <string name="contact_no">contactNo</string>
-    <string name="rolls_required">rollsRequired</string>
-    <string name="cust_number">custNumber</string>
-    <string name="urlCode">urlCode</string>
-    <string name="currentTime">currentTime</string>
-    <string name="submitReq">Submit Request</string>
-    <string name="fromdate">fromdate</string>
-    <string name="todate">todate</string>
 
     <string-array name="navigation_menu">
         <item>SMSವಾವತಿ</item>
@@ -271,7 +294,7 @@
     <string name="title_activity_notification">ಅಧಿಸೂಚನೆ</string>
     <string name="title_activity_transaction_details">ಕ್ಯು ಆರ್ ವಹಿವಾಟು
 </string>
-    <string name="id">id</string>
+
     <string name="mvisa_merchant_id">mvisa_merchant_id</string>
     <string name="mVisaId">mVisaಐಡಿ</string>
     <string name="rrn">RRNನಂ.</string>
@@ -281,8 +304,7 @@
     <string name="title_activity_qr_sign_up">QRವಾವತಿಸೈನ್ ಅಪ್</string>
     <string name="title_activity_activity__qrall_transaction">Activity_QRAllTransaction</string>
     <string name="no_transation">No transaction found</string>
-    <string name="fromDate">fromDate</string>
-    <string name="toDate">toDate</string>
+
     <string name="refund_all_text"><![CDATA[Total of SMS & QR pay]]></string>
     <string name="optional">ಐಚ್ಛಿಕ</string>
     <string name="analytics_heading1">ವಿಶ್ಲೇಷಣೆಯಲ್ಲಿ ಪಿಒಎಸ್ ಟರ್ಮಿನಲ್ಸ್ ದತ್ತಾಂಕ ಹಾಗೂ ಎಮ್ವೀಸ್ ವಹಿವಾಟುಗಳು ಒಳಗೊಂಡಿರುತ್ತವೆ.
@@ -313,13 +335,6 @@
 ಸೂಚನೆಯೊಂದಿಗೆ</string>
     <string name="qr_pt8">ಮೋಸಹೋಗುವ ಆಪತ್ತಿಲ್ಲ</string>
 
-    <!--<string name="version">Version UAT-39</string>-->
-    <string name="version">Version 3.0.3</string>
-    <string name="mvisa_id">mvisa_id</string>
-    <string name="userMobileNo">userMobileNo</string>
-    <string name="regUsersId">regUsersId</string>
-    <string name="emailid">emailid</string>
-    <string name="isActive">isActive</string>
     <string name="success">ಸಕ್ಸೆಸ್</string>
 
     <string name="sent_on_mobile">ನೋಂದಾಯಿಸಿರುವ ಮೊಬೈಲ್ ನಂಬರಿಗೆ ಕಳುಹಿಸಲಾಗಿದೆ</string>
@@ -417,9 +432,7 @@
     <string name="search_by_date">ದಿನಾಂಕ ಆಧರಿಸಿ ಸರ್ಚ್ ಮಾಡಿ</string>
     <string name="search_by_sr">SR/TID ನಂಬರ್ ಆಧರಿಸಿ ಸರ್ಚ್ ಮಾಡಿ</string>
 
-    <string name="mvisaId">mvisaId</string>
-    <string name="Ttype">Ttype</string>
-    <string name="mvisaID">mvisaID</string>
+
     <string name="sms">SMS</string>
     <string name="qr">QR-Code</string>
     <string name="reprt"><![CDATA[Reports &]]></string>
@@ -513,15 +526,6 @@
     <string name="qr_fees_pt5">All the charges / fees agreed upon  for POS will remain as is.</string>
 
 
-    <string name="mangal_font">fonts/mangal.ttf</string>
-    <string name="bengali_font">fonts/bengali.TTF</string>
-    <string name="tamil_font">fonts/tamil.TTF</string>
-    <string name="telugu_font">fonts/telugu.TTF</string>
-    <string name="kannada_font">fonts/kannada.TTF</string>
-
-    <string name="lightbold">fonts/Futura_LightBold.ttf</string>
-    <string name="light">fonts/futura_light.TTF</string>
-
 
     <string name="title_select_language">Select Language</string>
     <string name="hindi">Hindi</string>
@@ -536,8 +540,7 @@
     <string name="evening_text">Good Evening</string>
     <string name="last_login">Last Login</string>
     <string name="first_login">First Login</string>
-    <string name="secretKey">secretKey</string>
-    <string name="authToken">authToken</string>
+
     <string name="session_expired">Session Expired</string>
     <string name="root_msg">This device is rooted. You cannot proceed further.</string>
     <string name="try_later">Please try again later.</string>
@@ -550,4 +553,13 @@
     <string name="username">Username</string>
     <string name="email_id_hint">Email-id</string>
     <string name="enter_mpin_hint">Enter mPIN</string>
+    <string name="select_from_date">Please provide from date</string>
+    <string name="select_to_date">Please provide to date</string>
+    <string name="enter_one_of_the_obove">Please enter at least one of the above field</string>
+    <string name="from_date_should_not_less">From date should be less than today\'s date</string>
+    <string name="invalid_date">Enter valid date</string>
+    <string name="no_last_transaction">No Last Transaction Found</string>
+    <string name="select_language">Please select language</string>
+    <string name="terms">Terms &amp; conditions</string>
+
 </resources>
