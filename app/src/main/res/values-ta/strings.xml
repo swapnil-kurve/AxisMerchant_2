@@ -3,8 +3,8 @@
     <!--==========================================   ID's  =============================================-->
     <!--================================================================================================-->
 
-    <string name="version">Version UAT-40</string>
-    <!--<string name="version">Version 3.0.2</string>-->
+    <!--<string name="version">Version UAT-40</string>-->
+    <string name="version">Version 3.0.5</string>
     <string name="mvisa_id">Mvisa ஐடி</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>
@@ -192,7 +192,7 @@ MIS
 </string>
     <string name="filter">ஃபில்டர்</string>
     <string name="report_type">அறிக்கை வகை,</string>
-    <string name="reports">அறிக்கைகள்</string>
+    <string name="reports">reports</string>
     <string name="duration">காலவரம்பு</string>
     <string name="duration_analytics">duration</string>
     <string name="report_criteria">ரிபோர்ட் தகுதி வரம்பு</string>
@@ -200,8 +200,8 @@ MIS
     <string name="apply">பயன்படுத்துதல்</string>
 
     <string name="title_activity_faq">அடிக்கடி கேட்கப்படும் கேள்விகள்</string>
-    <string name="rptCriteria">ரிபோர்ட் தகுதி வரம்பு</string>
-    <string name="trans_type">டிரான்ஸ் டைப்</string>
+    <string name="rptCriteria">rptCriteria</string>
+    <string name="trans_type">TRANS_TYPE</string>
 
     <string name="fees_title1">MDR / Interchange</string>
     <string name="fees_description">விபரம்</string>

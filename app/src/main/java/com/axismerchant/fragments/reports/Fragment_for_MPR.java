@@ -495,7 +495,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.duration), duration));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.duration_analytics), duration));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.rptCriteria), criteria));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.trans_type), trans_type));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[6])));
@@ -526,59 +526,60 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             super.onPostExecute(data);
 
             try{
-                JSONArray transaction = new JSONArray(data);
-                JSONObject object1 = transaction.getJSONObject(0);
+                if(data != null) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
 
-                JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                JSONObject obj = rowResponse.getJSONObject(0);
-                String result = obj.optString("result");
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
 
-                result = encryptDecryptRegister.decrypt(result);
-                if(result.equals("Success"))
-                {
-                    mprDataSet.clear();
-                    JSONObject object = transaction.getJSONObject(1);
-                    JSONArray transactionBetDates = object.getJSONArray("filterMPRTransactions");
-                    for (int i = 0; i < transactionBetDates.length(); i++) {
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        mprDataSet.clear();
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray transactionBetDates = object.getJSONArray("filterMPRTransactions");
+                        for (int i = 0; i < transactionBetDates.length(); i++) {
 
-                        JSONObject object2 = transactionBetDates.getJSONObject(i);
-                        String Transactions = object2.optString("Transactions");
-                        String AvgTicketSize = object2.optString("AvgTicketSize");
-                        String TxnVolume = object2.optString("TxnVolume");
-                        String transDate = object2.optString("transDate");
-                        String tDate = object2.optString("tDate");
+                            JSONObject object2 = transactionBetDates.getJSONObject(i);
+                            String Transactions = object2.optString("Transactions");
+                            String AvgTicketSize = object2.optString("AvgTicketSize");
+                            String TxnVolume = object2.optString("TxnVolume");
+                            String transDate = object2.optString("transDate");
+                            String tDate = object2.optString("tDate");
 
-                        Transactions = encryptDecrypt.decrypt(Transactions);
-                        AvgTicketSize = encryptDecrypt.decrypt(AvgTicketSize);
-                        TxnVolume = encryptDecrypt.decrypt(TxnVolume);
-                        transDate = encryptDecrypt.decrypt(transDate);
-                        tDate = encryptDecrypt.decrypt(tDate);
+                            Transactions = encryptDecrypt.decrypt(Transactions);
+                            AvgTicketSize = encryptDecrypt.decrypt(AvgTicketSize);
+                            TxnVolume = encryptDecrypt.decrypt(TxnVolume);
+                            transDate = encryptDecrypt.decrypt(transDate);
+                            tDate = encryptDecrypt.decrypt(tDate);
 
-                        if(transDate.contains("-"))
-                            transDate.replace("-","/");
+                            if (transDate.contains("-"))
+                                transDate.replace("-", "/");
 
-                        if(mDuration.equalsIgnoreCase("Daily"))
-                            transDate = transDate.split("\\s+")[0];
+                            if (mDuration.equalsIgnoreCase("Daily"))
+                                transDate = transDate.split("\\s+")[0];
 
-                        mis_mpr = new MIS_MPR(Transactions,AvgTicketSize,TxnVolume,transDate,tDate);
-                        mprDataSet.add(mis_mpr);
+                            mis_mpr = new MIS_MPR(Transactions, AvgTicketSize, TxnVolume, transDate, tDate);
+                            mprDataSet.add(mis_mpr);
+                        }
+
+                        txtDateDuration.setText(date);
+                        showBarChart();
+                        progressDialog.dismiss();
+                        adapter = new CustomListAdapterForMPR(getActivity(), mprDataSet, screenInches);
+                        listData.setAdapter(adapter);
+
+                    } else if (result.equalsIgnoreCase("SessionFailure")) {
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
+                    } else {
+                        progressDialog.dismiss();
+                        txtMessage.setVisibility(View.VISIBLE);
+
                     }
-
-                    txtDateDuration.setText(date);
-                    showBarChart();
-                    progressDialog.dismiss();
-                    adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet, screenInches);
-                    listData.setAdapter(adapter);
-
-                }else if(result.equalsIgnoreCase("SessionFailure")){
-                    Constants.showToast(getActivity(), getString(R.string.session_expired));
-                    logout();
                 }
-                else {
-                    progressDialog.dismiss();
-                    txtMessage.setVisibility(View.VISIBLE);
-
-                }
+                progressDialog.dismiss();
             } catch (JSONException e) {
                 progressDialog.dismiss();
             }

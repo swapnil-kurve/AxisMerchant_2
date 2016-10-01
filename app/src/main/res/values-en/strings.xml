@@ -291,8 +291,8 @@
     <string name="qr_pt7">Safe and secure payemnt with instant notification</string>
     <string name="qr_pt8">No risk of fraud</string>
 
-    <string name="version">Version UAT-40</string>
-    <!--<string name="version">Version 3.0.3</string>-->
+    <!--<string name="version">Version UAT-40</string>-->
+    <string name="version">Version 3.0.5</string>
     <string name="mvisa_id">mvisa_id</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>

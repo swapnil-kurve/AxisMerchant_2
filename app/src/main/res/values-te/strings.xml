@@ -3,8 +3,10 @@
     <!--==========================================   ID's  =============================================-->
     <!--================================================================================================-->
 
-    <string name="version">Version UAT-40</string>
-    <!--<string name="version">Version 3.0.2</string>-->
+    <!--<string name="version">Version UAT-40</string>-->
+    <string name="version">Version 3.0.5</string>
+    <string name="merchant_id">merchantId</string>
+    <string name="mobile_no">mobileNo</string>
     <string name="mvisa_id">mvisa_id</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>
@@ -77,9 +79,6 @@
     <string name="sign_in">సైన్ ఇన్</string>
     <string name="sign_up">సైన్ అప్</string>
     <string name="submit">సమర్పించండి</string>
-
-    <string name="merchant_id">మర్చంట్ ఐడి</string>
-    <string name="mobile_no">మెుబైల్ నంబరు</string>
 
 
     <string name="welcome_text">హలో</string>
@@ -188,14 +187,14 @@
     <string name="report_type">రిపోర్టు రకం</string>
     <string name="reports">రిపోర్టులు</string>
     <string name="duration">వ్యవధి</string>
-    <string name="duration_analytics">వ్యవధి</string>
+    <string name="duration_analytics">duration</string>
     <string name="report_criteria">రిపోర్టు ప్రామాణికత</string>
     <string name="clear">క్లియర్</string>
     <string name="apply">వర్తింపజేయుండి</string>
 
     <string name="title_activity_faq">తరచూ అడిగే ప్రశ్నలు</string>
-    <string name="rptCriteria">రిపోర్టు ప్రావూణికత</string>
-    <string name="trans_type">ట్రాన్స్-రకం</string>
+    <string name="rptCriteria">rptCriteria</string>
+    <string name="trans_type">TRANS_TYPE</string>
 
     <string name="fees_title1">MDR / Interchange</string>
     <string name="fees_description">వివరాలు</string>
@@ -460,9 +459,9 @@
     <string name="sms">SMS</string>
     <string name="qr">QR-Code</string>
     <string name="reprt"><![CDATA[Reports &]]></string>
-    <string name="service">Service</string>
-    <string name="support">support</string>
-    <string name="pay">pay</string>
+    <string name="service">సర్వీసు</string>
+    <string name="support">సపోర్టు</string>
+    <string name="pay">చెల్లింపు</string>
     <string name="mis">MIS</string>
     <string name="last_transaction">చివరి లావాదేవీ</string>
     <string name="view_all">లావాదేవీలన్నిటినీ చూడండి</string>

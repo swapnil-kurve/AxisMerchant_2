@@ -3,8 +3,8 @@
     <!--==========================================   ID's  =============================================-->
     <!--================================================================================================-->
 
-    <string name="version">Version UAT-40</string>
-    <!--<string name="version">Version 3.0.3</string>-->
+    <!--<string name="version">Version UAT-40</string>-->
+    <string name="version">Version 3.0.5</string>
     <string name="mvisa_id">mvisa_id</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>

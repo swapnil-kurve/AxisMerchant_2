@@ -46,8 +46,8 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
 
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
-    String MID,MOBILE, callType;
-    TextView txtMIDNo, txtTIDNo,txtDocketID, txtProblemCode, txtDate, txtClosingRemark, txtOk, txtResponseCode, txtCurrentStatus;
+    String MID,MOBILE;
+    TextView txtMIDNo, txtTIDNo,txtDocketID, txtProblemCode, txtDate, txtClosingRemark, txtOk, txtResponseCode, txtCurrentStatus, txtTIDTitle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +63,7 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
         txtOk = (TextView) view.findViewById(R.id.txtOK);
         txtCurrentStatus = (TextView) view.findViewById(R.id.txtCurrentStatus);
         txtResponseCode = (TextView) view.findViewById(R.id.txtResponseCode);
+        txtTIDTitle = (TextView) view.findViewById(R.id.textTIDNumber);
 
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
@@ -216,6 +217,10 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                             docketId = encryptDecrypt.decrypt(docketId);
 
 
+                        if(tid.equalsIgnoreCase("")) {
+                            txtTIDNo.setVisibility(View.GONE);
+                            txtTIDTitle.setVisibility(View.GONE);
+                        }
                         txtMIDNo.setText(merchantId);
                         txtTIDNo.setText(tid);
                         txtDocketID.setText(docketId);
