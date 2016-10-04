@@ -1,5 +1,6 @@
 package com.axismerchant.activity.start;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -24,12 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.axismerchant.R;
 import com.axismerchant.activity.Activity_FAQ;
 import com.axismerchant.activity.Activity_Notification;
 import com.axismerchant.activity.Activity_Version;
-import com.axismerchant.activity.Activity_VideoDemo;
 import com.axismerchant.activity.AppActivity;
 import com.axismerchant.activity.analytics.Activity_Analytics;
 import com.axismerchant.activity.mis_reports.Activity_MIS_Home;
@@ -49,6 +49,7 @@ import com.axismerchant.classes.HomeBanner;
 import com.axismerchant.classes.Notification;
 import com.axismerchant.classes.Promotions;
 import com.axismerchant.database.DBHelper;
+import com.bumptech.glide.Glide;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.apache.http.HttpEntity;
@@ -76,24 +77,27 @@ import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
 public class Activity_Home extends AppActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
+    /**
+     * Creaated  by Swapnil Kurve
+     */
     AutoScrollViewPager viewPager;
     SharedPreferences preferences;
     TextView txtUserName, txtLastLogin, txtNotification;
     DBHelper dbHelper;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private NavigationItemAdapter navigationItemAdapter;
-    private String[] navigationItemList;
     EncryptDecrypt encryptDecrypt;
     ArrayList<Promotions> promotionsArrayList;
     Promotions promotions;
-    String MID,MOBILE;
+    String MID, MOBILE, isAdmin;
     ImageView imgMenu;
     ArrayList<HomeBanner> homeBanners;
     ArrayList<String> mvisaArrayList;
     HomeBanner banner;
-    private int session = 1;
     EncryptDecryptRegister encryptDecryptRegister;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private NavigationItemAdapter navigationItemAdapter;
+    private String[] navigationItemList;
+    private int session = 1;
     private int[] images = {R.mipmap.smspay_menu, R.mipmap.qrpay_menu, R.mipmap.service_support_menu, R.mipmap.reports_menu,
             R.mipmap.analytics, R.mipmap.offers, R.mipmap.profile_menu, R.mipmap.refer, R.mipmap.translation, R.mipmap.faq, R.mipmap.demo_video,R.mipmap.ver, R.mipmap.logout};
 
@@ -110,6 +114,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         String user = encryptDecryptRegister.decrypt(preferences.getString("Username", ""));
         String LastLogin = encryptDecryptRegister.decrypt(preferences.getString("LastLogin", ""));
+        isAdmin = encryptDecryptRegister.decrypt(preferences.getString("isAdmin", ""));
         MID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID","0"));
         MOBILE = encryptDecryptRegister.decrypt(preferences.getString("MobileNum","0"));
         boolean mHomeCoach = preferences.getBoolean("HomeCoach", true);
@@ -339,31 +344,41 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     }
 
     private void gotoQR() {
-        /*SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo,MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Constants.ProfileInfo, MODE_PRIVATE);
         if(preferences.contains("mvisaId"))
         {
             String mVisaId = encryptDecryptRegister.decrypt(preferences.getString("mvisaId",""));
+            String mVisaStatus = encryptDecryptRegister.decrypt(preferences.getString("mvisaStatus", ""));
+
             if(mVisaId.equals("")  ||  mVisaId.equalsIgnoreCase("Null"))
             {
-                startActivity(new Intent(this, Activity_QRSignUp.class));
+                if (mVisaStatus.equalsIgnoreCase("Not Requested") && isAdmin.equalsIgnoreCase("True")) {
+                    startActivity(new Intent(this, Activity_QRSignUp.class));
+                } else if (mVisaStatus.equalsIgnoreCase("Not Requested") && isAdmin.equalsIgnoreCase("False")) {
+                    ShowDialogNotAuthorized();
+                } else {
+                    preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("QRRequestValidated", "Pending");
+                    editor.apply();
+                    startActivity(new Intent(this, Activity_QRSignUp.class));
+                }
             }else
             {
                 startActivity(new Intent(this, Activity_QRPayHome.class));
             }
-        }else
-        {*/
+        } else {
             startActivity(new Intent(this, Activity_QRSignUp.class));
-//        }
+        }
     }
 
     private void gotoSMS() {
         SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
         String res = preferences.getString("SMSRequestValidated","No");
-        /*if(res.equalsIgnoreCase("Active"))
+        if (res.equalsIgnoreCase("Active"))
         {
             startActivity(new Intent(this, Activity_SMSPayHome.class));
-        }else if(res.equalsIgnoreCase("No"))
-            {*/
+        } else if (res.equalsIgnoreCase("No")) {
                 if (Constants.isNetworkConnectionAvailable(this)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new CheckStatus().executeOnExecutor(AsyncTask
@@ -375,15 +390,42 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 } else {
                     Constants.showToast(this, getString(R.string.no_internet));
                 }
-           /* }else if(res.equalsIgnoreCase("Pending")){
+        } else if (res.equalsIgnoreCase("Pending")) {
             Intent intent = new Intent(this, Activity_SMSSignUp.class);
             intent.putExtra("SMSRequestValidated","Pending");
             startActivity(intent);
         }else
         {
             startActivity(new Intent(this, Activity_SMSSignUp.class));
-        }*/
+        }
     }
+
+
+    private void ShowDialogNotAuthorized() {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_info);
+        dialog.setCancelable(false);
+
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+        TextView txtMessage = (TextView) dialog.findViewById(R.id.text);
+
+        txtMessage.setText(getString(R.string.notAuthorized));
+
+        // if button is clicked, close the custom dialog
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+
+        dialog.show();
+    }
+
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -455,11 +497,89 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             mDrawerLayout.closeDrawer(mDrawerList);
         else {
             super.onBackPressed();
-//            System.exit(0);
         }
     }
 
+    private void redirectUser(int position) {
+        String type = homeBanners.get(position).getStype();
 
+        if (type.equalsIgnoreCase("OFFER")) {
+            Intent intent = new Intent(this, Activity_OfferDetails.class);
+            intent.putExtra("PromotionId", homeBanners.get(position).getpID());
+            intent.putExtra("PromoImg", homeBanners.get(position).getpImg());
+            startActivity(intent);
+        } else if (type.equalsIgnoreCase("SMS")) {
+            gotoSMS();
+        } else if (type.equalsIgnoreCase("QR")) {
+            gotoQR();
+        } else if (type.equalsIgnoreCase("REFER")) {
+            startActivity(new Intent(this, Activity_ReferHome.class));
+        }
+
+    }
+
+    private void checkSessionVariable() {
+        if (session == 0)
+            logout(0);
+    }
+
+    private void retrieveFromDatabase() {
+        dbHelper = new DBHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        if (promotionsArrayList.size() > 0)
+            promotionsArrayList.clear();
+
+        Cursor crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.PROMOTION_ID + "," + DBHelper.TITLE + "," + DBHelper.SUB_TITLE + ","
+                + DBHelper.MESSAGE + "," + DBHelper.IMG_URL + ","
+                + DBHelper.PROMOTION_TYPE + "," + DBHelper.WITH_OPTION + "," + DBHelper.READ_STATUS + "," + DBHelper.STATUS + " from " + DBHelper.TABLE_NAME_PROMOTIONS, null);
+
+
+        while (crs.moveToNext()) {
+            String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
+            String mPromotionID = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_ID));
+            String mTitle = crs.getString(crs.getColumnIndex(DBHelper.TITLE));
+            String mSubTitle = crs.getString(crs.getColumnIndex(DBHelper.SUB_TITLE));
+            String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
+            String mImgUrl = crs.getString(crs.getColumnIndex(DBHelper.IMG_URL));
+            String mPromotionType = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_TYPE));
+            String mWithOption = crs.getString(crs.getColumnIndex(DBHelper.WITH_OPTION));
+            String mStatus = crs.getString(crs.getColumnIndex(DBHelper.STATUS));
+            String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));
+            String mOnDate = "";
+            promotions = new Promotions(mUID, mTitle, mMessage, mSubTitle, mImgUrl, mPromotionType, mPromotionID, mWithOption, mStatus, mReadStatus, mOnDate);
+            promotionsArrayList.add(promotions);
+        }
+    }
+
+    private void getMerchantDetails() {
+        if (Constants.isNetworkConnectionAvailable(Activity_Home.this)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new GetProfileDetails().executeOnExecutor(AsyncTask
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getProfileDetails", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+            } else {
+                new GetProfileDetails().execute(Constants.DEMO_SERVICE + "getProfileDetails", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+
+            }
+        } else {
+            Constants.showToast(Activity_Home.this, getString(R.string.no_internet));
+        }
+    }
+
+    private void logout(int i) {
+        if (i == 1)
+            Constants.showToast(Activity_Home.this, getString(R.string.sign_out));
+        else
+            Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
+        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     public class GetPromotions extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
@@ -566,7 +686,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }
     }
 
-
     class CustomPagerAdapter extends PagerAdapter {
 
         Context mContext;
@@ -612,32 +731,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             container.removeView((LinearLayout) object);
         }
     }
-
-    private void redirectUser(int position) {
-        String type = homeBanners.get(position).getStype();
-
-        if(type.equalsIgnoreCase("OFFER"))
-        {
-            Intent intent = new Intent(this, Activity_OfferDetails.class);
-            intent.putExtra("PromotionId", homeBanners.get(position).getpID());
-            intent.putExtra("PromoImg", homeBanners.get(position).getpImg());
-            startActivity(intent);
-        }else
-        if(type.equalsIgnoreCase("SMS"))
-        {
-            gotoSMS();
-        }else
-        if(type.equalsIgnoreCase("QR"))
-        {
-            gotoQR();
-        }else
-        if(type.equalsIgnoreCase("REFER"))
-        {
-            startActivity(new Intent(this, Activity_ReferHome.class));
-        }
-
-    }
-
 
     public class GetmVisaIds extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
@@ -744,12 +837,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }
     }
 
-    private void checkSessionVariable() {
-        if(session == 0)
-            logout(0);
-    }
-
-
     private class NavigationItemAdapter extends BaseAdapter
     {
 
@@ -782,37 +869,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             return convertView;
         }
     }
-
-
-    private void retrieveFromDatabase() {
-        dbHelper = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        if(promotionsArrayList.size()>0)
-            promotionsArrayList.clear();
-
-        Cursor crs = db.rawQuery("select DISTINCT "+ DBHelper.UID + ","+ DBHelper.PROMOTION_ID +"," + DBHelper.TITLE +","+ DBHelper.SUB_TITLE +","
-                + DBHelper.MESSAGE +"," + DBHelper.IMG_URL +","
-                + DBHelper.PROMOTION_TYPE+"," + DBHelper.WITH_OPTION +"," + DBHelper.READ_STATUS +"," +DBHelper.STATUS + " from " + DBHelper.TABLE_NAME_PROMOTIONS, null);
-
-
-        while (crs.moveToNext()) {
-            String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
-            String mPromotionID = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_ID));
-            String mTitle = crs.getString(crs.getColumnIndex(DBHelper.TITLE));
-            String mSubTitle = crs.getString(crs.getColumnIndex(DBHelper.SUB_TITLE));
-            String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
-            String mImgUrl = crs.getString(crs.getColumnIndex(DBHelper.IMG_URL));
-            String mPromotionType = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_TYPE));
-            String mWithOption = crs.getString(crs.getColumnIndex(DBHelper.WITH_OPTION));
-            String mStatus = crs.getString(crs.getColumnIndex(DBHelper.STATUS));
-            String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));
-            String mOnDate ="";
-            promotions = new Promotions(mUID,mTitle,mMessage,mSubTitle,mImgUrl,mPromotionType,mPromotionID,mWithOption,mStatus,mReadStatus,mOnDate);
-            promotionsArrayList.add(promotions);
-        }
-    }
-
 
     public class CheckStatus extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
@@ -927,22 +983,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }
     }
 
-
-    private void getMerchantDetails() {
-        if (Constants.isNetworkConnectionAvailable(Activity_Home.this)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                new GetProfileDetails().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getProfileDetails", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
-            } else {
-                new GetProfileDetails().execute(Constants.DEMO_SERVICE+"getProfileDetails", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
-
-            }
-        } else {
-            Constants.showToast(Activity_Home.this, getString(R.string.no_internet));
-        }
-    }
-
-
     private class GetProfileDetails extends AsyncTask<String, Void, String>
     {
         ProgressDialog progressDialog;
@@ -1028,6 +1068,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     editor.putString("merLegalName", object2.optString("merLegalName"));
                     editor.putString("merMobileNO", object2.optString("merMobileNO"));
                     editor.putString("currencyCode", object2.optString("currencyCode"));
+                    editor.putString("mvisaStatus", object2.optString("mvisaStatus"));
 
                     editor.apply();
 
@@ -1046,22 +1087,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             }
 
         }
-    }
-
-    private void logout(int i)
-    {
-        if(i == 1)
-            Constants.showToast(Activity_Home.this, getString(R.string.sign_out));
-        else
-            Constants.showToast(Activity_Home.this, getString(R.string.session_expired));
-        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 
 }
