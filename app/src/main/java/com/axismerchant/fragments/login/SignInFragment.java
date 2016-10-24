@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.axismerchant.R;
 import com.axismerchant.activity.start.Activity_Home;
-import com.axismerchant.activity.start.Activity_Main;
 import com.axismerchant.activity.start.Activity_SetOTP;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecryptRegister;
@@ -158,14 +157,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             editor.apply();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a");
-            String currentDateandTime = sdf.format(new Date());
+            String currentDateAndTime = sdf.format(new Date());
 
             if (Constants.isNetworkConnectionAvailable(getActivity())) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new VerifyMPIN().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateandTime,Constants.SecretKey, Constants.AuthToken);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateAndTime, Constants.SecretKey, Constants.AuthToken);
                 } else {
-                    new VerifyMPIN().execute(Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateandTime,Constants.SecretKey, Constants.AuthToken);
+                    new VerifyMPIN().execute(Constants.DEMO_SERVICE + "verifyPin", Constants.MERCHANT_ID, Constants.MOBILE_NUM, Constants.MPIN, Constants.IMEI, currentDateAndTime, Constants.SecretKey, Constants.AuthToken);
 
                 }
             } else {
@@ -174,6 +173,36 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void ShowDialog() {
+        // custom dialog
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_sign_in);
+        dialog.setCancelable(false);
+
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        // if button is clicked, close the custom dialog
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                changeToSignUp();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void changeToSignUp() {
+        (getActivity().findViewById(R.id.layoutSignIn)).setVisibility(View.GONE);
+        (getActivity().findViewById(R.id.layoutSignUp)).setVisibility(View.VISIBLE);
+        (getActivity().findViewById(R.id.viewSignUp)).setBackgroundColor(Color.WHITE);
+        (getActivity().findViewById(R.id.viewSignIn)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        SignUpFragment signUpFragment = new SignUpFragment();
+        getFragmentManager().beginTransaction().replace(R.id.container, signUpFragment).commit();
+    }
 
     private class VerifyMPIN extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
@@ -274,7 +303,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-
     private class ForgotMPIN extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
@@ -359,41 +387,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             }
 
         }
-    }
-
-
-    private void ShowDialog()
-    {
-        // custom dialog
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout_for_sign_in);
-        dialog.setCancelable(false);
-
-        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
-
-        // if button is clicked, close the custom dialog
-        txtConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                changeToSignUp();
-            }
-        });
-
-        dialog.show();
-    }
-
-
-    private void changeToSignUp()
-    {
-        (getActivity().findViewById(R.id.layoutSignIn)).setVisibility(View.GONE);
-        (getActivity().findViewById(R.id.layoutSignUp)).setVisibility(View.VISIBLE);
-        (getActivity().findViewById(R.id.viewSignUp)).setBackgroundColor(Color.WHITE);
-        (getActivity().findViewById(R.id.viewSignIn)).setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
-        SignUpFragment signUpFragment = new SignUpFragment();
-        getFragmentManager().beginTransaction().replace(R.id.container, signUpFragment).commit();
     }
 
 }

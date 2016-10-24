@@ -8,16 +8,13 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.axismerchant.R;
@@ -106,7 +103,7 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
             if(heading.equalsIgnoreCase("CallIssues")){
                 txtSubCode.setText("Call Issues");
                 txtHeading.setText("Other Issues");
-                mServiceType = "CALL ISSUES";
+                mServiceType = "CALL ISSUER";
             }else
             if(heading.equalsIgnoreCase("PaymentInquiry")){
                 txtSubCode.setText("Payment Inquiry");
@@ -131,67 +128,67 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
             if(heading.equalsIgnoreCase("AxisAccNo")){
                 txtSubCode.setText("Axis Account No.");
                 txtHeading.setText("Account Management");
-                mServiceType = "AXIS A/C NO";
+                mServiceType = "CHANGE IN ACCOUNT MODE (AXIS A/C NO.)";
             }else
             if(heading.equalsIgnoreCase("NeftRtgs")){
                 txtSubCode.setText("Neft Rtgs");
                 txtHeading.setText("Account Management");
-                mServiceType = "NEFT/RTGS";
+                mServiceType = "CHANGE IN ACCOUNT MODE (NEFT/RTGS)";
             }else
             if(heading.equalsIgnoreCase("DbaName")){
                 txtSubCode.setText("Dba Name");
                 txtHeading.setText("Account Management");
-                mServiceType = "DBA NAME";
+                mServiceType = "UPDATE MERCHANT DETAILS (DBA NAME)";
             }else
             if(heading.equalsIgnoreCase("LegalName")){
                 txtSubCode.setText("Legal Name");
                 txtHeading.setText("Account Management");
-                mServiceType = "LEGAL NAME";
+                mServiceType = "UPDATE MERCHANT DETAILS (LEGAL NAME)";
             }else
             if(heading.equalsIgnoreCase("AddressChange")){
                 txtSubCode.setText("Address Change");
                 txtHeading.setText("Account Management");
-                mServiceType = "ADDRESS CHANGE";
+                mServiceType = "UPDATE MERCHANT DETAILS (ADDRESS CHANGE)";
             }else
             if(heading.equalsIgnoreCase("PhoneNo")){
                 txtSubCode.setText("Phone No");
                 txtHeading.setText("Account Management");
-                mServiceType = "MOBILE NO";
+                mServiceType = "UPDATE MERCHANT DETAILS (MOBILE NUMBER)";
             }else
             if(heading.equalsIgnoreCase("NewLocation")){
                 txtSubCode.setText("New Location");
                 txtHeading.setText("Account Management");
-                mServiceType = "NEW LOCATION";
+                mServiceType = "UPDATE MERCHANT DETAILS (NEW LOCATION)";
             }else
             if(heading.equalsIgnoreCase("AssetSwapping")){
                 txtSubCode.setText("Asset Swapping");
                 txtHeading.setText("Account Management");
-                mServiceType = "ASSET SWAPPING";
+                mServiceType = "UPDATE MERCHANT DETAILS (ASSET SWAPPING)";
             }else
             if(heading.equalsIgnoreCase("Dcc")){
                 txtSubCode.setText("Dcc");
                 txtHeading.setText("Account Management");
-                mServiceType = "DCC";
+                mServiceType = "MERCHANT CREATION – DCC";
             }else
             if(heading.equalsIgnoreCase("AdditionalDcc")){
                 txtSubCode.setText("Additional Dcc");
                 txtHeading.setText("Account Management");
-                mServiceType = "ADDITIONAL DCC";
+                mServiceType = "MERCHANT CREATION – ADDITIONAL DCC";
             }else
             if(heading.equalsIgnoreCase("CashPos")){
                 txtSubCode.setText("Cash Pos");
                 txtHeading.setText("Account Management");
-                mServiceType = "CASH POS";
+                mServiceType = "Cash@PoS";
             }else
             if(heading.equalsIgnoreCase("Apply_mVisa")){
                 txtSubCode.setText("Apply mVisa");
                 txtHeading.setText("Account Management");
-                mServiceType = "APPLY MVISA";
+                mServiceType = "APPLY FOR mVISA / QR CODE PAY";
             }else
             if(heading.equalsIgnoreCase("MprStatmentRequest")){
                 txtSubCode.setText("Mpr Statement Request");
                 txtHeading.setText("Account Management");
-                mServiceType = "MPR STATEMENT REQUEST";
+                mServiceType = "MPR STATEMENT REQUEST (MERCHANT PAYMENT REPORT)";
             }
         }
 
@@ -276,6 +273,56 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private void ShowDialogReponse(String response, String request_Number, String docket_id, String response_code) {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_sr_request);
+        dialog.setCancelable(true);
+
+        TextView txtResponseStatus = (TextView) dialog.findViewById(R.id.txtResponseStatus);
+        TextView txtRequestNumber = (TextView) dialog.findViewById(R.id.txtRequestNumber);
+        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        if (response.equalsIgnoreCase("Success")) {
+            txtResponseStatus.setText("Success");
+            txtResponseStatus.setTextColor(Color.GREEN);
+            if (docket_id.equals("")) {
+                txtRequestNumber.setText(getString(R.string.request_raised) + "\n" + getString(R.string.request_number) + " \n" + request_Number);
+            } else {
+                txtRequestNumber.setText(getString(R.string.request_raised) + "\n" + getString(R.string.request_number) + " \n" + request_Number + ",\n Docket Id " + docket_id);
+            }
+            imgResponse.setImageResource(R.drawable.happiness);
+        } else {
+            txtResponseStatus.setText("Fail");
+            txtResponseStatus.setTextColor(Color.RED);
+            txtRequestNumber.setText(response_code + "\n" + getString(R.string.try_later));
+            imgResponse.setImageResource(R.mipmap.fail);
+        }
+
+        // if button is clicked, close the custom dialog
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     public class GetData extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
@@ -391,62 +438,6 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
             }
             progressDialog.dismiss();
         }
-    }
-
-
-    private void ShowDialogReponse(String response, String request_Number, String docket_id, String response_code)
-    {
-        // custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout_for_sr_request);
-        dialog.setCancelable(true);
-
-        TextView txtResponseStatus = (TextView) dialog.findViewById(R.id.txtResponseStatus);
-        TextView txtRequestNumber = (TextView) dialog.findViewById(R.id.txtRequestNumber);
-        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
-        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
-
-        if(response.equalsIgnoreCase("Success"))
-        {
-            txtResponseStatus.setText("Success");
-            txtResponseStatus.setTextColor(Color.GREEN);
-            if(docket_id.equals("")){
-                txtRequestNumber.setText(getString(R.string.request_raised)+"\n"+getString(R.string.request_number)+" \n"+request_Number);
-            }else {
-                txtRequestNumber.setText(getString(R.string.request_raised) + "\n" + getString(R.string.request_number) + " \n" + request_Number + ",\n Docket Id " + docket_id);
-            }
-            imgResponse.setImageResource(R.drawable.happiness);
-        }else
-        {
-            txtResponseStatus.setText("Fail");
-            txtResponseStatus.setTextColor(Color.RED);
-            txtRequestNumber.setText(response_code+"\n"+getString(R.string.try_later));
-            imgResponse.setImageResource(R.mipmap.fail);
-        }
-
-        // if button is clicked, close the custom dialog
-        txtConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                onBackPressed();
-            }
-        });
-
-        dialog.show();
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 
 

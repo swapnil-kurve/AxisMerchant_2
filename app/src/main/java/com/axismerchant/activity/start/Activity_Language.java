@@ -20,7 +20,7 @@ import java.util.Locale;
 public class Activity_Language extends AppActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     RadioGroup rdGrpLanguage;
-    String currentLanguage;
+    String currentLanguage = "en";
     Configuration config;
     TextView txtProceed, txtLabel, txtTitle;
     int i = 0;

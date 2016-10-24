@@ -10,16 +10,16 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:paddingLeft="10dp"
-        android:background="@drawable/shadow">
+        android:background="@drawable/shadow"
+        android:paddingLeft="10dp">
 
         <ImageView
             android:id="@+id/imgBack"
             android:layout_width="@dimen/toolbar_img_width"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:visibility="gone"
-            android:src="@mipmap/back_arrow" />
+            android:src="@mipmap/back_arrow"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imgIcon"
@@ -51,8 +51,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/txtProceed">
+        android:layout_above="@+id/txtProceed"
+        android:layout_below="@+id/toolbar">
 
         <com.axismerchant.custom.CustomTextViewLightBold
             android:id="@+id/txtTitle"
@@ -86,6 +86,7 @@
                 android:id="@+id/rdEnglish"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/english"
                 android:textSize="@dimen/title_size" />
 

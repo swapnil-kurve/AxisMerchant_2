@@ -161,7 +161,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                 txtSubCode.setText("Roll Required");
                 txtHeading.setText("Quick Links");
                 findViewById(R.id.lyNoOfRolls).setVisibility(View.VISIBLE);
-                mServiceType = "ROLLS TO BE DELIVERED PROACTIVELY";
+                mServiceType = "ROLLS REQUIRED";
             }else
             if(heading.equalsIgnoreCase("TrainingRequired")) {
                 txtSubCode.setText("Training Required");
@@ -550,6 +550,90 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private ArrayAdapter<String> adapterForSpinner(ArrayList<String> list) {
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list) {
+            @Override
+            public boolean isEnabled(int position) {
+                return position != 0;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                } else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        return dataAdapter;
+    }
+
+    private void ShowDialogReponse(String response, String request_Number, String docket_id, String response_code) {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_sr_request);
+        dialog.setCancelable(true);
+
+        TextView txtResponseStatus = (TextView) dialog.findViewById(R.id.txtResponseStatus);
+        TextView txtRequestNumber = (TextView) dialog.findViewById(R.id.txtRequestNumber);
+        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        if (response.equalsIgnoreCase("Success")) {
+            txtResponseStatus.setText("Success");
+            txtResponseStatus.setTextColor(Color.GREEN);
+            if (docket_id.equals("")) {
+                txtRequestNumber.setText(getString(R.string.request_raised) + "\n" + getString(R.string.request_number) + " \n" + request_Number);
+            } else {
+                txtRequestNumber.setText(getString(R.string.request_raised) + "\n" + getString(R.string.request_number) + " \n" + request_Number + ",\n Docket Id " + docket_id);
+            }
+            imgResponse.setImageResource(R.drawable.happiness);
+        } else {
+            txtResponseStatus.setText("Fail");
+            txtResponseStatus.setTextColor(Color.RED);
+            txtRequestNumber.setText(response_code + "\n" + getString(R.string.try_later));
+            imgResponse.setImageResource(R.mipmap.fail);
+        }
+
+        // if button is clicked, close the custom dialog
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     public class GetData extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
         @Override
@@ -664,100 +748,6 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
             }
             progressDialog.dismiss();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-
-    private  ArrayAdapter<String> adapterForSpinner(ArrayList<String> list)
-    {
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list)
-        {
-            @Override
-            public boolean isEnabled(int position) {
-                return position != 0;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if(position == 0){
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                }
-                else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        return dataAdapter;
-    }
-
-
-
-    private void ShowDialogReponse(String response, String request_Number, String docket_id, String response_code)
-    {
-        // custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout_for_sr_request);
-        dialog.setCancelable(true);
-
-        TextView txtResponseStatus = (TextView) dialog.findViewById(R.id.txtResponseStatus);
-        TextView txtRequestNumber = (TextView) dialog.findViewById(R.id.txtRequestNumber);
-        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
-        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
-
-        if(response.equalsIgnoreCase("Success"))
-        {
-            txtResponseStatus.setText("Success");
-            txtResponseStatus.setTextColor(Color.GREEN);
-            if(docket_id.equals("")){
-                txtRequestNumber.setText(getString(R.string.request_raised)+"\n"+getString(R.string.request_number)+" \n"+request_Number);
-            }else {
-                txtRequestNumber.setText(getString(R.string.request_raised) + "\n" + getString(R.string.request_number) + " \n" + request_Number + ",\n Docket Id " + docket_id);
-            }
-            imgResponse.setImageResource(R.drawable.happiness);
-        }else
-        {
-            txtResponseStatus.setText("Fail");
-            txtResponseStatus.setTextColor(Color.RED);
-            txtRequestNumber.setText(response_code+"\n"+getString(R.string.try_later));
-            imgResponse.setImageResource(R.mipmap.fail);
-        }
-
-        // if button is clicked, close the custom dialog
-        txtConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                onBackPressed();
-            }
-        });
-
-        dialog.show();
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 
 }

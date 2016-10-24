@@ -107,6 +107,17 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
         }
     }
 
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
     private class GetSRStatusDetails extends AsyncTask<String, Void, String>
     {
         ProgressDialog progressDialog;
@@ -217,7 +228,7 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                             docketId = encryptDecrypt.decrypt(docketId);
 
 
-                        if(tid.equalsIgnoreCase("")) {
+                        if (tid.equalsIgnoreCase("") || tid.equalsIgnoreCase("Null")) {
                             txtTIDNo.setVisibility(View.GONE);
                             txtTIDTitle.setVisibility(View.GONE);
                         }
@@ -250,18 +261,6 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
             }
 
         }
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 
 }

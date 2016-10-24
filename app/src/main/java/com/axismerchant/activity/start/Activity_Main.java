@@ -19,14 +19,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.axismerchant.R;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.fragments.login.SignInFragment;
 import com.axismerchant.fragments.login.SignUpFragment;
+import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,11 +36,11 @@ import io.fabric.sdk.android.Fabric;
 
 public class Activity_Main extends AppCompatActivity {
 
-    SharedPreferences preferences;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 1111;
+    SharedPreferences preferences;
     GoogleCloudMessaging gcmObj;
     String regId;
-    private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 1111;
 
     private void ShowDialog()
     {
@@ -84,7 +84,6 @@ public class Activity_Main extends AppCompatActivity {
         }else
         {
             changeToSignUp();
-
         }
 
         Bundle data = getIntent().getExtras();

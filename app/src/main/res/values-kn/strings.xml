@@ -3,8 +3,8 @@
     <!--==========================================   ID's  =============================================-->
     <!--================================================================================================-->
 
-    <!--<string name="version">Version UAT-40</string>-->
-    <string name="version">Version 3.0.5</string>
+    <!--<string name="version">Version UAT-42</string>-->
+    <string name="version">Version 3.0.6</string>
     <string name="mvisa_id">mvisa_id</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>
@@ -121,7 +121,7 @@
     <string name="title_activity_reports">ರಿಪೋರ್ಟ್ಸ್ ಮತ್ತು MIS</string>
     <string name="title_activity_activity_epayment">SMSವಾವತಿ</string>
     <string name="title_activity_activity_SMS_sign_up">SMSವಾವತಿಸೈನ್ ಅಪ್</string>
-    <string name="title_activity_activity_all_transactions">ಎಲ್ಲ ವಹಇಆಟಗಳು</string>
+    <string name="all_transactions">ಎಲ್ಲ ವಹಇಆಟಗಳು</string>
     <string name="transactions_status">ವಹಿವಾಟಿನ ಸ್ಥಿತಿ ಗತಿ</string>
     <string name="transaction_report">ವಹಿವಾಟಿನ ವರದಿ</string>
     <string name="businessDetails">ಬಿಸಿನೆಸ್ ವಿವರ</string>
@@ -482,22 +482,40 @@
 </string>
     <string name="terminal_sw_currpted">ಟರ್ಮಿನಲ್ ಸಾಫ್ಟ್ವೇರ್ ಕರಪ್ಟ್  ಆಗಿದೆ
 </string>
-    <string name="axis_no">ಎಕ್ಸಿಸ್ ಖಾತೆ ಕ್ರ.</string>
-    <string name="neft">NEFT/RTGS</string>
-    <string name="dba">DBA ಹೆಸರು</string>
-    <string name="legal_name">ಕಾನೂನು ಸಮ್ಮತ ಹೆಸರು</string>
-    <string name="address_change">ವಿಳಾಸ ಬದಲಾವಣೆ</string>
-    <string name="phone_no">ಫೋನ್ ನಂ.</string>
-    <string name="new_loc">ಹೊಸ ಲೊಕೇಶನ್</string>
-    <string name="asset_swapping">ಅಸೆಟ್ ಸ್ವ್ಯಾಪಿಂಗ್</string>
-    <string name="dcc">DCC</string>
-    <string name="additional_dcc">ಹೆಚ್ಚುವರಿ  DCC
 
-</string>
-    <string name="cash_pos">CASH @ POS</string>
-    <string name="apply_for_mvisa">mVISAಗೆ ಅಪ್ಲೈ ಮಾಡಿ</string>
-    <string name="mpr_request">MPR ಸ್ಟೇಟ್ಮೆಂಟ್ ರಿಕ್ವೆಸ್ಟ್
-</string>
+
+    <!-- <string name="axis_no">ಎಕ್ಸಿಸ್ ಖಾತೆ ಕ್ರ.</string>
+     <string name="neft">NEFT/RTGS</string>
+     <string name="dba">DBA ಹೆಸರು</string>
+     <string name="legal_name">ಕಾನೂನು ಸಮ್ಮತ ಹೆಸರು</string>
+     <string name="address_change">ವಿಳಾಸ ಬದಲಾವಣೆ</string>
+     <string name="phone_no">ಫೋನ್ ನಂ.</string>
+     <string name="new_loc">ಹೊಸ ಲೊಕೇಶನ್</string>
+     <string name="asset_swapping">ಅಸೆಟ್ ಸ್ವ್ಯಾಪಿಂಗ್</string>
+     <string name="dcc">DCC</string>
+     <string name="additional_dcc">ಹೆಚ್ಚುವರಿ  DCC
+
+ </string>
+     <string name="cash_pos">CASH @ POS</string>
+     <string name="apply_for_mvisa">mVISAಗೆ ಅಪ್ಲೈ ಮಾಡಿ</string>
+     <string name="mpr_request">MPR ಸ್ಟೇಟ್ಮೆಂಟ್ ರಿಕ್ವೆಸ್ಟ್
+ </string>-->
+
+    <string name="axis_no">ಪೇಮೆಂಟ್ ಮೊಡ್ದಲ್ಲಿ  ಬದಲಾವಣೆ - ಆ್ಯಕ್ಸಿಸ್ ಖಾತೆ ಸಂ.</string>
+    <string name="neft">ಪೇಮೆಂಟ್ ಮೊಡ್ದಲ್ಲಿ ಬದಲಾವಣೆ - ಎನ್ಇಎಫ್ಟಿ /ಆರ್ಟಿಜಿಎಸ್</string>
+    <string name="dba">ಅಪ್ಡೇಟ್ ವಿವರಣೆಗಳು - ಡಿಬಿಎ ಹೆಸರು</string>
+    <string name="legal_name">ಅಪ್ಡೇಟ್ ವಿವರಣೆಗಳು - ಕಾನೂನಾತ್ಮಕ ಹೆಸರು</string>
+    <string name="address_change">ಅಪ್ಡೇಟ್ ವಿವರಣೆಗಳು - ವಿಳಾಸ ಬದಲಾವಣೆ</string>
+    <string name="phone_no">ಅಪ್ಡೇಟ್ ವಿವರಣೆಗಳು - ದೂರವಾಣಿ ಸಂ.</string>
+    <string name="new_loc">ಅಪ್ಡೇಟ್ ವಿವರಣೆಗಳು - ಹೊಸ ಪ್ರದೇಶ</string>
+    <string name="asset_swapping">ಅಪ್ಡೇಟ್ ವಿವರಣೆಗಳು - ಅಸೇಟ್ ಸ್ವ್ಯಾಪಿಂಗ್</string>
+    <string name="dcc">ಮರ್ಚಂಟ್ ಕ್ರೀಯೆಶನ್ - ಡಿಸಿಸಿ</string>
+    <string name="additional_dcc">ಮರ್ಚಂಟ್ ಕ್ರೀಯೆಶನ್ - ಹೆಚ್ಚುವರಿ ಡಿಸಿಸಿ</string>
+    <string name="cash_pos">ನಗದು: ಪಿಒಎಸ್</string>
+    <string name="apply_for_mvisa">ಎಮ್ವಿಸಾಗಾಗಿ ಅನ್ವಯ</string>
+    <string name="mpr_request">ಎಮ್ಪಿಆರ್ ವಿವರಣೆ ವಿನಂತಿt</string>
+
+
     <string name="call_issues">ಕಾಲ್ ಸಮಸ್ಯೆ</string>
     <string name="payement_inquiry">ಪೇಮೆಂಟ್ ವಿಚಾರಣೆ</string>
     <string name="pick_up_card">ಪಿಕ್ಅಪ್ ಕಾರ್ಡ್
@@ -512,7 +530,33 @@
     <string name="null_week_off">Please provide weekly off</string>
     <string name="no_of_rolls">Please provide required roll</string>
     <string name="proceedTerms"><![CDATA[View Terms & Conditions to proceed]]></string>
-    <string name="termsDataSMS"><![CDATA[<body style=\"text-align:justify\"><p><b>Terms and Conditions for Internet Payment Gateway Services (‘IPG’) through SMS Pay on Axis Merchant App</b></p> <p><big><big>•</big></big> In using IPG Facility, the Merchant agrees: <p>(i) Not to use the Facility in any manner, or in furtherance of any activity, which constitutes a violation of any law or regulation or which may result in fraud on any person or which may cause the Bank to be subject to investigation, prosecution or legal action.<\p><p> (ii) To use information regarding a Cardholder (including name, address, e-mail address, telephone numbers, and data regarding Bank accounts or financial instruments) conveyed to Merchant by consumer software designed to access the Facility only for the purpose of completing the transactions for which it was furnished, and not to sell or otherwise furnish such information to others unless the Merchant has an independent source of such information or obtains the express consent of such Cardholder.<\p><p> (iii) To use the software in accordance with the terms on which the software has been provided to the Merchant and not to attempt to modify, translate, disassemble, decompile or reverse engineer the software, or use it for any purpose other than for the utilisation of the Facility</p><p> <big><big>•</big></big> The Merchant shall provide a commercially reasonable level of Cardholder support to the Cardholder’s with respect to sales using the Facility. Such support shall include appropriate notice to the Cardholder’s of: <p>(i) a means of contacting Merchant in the event the Cardholder has questions regarding the nature or quality of the goods or services that Merchant offers for sale and<\p><p> (ii) procedures for resolving disputes. If the Bank determines in good faith that the Merchant\'s failure to comply with this paragraph is causing an unacceptable burden on its Cardholder support facilities, the Bank may suspend or terminate this Agreement<\p><p> <big><big>•</big></big> If for any reason the Facility or any component of the Facility becomes, or in the Bank\'s opinion is likely to become, the subject of a claim of infringement, the Bank reserves the right to, at its option and expense, either<\p><p> (i) to revoke the right of the Merchant to continue using the Facility as permitted in this Agreement, or <\p><p>(ii) to replace or modify Facility or the infringing component of the Facility so that it becomes non-infringing. If, after using commercially reasonable efforts, the Bank is unable to cure the infringement, any of the Parties may terminate this Agreement on written notice to the other Party</p><p> <big><big>•</big></big> The Merchant shall not accept any Order for which payment is to be made through a Valid Credit / Debit Card unless the transaction is authorised by the Payment Gateway </p><p><big><big>•</big></big> If the Merchant is unable to deliver any part of the Cardholder’s Order within 5 calendar days from the date on which the Order was placed, or as mutually agreed between the Merchant and the Cardholder, Merchant shall cancel the Order and refund Cardholder </p><p><big><big>•</big></big> Deliver to the Cardholder a bill including mentioned of charges covered in the payment received from the Cardholder through the Payment Gateway</p><p> <big><big>•</big></big> The Bank reserves the right to impose limits on the number of Transactions undertaken using a particular Valid Credit / Debit Card and the value of a single transaction during any time period, and reserves the right to refuse to make payments in respect of transactions exceeding such limit </p><p><big><big>•</big></big> The Merchant hereby expressly agrees not to directly or indirectly deal in the following product/s or service/s at any time during the tenure of this Agreement. Without prejudice whatsoever to the Bank’s other rights & privileges, the Merchant binds himself unequivocally to be solely liable for including but not limited to any legal actions and suits, and to make good to the Bank immediately upon demand damages suffered by the Bank directly or owing to claims by any third party, levy of assessment fees or fines, penal actions taken by Card Association, the Reserve Bank of India and any other statutory or competent authorities for any breach of any terms of this Agreement, including the dealing in with goods/services in the \"Banned Category List\". For the full list kindly refer to <a href = "http://google.co.in/" target = "_blank"> Banned Category List.</a></p></body>]]></string>
+    <string name="termsDataSMS"><![CDATA[<body style=\"text-align:justify\"><p><b>Terms and Conditions for Internet Payment Gateway Services (‘IPG’) through SMS Pay on Axis Merchant App</b></p> <p><big><big>•</big></big> In using IPG Facility, the Merchant agrees: <p>(i) Not to use the Facility in any manner, or in furtherance of any activity, which constitutes a violation of any law or regulation or which may result in fraud on any person or which may cause the Bank to be subject to investigation, prosecution or legal action.<\p><p> (ii) To use information regarding a Cardholder (including name, address, e-mail address, telephone numbers, and data regarding Bank accounts or financial instruments) conveyed to Merchant by consumer software designed to access the Facility only for the purpose of completing the transactions for which it was furnished, and not to sell or otherwise furnish such information to others unless the Merchant has an independent source of such information or obtains the express consent of such Cardholder.<\p><p> (iii) To use the software in accordance with the terms on which the software has been provided to the Merchant and not to attempt to modify, translate, disassemble, decompile or reverse engineer the software, or use it for any purpose other than for the utilisation of the Facility</p><p> <big><big>•</big></big> The Merchant shall provide a commercially reasonable level of Cardholder support to the Cardholder’s with respect to sales using the Facility. Such support shall include appropriate notice to the Cardholder’s of: <p>(i) a means of contacting Merchant in the event the Cardholder has questions regarding the nature or quality of the goods or services that Merchant offers for sale and<\p><p> (ii) procedures for resolving disputes. If the Bank determines in good faith that the Merchant\'s failure to comply with this paragraph is causing an unacceptable burden on its Cardholder support facilities, the Bank may suspend or terminate this Agreement<\p><p> <big><big>•</big></big> If for any reason the Facility or any component of the Facility becomes, or in the Bank\'s opinion is likely to become, the subject of a claim of infringement, the Bank reserves the right to, at its option and expense, either<\p><p> (i) to revoke the right of the Merchant to continue using the Facility as permitted in this Agreement, or <\p><p>(ii) to replace or modify Facility or the infringing component of the Facility so that it becomes non-infringing. If, after using commercially reasonable efforts, the Bank is unable to cure the infringement, any of the Parties may terminate this Agreement on written notice to the other Party</p><p> <big><big>•</big></big> The Merchant shall not accept any Order for which payment is to be made through a Valid Credit / Debit Card unless the transaction is authorised by the Payment Gateway </p><p><big><big>•</big></big> If the Merchant is unable to deliver any part of the Cardholder’s Order within 5 calendar days from the date on which the Order was placed, or as mutually agreed between the Merchant and the Cardholder, Merchant shall cancel the Order and refund Cardholder </p><p><big><big>•</big></big> Deliver to the Cardholder a bill including mentioned of charges covered in the payment received from the Cardholder through the Payment Gateway</p><p> <big><big>•</big></big> The Bank reserves the right to impose limits on the number of Transactions undertaken using a particular Valid Credit / Debit Card and the value of a single transaction during any time period, and reserves the right to refuse to make payments in respect of transactions exceeding such limit </p><p><big><big>•</big></big> The Merchant hereby expressly agrees not to directly or indirectly deal in the following product/s or service/s at any time during the tenure of this Agreement. Without prejudice whatsoever to the Bank’s other rights & privileges, the Merchant binds himself unequivocally to be solely liable for including but not limited to any legal actions and suits, and to make good to the Bank immediately upon demand damages suffered by the Bank directly or owing to claims by any third party, levy of assessment fees or fines, penal actions taken by Card Association, the Reserve Bank of India and any other statutory or competent authorities for any breach of any terms of this Agreement, including the dealing in with goods/services in the Banned Category List.</a></p><p>List of banned businesses and activities:</p><p>
+    <b><b>•</b></b>	Adult goods and services which includes pornography and other sexually suggestive materials (including literature, imagery and other media); escort or prostitution services.</p><p><b><b>•</b></b>	Apparatus such as personal massagers / vibrators and sex toys and enhancements.</p> <p><b><b>•</b></b>Alcohol, which includes alcohol or alcoholic beverages such as beer, liquor, wine, or champagne. </p><p><b><b>•</b></b>Body parts, which includes organs or other body parts – live , cultured / preserved or from cadaver. </p><p><b><b>•</b></b>	Bulk marketing tools which includes e-mail lists, software, or other products enabling unsolicited e-mail messages (spam).</p><p><b><b>•</b></b>Cable TV descramblers and black boxes which includes devices intended to obtain cable and satellite signals for free. </p><p><b><b>•</b></b>	Child pornography in any form.</p> <p><b><b>•</b></b>Copyright unlocking devices which includes Mod chips or other devices designed to circumvent copyright protection.  </p> <p><b><b>•</b></b>	Copyrighted media, which includes unauthorised copies of books, music, movies, and other licensed or protected materials.  </p><p><b><b>•</b></b>Copyrighted software which includes unauthorised copies of software, video games and other licensed or protected materials, including OEM or bundled software.  </p><p><b><b>•</b></b>Counterfeit and unauthorised goods which includes replicas or imitations of designer goods; items without a celebrity endorsement that would normally require such an association; fake autographs, counterfeit stamps, and other potentially unauthorised goods.  </p> <p><b><b>•</b></b>Drugs and drug paraphernalia which includes illegal drugs and drug accessories, including herbal drugs including but not limited to salvia and magic mushrooms.  </p> <p><b><b>•</b></b>	Drug test circumvention aids which includes drug cleansing shakes, urine test additives, and related items.  </p><p><b><b>•</b></b> Endangered species, which includes plants, animals or other organisms (including product derivatives) in danger of extinction. </p><p><b><b>•</b></b>Gaming / gambling which includes lottery tickets, sports bets, memberships / enrolment in online gambling sites, and related content. </p> <p><b><b>•</b></b> Government IDs or documents which includes fake IDs, passports, diplomas, and noble titles. </p> <p><b><b>•</b></b> Hacking and cracking materials which includes manuals, how-to guides, information, or equipment enabling illegal access to software, servers, websites, or other protected property. </p><p><b><b>•</b></b>Illegal goods which includes materials, products, or information promoting illegal goods or enabling illegal acts.  </p><p><b><b>•</b></b>Miracle cures which includes unsubstantiated cures, remedies or other items marketed as quick health fixes.  </p><p><b><b>•</b></b>Offensive goods which includes literature, products or other materials that: a) Defame or slander any person or groups of people based on race, ethnicity, national origin, religion, sex, or other factors. b) Encourage or incite violent acts. c) Promote intolerance or hatred.  </p><p><b><b>•</b></b>Offensive goods, crime which includes crime scene photos or items, such as personal belongings, associated with criminals.  </p><p><b><b>•</b></b>Prescription drugs or herbal drugs or any kind of online pharmacies which includes drugs or other products requiring a prescription by a recognised and licensed medical practitioner in India or anywhere else  </p><p><b><b>•</b></b>Pyrotechnic devices and hazardous materials which includes fireworks and related goods; toxic, flammable, and radioactive materials and substances</p>
+
+<p><b><b>•</b></b>Regulated goods which includes air bags; batteries containing mercury; Freon or similar substances / refrigerants; chemical / industrial solvents; government uniforms; car titles; license plates; police badges and law enforcement equipment; lock-picking devices; pesticides; postage meters; recalled items; slot machines; surveillance equipment; goods regulated by government or other agency specifications</p>
+
+<p><b><b>•</b></b>Securities, which includes stocks, bonds, mutual funds or related financial products or investments</p>
+
+<p><b><b>•</b></b>Tobacco and cigarettes which includes cigarettes, cigars, chewing tobacco, and related products</p>
+
+<p><b><b>•</b></b>Traffic devices, which includes radar detectors / jammers, license plate covers, traffic signal changers, and related products</p>
+
+<p><b><b>•</b></b>Weapons, which includes firearms, ammunition, knives, brass knuckles, gun parts, and other armaments</p>
+
+<p><b><b>•</b></b>Wholesale currency, which includes discounted currencies or currency, exchanges</p>
+
+<p><b><b>•</b></b>Live animals or hides / skins / teeth, nails and other parts etc. of animals</p>
+
+<p><b><b>•</b></b>Multi Level Marketing schemes or Pyramid / Matrix sites or websites using a Matrix scheme approach</p>
+
+<p><b><b>•</b></b>Any intangible goods or services or aggregation / consolidation business</p>
+
+<p><b><b>•</b></b>Work-at-home information</p>
+
+<p><b><b>•</b></b>Drop-shipped merchandise</p>
+
+<p><b><b>•</b></b>Any product or service, which is not in compliance with all applicable laws and regulations whether federal, state, both local and international includes the laws of India Web-based telephony/ SMS/Text/Facsimile services or Calling Cards. Bandwidth or Data transfer/ allied services. Voice process /knowledge process services. </p>
+</body>]]></string>
     <string name="termsDataQR"><![CDATA[<body style=\"text-align:justify\"><p>The Merchant agrees and confirms that signing up for mVisa (QR code based payments) is to avail additional services from the bank. The arrangement for mVisa shall not have any effect of over riding all of any of the provisions as contained in Principal Agreement Signed. It is understood that for mVisa arrangement, the Principal Agreement stands in force and this additional services shall always be read  as forming part and parcel of Agreement.</p></body>]]></string>
     <string name="regular01">1.85%</string>
     <string name="blended01">2.15%</string>
@@ -561,5 +605,6 @@
     <string name="no_last_transaction">No Last Transaction Found</string>
     <string name="select_language">Please select language</string>
     <string name="terms">Terms &amp; conditions</string>
+    <string name="notAuthorized">You are not authorized for this process.</string>
 
 </resources>
