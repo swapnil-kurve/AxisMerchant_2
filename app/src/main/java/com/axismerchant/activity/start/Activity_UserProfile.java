@@ -21,31 +21,33 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
-import com.axismerchant.classes.EncryptDecryptRegister;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.axismerchant.R;
 import com.axismerchant.activity.Activity_Notification;
 import com.axismerchant.classes.Constants;
+import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.fragments.profile.BusinessDetailsFragment;
 import com.axismerchant.fragments.profile.SubUserFragment;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Activity_UserProfile extends AppCompatActivity implements View.OnClickListener {
-    ImageView imgUserProfile;
-    SharedPreferences preferences;
     private final static int RESULT_SELECT_IMAGE = 100;
     private static final String TAG = "GalleryUtil";
+    private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
+    ImageView imgUserProfile;
+    SharedPreferences preferences;
     String  picturePath;
     Intent returnFromGalleryIntent;
-    private int flag = 0;
-    private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
     SubUserFragment userFragment;
     EncryptDecryptRegister encryptDecryptRegister;
+    private int flag = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -283,7 +285,13 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        if(flag == 1){
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (inputManager.isAcceptingText()) {
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        } else if (flag == 1) {
             boolean groupsCollapsed = false;
             for (int i=0; i<userFragment.expandableListView.getCount(); ++i) {
                 if (userFragment.expandableListView.isGroupExpanded(i)) {

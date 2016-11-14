@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -23,7 +24,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
     String currentLanguage = "en";
     Configuration config;
     TextView txtProceed, txtLabel, txtTitle;
-    int i = 0;
+    int fromHome = 0; // 0 for No and 1 for yes
     Typeface kannadaFont,teluguFont, hindiFont, bengaliFont, tamilFont;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,31 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
         /**
          * Initialize the fonts.
          */
+        Initialize();
+
+
+        txtProceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (fromHome == 0) {
+                    Intent intent = new Intent(Activity_Language.this, Activity_Main.class);
+                    intent.putExtra("EntryType", "SignUp");
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(Activity_Language.this, Activity_Home.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+        });
+
+    }
+
+    private void Initialize() {
         hindiFont = Typeface.createFromAsset(getAssets(), "fonts/mangal.ttf");
         tamilFont = Typeface.createFromAsset(getAssets(), "fonts/tamil.TTF");
         bengaliFont = Typeface.createFromAsset(getAssets(), "fonts/bengali.TTF");
@@ -55,7 +81,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
         Bundle bundle = getIntent().getExtras();
         if(bundle != null && bundle.containsKey("FromHome"))
         {
-            i = 1;
+            fromHome = 1;
             imgBack.setVisibility(View.VISIBLE);
             View mToolbar = findViewById(R.id.toolbar);
             mToolbar.setPadding(0,0,0,0);
@@ -63,28 +89,28 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
             checkLoginStatus();
         }
 
-        txtProceed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                selectLanguage();
-                if(anyLang == 0)
-                    Constants.showToast(Activity_Language.this, getString(R.string.select_language));
-                else {
-                    if(i==0){
-                        Intent intent = new Intent(Activity_Language.this, Activity_Main.class);
-                        intent.putExtra("EntryType","SignUp");
-                        startActivity(intent);
-                        finish();
-                    }else {
-                        Intent intent = new Intent(Activity_Language.this, Activity_Home.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
-                    }
-                }
-            }
-        });
-
+        SharedPreferences preferences = getSharedPreferences(Constants.LanguageData, MODE_PRIVATE);
+        anyLang = preferences.getInt("Selected_Language", 0);
+        switch (anyLang) {
+            case 0:
+                ((RadioButton) findViewById(R.id.rdEnglish)).setChecked(true);
+                break;
+            case 1:
+                ((RadioButton) findViewById(R.id.rdHindi)).setChecked(true);
+                break;
+            case 2:
+                ((RadioButton) findViewById(R.id.rdTamil)).setChecked(true);
+                break;
+            case 3:
+                ((RadioButton) findViewById(R.id.rdTelugu)).setChecked(true);
+                break;
+            case 4:
+                ((RadioButton) findViewById(R.id.rdKannada)).setChecked(true);
+                break;
+            case 5:
+                ((RadioButton) findViewById(R.id.rdBengali)).setChecked(true);
+                break;
+        }
     }
 
     private void checkLoginStatus() {
@@ -106,7 +132,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                 }
             }
         }else{
-            i = 0;
+            fromHome = 0;
         }
 
     }
@@ -128,7 +154,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
         switch (i)
         {
             case R.id.rdEnglish:
-                anyLang = 1;
+                anyLang = 0;
                 currentLanguage = "en";
 
                 Locale locale = new Locale(currentLanguage);
@@ -143,7 +169,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                 break;
 
             case R.id.rdHindi:
-                anyLang = 2;
+                anyLang = 1;
                 currentLanguage = "hi";
                 locale = new Locale(currentLanguage);
                 Locale.setDefault(locale);
@@ -158,7 +184,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                 break;
 
             case R.id.rdTamil:
-                anyLang = 3;
+                anyLang = 2;
                 currentLanguage = "ta";
 
                 locale = new Locale(currentLanguage);
@@ -175,7 +201,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                 break;
 
             case R.id.rdTelugu:
-                anyLang = 4;
+                anyLang = 3;
                 currentLanguage = "te";
 
                 locale = new Locale(currentLanguage);
@@ -191,7 +217,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                 break;
 
             case R.id.rdKannada:
-                anyLang = 5;
+                anyLang = 4;
                 currentLanguage = "kn";
 
                 locale = new Locale(currentLanguage);
@@ -207,7 +233,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                 break;
 
             case R.id.rdBengali:
-                anyLang = 6;
+                anyLang = 5;
                 currentLanguage = "bn";
 
                 locale = new Locale(currentLanguage);

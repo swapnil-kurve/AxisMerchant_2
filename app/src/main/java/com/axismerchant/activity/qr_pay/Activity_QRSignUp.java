@@ -282,9 +282,9 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new SendRequest().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "APPLY FOR mVISA / QR CODE PAY", "", "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MVISA ONBOARDING REQUEST", "", "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "APPLY FOR mVISA / QR CODE PAY", "", "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {
@@ -292,6 +292,79 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
         }
     }
 
+    private void ShowDialog2(String result, String status, String reqID) {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_message_for_sms);
+        dialog.setCancelable(false);
+
+        TextView txtMID = (TextView) dialog.findViewById(R.id.txtMID);
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        TextView txtTitle = (TextView) dialog.findViewById(R.id.txtTitle);
+        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
+        TextView txtMsg1 = (TextView) dialog.findViewById(R.id.txtMessage);
+        TextView txtMsg2 = (TextView) dialog.findViewById(R.id.msg1);
+
+        if (!result.equals("Success")) {
+            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit_fail));
+            imgResponse.setImageResource(R.mipmap.fail);
+            txtConfirm.setText("Ok");
+            txtMID.setVisibility(View.GONE);
+
+            // if button is clicked, close the custom dialog
+            txtConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(Activity_QRSignUp.this, Activity_Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        } else {
+            txtMsg2.setVisibility(View.GONE);
+            txtMsg1.setText(getString(R.string.qr_on_boarding_pop_up));
+            txtConfirm.setText("Ok");
+
+            SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            editor.putString("QRRequestValidated", "pending");
+            editor.putString("Status", status);
+            editor.putString("Request_ID", reqID);
+            editor.apply();
+
+            // if button is clicked, close the custom dialog
+            txtConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                    Intent intent = new Intent(Activity_QRSignUp.this, Activity_Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+
+
+        dialog.show();
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     public class SendRequest extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
@@ -396,86 +469,6 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
             }
             progressDialog.dismiss();
         }
-    }
-
-
-    private void ShowDialog2(String result, String status, String reqID)
-    {
-        // custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout_message_for_sms);
-        dialog.setCancelable(false);
-
-        TextView txtMID = (TextView) dialog.findViewById(R.id.txtMID);
-        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
-
-        TextView txtTitle = (TextView) dialog.findViewById(R.id.txtTitle);
-        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
-        TextView txtMsg1 = (TextView) dialog.findViewById(R.id.txtMessage);
-        TextView txtMsg2 = (TextView) dialog.findViewById(R.id.msg1);
-
-        if(!result.equals("Success"))
-        {
-            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit_fail));
-            imgResponse.setImageResource(R.mipmap.fail);
-            txtConfirm.setText("Ok");
-            txtMID.setVisibility(View.GONE);
-
-            // if button is clicked, close the custom dialog
-            txtConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(Activity_QRSignUp.this, Activity_Home.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        }else
-        {
-            txtMsg2.setVisibility(View.GONE);
-            txtMsg1.setText(getString(R.string.qr_on_boarding_pop_up));
-            txtConfirm.setText("Ok");
-
-            SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-
-            editor.putString("QRRequestValidated","pending");
-            editor.putString("Status",status);
-            editor.putString("Request_ID", reqID);
-            editor.apply();
-
-            // if button is clicked, close the custom dialog
-            txtConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-
-                    Intent intent = new Intent(Activity_QRSignUp.this, Activity_Home.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        }
-
-
-        dialog.show();
-    }
-
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 
 }

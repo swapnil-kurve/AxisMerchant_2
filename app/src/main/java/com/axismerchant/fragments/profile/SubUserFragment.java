@@ -15,6 +15,7 @@ import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -57,14 +58,13 @@ import java.util.Set;
  */
 public class SubUserFragment extends Fragment implements View.OnClickListener, ExpandableListView.OnChildClickListener, AdapterView.OnItemSelectedListener, ExpandableListView.OnGroupExpandListener {
 
+    public static int editFlag = 0;
+    public ExpandableListView expandableListView;
     EditText edtUserName, edtMobileNo, edtEmailId;
     String mUserName = "", mMobileNo = "", mEmailID = "", mMVisaId = "", MID, MOBILE;
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
-    public ExpandableListView expandableListView;
     Spinner spinMVisaID;
-    public static int editFlag = 0;
-
     ArrayList<UserList> userListArrayList;
     ArrayList<String> mVisaArrayList;
     UserList userList;
@@ -195,6 +195,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txtSubmit:
+                hideKeyboard();
                 getData();
                 break;
 
@@ -205,6 +206,17 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                 break;
         }
     }
+
+    private void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)
+                getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (inputManager.isAcceptingText()) {
+            inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
 
     private void getData() {
 
@@ -319,6 +331,67 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
 
     }
 
+    private void setAdapter() {
+        ExpandableListAdapter listAdapter;
+        HashMap<String, UserList> listDataChild = new HashMap<>();
+        ArrayList<String> usernameArrayList = new ArrayList<>();
+
+        if (userListArrayList.size() != 0) {
+            int i;
+            for (i = 0; i < userListArrayList.size(); i++) {
+                usernameArrayList.add(userListArrayList.get(i).getUserName());
+
+                listDataChild.put(userListArrayList.get(i).getRegUsersID(), userListArrayList.get(i));
+            }
+            listAdapter = new ExpandableListAdapter(getActivity(), usernameArrayList, listDataChild, userListArrayList);
+            listAdapter.notifyDataSetChanged();
+            expandableListView.setAdapter(listAdapter);
+            txtCreateNewUser.setVisibility(View.VISIBLE);
+        } else {
+            txtCreateNewUser.setVisibility(View.GONE);
+            lyCreateUser.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private ArrayAdapter<String> adapterForSpinner(ArrayList<String> list) {
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list) {
+            @Override
+            public boolean isEnabled(int position) {
+                return position != 0;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                } else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        return dataAdapter;
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
     private class CreateSubUser extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
@@ -414,7 +487,6 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
 
         }
     }
-
 
     private class GetUserList extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
@@ -530,29 +602,6 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         }
     }
 
-    private void setAdapter() {
-        ExpandableListAdapter listAdapter;
-        HashMap<String, UserList> listDataChild = new HashMap<>();
-        ArrayList<String> usernameArrayList = new ArrayList<>();
-
-        if (userListArrayList.size() != 0) {
-            int i;
-            for (i = 0; i < userListArrayList.size(); i++) {
-                usernameArrayList.add(userListArrayList.get(i).getUserName());
-
-                listDataChild.put(userListArrayList.get(i).getRegUsersID(), userListArrayList.get(i));
-            }
-            listAdapter = new ExpandableListAdapter(getActivity(), usernameArrayList, listDataChild, userListArrayList);
-            listAdapter.notifyDataSetChanged();
-            expandableListView.setAdapter(listAdapter);
-            txtCreateNewUser.setVisibility(View.VISIBLE);
-        } else {
-            txtCreateNewUser.setVisibility(View.GONE);
-            lyCreateUser.setVisibility(View.VISIBLE);
-        }
-    }
-
-
     private class UpdateSubUser extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
@@ -663,48 +712,6 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
             }
 
         }
-    }
-
-
-    private ArrayAdapter<String> adapterForSpinner(ArrayList<String> list) {
-        // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, list) {
-            @Override
-            public boolean isEnabled(int position) {
-                return position != 0;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    // Set the hint text color gray
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        return dataAdapter;
-    }
-
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 
 

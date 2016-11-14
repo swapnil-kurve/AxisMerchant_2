@@ -133,8 +133,10 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         int languageSelected = preferences.getInt("Selected_Language",0);
 
         if (LastLogin.equals("firstLogin")) {
-            if(languageSelected == 1)
+            if (languageSelected == 0)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
+            else if (languageSelected == 1)
+                txtLastLogin.setText(getString(R.string.last_login) + " : " + getString(R.string.first_login));
             else if(languageSelected == 2)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
             else if(languageSelected == 3)
@@ -142,34 +144,38 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             else if(languageSelected == 4)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
             else if(languageSelected == 5)
-                txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
-            else if(languageSelected == 6)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+getString(R.string.first_login));
         } else {
-            if(languageSelected == 1)
+            if (languageSelected == 0)
                 txtLastLogin.setText(getString(R.string.last_login)+" : " + LastLogin);
-            else if(languageSelected == 2)
+            else if (languageSelected == 1)
                 txtLastLogin.setText(getString(R.string.last_login)+" : " + LastLogin);
+            else if (languageSelected == 2)
+                txtLastLogin.setText(getString(R.string.last_login) + " : " + LastLogin);
             else if(languageSelected == 3)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+LastLogin);
             else if(languageSelected == 4)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+LastLogin);
             else if(languageSelected == 5)
-                txtLastLogin.setText(getString(R.string.last_login)+" : "+LastLogin);
-            else if(languageSelected == 6)
                 txtLastLogin.setText(getString(R.string.last_login)+" : "+LastLogin);
         }
 
         Calendar c = Calendar.getInstance();
         int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
         switch (languageSelected) {
-            case 1:   if (timeOfDay >= 0 && timeOfDay < 12) {
+            case 0:
+                if (timeOfDay >= 0 && timeOfDay < 12) {
                             txtUserName.setText(getString(R.string.morning_text) + " " + user + "!");
                         } else if (timeOfDay >= 12 && timeOfDay < 16) {
                             txtUserName.setText(getString(R.string.afternoon_text) + " " + user + "!");
                         } else if (timeOfDay >= 16 && timeOfDay < 24) {
                             txtUserName.setText(getString(R.string.evening_text) + " " + user + "!");
                         }
+                navigationItemList = getResources().getStringArray(R.array.navigation_menu);
+                break;
+
+            case 1:
+                txtUserName.setText(getString(R.string.welcome_text) + " " + user + "!");
                 navigationItemList = getResources().getStringArray(R.array.navigation_menu);
                 break;
 
@@ -189,11 +195,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 break;
 
             case 5:
-                txtUserName.setText(getString(R.string.welcome_text) + " " + user + "!");
-                navigationItemList = getResources().getStringArray(R.array.navigation_menu);
-                break;
-
-            case 6:
                 txtUserName.setText(getString(R.string.welcome_text) + " " + user + "!");
                 navigationItemList = getResources().getStringArray(R.array.navigation_menu);
                 break;
@@ -805,8 +806,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                             JSONObject object2 = getImagesForSlider.getJSONObject(i);
                             String mvisa_mid = object2.optString("mvisa_mid");
-
-//                            mvisa_mid = encryptDecrypt.decrypt(mvisa_mid);
 
                             mvisaArrayList.add(mvisa_mid);
                         }

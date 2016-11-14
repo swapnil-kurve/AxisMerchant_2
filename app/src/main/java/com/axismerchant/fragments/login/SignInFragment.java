@@ -25,6 +25,7 @@ import com.axismerchant.activity.start.Activity_SetOTP;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -45,6 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -156,7 +158,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
             editor.putString("MPIN", encryptDecryptRegister.encrypt(mMPIN));
             editor.apply();
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.ENGLISH);
             String currentDateAndTime = sdf.format(new Date());
 
             if (Constants.isNetworkConnectionAvailable(getActivity())) {
@@ -186,6 +188,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         txtConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearApplicationData();
                 dialog.dismiss();
                 changeToSignUp();
             }
@@ -202,6 +205,27 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
         SignUpFragment signUpFragment = new SignUpFragment();
         getFragmentManager().beginTransaction().replace(R.id.container, signUpFragment).commit();
+    }
+
+    public void clearApplicationData() {
+        getActivity().deleteDatabase(DBHelper.DATABASE_NAME);
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+
+        preferences = getActivity().getSharedPreferences(Constants.UserDetails, Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        editor.clear();
+
+
+        preferences = getActivity().getSharedPreferences(Constants.ProfileInfo, Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        editor.clear();
+
+        preferences = getActivity().getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+        editor = preferences.edit();
+        editor.clear();
+
     }
 
     private class VerifyMPIN extends AsyncTask<String, Void, String> {

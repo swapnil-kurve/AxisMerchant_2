@@ -147,11 +147,11 @@
                 android:background="@android:color/black" />
 
             <RadioButton
-                android:id="@+id/rdBengali"
+                android:id="@+id/rdKannada"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/bengali"
+                android:text="@string/kannada"
                 android:textSize="@dimen/title_size" />
 
             <View
@@ -163,11 +163,11 @@
                 android:background="@android:color/black" />
 
             <RadioButton
-                android:id="@+id/rdKannada"
+                android:id="@+id/rdBengali"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/kannada"
+                android:text="@string/bengali"
                 android:textSize="@dimen/title_size" />
 
             <View

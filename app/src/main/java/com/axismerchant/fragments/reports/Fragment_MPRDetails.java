@@ -53,14 +53,26 @@ import java.util.Locale;
  */
 public class Fragment_MPRDetails extends Fragment implements View.OnClickListener {
 
+    public static int flag = 0;
     TextView txtGrossAmount,txtMDR,txtServiceTax,txtHoldAmount,txtAdjustments,txtCashPos, txtPaymentDate,txtNoOfTxn,txtTotalValue, txtNetAmount,txtFromDate, txtToDate;
     String MOBILE, MID, currentDateAndTime;
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
-    private View lyEmail,lyDetailsLayout, lyShowEmailButton;
     Calendar myCalendar = Calendar.getInstance();
     int DateFlag = 0;
-    public static int flag = 0;
+    DatePickerDialog.OnDateSetListener selectedDate = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+
+    };
+    private View lyEmail, lyDetailsLayout, lyShowEmailButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,7 +99,6 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         getMPRDetails(mDate);
         return view;
     }
-
 
     private void getInitialize(View view) {
         TextView txtDate = (TextView) view.findViewById(R.id.txtDate);
@@ -127,8 +138,6 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         encryptDecryptRegister =  new EncryptDecryptRegister();
         encryptDecrypt = new EncryptDecrypt();
     }
-
-
 
     private void getMPRDetails(String transDate) {
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
@@ -181,7 +190,6 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
     }
 
-
     private void sendEmail() {
         if(txtFromDate.getText().toString().equals(""))
         {
@@ -197,9 +205,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
             if (Constants.isNetworkConnectionAvailable(getActivity())) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new SendRequest().executeOnExecutor(AsyncTask
-                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "STATEMENT REQUEST", "Statement request from "+fromDate+" to "+toDate, "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                            .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MPR STATEMENT REQUEST (MERCHANT PAYMENT REPORT)", "Statement request from " + fromDate + " to " + toDate, "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
                 } else {
-                    new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "STATEMENT REQUEST", "Statement request from "+fromDate+" to "+toDate, "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                    new SendRequest().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", "MPR STATEMENT REQUEST (MERCHANT PAYMENT REPORT)", "Statement request from " + fromDate + " to " + toDate, "", "", "", "0", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
                 }
             } else {
@@ -208,7 +216,86 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         }
     }
 
+    private void updateLabel() {
 
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String calDate = sdf.format(myCalendar.getTime());
+        try {
+            if (DateFlag == 0) {
+                if (!sdf.parse(currentDateAndTime).before(sdf.parse(calDate)) && !sdf.parse(currentDateAndTime).equals(sdf.parse(calDate))) {
+                    txtFromDate.setText(sdf.format(myCalendar.getTime()));
+
+                } else {
+                    Constants.showToast(getActivity(), getString(R.string.from_date_should_not_less));
+                }
+            } else {
+                if (txtFromDate.getText().toString().equals("")) {
+                    Constants.showToast(getActivity(), getString(R.string.select_from_date));
+                } else {
+                    if (sdf.parse(calDate).after(sdf.parse(txtFromDate.getText().toString())) && !sdf.parse(calDate).after(sdf.parse(currentDateAndTime))) {
+                        txtToDate.setText(sdf.format(myCalendar.getTime()));
+                    } else {
+                        Constants.showToast(getActivity(), getString(R.string.invalid_date));
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+
+
+        }
+    }
+
+    private void ShowDialog(String result, String requestNumber, String callStatus) {
+        // custom dialog
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_email_success);
+        dialog.setCancelable(false);
+
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+        TextView textMessage = (TextView) dialog.findViewById(R.id.text);
+        TextView textEmailId = (TextView) dialog.findViewById(R.id.txtEmailID);
+
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        String email = encryptDecryptRegister.decrypt(preferences.getString("MerchantEmail", ""));
+        textEmailId.setText(email);
+
+        if (result.equalsIgnoreCase("No")) {
+            textEmailId.setVisibility(View.GONE);
+            textMessage.setText(getResources().getString(R.string.email_sent_failed));
+            txtConfirm.setText("OK");
+        } else if (result.equalsIgnoreCase("Success")) {
+            textMessage.setText(getResources().getString(R.string.email_sent_success_new));
+            txtConfirm.setText("OK");
+        } else {
+            textEmailId.setText(requestNumber);
+            textMessage.setText("Failed");
+            txtConfirm.setText("OK");
+        }
+        // if button is clicked, close the custom dialog
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                getActivity().onBackPressed();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 
     private class SendRequest extends AsyncTask<String, Void, String>
     {
@@ -324,9 +411,6 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
             progressDialog.dismiss();
         }
     }
-
-
-
 
     private class GetMPRDetails extends AsyncTask<String, Void, String>
     {
@@ -448,108 +532,5 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
             }
 
         }
-    }
-
-
-
-    DatePickerDialog.OnDateSetListener selectedDate = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
-        }
-
-    };
-
-
-    private void updateLabel() {
-
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        String calDate = sdf.format(myCalendar.getTime());
-        try {
-            if (DateFlag == 0) {
-                if (!sdf.parse(currentDateAndTime).before(sdf.parse(calDate)) && !sdf.parse(currentDateAndTime).equals(sdf.parse(calDate))) {
-                    txtFromDate.setText(sdf.format(myCalendar.getTime()));
-
-                } else {
-                    Constants.showToast(getActivity(), getString(R.string.from_date_should_not_less));
-                }
-            } else {
-                if(txtFromDate.getText().toString().equals("")){
-                    Constants.showToast(getActivity(), getString(R.string.select_from_date));
-                }else {
-                    if (sdf.parse(calDate).after(sdf.parse(txtFromDate.getText().toString())) && !sdf.parse(calDate).after(sdf.parse(currentDateAndTime))) {
-                        txtToDate.setText(sdf.format(myCalendar.getTime()));
-                    } else {
-                        Constants.showToast(getActivity(), getString(R.string.invalid_date));
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-
-
-        }
-    }
-
-
-    private void ShowDialog(String result, String requestNumber, String callStatus)
-    {
-        // custom dialog
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout_for_email_success);
-        dialog.setCancelable(false);
-
-        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
-        TextView textMessage = (TextView) dialog.findViewById(R.id.text);
-        TextView textEmailId = (TextView) dialog.findViewById(R.id.txtEmailID);
-
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref,Context.MODE_PRIVATE);
-        String email = encryptDecryptRegister.decrypt(preferences.getString("MerchantEmail",""));
-        textEmailId.setText(email);
-
-        if(result.equalsIgnoreCase("No"))
-        {
-            textEmailId.setVisibility(View.GONE);
-            textMessage.setText(getResources().getString(R.string.email_sent_failed));
-            txtConfirm.setText("OK");
-        }else if(result.equalsIgnoreCase("Success")){
-            textMessage.setText(getResources().getString(R.string.email_sent_success_new));
-            txtConfirm.setText("OK");
-        }else
-        {
-            textEmailId.setText(requestNumber);
-            textMessage.setText("Failed");
-            txtConfirm.setText("OK");
-        }
-        // if button is clicked, close the custom dialog
-        txtConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                getActivity().onBackPressed();
-            }
-        });
-
-        dialog.show();
-    }
-
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 }

@@ -7,5 +7,5 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class AppActivity extends AppCompatActivity {
 
-    public static int anyLang = 1;
+    public static int anyLang = 0;
 }

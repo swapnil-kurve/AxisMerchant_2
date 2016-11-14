@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClickListener {
 
@@ -99,7 +100,7 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
             editor.putString("MPIN", encryptDecryptRegister.encrypt(mMPIN));
             editor.apply();
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.ENGLISH);
             String currentDateandTime = sdf.format(new Date());
 
             if (Constants.isNetworkConnectionAvailable(this)) {
@@ -170,6 +171,17 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
+    }
+
+    private void logout() {
+        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private class SetMPIN extends AsyncTask<String, Void, String>
@@ -265,17 +277,5 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
             }
 
         }
-    }
-
-    private void logout()
-    {
-        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 }

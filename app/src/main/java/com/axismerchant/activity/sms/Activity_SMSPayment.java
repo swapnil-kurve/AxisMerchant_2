@@ -59,6 +59,7 @@ import java.util.List;
 
 public class Activity_SMSPayment extends AppCompatActivity implements View.OnClickListener {
 
+    final static int RQS_PICK_CONTACT = 1;
     ImageView imgBack, imgEditMobile, imgEditAmount, imgEditRemark, imgReadContact;
     TextView txtNext, txtReqLabel, txtOptional;
     EditText  edtCustMobile,edtAmount, edtRemarks;
@@ -344,7 +345,80 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
 
     }
 
+    private void retrieveFromDatabase(String mobileNo) {
+        dbHelper = new DBHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor crs = null;
 
+        try {
+            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.CUST_MOBILE + ","
+                    + DBHelper.AMOUNT + "," + DBHelper.REMARK + ","
+                    + DBHelper.INVOICE_NO + "," + DBHelper.STATUS + " from " + DBHelper.TABLE_NAME_E_PAYMENT +
+                    " where " + DBHelper.CUST_MOBILE + " = ?", new String[]{mobileNo});
+
+            while (crs.moveToNext()) {
+                String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
+                String mCustMobile = crs.getString(crs.getColumnIndex(DBHelper.CUST_MOBILE));
+                String mAmount = crs.getString(crs.getColumnIndex(DBHelper.AMOUNT));
+                String mRemark = crs.getString(crs.getColumnIndex(DBHelper.REMARK));
+                String mInvoiceNumber = crs.getString(crs.getColumnIndex(DBHelper.INVOICE_NO));
+                String mStatus = crs.getString(crs.getColumnIndex(DBHelper.STATUS));
+
+                mCustMobile = mCustMobile.substring(3, mCustMobile.length());
+                edtCustMobile.setText(mCustMobile);
+                edtAmount.setText(mAmount);
+                edtRemarks.setText(mRemark);
+
+                changeToReview();
+            }
+        } catch (Exception e) {
+        } finally {
+            crs.close();
+            db.close();
+        }
+
+    }
+
+    private void getContactFromPhonebook() {
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+        startActivityForResult(intent, RQS_PICK_CONTACT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RQS_PICK_CONTACT) {
+            if (resultCode == RESULT_OK) {
+                Uri contactData = data.getData();
+                Cursor cursor = null;
+                try {
+                    cursor = getContentResolver().query(contactData, null, null, null, null);
+                    cursor.moveToFirst();
+                    String number = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    number = number.replaceAll("[^a-zA-Z0-9]+", "");
+                    number = number.substring(number.length() - 10, number.length());
+                    edtCustMobile.setText(number);
+                    edtCustMobile.setSelection(edtCustMobile.getText().length());
+                } catch (Exception e) {
+                } finally {
+                    if (!cursor.isClosed())
+                        cursor.close();
+                }
+            }
+        }
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     private class InsertTransactions extends AsyncTask<String, Void, String> {
 
@@ -483,82 +557,4 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
 
     }
 }
-
-
-    private void retrieveFromDatabase(String mobileNo) {
-        dbHelper = new DBHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor crs = null;
-
-        try {
-            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.CUST_MOBILE + ","
-                    + DBHelper.AMOUNT + "," + DBHelper.REMARK + ","
-                    + DBHelper.INVOICE_NO + "," + DBHelper.STATUS + " from " + DBHelper.TABLE_NAME_E_PAYMENT +
-                    " where " + DBHelper.CUST_MOBILE + " = ?", new String[]{mobileNo});
-
-            while (crs.moveToNext()) {
-                String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
-                String mCustMobile = crs.getString(crs.getColumnIndex(DBHelper.CUST_MOBILE));
-                String mAmount = crs.getString(crs.getColumnIndex(DBHelper.AMOUNT));
-                String mRemark = crs.getString(crs.getColumnIndex(DBHelper.REMARK));
-                String mInvoiceNumber = crs.getString(crs.getColumnIndex(DBHelper.INVOICE_NO));
-                String mStatus = crs.getString(crs.getColumnIndex(DBHelper.STATUS));
-
-                mCustMobile = mCustMobile.substring(3, mCustMobile.length());
-                edtCustMobile.setText(mCustMobile);
-                edtAmount.setText(mAmount);
-                edtRemarks.setText(mRemark);
-
-                changeToReview();
-            }
-        }catch (Exception e)
-        { }finally {
-            crs.close();
-            db.close();
-        }
-
-    }
-
-    final static int RQS_PICK_CONTACT = 1;
-    private void getContactFromPhonebook() {
-        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
-        startActivityForResult(intent, RQS_PICK_CONTACT);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RQS_PICK_CONTACT) {
-            if (resultCode == RESULT_OK) {
-                Uri contactData = data.getData();
-                Cursor cursor = null;
-                try {
-                    cursor = managedQuery(contactData, null, null, null, null);
-                    cursor.moveToFirst();
-                    String number = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    number = number.replaceAll("[^a-zA-Z0-9]+", "");
-                    number = number.substring(number.length() - 10, number.length());
-                    edtCustMobile.setText(number);
-                    edtCustMobile.setSelection(edtCustMobile.getText().length());
-                }catch (Exception e)
-                {}finally {
-                    cursor.close();
-                }
-            }
-        }
-    }
-
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
 }
