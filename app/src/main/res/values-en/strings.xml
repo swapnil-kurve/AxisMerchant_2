@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Axis Bank Merchant App</string>
 
+    <string name="version">Version Prod 1.0.0</string>
+    <!--<string name="version">Version UAT-42</string>-->
+
     <string name="action_settings">Settings</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
@@ -291,8 +294,6 @@
     <string name="qr_pt7">Safe and secure payemnt with instant notification</string>
     <string name="qr_pt8">No risk of fraud</string>
 
-    <!--<string name="version">Version UAT-42</string>-->
-    <string name="version">Version 3.0.6</string>
     <string name="mvisa_id">mvisa_id</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>
@@ -552,4 +553,18 @@
     <string name="no_last_transaction">No Last Transaction Found</string>
     <string name="select_language">Please select language</string>
     <string name="notAuthorized">You are not authorized for this process.</string>
+    <string name="link_expiry">Link Expiry</string>
+    <string name="resend_link">Resend Link</string>
+    <string name="refunded">Already refunded</string>
+    <string name="transaction_volume">Txn Volume</string>
+    <string name="avg_ticket_size">Avg Ticket Size</string>
+    <string name="xn_volume">Transaction Volume</string>
+    <string name="title_terminal_id">Terminal ID</string>
+    <string name="title_problm_description">Problem Description</string>
+    <string name="title_contact_no">Contact Number</string>
+    <string name="tid_title">TID Number</string>
+    <string name="docket_id_title">Docket Id</string>
+    <string name="problem_code_title">Problem Code</string>
+    <string name="closing_remark_title">Closing Remarks</string>
+    <string name="current_status_title">Current Status</string>
 </resources>

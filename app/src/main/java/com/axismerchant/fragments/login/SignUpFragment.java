@@ -307,6 +307,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
+                    progressDialog.dismiss();
                 }
             } catch (JSONException e) {
             }

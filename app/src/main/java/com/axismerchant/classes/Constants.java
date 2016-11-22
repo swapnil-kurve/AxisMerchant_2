@@ -18,19 +18,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.axismerchant.R;
-import com.bumptech.glide.Glide;
 import com.axismerchant.database.DBHelper;
+import com.bumptech.glide.Glide;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 /**
@@ -38,33 +34,29 @@ import java.util.Date;
  */
 public class Constants {
 
-    public static String MPIN = "";
-    public static String IMEI = "";
-    public static String MERCHANT_ID = "";
-    public static String MOBILE_NUM = "";
-    public static String secretekeyDatabase = "";
-    public static String AuthToken = "";
-    public static String SecretKey = "secretKey";
-
     public static final String LoginPref = "LoginPref";
     public static final String UserDetails = "UserDetails";
     public static final String ProfileInfo = "ProfileInfo";
     public static final String EPaymentData = "EPaymentData";
 //    public static final String QRPaymentData = "QRPaymentData";
     public static final String LanguageData = "LanguageData";
-
-    public static String GOOGLE_PROJ_ID = "660348263150";
-    public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
-
-//    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
-
     public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
     public static final String DEMO_SERVICE_REFUND ="http://merchantportal.paycraftsol.com/";
-
-//    public static final String DEMO_SERVICE = "http://192.168.88.14:9006/mservices.asmx/";
-//    public static final String DEMO_SERVICE_REFUND = "http://192.168.88.14:9006/";
-
     public static final String[] FORCE_TLS_PROTOCOL = {"TLSv1.2"};
+    public static String MPIN = "";
+    public static String IMEI = "";
+    public static String MERCHANT_ID = "";
+    public static String MOBILE_NUM = "";
+    public static String secretekeyDatabase = "";
+    public static String AuthToken = "";
+
+    //    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
+    public static String SecretKey = "secretKey";
+    public static String GOOGLE_PROJ_ID = "660348263150";
+
+    //    public static final String DEMO_SERVICE = "https://merchant.axisbank.co.in/mservices.asmx/";
+//    public static final String DEMO_SERVICE_REFUND = "https://merchant.axisbank.co.in/";
+    public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
     public static String ServiceRef = "http://192.168.2.162:8094/";
 
     public static void showToast(Activity activity, String msg)
@@ -285,10 +277,7 @@ public class Constants {
     {
         try{
             int exitValue = Runtime.getRuntime().exec(command).waitFor();
-            if(exitValue != 0 )
-                return false;
-            else
-                return true;
+            return exitValue == 0;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -1,8 +1,6 @@
 package com.axismerchant.fragments.reports;
 
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +13,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.axismerchant.R;
+import com.axismerchant.activity.mis_reports.Activity_FilterMIS;
+import com.axismerchant.activity.start.Activity_Main;
+import com.axismerchant.classes.Constants;
+import com.axismerchant.classes.CustomListAdapterForMPR;
+import com.axismerchant.classes.EncryptDecrypt;
+import com.axismerchant.classes.EncryptDecryptRegister;
+import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.classes.MIS_MPR;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -32,15 +37,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
-import com.axismerchant.R;
-import com.axismerchant.activity.mis_reports.Activity_FilterMIS;
-import com.axismerchant.activity.start.Activity_Main;
-import com.axismerchant.classes.Constants;
-import com.axismerchant.classes.CustomListAdapterForMPR;
-import com.axismerchant.classes.EncryptDecrypt;
-import com.axismerchant.classes.EncryptDecryptRegister;
-import com.axismerchant.classes.HTTPUtils;
-import com.axismerchant.classes.MIS_MPR;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -59,33 +55,30 @@ import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+    public static final String ARG_OBJECT = "object";
+    public static int flag = 0;
+    public static View viewDetailsLayout;
+    public ParallaxListView listData;
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
     BarChart layoutChart;
     String MOBILE, MID;
     MIS_MPR mis_mpr;
     ArrayList<MIS_MPR> mprDataSet;
-    private String date, mGraphType = "Transactions",currentDateAndTime,mDuration = "Daily";
-
     CustomListAdapterForMPR adapter;
-    public ParallaxListView listData;
-    public static final String ARG_OBJECT = "object";
-    public static int flag = 0;
-    public static View viewDetailsLayout;
     ImageView imgFilter;
-    TextView txtMessage,txtDateDuration, txtGraphType;;
+    TextView txtMessage, txtDateDuration, txtGraphType;
     int type;
     double screenInches;
+    private String date, mGraphType = "Transactions", currentDateAndTime, mDuration = "Daily";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -249,6 +242,106 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         }
     }
 
+    public void showBarChart() {
+        if (layoutChart != null)
+            layoutChart.removeAllViews();
+
+        ArrayList<MIS_MPR> mprArrayList = new ArrayList<>();
+        for (int i = mprDataSet.size() - 1; i >= 0; i--) {
+            mprArrayList.add(mprDataSet.get(i));
+        }
+
+        date = "";
+        date = date + mprArrayList.get(0).getTransDate() + " To " + mprArrayList.get(mprArrayList.size() - 1).getTransDate();
+        txtDateDuration.setText(date);
+
+        ArrayList<BarEntry> entries = new ArrayList<>();
+
+        if (mGraphType.equalsIgnoreCase("Transactions")) {
+            for (int i = 0; i < mprArrayList.size(); i++) {
+                if (mprArrayList.get(i).getTransactions().equals("")) {
+                    entries.add(new BarEntry(0, i));
+                } else {
+                    entries.add(new BarEntry(Integer.parseInt(mprArrayList.get(i).getTransactions()), i));
+                }
+            }
+            txtGraphType.setText(getString(R.string.transaction));
+        } else if (mGraphType.equalsIgnoreCase("Transaction Volume")) {
+            for (int i = 0; i < mprArrayList.size(); i++) {
+                if (mprArrayList.get(i).getTxnVolume().equals("")) {
+                    entries.add(new BarEntry(0, i));
+                } else {
+                    entries.add(new BarEntry(Float.parseFloat(mprArrayList.get(i).getTxnVolume()), i));
+                }
+            }
+            txtGraphType.setText(getString(R.string.xn_volume));
+        } else {
+            for (int i = 0; i < mprArrayList.size(); i++) {
+                if (mprArrayList.get(i).getAvgTicketSize().equals("")) {
+                    entries.add(new BarEntry(0, i));
+                } else {
+                    entries.add(new BarEntry(Float.parseFloat(mprArrayList.get(i).getAvgTicketSize()), i));
+                }
+            }
+            txtGraphType.setText(getString(R.string.avg_ticket_size));
+        }
+
+        BarDataSet dataSet = new BarDataSet(entries, "");
+        dataSet.setColor(getResources().getColor(R.color.colorPrimary));
+        dataSet.setBarSpacePercent(25f);
+
+        ArrayList<String> labels = new ArrayList<>();
+
+        for (int i = 0; i < mprArrayList.size(); i++) {
+            labels.add(mprArrayList.get(i).gettDate());
+        }
+
+        BarChart chart = new BarChart(getActivity());
+        BarData data = new BarData(labels, dataSet);
+        data.setValueFormatter(new MyValueFormatter());
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setSpaceBetweenLabels(0);
+
+        Legend l = chart.getLegend();
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        l.setForm(Legend.LegendForm.LINE);
+        l.setFormSize(0f);
+        l.setTextSize(0f);
+        l.setXEntrySpace(0f);
+        l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
+
+        chart.setDescription("");
+        chart.setData(data);
+        chart.setVisibleXRangeMaximum(7);
+        chart.moveViewToX(mprArrayList.size());
+        chart.getAxisRight().setDrawLabels(false);
+        chart.setDoubleTapToZoomEnabled(false);
+        chart.setPinchZoom(false);
+        chart.setScaleEnabled(false);
+
+        layoutChart.notifyDataSetChanged();
+        layoutChart.addView(chart);
+
+        adapter = new CustomListAdapterForMPR(getActivity(), mprDataSet, screenInches);
+        adapter.notifyDataSetChanged();
+        listData.setAdapter(adapter);
+
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
     private class GetTransactions extends AsyncTask<String, Void, String>
     {
         ProgressDialog progressDialog;
@@ -363,107 +456,12 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         }
     }
 
-
-    public void showBarChart()
-    {
-        if(layoutChart != null)
-            layoutChart.removeAllViews();
-
-        ArrayList<MIS_MPR> mprArrayList = new ArrayList<>();
-        for (int i = mprDataSet.size()-1; i>=0 ; i--) {
-            mprArrayList.add(mprDataSet.get(i));
-        }
-
-        date = "";
-        date = date + mprArrayList.get(0).getTransDate()+" To "+mprArrayList.get(mprArrayList.size()-1).getTransDate();
-        txtDateDuration.setText(date);
-
-        ArrayList<BarEntry> entries = new ArrayList<>();
-
-        if(mGraphType.equalsIgnoreCase("Transactions")) {
-            for (int i = 0; i < mprArrayList.size(); i++) {
-                if (mprArrayList.get(i).getTransactions().equals("")) {
-                    entries.add(new BarEntry(0, i));
-                } else {
-                    entries.add(new BarEntry(Integer.parseInt(mprArrayList.get(i).getTransactions()), i));
-                }
-            }
-            txtGraphType.setText("Transactions");
-        }else if(mGraphType.equalsIgnoreCase("Transaction Volume"))
-        {
-            for (int i = 0; i < mprArrayList.size(); i++) {
-                if (mprArrayList.get(i).getTxnVolume().equals("")) {
-                    entries.add(new BarEntry(0, i));
-                } else {
-                    entries.add(new BarEntry(Float.parseFloat(mprArrayList.get(i).getTxnVolume()), i));
-                }
-            }
-            txtGraphType.setText("Transaction Volume");
-        }else
-        {
-            for (int i = 0; i < mprArrayList.size(); i++) {
-                if (mprArrayList.get(i).getAvgTicketSize().equals("")) {
-                    entries.add(new BarEntry(0, i));
-                } else {
-                    entries.add(new BarEntry(Float.parseFloat(mprArrayList.get(i).getAvgTicketSize()), i));
-                }
-            }
-            txtGraphType.setText("Average Ticket Size");
-        }
-
-        BarDataSet dataSet = new BarDataSet(entries, "");
-        dataSet.setColor(getResources().getColor(R.color.colorPrimary));
-        dataSet.setBarSpacePercent(25f);
-
-        ArrayList<String> labels = new ArrayList<>();
-
-        for (int i = 0; i < mprArrayList.size(); i++) {
-            labels.add(mprArrayList.get(i).gettDate());
-        }
-
-        BarChart chart = new BarChart(getActivity());
-        BarData data = new BarData(labels, dataSet);
-        data.setValueFormatter(new MyValueFormatter());
-
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setSpaceBetweenLabels(0);
-
-        Legend l = chart.getLegend();
-        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
-        l.setForm(Legend.LegendForm.LINE);
-        l.setFormSize(0f);
-        l.setTextSize(0f);
-        l.setXEntrySpace(0f);
-        l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
-
-        chart.setDescription("");
-        chart.setData(data);
-        chart.setVisibleXRangeMaximum(7);
-        chart.moveViewToX(mprArrayList.size());
-        chart.getAxisRight().setDrawLabels(false);
-        chart.setDoubleTapToZoomEnabled(false);
-        chart.setPinchZoom(false);
-        chart.setScaleEnabled(false);
-
-        layoutChart.notifyDataSetChanged();
-        layoutChart.addView(chart);
-
-        adapter = new CustomListAdapterForMPR(getActivity(),mprDataSet,screenInches);
-        adapter.notifyDataSetChanged();
-        listData.setAdapter(adapter);
-
-    }
-
-
     public class MyValueFormatter implements ValueFormatter {
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             return Math.round(value)+"";
         }
     }
-
 
     private class GetFilteredData extends AsyncTask<String, Void, String>
     {
@@ -585,18 +583,6 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
             }
 
         }
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 
 }

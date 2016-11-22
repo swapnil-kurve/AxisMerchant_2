@@ -101,93 +101,93 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
             String heading = bundle.getString("Heading");
 
             if(heading.equalsIgnoreCase("CallIssues")){
-                txtSubCode.setText("Call Issues");
-                txtHeading.setText("Other Issues");
+                txtSubCode.setText(getString(R.string.call_issues));
+                txtHeading.setText(getString(R.string.others));
                 mServiceType = "CALL ISSUER";
             }else
             if(heading.equalsIgnoreCase("PaymentInquiry")){
-                txtSubCode.setText("Payment Inquiry");
-                txtHeading.setText("Other Issues");
+                txtSubCode.setText(getString(R.string.payement_inquiry));
+                txtHeading.setText(getString(R.string.others));
                 mServiceType = "PAYMENT INQUIRY";
             }else
             if(heading.equalsIgnoreCase("PickUpCard")){
-                txtHeading.setText("Pick Up Card");
-                txtHeading.setText("Other Issues");
+                txtSubCode.setText(getString(R.string.pick_up_card));
+                txtHeading.setText(getString(R.string.others));
                 mServiceType = "PICK UP CARD";
             }else
             if(heading.equalsIgnoreCase("DeclineCard")){
-                txtSubCode.setText("Decline Card");
-                txtHeading.setText("Other Issues");
+                txtSubCode.setText(getString(R.string.decline_card));
+                txtHeading.setText(getString(R.string.others));
                 mServiceType = "DECLINE CARD";
             }else
             if(heading.equalsIgnoreCase("CardSwipeError")){
-                txtSubCode.setText("Card Swipe Error");
-                txtHeading.setText("Other Issues");
+                txtSubCode.setText(getString(R.string.card_swipe_error));
+                txtHeading.setText(getString(R.string.others));
                 mServiceType = "CARD SWIPE ERROR";
             }else
             if(heading.equalsIgnoreCase("AxisAccNo")){
-                txtSubCode.setText("Axis Account No.");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.axis_no));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "CHANGE IN ACCOUNT MODE (AXIS A/C NO.)";
             }else
             if(heading.equalsIgnoreCase("NeftRtgs")){
-                txtSubCode.setText("Neft Rtgs");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.neft));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "CHANGE IN ACCOUNT MODE (NEFT/RTGS)";
             }else
             if(heading.equalsIgnoreCase("DbaName")){
-                txtSubCode.setText("Dba Name");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.dba));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (DBA NAME)";
             }else
             if(heading.equalsIgnoreCase("LegalName")){
-                txtSubCode.setText("Legal Name");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.legal_name));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (LEGAL NAME)";
             }else
             if(heading.equalsIgnoreCase("AddressChange")){
-                txtSubCode.setText("Address Change");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.address_change));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (ADDRESS CHANGE)";
             }else
             if(heading.equalsIgnoreCase("PhoneNo")){
-                txtSubCode.setText("Phone No");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.phone_no));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (MOBILE NUMBER)";
             }else
             if(heading.equalsIgnoreCase("NewLocation")){
-                txtSubCode.setText("New Location");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.new_loc));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (NEW LOCATION)";
             }else
             if(heading.equalsIgnoreCase("AssetSwapping")){
-                txtSubCode.setText("Asset Swapping");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.asset_swapping));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (ASSET SWAPPING)";
             }else
             if(heading.equalsIgnoreCase("Dcc")){
-                txtSubCode.setText("Dcc");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.dcc));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "MERCHANT CREATION – DCC";
             }else
             if(heading.equalsIgnoreCase("AdditionalDcc")){
-                txtSubCode.setText("Additional Dcc");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.additional_dcc));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "MERCHANT CREATION – ADDITIONAL DCC";
             }else
             if(heading.equalsIgnoreCase("CashPos")){
-                txtSubCode.setText("Cash Pos");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.cash_pos));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "Cash@PoS";
             }else
             if(heading.equalsIgnoreCase("Apply_mVisa")){
-                txtSubCode.setText("Apply mVisa");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.apply_for_mvisa));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "APPLY FOR mVISA / QR CODE PAY";
             }else
             if(heading.equalsIgnoreCase("MprStatmentRequest")){
-                txtSubCode.setText("Mpr Statement Request");
-                txtHeading.setText("Account Management");
+                txtSubCode.setText(getString(R.string.mpr_request));
+                txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "MPR STATEMENT REQUEST (MERCHANT PAYMENT REPORT)";
             }
         }

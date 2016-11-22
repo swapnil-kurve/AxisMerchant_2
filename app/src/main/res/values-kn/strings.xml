@@ -4,7 +4,7 @@
     <!--================================================================================================-->
 
     <!--<string name="version">Version UAT-42</string>-->
-    <string name="version">Version 3.0.6</string>
+    <string name="version">Version Prod 1.0.0</string>
     <string name="mvisa_id">mvisa_id</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>
@@ -20,7 +20,7 @@
     <string name="cust_number">custNumber</string>
     <string name="urlCode">urlCode</string>
     <string name="currentTime">currentTime</string>
-    <string name="submitReq">Submit Request</string>
+    <string name="submitReq">ವಿನಂತಿಕಳುಹಿಸಿ</string>
     <string name="fromdate">fromdate</string>
     <string name="todate">todate</string>
     <string name="mer_mobile_no">merMobileNo</string>
@@ -241,13 +241,13 @@
         <item>SMSವಾವತಿ</item>
         <item>QR-ಕೋಡ್ವಾವತಿ</item>
         <item>ಸರ್ವಿಸ್ ರಿಪೋರ್ಟ್</item>
-        <item>Report &amp; MIS</item>
+        <item>ವರದಿಮತ್ತುಎಮ್ಐಎಸ್</item>
         <item>ವಿಶ್ಲೇಷಣೆಗಳು</item>
-        <item>Offers &amp; Notices</item>
+        <item>ಕೊಡುಗೆಮತ್ತುನೋಟೀಸುಗಳು</item>
         <item>ಪ್ರೊಫೈಲ್ ನಿರ್ವಹಣೆ</item>
         <item>ಮಿತ್ರನನ್ನುರೆಫರ್ ಮಾಡಿ</item>
         <item>Change language</item>
-        <item>FAQ</item>
+        <item>ಎಫ್ಎಕ್ಯು</item>
         <item>ಡೆಮೊ ವಿಡಿಯೊ</item>
         <item>ಆ್ಯಪ್ ಕುರಿತು</item>
         <item>ಲಾಗ್ಔಟ್</item>
@@ -596,7 +596,7 @@
     <string name="confirm_mpin_hint">Confirm mPIN</string>
     <string name="username">Username</string>
     <string name="email_id_hint">Email-id</string>
-    <string name="enter_mpin_hint">Enter mPIN</string>
+    <string name="enter_mpin_hint">ಎಮ್ಪಿನ್ಎಂಟರ್ಮಾಡಿ</string>
     <string name="select_from_date">Please provide from date</string>
     <string name="select_to_date">Please provide to date</string>
     <string name="enter_one_of_the_obove">Please enter at least one of the above field</string>
@@ -606,5 +606,20 @@
     <string name="select_language">Please select language</string>
     <string name="terms">Terms &amp; conditions</string>
     <string name="notAuthorized">You are not authorized for this process.</string>
+    <string name="link_expiry">ಲಿಂಕ್ಸಮಯಅಂತ್ಯ</string>
+    <string name="resend_link">ಲಿಂಕ್ಮತ್ತೆಕಳುಹಿಸಿ</string>
+    <string name="refunded">Already refunded</string>
+    <string name="transaction_volume">ವಹಿವಾಟುಪ್ರಮಾಣ</string>
+    <string name="avg_ticket_size">ಸರಾಸರಿಟಿಕೆಟ್ಸೈಜ್</string>
+    <string name="xn_volume">ಟಿಎಕ್ಸ್ಎನ್ಪ್ರಮಾಣ</string>
+    <string name="title_terminal_id">Terminal ID</string>
+    <string name="title_problm_description">ಸಮಸ್ಯೆಯವಿವರಣೆ</string>
+    <string name="title_contact_no">ಸಂಪರ್ಕಸಂಖ್ಯೆ</string>
+    <string name="tid_title">TID Number</string>
+    <string name="docket_id_title">ಡಾಕೆಟ್ಐಡಿ</string>
+    <string name="problem_code_title">ಸಮಸ್ಯೆಕೋಡ್</string>
+    <string name="closing_remark_title">ಅಂತಿಮಅಭಿಪ್ರಾಯ</string>
+    <string name="current_status_title">ಸಧ್ಯದಸ್ಥಿತಿಗತಿ</string>
+    <string name="transaction_id">ವಹಿವಾಟುಐಡಿ</string>
 
 </resources>

@@ -24,6 +24,8 @@ public class Activity_AllTransactions extends AppCompatActivity implements View.
 
     View viewStatus, viewReport, lyButtonController;
     int flag = 1;
+    Fragment_SMSTransactionReport report_fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +77,6 @@ public class Activity_AllTransactions extends AppCompatActivity implements View.
         lyButtonController.setVisibility(View.GONE);
     }
 
-    Fragment_SMSTransactionReport report_fragment;
     private void changeToXnReport() {
         report_fragment = new Fragment_SMSTransactionReport();
         Bundle bundle = new Bundle();
@@ -140,5 +141,11 @@ public class Activity_AllTransactions extends AppCompatActivity implements View.
             report_fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.xnContainer,report_fragment).commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Activity_SMSPayHome.class));
+        finish();
     }
 }

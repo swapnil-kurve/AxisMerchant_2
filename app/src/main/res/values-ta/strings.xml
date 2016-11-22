@@ -4,7 +4,7 @@
     <!--================================================================================================-->
 
     <!--<string name="version">Version UAT-42</string>-->
-    <string name="version">Version 3.0.6</string>
+    <string name="version">Version Prod 1.0.0</string>
     <string name="mvisa_id">Mvisa ஐடி</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>
@@ -23,7 +23,7 @@
     <string name="cust_number">custNumber</string>
     <string name="urlCode">urlCode</string>
     <string name="currentTime">currentTime</string>
-    <string name="submitReq">Submit Request</string>
+    <string name="submitReq">சமர்ப்பித்தல் கோரிக்கை</string>
     <string name="fromdate">fromdate</string>
     <string name="todate">todate</string>
     <string name="mer_mobile_no">merMobileNo</string>
@@ -613,4 +613,19 @@ QR கோட் பே - இது ஆக்ஸிஸ்
     <string name="email_id_hint">மின்னஞ்சல் சேர்க்கப்பட்டுள்ளது ----- பரிவர்த்தனை ஐடி நான் ஏற்கிறேன்,</string>
     <string name="enter_mpin_hint">MPIN என்டர் செய்யுங்கள். கணக்கு வெற்றிகரமாக சரிபார்க்கப்பட்டுள்ளது</string>
     <string name="notAuthorized">You are not authorized for this process.</string>
+    <string name="link_expiry">லிங்க் காலாவதி</string>
+    <string name="resend_link">மீண்டும் லிங்க்கை அனுப்புங்கள்.</string>
+    <string name="refunded">Already refunded</string>
+    <string name="transaction_volume">பரிவர்த்தனை அளவு</string>
+    <string name="avg_ticket_size">சராசரி டிக்கட் அளவு</string>
+    <string name="xn_volume">பரிவர்த்தனை அளவு</string>
+    <string name="title_terminal_id">Terminal ID</string>
+    <string name="title_problm_description">பிரச்சினை விபரம்</string>
+    <string name="title_contact_no">Contact Number</string>
+    <string name="tid_title">TID Number</string>
+    <string name="docket_id_title">டாக்கெட் ஐடி</string>
+    <string name="problem_code_title">பிரச்சினை கோடு</string>
+    <string name="closing_remark_title">முடித்தல் குறிப்புகள்</string>
+    <string name="current_status_title">நடப்பு நிலை</string>
+    <string name="transaction_id">பரிவர்த்தனை ஐடி</string>
 </resources>

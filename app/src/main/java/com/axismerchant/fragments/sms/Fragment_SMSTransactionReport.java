@@ -14,6 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.axismerchant.R;
+import com.axismerchant.activity.start.Activity_Main;
+import com.axismerchant.classes.Constants;
+import com.axismerchant.classes.CustomListAdapter;
+import com.axismerchant.classes.EncryptDecrypt;
+import com.axismerchant.classes.EncryptDecryptRegister;
+import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.classes.SMSXnSummary;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,14 +33,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
-import com.axismerchant.R;
-import com.axismerchant.activity.start.Activity_Main;
-import com.axismerchant.classes.Constants;
-import com.axismerchant.classes.CustomListAdapter;
-import com.axismerchant.classes.EncryptDecrypt;
-import com.axismerchant.classes.EncryptDecryptRegister;
-import com.axismerchant.classes.HTTPUtils;
-import com.axismerchant.classes.SMSXnSummary;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -57,6 +57,7 @@ import java.util.List;
  */
 public class Fragment_SMSTransactionReport extends Fragment{
 
+    public static String ARG_OBJECT = "object";
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
     BarChart layoutChartXn, layoutChartVolume;
@@ -65,9 +66,8 @@ public class Fragment_SMSTransactionReport extends Fragment{
     TextView txtGraphType, txtDateDuration;
     CustomListAdapter adapter;
     ParallaxListView listData;
-    public static String ARG_OBJECT = "object";
-    private int type ;
     String date;
+    private int type;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,150 +123,12 @@ public class Fragment_SMSTransactionReport extends Fragment{
 
     }
 
-
-    private class GetTransactions extends AsyncTask<String, Void, String>
-    {
-        ProgressDialog progressDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... arg0) {
-            String str = null;
-            try {
-                HTTPUtils utils = new HTTPUtils();
-                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
-                URI newURI = URI.create(arg0[0]);
-                HttpPost httppost = new HttpPost(newURI);
-
-                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                String mID = encryptDecryptRegister.encrypt(arg0[1]);
-                String mobile = encryptDecryptRegister.encrypt(arg0[2]);
-                String fDate = encryptDecryptRegister.encrypt(arg0[3]);
-
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.transStatus),fDate));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
-                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
-
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                HttpResponse response = httpclient.execute(httppost);
-                int stats = response.getStatusLine().getStatusCode();
-
-                if (stats == 200) {
-                    HttpEntity entity = response.getEntity();
-                    String data = EntityUtils.toString(entity);
-                    str = data;
-                }
-            } catch (ParseException e1) {
-                progressDialog.dismiss();
-            } catch (IOException e) {
-                progressDialog.dismiss();
-            }
-            return str;
-        }
-
-
-        @Override
-        protected void onPostExecute(String data) {
-            super.onPostExecute(data);
-
-            try{
-                if(data != null) {
-                    JSONArray transaction = new JSONArray(data);
-                    JSONObject object1 = transaction.getJSONObject(0);
-
-                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
-                    JSONObject obj = rowResponse.getJSONObject(0);
-                    String result = obj.optString("result");
-
-                    result = encryptDecryptRegister.decrypt(result);
-                    if (result.equals("Success")) {
-                        JSONObject object = transaction.getJSONObject(1);
-                        JSONArray transactionBetDates = object.getJSONArray("getlatestSMSTransSummary");
-                        for (int i = 0; i < transactionBetDates.length(); i++) {
-
-                            JSONObject object2 = transactionBetDates.getJSONObject(i);
-                            String volume = object2.optString("volume");
-                            String ticketSize = object2.optString("ticketSize");
-                            String noOfTrans = object2.optString("noOfTrans");
-                            String transdate = object2.optString("transdate");
-                            String fd = object2.optString("fd");
-                            String fday = object2.optString("fday");
-                            String fmonth = object2.optString("fmonth");
-                            String fyear = object2.optString("fyear");
-                            String fulldate = object2.optString("fulldate");
-                            String transstatus = object2.optString("transstatus");
-
-                            volume = encryptDecrypt.decrypt(volume);
-                            ticketSize = encryptDecrypt.decrypt(ticketSize);
-                            noOfTrans = encryptDecrypt.decrypt(noOfTrans);
-                            transdate = encryptDecrypt.decrypt(transdate);
-                            fd = encryptDecrypt.decrypt(fd);
-                            fday = encryptDecrypt.decrypt(fday);
-                            fmonth = encryptDecrypt.decrypt(fmonth);
-                            fyear = encryptDecrypt.decrypt(fyear);
-                            fulldate = encryptDecrypt.decrypt(fulldate);
-                            transstatus = encryptDecrypt.decrypt(transstatus);
-
-                            if(transdate.contains("-"))
-                                transdate.replace("-","/");
-
-                            transdate = transdate.split("\\s+")[0];
-
-                            /*transdate = Constants.splitDate(transdate.split("\\s+")[0]);*/
-
-                            smsXnSummary = new SMSXnSummary(volume, ticketSize, noOfTrans, transdate, fd, fday, fmonth, fyear, fulldate, transstatus);
-                            smsXnSummaries.add(smsXnSummary);
-                        }
-
-                        if (type == 1) {
-                            showBarChartXn();
-                        } else {
-                            showBarChartVolume();
-                        }
-
-                        adapter = new CustomListAdapter(getActivity(), smsXnSummaries);
-                        listData.setAdapter(adapter);
-                        progressDialog.dismiss();
-
-                    }else if(result.equalsIgnoreCase("SessionFailure")){
-                        Constants.showToast(getActivity(), getString(R.string.session_expired));
-                        logout();
-                    } else {
-                        progressDialog.dismiss();
-                        Constants.showToast(getActivity(), getString(R.string.no_details));
-
-                    }
-                }else {
-                    Constants.showToast(getActivity(),getString(R.string.network_error));
-                }
-            } catch (JSONException e) {
-                progressDialog.dismiss();
-                Constants.showToast(getActivity(),getString(R.string.network_error));
-            }
-
-        }
-    }
-
-
-
-
    public void showBarChartXn()
     {
         layoutChartXn.clear();
         layoutChartVolume.setVisibility(View.GONE);
         layoutChartXn.setVisibility(View.VISIBLE);
-        txtGraphType.setText("Transactions");
+        txtGraphType.setText(getString(R.string.transaction));
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
 
@@ -329,21 +191,12 @@ public class Fragment_SMSTransactionReport extends Fragment{
 
     }
 
-
-    public class MyValueFormatter implements ValueFormatter {
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return Math.round(value)+"";
-        }
-    }
-
-
     public void showBarChartVolume()
     {
         layoutChartVolume.clear();
         layoutChartVolume.setVisibility(View.VISIBLE);
         layoutChartXn.setVisibility(View.GONE);
-        txtGraphType.setText("Volume");
+        txtGraphType.setText(getString(R.string.amount));
         ArrayList<BarEntry> entries = new ArrayList<>();
 
         ArrayList<SMSXnSummary> xnSummaries = new ArrayList<>();
@@ -409,7 +262,6 @@ public class Fragment_SMSTransactionReport extends Fragment{
 
     }
 
-
     private void logout()
     {
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
@@ -420,6 +272,147 @@ public class Fragment_SMSTransactionReport extends Fragment{
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         getActivity().finish();
+    }
+
+    private class GetTransactions extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Please wait...");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            String str = null;
+            try {
+                HTTPUtils utils = new HTTPUtils();
+                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
+                URI newURI = URI.create(arg0[0]);
+                HttpPost httppost = new HttpPost(newURI);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                String mID = encryptDecryptRegister.encrypt(arg0[1]);
+                String mobile = encryptDecryptRegister.encrypt(arg0[2]);
+                String fDate = encryptDecryptRegister.encrypt(arg0[3]);
+
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), mID));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), mobile));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.transStatus), fDate));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[6])));
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpclient.execute(httppost);
+                int stats = response.getStatusLine().getStatusCode();
+
+                if (stats == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    str = data;
+                }
+            } catch (ParseException e1) {
+                progressDialog.dismiss();
+            } catch (IOException e) {
+                progressDialog.dismiss();
+            }
+            return str;
+        }
+
+
+        @Override
+        protected void onPostExecute(String data) {
+            super.onPostExecute(data);
+
+            try {
+                if (data != null) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
+
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
+
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray transactionBetDates = object.getJSONArray("getlatestSMSTransSummary");
+                        for (int i = 0; i < transactionBetDates.length(); i++) {
+
+                            JSONObject object2 = transactionBetDates.getJSONObject(i);
+                            String volume = object2.optString("volume");
+                            String ticketSize = object2.optString("ticketSize");
+                            String noOfTrans = object2.optString("noOfTrans");
+                            String transdate = object2.optString("transdate");
+                            String fd = object2.optString("fd");
+                            String fday = object2.optString("fday");
+                            String fmonth = object2.optString("fmonth");
+                            String fyear = object2.optString("fyear");
+                            String fulldate = object2.optString("fulldate");
+                            String transstatus = object2.optString("transstatus");
+
+                            volume = encryptDecrypt.decrypt(volume);
+                            ticketSize = encryptDecrypt.decrypt(ticketSize);
+                            noOfTrans = encryptDecrypt.decrypt(noOfTrans);
+                            transdate = encryptDecrypt.decrypt(transdate);
+                            fd = encryptDecrypt.decrypt(fd);
+                            fday = encryptDecrypt.decrypt(fday);
+                            fmonth = encryptDecrypt.decrypt(fmonth);
+                            fyear = encryptDecrypt.decrypt(fyear);
+                            fulldate = encryptDecrypt.decrypt(fulldate);
+                            transstatus = encryptDecrypt.decrypt(transstatus);
+
+                            if (transdate.contains("-"))
+                                transdate.replace("-", "/");
+
+                            transdate = transdate.split("\\s+")[0];
+
+                            /*transdate = Constants.splitDate(transdate.split("\\s+")[0]);*/
+
+                            smsXnSummary = new SMSXnSummary(volume, ticketSize, noOfTrans, transdate, fd, fday, fmonth, fyear, fulldate, transstatus);
+                            smsXnSummaries.add(smsXnSummary);
+                        }
+
+                        if (type == 1) {
+                            showBarChartXn();
+                        } else {
+                            showBarChartVolume();
+                        }
+
+                        adapter = new CustomListAdapter(getActivity(), smsXnSummaries);
+                        listData.setAdapter(adapter);
+                        progressDialog.dismiss();
+
+                    } else if (result.equalsIgnoreCase("SessionFailure")) {
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
+                    } else {
+                        progressDialog.dismiss();
+                        Constants.showToast(getActivity(), getString(R.string.no_details));
+
+                    }
+                } else {
+                    Constants.showToast(getActivity(), getString(R.string.network_error));
+                }
+            } catch (JSONException e) {
+                progressDialog.dismiss();
+                Constants.showToast(getActivity(), getString(R.string.network_error));
+            }
+
+        }
+    }
+
+    public class MyValueFormatter implements ValueFormatter {
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return Math.round(value) + "";
+        }
     }
 
 }

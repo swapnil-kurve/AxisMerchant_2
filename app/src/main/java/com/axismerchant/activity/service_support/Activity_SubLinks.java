@@ -158,197 +158,79 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         {
             String heading = bundle.getString("Heading");
             if(heading.equalsIgnoreCase("RollsRequired")) {
-                txtSubCode.setText("Roll Required");
-                txtHeading.setText("Quick Links");
+                txtSubCode.setText(getString(R.string.roll_required));
+                txtHeading.setText(getString(R.string.quick) + " " + getString(R.string.links));
                 findViewById(R.id.lyNoOfRolls).setVisibility(View.VISIBLE);
                 mServiceType = "ROLLS REQUIRED";
             }else
             if(heading.equalsIgnoreCase("TrainingRequired")) {
-                txtSubCode.setText("Training Required");
-                txtHeading.setText("Quick Links");
+                txtSubCode.setText(getString(R.string.training_required));
+                txtHeading.setText(getString(R.string.quick) + " " + getString(R.string.links));
                 mServiceType = "TRAINING REQUIRED";
             }else
             if(heading.equalsIgnoreCase("AdaptorProblem")) {
-                txtSubCode.setText("Adaptor Problem");
-                txtHeading.setText("Terminal Hardware Issues");
+                txtSubCode.setText(getString(R.string.adapter_problem));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.hw_issue));
                 mServiceType = "ADAPTOR PROBLEM";
             }else
             if(heading.equalsIgnoreCase("BaseProblem")){
-                txtSubCode.setText("Base Problem");
-                txtHeading.setText("Terminal Hardware Issues");
+                txtSubCode.setText(getString(R.string.base_problem));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.hw_issue));
                 mServiceType = "BASE PROBLEM";
             }else
             if(heading.equalsIgnoreCase("BatteryProblem")){
-                txtSubCode.setText("Battery Problem");
-                txtHeading.setText("Terminal Hardware Issues");
+                txtSubCode.setText(getString(R.string.battery_problem));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.hw_issue));
                 mServiceType = "BATTERY PROBLEM";
             }else
             if(heading.equalsIgnoreCase("CardReaderProblem")){
-                txtSubCode.setText("Card Reader Problem");
-                txtHeading.setText("Terminal Hardware Issues");
+                txtSubCode.setText(getString(R.string.card_reader_problem));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.hw_issue));
                 mServiceType = "CARD READER PROBLEM";
             }else
             if(heading.equalsIgnoreCase("DisplayProblem")){
-                txtSubCode.setText("Display Problem");
-                txtHeading.setText("Terminal Hardware Issues");
+                txtSubCode.setText(getString(R.string.display_problm));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.hw_issue));
                 mServiceType = "DISPLAY PROBLEM";
             }else
             if(heading.equalsIgnoreCase("KeysNotWorking")){
-                txtSubCode.setText("Keys Not Working");
-                txtHeading.setText("Terminal Hardware Issues");
+                txtSubCode.setText(getString(R.string.key_problem));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.hw_issue));
                 mServiceType = "KEYS NOT WORKING";
             }else
             if(heading.equalsIgnoreCase("PowerCardProblem")){
-                txtSubCode.setText("Power Card Problem");
-                txtHeading.setText("Terminal Hardware Issues");
+                txtSubCode.setText(getString(R.string.power_card_problem));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.hw_issue));
                 mServiceType = "POWER CORD PROBLEM";
             }else
             if(heading.equalsIgnoreCase("PrinterProblem")){
-                txtSubCode.setText("Printer Problem");
-                txtHeading.setText("Terminal Hardware Issues");
+                txtSubCode.setText(getString(R.string.printer_problem));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.hw_issue));
                 mServiceType = "PRINTER PROBLEM";
             }else
             if(heading.equalsIgnoreCase("SettlementProblem")){
-                txtSubCode.setText("Settlement Problem");
-                txtHeading.setText("Terminal Application Issues");
+                txtSubCode.setText(getString(R.string.settlement_Problem));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.app_issue));
                 mServiceType = "SETTLEMENT PROBLEM";
             }else
             if(heading.equalsIgnoreCase("TerminalSoftwareCorrupted")){
-                txtSubCode.setText("Terminal Software Corrupted");
-                txtHeading.setText("Terminal Application Issues");
+                txtSubCode.setText(getString(R.string.terminal_sw_currpted));
+                txtHeading.setText(getString(R.string.terminal) + " " + getString(R.string.app_issue));
                 mServiceType = "TERMINAL SOFTWARE CORRUPTED";
             }
 
-           /* if(heading.equalsIgnoreCase("CallIssues")){
-                txtSubCode.setText("Call Issues");
-                txtHeading.setText("Other Issues");
-                mServiceType = "CALL ISSUES";
-            }
-
-            if(heading.equalsIgnoreCase("PaymentInquiry")){
-                txtSubCode.setText("Payment Inquiry");
-                txtHeading.setText("Other Issues");
-                mServiceType = "PAYMENT INQUIRY";
-            }
-
-            if(heading.equalsIgnoreCase("PickUpCard")){
-                txtHeading.setText("Pick Up Card");
-                txtHeading.setText("Other Issues");
-                mServiceType = "PICK UP CARD";
-            }
-
-            if(heading.equalsIgnoreCase("DeclineCard")){
-                txtSubCode.setText("Decline Card");
-                txtHeading.setText("Other Issues");
-                mServiceType = "DECLINE CARD";
-            }
-*/
             if(heading.equalsIgnoreCase("CardSwipeError")){
-                txtSubCode.setText("Card Swipe Error");
-                txtHeading.setText("Other Issues");
+                txtSubCode.setText(getString(R.string.card_swipe_error));
+                txtHeading.setText(getString(R.string.others));
                 mServiceType = "CARD SWIPE ERROR";
             }
 
-           /* if(heading.equalsIgnoreCase("AxisAccNo")){
-                txtSubCode.setText("Axis Account No.");
-                txtHeading.setText("Account Management");
-                mServiceType = "AXIS A/C NO";
-            }
-
-            if(heading.equalsIgnoreCase("NeftRtgs")){
-                txtSubCode.setText("Neft Rtgs");
-                txtHeading.setText("Account Management");
-                mServiceType = "NEFT/RTGS";
-            }
-
-            if(heading.equalsIgnoreCase("DbaName")){
-                txtSubCode.setText("Dba Name");
-                txtHeading.setText("Account Management");
-                mServiceType = "DBA NAME";
-            }
-
-            if(heading.equalsIgnoreCase("LegalName")){
-                txtSubCode.setText("Legal Name");
-                txtHeading.setText("Account Management");
-                mServiceType = "LEGAL NAME";
-            }
-
-            if(heading.equalsIgnoreCase("AddressChange")){
-                txtSubCode.setText("Address Change");
-                txtHeading.setText("Account Management");
-                mServiceType = "ADDRESS CHANGE";
-            }
-
-            if(heading.equalsIgnoreCase("PhoneNo")){
-                txtSubCode.setText("Phone No");
-                txtHeading.setText("Account Management");
-                mServiceType = "MOBILE NO";
-            }
-
-            if(heading.equalsIgnoreCase("NewLocation")){
-                txtSubCode.setText("New Location");
-                txtHeading.setText("Account Management");
-                mServiceType = "NEW LOCATION";
-            }
-
-            if(heading.equalsIgnoreCase("AssetSwapping")){
-                txtSubCode.setText("Asset Swapping");
-                txtHeading.setText("Account Management");
-                mServiceType = "ASSET SWAPPING";
-            }
-
-            if(heading.equalsIgnoreCase("Dcc")){
-                txtSubCode.setText("Dcc");
-                txtHeading.setText("Account Management");
-                mServiceType = "DCC";
-            }
-
-            if(heading.equalsIgnoreCase("AdditionalDcc")){
-                txtSubCode.setText("Additional Dcc");
-                txtHeading.setText("Account Management");
-                mServiceType = "ADDITIONAL DCC";
-            }
-
-            if(heading.equalsIgnoreCase("CashPos")){
-                txtSubCode.setText("Cash Pos");
-                txtHeading.setText("Account Management");
-                mServiceType = "CASH POS";
-            }
-
-            if(heading.equalsIgnoreCase("Apply_mVisa")){
-                txtSubCode.setText("Apply mVisa");
-                txtHeading.setText("Account Management");
-                mServiceType = "APPLY MVISA";
-            }
-
-            if(heading.equalsIgnoreCase("MprStatmentRequest")){
-                txtSubCode.setText("Mpr Statement Request");
-                txtHeading.setText("Account Management");
-                mServiceType = "MPR STATEMENT REQUEST";
-            }*/
         }
 
-        /*if(txtHeading.getText().toString().trim().equalsIgnoreCase("Account Management") ||
-                txtHeading.getText().toString().trim().equalsIgnoreCase("Other Issues"))
-        {
-            findViewById(R.id.imgStar1).setVisibility(View.GONE);
-            findViewById(R.id.imgStar3).setVisibility(View.GONE);
-            findViewById(R.id.imgStar4).setVisibility(View.GONE);
-            findViewById(R.id.imgStar5).setVisibility(View.GONE);
-
-            findViewById(R.id.lyTerminal).setVisibility(View.GONE);
-            findViewById(R.id.lyContact).setVisibility(View.GONE);
-            findViewById(R.id.lyVisiting).setVisibility(View.INVISIBLE);
-            findViewById(R.id.lyWeeklyOff).setVisibility(View.INVISIBLE);
-            findViewById(R.id.viewContact).setVisibility(View.GONE);
-            findViewById(R.id.viewVisit).setVisibility(View.GONE);
-            findViewById(R.id.viewWeekly).setVisibility(View.GONE);
-        }*/
         imgBack.setOnClickListener(this);
         imgNotification.setOnClickListener(this);
         imgProfile.setOnClickListener(this);
         txtSubmitRequest.setOnClickListener(this);
-
 
     }
 

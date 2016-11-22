@@ -3,7 +3,6 @@ package com.axismerchant.activity.sms;
 import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -57,6 +56,7 @@ import java.util.List;
 
 public class Activity_SMSPayHome extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
+    private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
     ArrayList<String> favoriteArrayList;
     DBHelper dbHelper;
     ListView listFavorites;
@@ -69,7 +69,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     EncryptDecryptRegister encryptDecryptRegister;
     int simStatus;
     boolean isOnAirplane;
-    private final static int REQUEST_CODE_SOME_FEATURES_PERMISSIONS = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,33 +178,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     }
 
 
-/*
-    public boolean isTableExists() {
-        dbHelper = new DBHelper(this);
-        mDatabase = dbHelper.getReadableDatabase();
-
-        if (mDatabase == null || !mDatabase.isOpen()) {
-            mDatabase = dbHelper.getReadableDatabase();
-        }
-
-        if (!mDatabase.isReadOnly()) {
-            mDatabase.close();
-            mDatabase = dbHelper.getReadableDatabase();
-        }
-
-        Cursor cursor = mDatabase.rawQuery("select * from "+DBHelper.TABLE_NAME_E_PAYMENT, null);
-        if (cursor != null) {
-            Log.e("Data Count", "" + cursor.getCount());
-            if (cursor.getCount() > 0) {
-                cursor.close();
-                return true;
-            }
-            cursor.close();
-        }
-        return false;
-    }
-*/
-
 
     @Override
     protected void onResume() {
@@ -249,6 +221,7 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
 
             case R.id.txtSeeAllTransactions:
                 startActivity(new Intent(this, Activity_AllTransactions.class));
+                finish();
                 break;
 
             case R.id.imgBack:
@@ -309,6 +282,81 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, Activity_Home.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        finish();
+    }
+
+    private void ShowDialog(int simStatus) {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_message_for_sms);
+        dialog.setCancelable(false);
+
+        TextView txtMID = (TextView) dialog.findViewById(R.id.txtMID);
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        TextView txtTitle = (TextView) dialog.findViewById(R.id.txtTitle);
+        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
+        TextView txtMsg1 = (TextView) dialog.findViewById(R.id.txtMessage);
+        TextView txtMsg2 = (TextView) dialog.findViewById(R.id.msg1);
+
+        txtMID.setVisibility(View.GONE);
+        txtTitle.setVisibility(View.GONE);
+        imgResponse.setVisibility(View.GONE);
+        txtMsg2.setVisibility(View.GONE);
+
+        switch (simStatus) {
+            case 100:
+                txtMsg1.setText("Please insert sim card to use this feature.");
+                break;
+
+            case 200:
+                txtMsg1.setText("Your Sim network is locked.");
+                break;
+
+            case 300:
+                txtMsg1.setText("Your Sim id PIN Locked.");
+                break;
+
+            case 400:
+                txtMsg1.setText("Your Sim id PUK Locked.");
+                break;
+
+            case 600:
+                txtMsg1.setText("Unknown sim state.");
+                break;
+
+            case 0:
+                txtMsg1.setText("Please insert sim card to use this feature.");
+                break;
+        }
+
+        txtConfirm.setText("Ok");
+        txtConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     private class DataAdapter extends BaseAdapter {
         ArrayList<String> favoriteArrayList;
@@ -346,15 +394,6 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
             return view;
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, Activity_Home.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
-        finish();
-    }
-
 
     public class GetLastTransactionByMer extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
@@ -476,79 +515,5 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
                 Constants.showToast(Activity_SMSPayHome.this,getString(R.string.network_error));
             }
         }
-    }
-
-
-    private  void ShowDialog(int simStatus)
-    {
-        // custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout_message_for_sms);
-        dialog.setCancelable(false);
-
-        TextView txtMID = (TextView) dialog.findViewById(R.id.txtMID);
-        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
-
-        TextView txtTitle = (TextView) dialog.findViewById(R.id.txtTitle);
-        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
-        TextView txtMsg1 = (TextView) dialog.findViewById(R.id.txtMessage);
-        TextView txtMsg2 = (TextView) dialog.findViewById(R.id.msg1);
-
-        txtMID.setVisibility(View.GONE);
-        txtTitle.setVisibility(View.GONE);
-        imgResponse.setVisibility(View.GONE);
-        txtMsg2.setVisibility(View.GONE);
-
-        switch (simStatus)
-        {
-            case 100:
-                txtMsg1.setText("Please insert sim card to use this feature.");
-                break;
-
-            case 200:
-                txtMsg1.setText("Your Sim network is locked.");
-                break;
-
-            case 300:
-                txtMsg1.setText("Your Sim id PIN Locked.");
-                break;
-
-            case 400:
-                txtMsg1.setText("Your Sim id PUK Locked.");
-                break;
-
-            case 600:
-                txtMsg1.setText("Unknown sim state.");
-                break;
-
-            case 0:
-                txtMsg1.setText("Please insert sim card to use this feature.");
-                break;
-        }
-
-        txtConfirm.setText("Ok");
-        txtConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
-
-
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 }

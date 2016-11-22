@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.axismerchant.R;
@@ -285,20 +284,21 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        InputMethodManager inputManager = (InputMethodManager)
+        /*InputMethodManager inputManager = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (inputManager.isAcceptingText()) {
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
-        } else if (flag == 1) {
+        }else{*/
+        if (flag == 1) {
             boolean groupsCollapsed = false;
-            for (int i=0; i<userFragment.expandableListView.getCount(); ++i) {
+            for (int i = 0; i < userFragment.expandableListView.getCount(); ++i) {
                 if (userFragment.expandableListView.isGroupExpanded(i)) {
                     userFragment.expandableListView.collapseGroup(i);
                     groupsCollapsed = true;
                 }
-            }
+                }
 
             // If no groups collapsed, call the default back button
             if (!groupsCollapsed) {
@@ -306,8 +306,9 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
                 flag = 0;
             }
 
-        }else {
+        } else {
             super.onBackPressed();
         }
-    }
+        }
+
 }

@@ -218,6 +218,7 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
                 imgEditRemark.setVisibility(View.VISIBLE);
                 imgEditAmount.setVisibility(View.VISIBLE);
                 imgReadContact.setVisibility(View.VISIBLE);
+                txtOptional.setVisibility(View.GONE);
                 break;
 
             case R.id.imgEdit1:
@@ -230,6 +231,7 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
                 imgEditRemark.setVisibility(View.VISIBLE);
                 imgEditAmount.setVisibility(View.GONE);
                 imgReadContact.setVisibility(View.GONE);
+                txtOptional.setVisibility(View.GONE);
                 break;
 
             case R.id.imgEdit2:

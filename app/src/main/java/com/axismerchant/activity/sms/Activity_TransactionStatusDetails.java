@@ -233,7 +233,95 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         dialog.show();
     }
 
+    private void InsertIntoDatabase(String custMobile, String amount, String remark, String invoiceNum, String isFavo, String currentDateandTime) {
+        dbHelper = new DBHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        try {
+            values.put(DBHelper.CUST_MOBILE, custMobile);
+            values.put(DBHelper.AMOUNT, amount);
+            values.put(DBHelper.REMARK, remark);
+            values.put(DBHelper.INVOICE_NO, invoiceNum);
+            values.put(DBHelper.IS_FAVORITE, isFavo);
+            values.put(DBHelper.STATUS, "Pending");
+            values.put(DBHelper.TRANS_DATE, currentDateandTime);
+
+            long id = db.insert(DBHelper.TABLE_NAME_E_PAYMENT, null, values);
+            Log.v("id", String.valueOf(id));
+        } catch (Exception e) {
+        } finally {
+            db.close();
+        }
+
+    }
+
+    private void UpdateIntoEPay(String invNo, String refundStatus) {
+        dbHelper = new DBHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(DBHelper.IS_REFUND, refundStatus);
+
+            long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT, values, DBHelper.INVOICE_NO + " = " + invNo, null);
+        } catch (Exception e) {
+        } finally {
+            db.close();
+        }
+    }
+
+    private void UpdateStatusIntoEPay(String invNo, String status) {
+        dbHelper = new DBHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        try {
+            values.put(DBHelper.STATUS, status);
+
+            long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT, values, DBHelper.INVOICE_NO + " = " + invNo, null);
+        } catch (Exception e) {
+        } finally {
+            db.close();
+        }
+    }
+
+    private void getConfirm() {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_for_refund_layout);
+        dialog.setCancelable(false);
+
+        TextView txtYes = (TextView) dialog.findViewById(R.id.txtYes);
+        TextView txtNo = (TextView) dialog.findViewById(R.id.txtNo);
+
+        txtYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                callRefund();
+            }
+        });
+
+        txtNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     private class GetSMSXnDetails extends AsyncTask<String, Void, String> {
 
@@ -348,7 +436,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                             ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_orange_light));
                             ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.pending);
                             findViewById(R.id.refundLayout).setVisibility(View.VISIBLE);
-                            txtResText.setText("Resend Link");
+                            txtResText.setText(getString(R.string.resend_link));
                             refLayout.setVisibility(View.VISIBLE);
                         }else if(transStatus.equals("Success"))
                         {
@@ -357,13 +445,13 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                             ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.success);
                             findViewById(R.id.lyExpiry).setVisibility(View.GONE);
                             findViewById(R.id.refundLayout).setVisibility(View.VISIBLE);
-                            txtResText.setText("Refund Payment");
+                            txtResText.setText(getString(R.string.refund_pay));
                             if(transType.equalsIgnoreCase("sales")) {
                                 if (isRefund.equals("0"))
                                     refLayout.setVisibility(View.VISIBLE);
                                 else {
 //                                    refLayout.setVisibility(View.GONE);
-                                    txtResText.setText("Already refunded");
+                                    txtResText.setText(getString(R.string.refunded));
                                     refLayout.setEnabled(false);
                                 }
                             }else{
@@ -375,7 +463,7 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
                             ((TextView) findViewById(R.id.txtStatus)).setText(transStatus);
                             ((TextView) findViewById(R.id.txtStatus)).setTextColor(getResources().getColor(android.R.color.holo_red_dark));
                             ((ImageView) findViewById(R.id.imgStatusSMS)).setImageResource(R.mipmap.fail);
-                            txtResText.setText("Resend Link");
+                            txtResText.setText(getString(R.string.resend_link));
                             refLayout.setVisibility(View.VISIBLE);
                         }
 
@@ -397,8 +485,6 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
         }
     }
-
-
 
     private class ResendURL extends AsyncTask<String, Void, String> {
 
@@ -534,32 +620,6 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
         }
     }
 
-
-    private void InsertIntoDatabase(String custMobile, String amount, String remark, String invoiceNum, String isFavo, String currentDateandTime) {
-        dbHelper = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        try {
-            values.put(DBHelper.CUST_MOBILE, custMobile);
-            values.put(DBHelper.AMOUNT, amount);
-            values.put(DBHelper.REMARK, remark);
-            values.put(DBHelper.INVOICE_NO, invoiceNum);
-            values.put(DBHelper.IS_FAVORITE, isFavo);
-            values.put(DBHelper.STATUS, "Pending");
-            values.put(DBHelper.TRANS_DATE, currentDateandTime);
-
-            long id = db.insert(DBHelper.TABLE_NAME_E_PAYMENT, null, values);
-            Log.v("id", String.valueOf(id));
-        }catch (Exception e){}
-        finally {
-            db.close();
-        }
-
-    }
-
-
-
     private class RefundTransactions extends AsyncTask<String, Void, String> {
 
         ProgressDialog progressDialog;
@@ -662,77 +722,6 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
             }
 
         }
-    }
-
-
-    private void UpdateIntoEPay(String invNo, String refundStatus) {
-        dbHelper = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        try {
-            ContentValues values = new ContentValues();
-            values.put(DBHelper.IS_REFUND, refundStatus);
-
-            long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT, values, DBHelper.INVOICE_NO + " = " + invNo, null);
-        }catch (Exception e)
-        {}finally {
-            db.close();
-        }
-    }
-
-    private void UpdateStatusIntoEPay(String invNo, String status) {
-        dbHelper = new DBHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        try {
-            values.put(DBHelper.STATUS, status);
-
-            long id = db.update(DBHelper.TABLE_NAME_E_PAYMENT, values, DBHelper.INVOICE_NO + " = " + invNo, null);
-        }catch (Exception e)
-        {}finally {
-            db.close();
-        }
-    }
-
-
-    private void getConfirm()
-    {
-        // custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout_for_refund_layout);
-        dialog.setCancelable(false);
-
-        TextView txtYes = (TextView) dialog.findViewById(R.id.txtYes);
-        TextView txtNo = (TextView) dialog.findViewById(R.id.txtNo);
-
-        txtYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                callRefund();
-            }
-        });
-
-        txtNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 
 }

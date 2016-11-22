@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="version">वर्जन Prod 1.0.0</string>
+    <!--<string name="version">वर्जन UAT-42</string>-->
+
     <string name="app_name">ऐक्सिि बकैं मर्चेन्ट एप्प </string>
 
     <string name="sign_up">साइन अप </string>
@@ -146,7 +149,7 @@
 
     <string name="proceed">आगे बढ़ें </string>
 
-    <string name="Add_to_favorites_for_future_Payments">भविष्य के भुगतानों के लिए फेवरेट्स जोड़ें</string>
+    <string name="add_to_fav">भविष्य के भुगतानों के लिए फेवरेट्स जोड़ें</string>
 
     <string name="no_mobile_and_amount">कृपया मोबाइल नंबर और रामि दर्ज करें                  </string>
 
@@ -195,7 +198,7 @@
 
     <string name="data_for_60_days">डेटा 60 दिनों के लिए उपलब्ध</string>
 
-    <string name="transactions">ट्रांजेक्शन </string>
+    <string name="transactions">ट्रांजेक्शन</string>
 
     <string name="volme">मात्रा</string>
 
@@ -475,7 +478,7 @@
 
     <string name="no_internet">इंटरनेट कनेक्शन उपलब्ध नहीं है.</string>
 
-    <string name="network_error">नेटिकज की त्रुहट हुई है. कृपया बाद में कोमिि करें  </string>
+    <string name="network_error">नेटवर्क की त्रुटि हुई है. कृपया बाद में कोशिश करें</string>
 
     <string name="Remaining">शेष है  </string>
 
@@ -519,19 +522,18 @@
     <string name="Remarks">टिप्पणियां </string>
 
 
-
-
     <string name="Invoice_Number">इन्वॉयस नंबर</string>
 
-    <string name="Date">तिथि</string>
+    <string name="date">तिथि</string>
 
     <string name="Total_Volume">कुल वॉल्यूम</string>
 
     <string name="Total_Amount">कुल राशि  </string>
 
     <string name="amount">राशि</string>
+    <string name="Amount">राशि</string>
 
-
+    <string name="refund_all_text">SMS और QR भुगतान का कुल</string>
 
     <string name="Average_Size">औसत साइज</string>
 
@@ -635,7 +637,7 @@
 
     <string name="Email_request_fo_Merchan_Payment_Report">मर्चेन्ट भुगतान ररपोटज के मलए ईमेल अनुरोध </string>
 
-    <string name="MIDNumber">MID नंबर  </string>
+    <string name="mid_title">MID नंबर  </string>
 
     <string name="Select_Date_Range">डेटा रेंज चुनें</string>
 
@@ -677,8 +679,6 @@
 
     <string name="SORRYyouremail_is_not_registered">क्षमा कीजिए! आपका ईमेल हमारे यहां रजिस्टर्ड नहीं है, कृपया अपना ईमेल आईडी रजिस्टर कराएं</string>
 
-    <string name="version">वर्जन 3.0.6</string>
-    <!--<string name="version">वर्जन UAT-42</string>-->
 
     <string name="mvisa_id">mvisa_id </string>
 
@@ -821,4 +821,18 @@
 </body>]]></string>
 
     <string name="termsDataQR"><![CDATA[<body style=\"text-align:justify\"><p>The Merchant agrees and confirms that signing up for mVisa (QR code based payments) is to avail additional services from the bank. The arrangement for mVisa shall not have any effect of over riding all of any of the provisions as contained in Principal Agreement Signed. It is understood that for mVisa arrangement, the Principal Agreement stands in force and this additional services shall always be read  as forming part and parcel of Agreement.</p></body>]]></string>
+    <string name="link_expiry">लिंक समाप्ति</string>
+    <string name="resend_link">पुन: भेजें लिंक</string>
+    <string name="refunded">Already refunded</string>
+    <string name="transaction_volume">लेनदेन की मात्रा</string>
+    <string name="avg_ticket_size">औसत टिकट आकार</string>
+    <string name="xn_volume">लेनदेन की मात्रा</string>
+    <string name="title_terminal_id">टर्मिनल ID</string>
+    <string name="title_problm_description">समस्या का विवरण</string>
+    <string name="title_contact_no">फ़ोन नंबर</string>
+    <string name="tid_title">TID Number</string>
+    <string name="docket_id_title">डॉकेट ID</string>
+    <string name="problem_code_title">समस्या कोड</string>
+    <string name="closing_remark_title">अंतिम टिप्पणी</string>
+    <string name="current_status_title">वर्तमान स्थिति</string>
 </resources>

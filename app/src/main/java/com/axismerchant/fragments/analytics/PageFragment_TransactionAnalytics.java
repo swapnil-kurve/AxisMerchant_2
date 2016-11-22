@@ -16,6 +16,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.axismerchant.R;
+import com.axismerchant.activity.mis_reports.Activity_FilterMIS;
+import com.axismerchant.activity.start.Activity_Main;
+import com.axismerchant.classes.Constants;
+import com.axismerchant.classes.CustomListAdapterForMPR;
+import com.axismerchant.classes.CustomListAdapterForMerchantLikeMe;
+import com.axismerchant.classes.EncryptDecrypt;
+import com.axismerchant.classes.EncryptDecryptRegister;
+import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.classes.MIS_MPR;
+import com.axismerchant.classes.MerchantLikeMe;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,17 +43,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nirhart.parallaxscroll.views.ParallaxListView;
-import com.axismerchant.R;
-import com.axismerchant.activity.mis_reports.Activity_FilterMIS;
-import com.axismerchant.activity.start.Activity_Main;
-import com.axismerchant.classes.Constants;
-import com.axismerchant.classes.CustomListAdapterForMPR;
-import com.axismerchant.classes.CustomListAdapterForMerchantLikeMe;
-import com.axismerchant.classes.EncryptDecrypt;
-import com.axismerchant.classes.EncryptDecryptRegister;
-import com.axismerchant.classes.HTTPUtils;
-import com.axismerchant.classes.MIS_MPR;
-import com.axismerchant.classes.MerchantLikeMe;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -68,10 +68,10 @@ import java.util.List;
 public class PageFragment_TransactionAnalytics extends Fragment implements View.OnClickListener {
 
     public static final String ARG_OBJECT = "object";
+    public ParallaxListView listData;
     String MOBILE, MID, mGraphType = "Transactions", mDuration = "Daily";
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
-    public ParallaxListView listData;
     MerchantLikeMe merchantLikeMe;
     ArrayList<MerchantLikeMe> likeMeArrayList;
     MIS_MPR mis_mpr;
@@ -83,6 +83,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
     TextView txtDateDuration,txtGraphType, txtXn, txtVol, txtTicket, txtMessage, txtHeaderText;
     View lyTop, lyInfo, lyTopMessages;
     double screenInches;
+    /**
+     * Modify Here Analytics Graph
+     */
+    int[] clor = new int[1];
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -169,9 +173,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
     }
 
-
-
-
     private void getMerchantData() {
 
         if (Constants.isNetworkConnectionAvailable(getActivity())) {
@@ -257,6 +258,179 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         }
     }
 
+    public void showBarChart(String noOfTxnofAllMerchant, String txnVolofAllMerchant, String avgTicketSizeofAllMerchant, String noOfTxnofMerchant, String txnVolofMerchant, String avgTicketSizeofMerchant) {
+        layoutChart.clear();
+        HorizontalBarChart chart = new HorizontalBarChart(getActivity());
+
+        ArrayList<BarEntry> yValues1 = new ArrayList<>();
+        BarEntry v1e11 = new BarEntry(Float.parseFloat(noOfTxnofMerchant), 2); // Jan
+        yValues1.add(v1e11);
+        BarEntry v1e12 = new BarEntry(Float.parseFloat(txnVolofMerchant), 1); // Feb
+        yValues1.add(v1e12);
+        BarEntry v1e13 = new BarEntry(Float.parseFloat(avgTicketSizeofMerchant), 0); // Mar
+        yValues1.add(v1e13);
+
+        ArrayList<BarEntry> yValues2 = new ArrayList<>();
+        BarEntry v1e21 = new BarEntry(Float.parseFloat(noOfTxnofAllMerchant), 2); // Jan
+        yValues2.add(v1e21);
+        BarEntry v1e22 = new BarEntry(Float.parseFloat(txnVolofAllMerchant), 1); // Feb
+        yValues2.add(v1e22);
+        BarEntry v1e23 = new BarEntry(Float.parseFloat(avgTicketSizeofAllMerchant), 0); // Mar
+        yValues2.add(v1e23);
+
+        BarDataSet barDataSet1 = new BarDataSet(yValues1, "Avg. of Merchant");
+        barDataSet1.setColor(getResources().getColor(R.color.green_float));
+        BarDataSet barDataSet2 = new BarDataSet(yValues2, "You");
+        barDataSet2.setColor(getResources().getColor(R.color.colorPrimary));
+
+        barDataSet1.setBarSpacePercent(0f);
+        barDataSet2.setBarSpacePercent(0f);
+
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        dataSets.add(barDataSet1);
+        dataSets.add(barDataSet2);
+
+
+        ArrayList<String> xValues = new ArrayList<>();
+        xValues.add("");
+        xValues.add("");
+        xValues.add("");
+
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+
+        BarData data = new BarData(xValues, dataSets);
+        data.setValueTextSize(8);
+        data.setValueTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/futura_std_medium.otf"));
+        data.setValueFormatter(new MyValueFormatter());
+        data.setGroupSpace(400f);
+
+        data.setGroupSpace(400f);
+        data.setGroupSpace(400f);
+
+        chart.setData(data);
+        chart.getXAxis().setTextSize(6);// hides horizontal grid lines inside chart
+        YAxis leftAxis = chart.getAxisLeft();
+        chart.getAxisRight().setEnabled(false); // hides horizontal grid lines with below line
+        leftAxis.setEnabled(false); // hides vertical grid lines  inside chart
+        chart.invalidate();
+        chart.setClickable(false);
+        chart.setDescription("");    // Hide the description
+        chart.getLegend().setEnabled(true);
+        chart.setDoubleTapToZoomEnabled(false);
+        chart.setPinchZoom(false);
+        chart.notifyDataSetChanged();
+        chart.setScaleEnabled(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getXAxis().setDrawGridLines(false);
+
+        leftAxis.setDrawLabels(true);
+        layoutChart.addView(chart);
+
+        adapter = new CustomListAdapterForMerchantLikeMe(getActivity(), likeMeArrayList);
+        adapter.notifyDataSetChanged();
+        listData.setAdapter(adapter);
+
+    }
+
+    public void showBarChart() {
+        if (layoutChart != null)
+            layoutChart.removeAllViews();
+
+        ArrayList<Entry> entries = new ArrayList<>();
+        LineChart chart = new LineChart(getActivity());
+
+        ArrayList<MIS_MPR> arrayAnalytics = new ArrayList<>();
+        for (int i = analyticsArrayList.size() - 1; i >= 0; i--) {
+            arrayAnalytics.add(analyticsArrayList.get(i));
+        }
+
+        date = "";
+        date = date + arrayAnalytics.get(0).getTransDate() + " To " + arrayAnalytics.get(arrayAnalytics.size() - 1).getTransDate();
+        txtDateDuration.setText(date);
+
+        if (mGraphType.equalsIgnoreCase("Transactions")) {
+            for (int i = 0; i < arrayAnalytics.size(); i++) {
+                if (arrayAnalytics.get(i).getTransactions().equals("")) {
+                    entries.add(new BarEntry(0, i));
+                } else {
+                    entries.add(new BarEntry(Integer.parseInt(arrayAnalytics.get(i).getTransactions()), i));
+                }
+            }
+            txtGraphType.setText("Transactions");
+        } else if (mGraphType.equalsIgnoreCase("Transaction Volume")) {
+            for (int i = 0; i < arrayAnalytics.size(); i++) {
+                if (arrayAnalytics.get(i).getTxnVolume().equals("")) {
+                    entries.add(new BarEntry(0, i));
+                } else {
+                    entries.add(new BarEntry(Float.parseFloat(arrayAnalytics.get(i).getTxnVolume()), i));
+                }
+            }
+            txtGraphType.setText("Transaction Volume");
+        } else {
+            for (int i = 0; i < arrayAnalytics.size(); i++) {
+                if (arrayAnalytics.get(i).getAvgTicketSize().equals("")) {
+                    entries.add(new BarEntry(0, i));
+                } else {
+                    entries.add(new BarEntry(Float.parseFloat(arrayAnalytics.get(i).getAvgTicketSize()), i));
+                }
+            }
+            txtGraphType.setText("Average Ticket Size");
+        }
+        LineDataSet dataSet = new LineDataSet(entries, "");
+        clor[0] = getResources().getColor(R.color.colorPrimary);
+        dataSet.setColors(clor);
+
+        ArrayList<String> labels = new ArrayList<>();
+
+        for (int i = 0; i < arrayAnalytics.size(); i++) {
+            labels.add(arrayAnalytics.get(i).gettDate());
+        }
+
+        LineData data = new LineData(labels, dataSet);
+        data.setValueFormatter(new MyValueFormatter());
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setSpaceBetweenLabels(0);
+
+        Legend l = chart.getLegend();
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        l.setForm(Legend.LegendForm.LINE);
+        l.setFormSize(0f);
+        l.setTextSize(0f);
+        l.setXEntrySpace(0f);
+        l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
+
+        chart.getAxisRight().setEnabled(false);
+        chart.setDescription("");
+        chart.setData(data);
+        chart.setVisibleXRangeMaximum(7);
+        chart.moveViewToX(arrayAnalytics.size());
+        chart.setDoubleTapToZoomEnabled(false);
+        chart.setPinchZoom(false);
+        chart.notifyDataSetChanged();
+        chart.setScaleEnabled(false);
+
+
+        layoutChart.addView(chart);
+
+        adapterAnalytics = new CustomListAdapterForMPR(getActivity(), analyticsArrayList, screenInches);
+        adapterAnalytics.notifyDataSetChanged();
+        listData.setAdapter(adapter);
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 
     private class GetMerchantData extends AsyncTask<String, Void, String>
     {
@@ -368,8 +542,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         }
     }
 
-
-
     private class GetMerchantGraphData extends AsyncTask<String, Void, String>
     {
         ProgressDialog progressDialog;
@@ -476,87 +648,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
         }
     }
-
-
-
-    public void showBarChart(String noOfTxnofAllMerchant, String txnVolofAllMerchant, String avgTicketSizeofAllMerchant, String noOfTxnofMerchant, String txnVolofMerchant, String avgTicketSizeofMerchant)
-    {
-        layoutChart.clear();
-        HorizontalBarChart chart = new HorizontalBarChart(getActivity());
-
-        ArrayList<BarEntry> yValues1 = new ArrayList<>();
-        BarEntry v1e11 = new BarEntry(Float.parseFloat(noOfTxnofMerchant), 2); // Jan
-        yValues1.add(v1e11);
-        BarEntry v1e12 = new BarEntry(Float.parseFloat(txnVolofMerchant), 1); // Feb
-        yValues1.add(v1e12);
-        BarEntry v1e13 = new BarEntry(Float.parseFloat(avgTicketSizeofMerchant), 0); // Mar
-        yValues1.add(v1e13);
-
-        ArrayList<BarEntry> yValues2 = new ArrayList<>();
-        BarEntry v1e21 = new BarEntry(Float.parseFloat(noOfTxnofAllMerchant), 2); // Jan
-        yValues2.add(v1e21);
-        BarEntry v1e22 = new BarEntry(Float.parseFloat(txnVolofAllMerchant), 1); // Feb
-        yValues2.add(v1e22);
-        BarEntry v1e23 = new BarEntry(Float.parseFloat(avgTicketSizeofAllMerchant), 0); // Mar
-        yValues2.add(v1e23);
-
-        BarDataSet barDataSet1 = new BarDataSet(yValues1, "Avg. of Merchant");
-        barDataSet1.setColor(getResources().getColor(R.color.green_float));
-        BarDataSet barDataSet2 = new BarDataSet(yValues2, "You");
-        barDataSet2.setColor(getResources().getColor(R.color.colorPrimary));
-
-        barDataSet1.setBarSpacePercent(0f);
-        barDataSet2.setBarSpacePercent(0f);
-
-
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
-        dataSets.add(barDataSet1);
-        dataSets.add(barDataSet2);
-
-
-        ArrayList<String> xValues = new ArrayList<>();
-        xValues.add("");
-        xValues.add("");
-        xValues.add("");
-
-        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
-
-        BarData data = new BarData(xValues, dataSets);
-        data.setValueTextSize(8);
-        data.setValueTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/futura_std_medium.otf"));
-        data.setValueFormatter(new MyValueFormatter());
-        data.setGroupSpace(400f);
-
-        data.setGroupSpace(400f);
-        data.setGroupSpace(400f);
-
-        chart.setData(data);
-        chart.getXAxis().setTextSize(6);// hides horizontal grid lines inside chart
-        YAxis leftAxis = chart.getAxisLeft();
-        chart.getAxisRight().setEnabled(false); // hides horizontal grid lines with below line
-        leftAxis.setEnabled(false); // hides vertical grid lines  inside chart
-        chart.invalidate();
-        chart.setClickable(false);
-        chart.setDescription("");    // Hide the description
-        chart.getLegend().setEnabled(true);
-        chart.setDoubleTapToZoomEnabled(false);
-        chart.setPinchZoom(false);
-        chart.notifyDataSetChanged();
-        chart.setScaleEnabled(false);
-        chart.getAxisLeft().setDrawGridLines(false);
-        chart.getXAxis().setDrawGridLines(false);
-
-        leftAxis.setDrawLabels(true);
-        layoutChart.addView(chart);
-
-        adapter = new CustomListAdapterForMerchantLikeMe(getActivity(),likeMeArrayList);
-        adapter.notifyDataSetChanged();
-        listData.setAdapter(adapter);
-
-    }
-
-
-
 
     private class GetAnalyticsData extends AsyncTask<String, Void, String>
     {
@@ -678,108 +769,12 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         }
     }
 
-    /**
-     * Modify Here Analytics Graph
-     */
-    int[] clor = new int[1];
-    public void showBarChart()
-    {
-        if(layoutChart != null)
-        layoutChart.removeAllViews();
-
-        ArrayList<Entry> entries = new ArrayList<>();
-        LineChart chart = new LineChart(getActivity());
-
-        ArrayList<MIS_MPR> arrayAnalytics = new ArrayList<>();
-        for (int i = analyticsArrayList.size()-1; i>=0 ; i--) {
-            arrayAnalytics.add(analyticsArrayList.get(i));
-        }
-
-        date = "";
-        date = date + arrayAnalytics.get(0).getTransDate()+" To "+arrayAnalytics.get(arrayAnalytics.size()-1).getTransDate();
-        txtDateDuration.setText(date);
-
-        if(mGraphType.equalsIgnoreCase("Transactions")) {
-            for (int i = 0; i < arrayAnalytics.size(); i++) {
-                if (arrayAnalytics.get(i).getTransactions().equals("")) {
-                    entries.add(new BarEntry(0, i));
-                } else {
-                    entries.add(new BarEntry(Integer.parseInt(arrayAnalytics.get(i).getTransactions()), i));
-                }
-            }
-            txtGraphType.setText("Transactions");
-        }else if(mGraphType.equalsIgnoreCase("Transaction Volume"))
-        {
-            for (int i = 0; i < arrayAnalytics.size(); i++) {
-                if (arrayAnalytics.get(i).getTxnVolume().equals("")) {
-                    entries.add(new BarEntry(0, i));
-                } else {
-                    entries.add(new BarEntry(Float.parseFloat(arrayAnalytics.get(i).getTxnVolume()), i));
-                }
-            }
-            txtGraphType.setText("Transaction Volume");
-        }else
-        {
-            for (int i = 0; i < arrayAnalytics.size(); i++) {
-                if (arrayAnalytics.get(i).getAvgTicketSize().equals("")) {
-                    entries.add(new BarEntry(0, i));
-                } else {
-                    entries.add(new BarEntry(Float.parseFloat(arrayAnalytics.get(i).getAvgTicketSize()), i));
-                }
-            }
-            txtGraphType.setText("Average Ticket Size");
-        }
-        LineDataSet dataSet = new LineDataSet(entries, "");
-        clor[0] = getResources().getColor(R.color.colorPrimary);
-        dataSet.setColors(clor);
-
-        ArrayList<String> labels = new ArrayList<>();
-
-        for (int i = 0; i < arrayAnalytics.size(); i++) {
-            labels.add(arrayAnalytics.get(i).gettDate());
-        }
-
-        LineData data = new LineData(labels, dataSet);
-        data.setValueFormatter(new MyValueFormatter());
-
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setDrawGridLines(false);
-        xAxis.setSpaceBetweenLabels(0);
-
-        Legend l = chart.getLegend();
-        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
-        l.setForm(Legend.LegendForm.LINE);
-        l.setFormSize(0f);
-        l.setTextSize(0f);
-        l.setXEntrySpace(0f);
-        l.setExtra(ColorTemplate.COLORFUL_COLORS, new String[]{});
-
-        chart.getAxisRight().setEnabled(false);
-        chart.setDescription("");
-        chart.setData(data);
-        chart.setVisibleXRangeMaximum(7);
-        chart.moveViewToX(arrayAnalytics.size());
-        chart.setDoubleTapToZoomEnabled(false);
-        chart.setPinchZoom(false);
-        chart.notifyDataSetChanged();
-        chart.setScaleEnabled(false);
-
-        layoutChart.addView(chart);
-
-        adapterAnalytics = new CustomListAdapterForMPR(getActivity(),analyticsArrayList, screenInches);
-        adapterAnalytics.notifyDataSetChanged();
-        listData.setAdapter(adapter);
-    }
-
-
     public class MyValueFormatter implements ValueFormatter {
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             return Math.round(value)+"";
         }
     }
-
 
     private class GetAnalyticsDataForFilter extends AsyncTask<String, Void, String>
     {
@@ -898,18 +893,6 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
             }
 
         }
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 
 }

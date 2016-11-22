@@ -4,7 +4,7 @@
     <!--================================================================================================-->
 
     <!--<string name="version">Version UAT-42</string>-->
-    <string name="version">Version 3.0.6</string>
+    <string name="version">Version Prod 1.0.0</string>
     <string name="mvisa_id">mvisa_id</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>
@@ -28,7 +28,7 @@
     <string name="cust_number">custNumber</string>
     <string name="urlCode">urlCode</string>
     <string name="currentTime">currentTime</string>
-    <string name="submitReq">Submit Request</string>
+    <string name="submitReq">রিকোয়েস্টজমা</string>
     <string name="fromdate">fromdate</string>
     <string name="todate">todate</string>
     <string name="merchant_id">merchantId</string>
@@ -221,7 +221,7 @@
 
     <string name="service_support">সার্ভিস সাপোর্ট</string>
     <string name="qr_code_payment">QR - কোড প্রদান</string>
-    <string name="ok">OK</string>
+    <string name="ok">ওকে</string>
     <string name="viewalltransaction">সব ট্র‌্যান্স্যাকশান দেখান</string>
     <string name="staticqrcode">QR কোড স্ট্যাটিক</string>
     <string name="dynamicqrcode">ডায়ানামিক QR কোড</string>
@@ -542,9 +542,9 @@
     <string name="root_msg">This device is rooted. You cannot proceed further.</string>
     <string name="try_later">Please try again later.</string>
     <string name="request_raised">Ticket successfully raised.</string>
-    <string name="performance_of_merchants">Performance of top 10 Merchants</string>
+    <string name="performance_of_merchants">শীর্ষ10মার্চেন্টেরকার্যকারিতা</string>
     <string name="invalid_login">You have already signed up with other device.</string>
-    <string name="registred_mobile_no">Registered Mobile No.</string>
+    <string name="registred_mobile_no">রেজিস্টার্ডমোবাইলনং.</string>
     <string name="set_mpin_hint">Set mPIN</string>
     <string name="confirm_mpin_hint">Confirm mPIN</string>
     <string name="username">Username</string>
@@ -558,4 +558,19 @@
     <string name="no_last_transaction">No Last Transaction Found</string>
     <string name="select_language">Please select language</string>
     <string name="notAuthorized">You are not authorized for this process.</string>
+    <string name="link_expiry">লিংকএক্সপায়ারি</string>
+    <string name="resend_link">রিসেঅলিংক</string>
+    <string name="refunded">Already refunded</string>
+    <string name="transaction_volume">লেনদেনেরপরিমাপ</string>
+    <string name="avg_ticket_size">গড়টিকিটসাইজ</string>
+    <string name="xn_volume">লেনদেনেরপরিমাপ</string>
+    <string name="title_terminal_id">Terminal ID</string>
+    <string name="title_problm_description">সমস্যাবিবরণ</string>
+    <string name="title_contact_no">Contact Number</string>
+    <string name="tid_title">TID Number</string>
+    <string name="docket_id_title">ডকেটআইডি</string>
+    <string name="problem_code_title">প্রব্লেমকোড</string>
+    <string name="closing_remark_title">ক্লোজিংরিমার্কস</string>
+    <string name="current_status_title">বর্তমানস্থিতি</string>
+    <string name="transaction_id">ট্রান্স্যাকশানআইডি</string>
 </resources>

@@ -71,6 +71,18 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     Calendar myCalendar = Calendar.getInstance();
     View lyTID, lyDate;
     TextView txtSearchByDate, txtSearchBySR;
+    DatePickerDialog.OnDateSetListener selectedDate = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+
+    };
     private int flag = 0;
 
     @Nullable
@@ -231,6 +243,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getId() == R.id.listSRStatus)
         {
+            flag = 0;
             Bundle bundle = new Bundle();
             bundle.putString("SRID",srStatuses.get(position).getServiceID());
             bundle.putString("Call_Type","Details");
@@ -240,11 +253,52 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    private void updateLabel() {
+
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        String calDate = sdf.format(myCalendar.getTime());
+        try {
+            if (DateFlag == 0) {
+                if (!sdf.parse(currentDateAndTime).before(sdf.parse(calDate)) && !sdf.parse(currentDateAndTime).equals(sdf.parse(calDate))) {
+                    txtFromDate.setText(sdf.format(myCalendar.getTime()));
+
+                } else {
+                    Constants.showToast(getActivity(), getString(R.string.from_date_should_not_less));
+                }
+            } else {
+                if (txtFromDate.getText().toString().equals("")) {
+                    Constants.showToast(getActivity(), getString(R.string.select_from_date));
+                } else {
+                    if (sdf.parse(calDate).after(sdf.parse(txtFromDate.getText().toString())) && !sdf.parse(calDate).after(sdf.parse(currentDateAndTime))) {
+                        txtToDate.setText(sdf.format(myCalendar.getTime()));
+                    } else {
+                        Constants.showToast(getActivity(), getString(R.string.invalid_date));
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 
     private class GetSRStatusList extends AsyncTask<String, Void, String>
     {
-        private int len ;
         ProgressDialog progressDialog;
+        private int len;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -400,7 +454,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         }
     }
 
-
     private class SRStatusAdapter extends BaseAdapter
     {
         Context context;
@@ -449,51 +502,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             }
 
             return convertView;
-        }
-    }
-
-
-    DatePickerDialog.OnDateSetListener selectedDate = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateLabel();
-        }
-
-    };
-
-
-    private void updateLabel() {
-
-        String myFormat = "dd/MM/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        String calDate = sdf.format(myCalendar.getTime());
-        try {
-            if (DateFlag == 0) {
-                if (!sdf.parse(currentDateAndTime).before(sdf.parse(calDate)) && !sdf.parse(currentDateAndTime).equals(sdf.parse(calDate))) {
-                    txtFromDate.setText(sdf.format(myCalendar.getTime()));
-
-                } else {
-                    Constants.showToast(getActivity(), getString(R.string.from_date_should_not_less));
-                }
-            } else {
-                if(txtFromDate.getText().toString().equals("")){
-                    Constants.showToast(getActivity(), getString(R.string.select_from_date));
-                }else {
-                    if (sdf.parse(calDate).after(sdf.parse(txtFromDate.getText().toString())) && !sdf.parse(calDate).after(sdf.parse(currentDateAndTime))) {
-                        txtToDate.setText(sdf.format(myCalendar.getTime()));
-                    } else {
-                        Constants.showToast(getActivity(), getString(R.string.invalid_date));
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-
         }
     }
 
@@ -645,18 +653,6 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             }
 
         }
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 
 
