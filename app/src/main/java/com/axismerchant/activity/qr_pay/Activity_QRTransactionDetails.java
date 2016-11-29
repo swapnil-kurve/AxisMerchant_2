@@ -193,6 +193,16 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
         }
     }
 
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     private class RefundTransactions extends AsyncTask<String, Void, String> {
 
@@ -213,7 +223,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
             String str = "";
             HttpResponse response;
             HttpClient myClient = new DefaultHttpClient();
-            HttpPost myConnection = new HttpPost(Constants.DEMO_SERVICE_REFUND+"MerchantApp/API/Merchant/Refund");
+            HttpPost myConnection = new HttpPost(Constants.DEMO_SERVICE_REFUND + "Merchant/API/Merchant/Refund");
 
             try {
                 myConnection.setHeader("Accept", "application/json");
@@ -278,7 +288,6 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
         }
     }
-
 
     private class GetQRXnDetails extends AsyncTask<String, Void, String> {
 
@@ -433,18 +442,6 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
             }
 
         }
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 
 

@@ -38,11 +38,11 @@ public class Constants {
     public static final String UserDetails = "UserDetails";
     public static final String ProfileInfo = "ProfileInfo";
     public static final String EPaymentData = "EPaymentData";
-//    public static final String QRPaymentData = "QRPaymentData";
     public static final String LanguageData = "LanguageData";
-    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
-    public static final String DEMO_SERVICE_REFUND ="http://merchantportal.paycraftsol.com/";
+
     public static final String[] FORCE_TLS_PROTOCOL = {"TLSv1.2"};
+    public static final String DEMO_SERVICE = "https://merchant.axisbank.co.in/mservices.asmx/";
+    public static final String DEMO_SERVICE_REFUND = "https://merchant.axisbank.co.in/";
     public static String MPIN = "";
     public static String IMEI = "";
     public static String MERCHANT_ID = "";
@@ -50,12 +50,11 @@ public class Constants {
     public static String secretekeyDatabase = "";
     public static String AuthToken = "";
 
+    //    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
+    //    public static final String DEMO_SERVICE_REFUND ="http://merchantportal.paycraftsol.com/";
     //    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
     public static String SecretKey = "secretKey";
     public static String GOOGLE_PROJ_ID = "660348263150";
-
-    //    public static final String DEMO_SERVICE = "https://merchant.axisbank.co.in/mservices.asmx/";
-//    public static final String DEMO_SERVICE_REFUND = "https://merchant.axisbank.co.in/";
     public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";
     public static String ServiceRef = "http://192.168.2.162:8094/";
 

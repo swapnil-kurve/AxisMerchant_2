@@ -188,8 +188,8 @@ public class Activity_QRRequestPayment extends AppCompatActivity implements View
 
             Intent intent = new Intent(this, Activity_QRCodeGenerated.class);
             intent.putExtra("Amount",mAmount);
-//            intent.putExtra("Primary_Id", mPrimaryID);
-            intent.putExtra("Primary_Id", "PAYCRAFTQR");
+            intent.putExtra("Primary_Id", mPrimaryID);
+//            intent.putExtra("Primary_Id", "PAYCRAFTQR");
             intent.putExtra("Secondary_Id", mSecondaryID);
             startActivity(intent);
             finish();

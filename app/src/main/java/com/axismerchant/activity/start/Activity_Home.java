@@ -1069,6 +1069,8 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     editor.putString("currencyCode", object2.optString("currencyCode"));
                     editor.putString("mvisaStatus", object2.optString("mvisaStatus"));
 
+                    String cc = encryptDecryptRegister.decrypt(object2.optString("currencyCode"));
+
                     editor.apply();
 
                 }else if(result.equalsIgnoreCase("SessionFailure")){

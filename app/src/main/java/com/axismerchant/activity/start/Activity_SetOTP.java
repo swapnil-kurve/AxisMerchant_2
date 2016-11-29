@@ -46,6 +46,12 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
     EditText edtOTP;
     SharedPreferences preferences;
     EncryptDecryptRegister encryptDecryptRegister;
+    private View.OnTouchListener otl = new View.OnTouchListener() {
+        public boolean onTouch(View v, MotionEvent event) {
+            return true; // the listener has consumed the event
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +59,12 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
         getInitialize();
 
-        Bundle bundle = getIntent().getExtras();
+        /*Bundle bundle = getIntent().getExtras();
         if(bundle != null && bundle.containsKey("OTP"))
         {
             String otp = bundle.getString("OTP");
             ((TextView)findViewById(R.id.dummyText)).setText(otp);
-        }
+        }*/
 
         edtOTP.setOnTouchListener(otl);
 
@@ -83,13 +89,6 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
-
-
-    private View.OnTouchListener otl = new View.OnTouchListener() {
-        public boolean onTouch (View v, MotionEvent event) {
-            return true; // the listener has consumed the event
-        }
-    };
 
     @Override
     public void onBackPressed() {
@@ -254,6 +253,16 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    private void logout() {
+        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     private class VerifyOTP extends AsyncTask<String, Void, String>
     {
@@ -337,8 +346,6 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
         }
     }
-
-
 
     private class LoginProcess extends AsyncTask<String, Void, String> {
 
@@ -430,19 +437,6 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 }
 
         }
-    }
-
-
-    private void logout()
-    {
-        preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 
 }

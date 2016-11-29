@@ -73,8 +73,8 @@ public class Activity_Main extends AppCompatActivity {
 
         Fabric.with(this, new Crashlytics());
 
-        if(Constants.isRooted())
-            ShowDialog();
+        /*if(Constants.isRooted())
+            ShowDialog();*/
 
         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         if(preferences.contains("LoggedIn"))
