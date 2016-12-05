@@ -142,6 +142,16 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
         startActivity(intent);
     }
 
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 
     private class GetQRPayData extends AsyncTask<String, Void, String> {
 
@@ -214,17 +224,19 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
                             String txn_amount = object1.optString("txn_amount");
                             String ref_no = object1.optString("ref_no");
                             String id = object1.optString("id");
+                            String isRefund = object1.optString("isRefund");
 
                             mvisa_merchant_id = encryptDecrypt.decrypt(mvisa_merchant_id);
                             onDate = encryptDecrypt.decrypt(onDate);
                             txn_amount = encryptDecrypt.decrypt(txn_amount);
                             ref_no = encryptDecrypt.decrypt(ref_no);
                             id = encryptDecrypt.decrypt(id);
+                            isRefund = encryptDecrypt.decrypt(isRefund);
 
                             if(onDate.contains("-"))
                                 onDate.replace("-","/");
                             onDate = onDate.split("\\s+")[0];
-                            qrTransactions = new QRTransactions(id,onDate,ref_no,mvisa_merchant_id,txn_amount);
+                            qrTransactions = new QRTransactions(id, onDate, ref_no, mvisa_merchant_id, txn_amount, isRefund);
                             qrTransactionsList.add(qrTransactions);
                         }
 
@@ -250,7 +262,6 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
 
         }
     }
-
 
     private class SetQRAdapter extends BaseAdapter
     {
@@ -286,27 +297,19 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
             TextView txtmVisaID = (TextView) view.findViewById(R.id.txtmVisaID);
             TextView txtRRnNo = (TextView) view.findViewById(R.id.txtRRnNo);
             TextView txtAmount = (TextView) view.findViewById(R.id.txtAmount);
+            View lyRefundLayout = view.findViewById(R.id.refundLayout);
 
             txtDate.setText(qrTransactionsList.get(i).getOnDate());
             txtmVisaID.setText(qrTransactionsList.get(i).getMvisa_merchant_id());
             txtRRnNo.setText(qrTransactionsList.get(i).getRef_no());
             txtAmount.setText(qrTransactionsList.get(i).getTxn_amount());
+            if (qrTransactionsList.get(i).getIsRefund().equalsIgnoreCase("1"))
+                lyRefundLayout.setVisibility(View.GONE);
+            else
+                lyRefundLayout.setVisibility(View.VISIBLE);
 
 
             return view;
         }
-    }
-
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 }

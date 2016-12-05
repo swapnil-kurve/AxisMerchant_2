@@ -27,7 +27,6 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.SMSPayStatus;
-import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -60,10 +59,10 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
     DataAdapter dataAdapter;
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
-    private String[] arrTitle = {"All", "Pending","Success", "Failed"};
-    private String pageTitle, MID,MOBILE;
     int pageNO;
     boolean loadingMore = false;
+    private String[] arrTitle = {"All", "Pending", "Success", "Failed"};
+    private String pageTitle, MID, MOBILE;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,8 +98,10 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
                                  int visibleItemCount, int totalItemCount) {
 
                 int lastInScreen = firstVisibleItem + visibleItemCount;
-                if((lastInScreen == totalItemCount) && !(loadingMore)){
-                    grabURL(statusArrayList.get(statusArrayList.size()-1).getInvoiceNum());
+                if (statusArrayList.size() > 0) {
+                    if ((lastInScreen == totalItemCount) && !(loadingMore)) {
+                        grabURL(statusArrayList.get(statusArrayList.size() - 1).getInvoiceNum());
+                    }
                 }
             }
         });
@@ -192,6 +193,16 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
     }
 */
 
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 
     private class DataAdapter extends BaseAdapter {
         ArrayList<SMSPayStatus> statusArrayList;
@@ -267,7 +278,6 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
             return view;
         }
     }
-
 
     private class GetEPayData extends AsyncTask<String, Void, String> {
 
@@ -388,18 +398,5 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
             }
 
         }
-    }
-
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 }

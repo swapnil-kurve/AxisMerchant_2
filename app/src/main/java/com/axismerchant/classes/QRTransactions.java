@@ -5,14 +5,19 @@ package com.axismerchant.classes;
  */
 public class QRTransactions {
 
-    String id,onDate, ref_no, mvisa_merchant_id, txn_amount;
+    String id, onDate, ref_no, mvisa_merchant_id, txn_amount, isRefund;
 
-    public QRTransactions(String id,String onDate, String ref_no, String mvisa_merchant_id, String txn_amount) {
+    public QRTransactions(String id, String onDate, String ref_no, String mvisa_merchant_id, String txn_amount, String isRefund) {
         this.id = id;
         this.onDate = onDate;
         this.ref_no = ref_no;
         this.mvisa_merchant_id = mvisa_merchant_id;
         this.txn_amount = txn_amount;
+        this.isRefund = isRefund;
+    }
+
+    public String getIsRefund() {
+        return isRefund;
     }
 
     public String getOnDate() {

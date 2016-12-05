@@ -142,7 +142,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
             mVisaArrayList = new ArrayList<>();
         }
 
-        setMVisaID();
+        setMVisaID("");
         spinMVisaID.setOnItemSelectedListener(this);
 
         InputFilter[] filter = new InputFilter[2];
@@ -178,9 +178,12 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
 
     }
 
-    private void setMVisaID() {
+    private void setMVisaID(String mMVisaId) {
         ArrayList mVisaList = new ArrayList();
-        mVisaList.add("mVisa Id");
+        if (mMVisaId.equalsIgnoreCase(""))
+            mVisaList.add("mVisa Id");
+        else
+            mVisaList.add(mMVisaId);
         for (int i = 0; i < mVisaArrayList.size(); i++) {
             mVisaList.add(encryptDecrypt.decrypt(mVisaArrayList.get(i)));
         }
@@ -291,8 +294,10 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
         edtEmailId.setText(userList.getEmailid());
         if(userList.getAssignedMVisaID().equalsIgnoreCase("") || userList.getAssignedMVisaID().equalsIgnoreCase("null"))
             spinMVisaID.setPrompt("mVisa Id");
-        else
-            spinMVisaID.setPrompt(userList.getAssignedMVisaID());
+        else {
+            setMVisaID(userList.getAssignedMVisaID());
+//            spinMVisaID.setPrompt(userList.getAssignedMVisaID());
+        }
 
         edtUserName.setEnabled(false);
         edtMobileNo.setEnabled(false);

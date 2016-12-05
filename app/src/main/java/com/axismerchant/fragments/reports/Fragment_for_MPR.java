@@ -96,6 +96,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
         txtDateDuration = (TextView) v.findViewById(R.id.txtDateDuration);
         txtGraphType = (TextView) v.findViewById(R.id.txtLeftText);
         TextView txtLabel = (TextView) view.findViewById(R.id.txtLabel);
+        txtLabel.setText("Total of POS Terminal & mVisa");
 
         listData.addParallaxedHeaderView(v);
         listData.setOnItemClickListener(this);

@@ -53,6 +53,7 @@ import java.util.Locale;
  */
 public class Fragment_MPRDetails extends Fragment implements View.OnClickListener {
 
+    public static final String ARG_OBJECT = "object";
     public static int flag = 0;
     TextView txtGrossAmount,txtMDR,txtServiceTax,txtHoldAmount,txtAdjustments,txtCashPos, txtPaymentDate,txtNoOfTxn,txtTotalValue, txtNetAmount,txtFromDate, txtToDate;
     String MOBILE, MID, currentDateAndTime;
@@ -72,7 +73,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         }
 
     };
-    private View lyEmail, lyDetailsLayout, lyShowEmailButton;
+    private View lyEmail, lyDetailsLayout, lyShowEmailButton, lyPaymentDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,12 +89,9 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
         currentDateAndTime = sdf.format(new Date());
 
-        Bundle bundle = getArguments();
         String mDate = "";
-        if(bundle != null && bundle.containsKey("Date"))
-        {
-            mDate = bundle.getString("Date");
-        }
+        sdf = new SimpleDateFormat("dd MMM");
+        mDate = sdf.format(new Date());
 
         flag = 1;
         getMPRDetails(mDate);
@@ -115,6 +113,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         lyEmail = view.findViewById(R.id.lyEmail);
         lyDetailsLayout = view.findViewById(R.id.lyDetails);
         lyShowEmailButton = view.findViewById(R.id.lyShowEmail);
+        lyPaymentDate = view.findViewById(R.id.lyPaymentDate);
 
         txtGrossAmount = (TextView) view.findViewById(R.id.txtGrossAmount);
         txtMDR = (TextView) view.findViewById(R.id.txtMdr);
@@ -134,9 +133,11 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         txtToDate.setOnClickListener(this);
         txtConfirm.setOnClickListener(this);
         lyShowEmailButton.setOnClickListener(this);
+        lyPaymentDate.setOnClickListener(this);
 
         encryptDecryptRegister =  new EncryptDecryptRegister();
         encryptDecrypt = new EncryptDecrypt();
+
     }
 
     private void getMPRDetails(String transDate) {
@@ -186,6 +187,13 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 lyDetailsLayout.setVisibility(View.GONE);
                 lyEmail.setVisibility(View.VISIBLE);
                 break;
+
+            case R.id.lyPaymentDate:
+                DateFlag = 2;
+                new DatePickerDialog(getActivity(), selectedDate, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                break;
         }
 
     }
@@ -229,7 +237,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 } else {
                     Constants.showToast(getActivity(), getString(R.string.from_date_should_not_less));
                 }
-            } else {
+            } else if (DateFlag == 1) {
                 if (txtFromDate.getText().toString().equals("")) {
                     Constants.showToast(getActivity(), getString(R.string.select_from_date));
                 } else {
@@ -238,6 +246,14 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                     } else {
                         Constants.showToast(getActivity(), getString(R.string.invalid_date));
                     }
+                }
+            } else {
+                if (sdf.parse(calDate).after(sdf.parse(currentDateAndTime))) {
+                    Constants.showToast(getActivity(), getString(R.string.from_date_should_not_less));
+                } else {
+                    sdf = new SimpleDateFormat("dd MMM");
+                    calDate = sdf.format(myCalendar.getTime());
+                    getMPRDetails(calDate);
                 }
             }
 
@@ -480,49 +496,55 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
                 String result = obj.optString("result");
 
                 result = encryptDecryptRegister.decrypt(result);
-                if(result.equals("Success"))
-                {
-                    JSONObject object = transaction.getJSONObject(1);
-                    JSONArray transactionBetDates = object.getJSONArray("getMPRDetailsForDate");
-                    for (int i = 0; i < transactionBetDates.length(); i++) {
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray transactionBetDates = object.getJSONArray("getMPRDetailsForDate");
+                        for (int i = 0; i < transactionBetDates.length(); i++) {
 
-                        JSONObject object2 = transactionBetDates.getJSONObject(i);
-                        String GrossAmt = object2.optString("GrossAmt");
-                        String MDR = object2.optString("MDR");
-                        String serviceTax = object2.optString("serviceTax");
-                        String HOLD_VALUE = object2.optString("HOLD_VALUE");
-                        String ADJUSTMENTS = object2.optString("ADJUSTMENTS");
-                        String CASH_AT_POS = object2.optString("CASH_AT_POS");
-                        String NETAMT = object2.optString("NETAMT");
-                        String transDate = object2.optString("transDate");
-                        String tDate = object2.optString("tDate");
-                        String TOTALTXNS = object2.optString("TOTALTXNS");
+                            JSONObject object2 = transactionBetDates.getJSONObject(i);
+                            String GrossAmt = object2.optString("GrossAmt");
+                            String MDR = object2.optString("MDR");
+                            String serviceTax = object2.optString("serviceTax");
+                            String HOLD_VALUE = object2.optString("HOLD_VALUE");
+                            String ADJUSTMENTS = object2.optString("ADJUSTMENTS");
+                            String CASH_AT_POS = object2.optString("CASH_AT_POS");
+                            String NETAMT = object2.optString("NETAMT");
+                            String transDate = object2.optString("transDate");
+                            String tDate = object2.optString("tDate");
+                            String TOTALTXNS = object2.optString("TOTALTXNS");
 
-                        transDate = encryptDecrypt.decrypt(transDate);
-                        transDate = transDate.split("\\s+")[0];
+                            transDate = encryptDecrypt.decrypt(transDate);
+                            transDate = transDate.split("\\s+")[0];
 
-                        txtGrossAmount.setText(encryptDecrypt.decrypt(GrossAmt));
-                        txtMDR.setText(encryptDecrypt.decrypt(MDR));
-                        txtServiceTax.setText(encryptDecrypt.decrypt(serviceTax));
-                        txtHoldAmount.setText(encryptDecrypt.decrypt(HOLD_VALUE));
-                        txtAdjustments.setText(encryptDecrypt.decrypt(ADJUSTMENTS));
-                        txtCashPos.setText(encryptDecrypt.decrypt(CASH_AT_POS));
-                        txtNoOfTxn.setText(encryptDecrypt.decrypt(TOTALTXNS));
-                        txtPaymentDate.setText(transDate);
-                        txtTotalValue.setText(encryptDecrypt.decrypt(NETAMT));
-                        txtNetAmount.setText(encryptDecrypt.decrypt(NETAMT));
+                            txtGrossAmount.setText(encryptDecrypt.decrypt(GrossAmt));
+                            txtMDR.setText(encryptDecrypt.decrypt(MDR));
+                            txtServiceTax.setText(encryptDecrypt.decrypt(serviceTax));
+                            txtHoldAmount.setText(encryptDecrypt.decrypt(HOLD_VALUE));
+                            txtAdjustments.setText(encryptDecrypt.decrypt(ADJUSTMENTS));
+                            txtCashPos.setText(encryptDecrypt.decrypt(CASH_AT_POS));
+                            txtNoOfTxn.setText(encryptDecrypt.decrypt(TOTALTXNS));
+                            txtPaymentDate.setText(transDate);
+                            txtTotalValue.setText(encryptDecrypt.decrypt(NETAMT));
+                            txtNetAmount.setText(encryptDecrypt.decrypt(NETAMT));
 
+                        }
+                        progressDialog.dismiss();
+
+                    } else if (result.equalsIgnoreCase("SessionFailure")) {
+                        Constants.showToast(getActivity(), getString(R.string.session_expired));
+                        logout();
+                    } else {
+                        progressDialog.dismiss();
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray getMPRDetailsForDate = object.getJSONArray("getMPRDetailsForDate");
+                        JSONObject obj1 = getMPRDetailsForDate.getJSONObject(0);
+                        String result1 = obj1.optString("result");
+                        result1 = encryptDecrypt.decrypt(result1);
+                        if (result1.equalsIgnoreCase("No details found"))
+                            Constants.showToast(getActivity(), getString(R.string.no_details));
+                        else
+                            Constants.showToast(getActivity(), getString(R.string.no_internet));
                     }
-                    progressDialog.dismiss();
-
-                }else if(result.equalsIgnoreCase("SessionFailure")){
-                    Constants.showToast(getActivity(), getString(R.string.session_expired));
-                    logout();
-                }
-                else {
-                    progressDialog.dismiss();
-                    Constants.showToast(getActivity(),getString(R.string.no_internet));
-                }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }

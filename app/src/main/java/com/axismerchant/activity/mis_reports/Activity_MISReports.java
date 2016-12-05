@@ -28,8 +28,8 @@ import java.util.ArrayList;
 
 public class Activity_MISReports extends AppCompatActivity implements View.OnClickListener {
 
-    ViewPager viewPager;
     public static String[] tabs ;
+    ViewPager viewPager;
     PagerSlidingTabStrip tabsStrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,12 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (Fragment_MPRDetails.flag == 1)
+            Fragment_MPRDetails.flag = 0;
+        super.onBackPressed();
+    }
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -120,11 +126,17 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
         @Override
         public Fragment getItem(int position) {
             if(position == 0) {
-                Fragment_for_MPR fragment_for_mpr = new Fragment_for_MPR();
+                /*Fragment_for_MPR fragment_for_mpr = new Fragment_for_MPR();
                 Bundle bundle = new Bundle();
                 bundle.putInt(Fragment_for_MPR.ARG_OBJECT, position);
                 fragment_for_mpr.setArguments(bundle);
-                return fragment_for_mpr;
+                return fragment_for_mpr;*/
+
+                Fragment_MPRDetails mprDetails = new Fragment_MPRDetails();
+                Bundle bundle = new Bundle();
+                bundle.putInt(Fragment_MPRDetails.ARG_OBJECT, position);
+                mprDetails.setArguments(bundle);
+                return mprDetails;
             }else if(position == 1)
             {
                 Fragment_for_TransactionReport fragment_for_transactionReport = new Fragment_for_TransactionReport();
@@ -157,13 +169,5 @@ public class Activity_MISReports extends AppCompatActivity implements View.OnCli
             // Generate title based on item position
             return tabs[position];
         }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if(Fragment_MPRDetails.flag == 1)
-            Fragment_MPRDetails.flag = 0;
-        super.onBackPressed();
     }
 }

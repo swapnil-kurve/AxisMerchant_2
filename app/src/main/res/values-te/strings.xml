@@ -4,7 +4,7 @@
     <!--================================================================================================-->
 
     <!--<string name="version">Version UAT-42</string>-->
-    <string name="version">Version Prod 1.0.3</string>
+    <string name="version">Version Prod 1.0.5</string>
     <string name="merchant_id">merchantId</string>
     <string name="mobile_no">mobileNo</string>
     <string name="mvisa_id">mvisa_id</string>
