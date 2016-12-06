@@ -265,7 +265,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         encryptDecryptRegister = new EncryptDecryptRegister();
         mDrawerList.setOnItemClickListener(this);
         viewPager.startAutoScroll();
-        viewPager.setInterval(4000);
+        viewPager.setInterval(7000);
 
         promotionsArrayList = new ArrayList<>(3);
         homeBanners = new ArrayList<>();
@@ -395,6 +395,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             Intent intent = new Intent(this, Activity_SMSSignUp.class);
             intent.putExtra("SMSRequestValidated","Pending");
             startActivity(intent);
+            finish();
         }else
         {
             startActivity(new Intent(this, Activity_SMSSignUp.class));

@@ -226,7 +226,7 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
          if (status.equalsIgnoreCase("Pending")) {
              txtTitle.setVisibility(View.GONE);
              txtMsg1.setText("Your Request is pending.");
-             txtMsg2.setText("Our Relationship Manager will contact you soon.");
+             txtMsg2.setText(getString(R.string.offer_accepted_sms));
              txtMsg2.setMaxLines(3);
              txtConfirm.setText("Ok");
              SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
@@ -298,6 +298,85 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private void ShowDialog2(String result, String status, String reqID) {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_layout_message_for_sms);
+        dialog.setCancelable(false);
+
+        TextView txtMID = (TextView) dialog.findViewById(R.id.txtMID);
+        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
+
+        TextView txtTitle = (TextView) dialog.findViewById(R.id.txtTitle);
+        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
+        TextView txtMsg1 = (TextView) dialog.findViewById(R.id.txtMessage);
+        TextView txtMsg2 = (TextView) dialog.findViewById(R.id.msg1);
+
+        if (!result.equals("Success")) {
+            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit_fail));
+            imgResponse.setImageResource(R.mipmap.fail);
+            txtConfirm.setText("Ok");
+            txtMID.setVisibility(View.GONE);
+
+            // if button is clicked, close the custom dialog
+            txtConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(Activity_SMSSignUp.this, Activity_Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        } else {
+            txtMsg2.setVisibility(View.GONE);
+            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit));
+            txtConfirm.setText("Ok");
+
+            SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            editor.putString("SMSRequestValidated", "pending");
+            editor.putString("Status", status);
+            editor.putString("Request_ID", reqID);
+            editor.apply();
+
+            // if button is clicked, close the custom dialog
+            txtConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                    Intent intent = new Intent(Activity_SMSSignUp.this, Activity_Home.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
+
+
+        dialog.show();
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Activity_Home.class));
+        finish();
+    }
 
     private class SendRequest extends AsyncTask<String, Void, String> {
 
@@ -387,84 +466,4 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
 
         }
     }
-
-
-    private void ShowDialog2(String result, String status, String reqID)
-    {
-        // custom dialog
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_layout_message_for_sms);
-        dialog.setCancelable(false);
-
-        TextView txtMID = (TextView) dialog.findViewById(R.id.txtMID);
-        TextView txtConfirm = (TextView) dialog.findViewById(R.id.txtDone);
-
-        TextView txtTitle = (TextView) dialog.findViewById(R.id.txtTitle);
-        ImageView imgResponse = (ImageView) dialog.findViewById(R.id.imgResponse);
-        TextView txtMsg1 = (TextView) dialog.findViewById(R.id.txtMessage);
-        TextView txtMsg2 = (TextView) dialog.findViewById(R.id.msg1);
-
-        if(!result.equals("Success"))
-        {
-            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit_fail));
-            imgResponse.setImageResource(R.mipmap.fail);
-            txtConfirm.setText("Ok");
-            txtMID.setVisibility(View.GONE);
-
-            // if button is clicked, close the custom dialog
-            txtConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(Activity_SMSSignUp.this, Activity_Home.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        }else
-        {
-            txtMsg2.setVisibility(View.GONE);
-            txtMsg1.setText(getString(R.string.sms_on_boarding_pop_up_submit));
-            txtConfirm.setText("Ok");
-
-            SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-
-            editor.putString("SMSRequestValidated","pending");
-            editor.putString("Status",status);
-            editor.putString("Request_ID", reqID);
-            editor.apply();
-
-            // if button is clicked, close the custom dialog
-            txtConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-
-                    Intent intent = new Intent(Activity_SMSSignUp.this, Activity_Home.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            });
-        }
-
-
-        dialog.show();
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
-    }
-
 }

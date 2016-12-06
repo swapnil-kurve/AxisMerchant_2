@@ -221,7 +221,7 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
          if (status.equalsIgnoreCase("Pending")) {
              txtTitle.setVisibility(View.GONE);
              txtMsg1.setText("Your Request is pending.");
-             txtMsg2.setText("Our Relationship Manager will contact you soon.");
+             txtMsg2.setText(getString(R.string.offer_accepted_qr));
              txtMsg2.setMaxLines(3);
              txtConfirm.setText("Ok");
              SharedPreferences preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);

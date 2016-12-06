@@ -166,6 +166,7 @@ public class Activity_Language extends AppActivity implements View.OnClickListen
                         getBaseContext().getResources().getDisplayMetrics());
 
                 txtProceed.setText(getString(R.string.proceed));
+                txtProceed.setTypeface(Typeface.DEFAULT);
                 break;
 
             case R.id.rdHindi:

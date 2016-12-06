@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Axis Bank Merchant App</string>
 
-    <string name="version">Version Prod 1.0.5</string>
+    <string name="version">Version B 1.0.7</string>
     <!--<string name="version">Version UAT-42</string>-->
 
     <string name="action_settings">Settings</string>
@@ -70,7 +70,7 @@
     <string name="keep_me">Keep me logged in</string>
     <string name="title_activity_home">Axis Bank</string>
     <string name="title_activity_otp">Enter OTP</string>
-    <string name="title_activity_set_m_pin">Enter mPIN</string>
+    <string name="title_activity_set_m_pin">Set mPIN</string>
     <string name="confirm"><![CDATA[Set & Confirm]]></string>
     <string name="congo">Congratulations</string>
     <string name="verified">Account verified successfully!</string>
@@ -302,7 +302,7 @@
     <string name="success">Success</string>
     <string name="failed">Failed</string>
 
-    <string name="sent_on_mobile">sent on registered mobile number</string>
+    <string name="sent_on_mobile">received on registered mobile number</string>
     <string name="not_recieved">Not yet received?</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="Customer_MobileNo">Customer Mobile No.</string>
@@ -315,8 +315,8 @@
 
     //Sign Up//
     <string name="enter_valid_details">Please enter valid details</string>
-    <string name="enter_valid_mobile">Please enter valid mobile number</string>
-    <string name="enter_valid_mid">Please enter valid Merchant ID</string>
+    <string name="enter_valid_mobile">Please enter a valid mobile number</string>
+    <string name="enter_valid_mid">Please enter a valid Merchant ID</string>
     <string name="invalid_details">Details entered are not valid</string>
     //OTP//
     <string name="enter_otp">Please enter One Time Password (OTP)!</string>
@@ -378,8 +378,9 @@
 
     <string name="offer_remind_later">Thank you for your inputs.</string>
 
-    <!--<string name="offer_accepted">Thank you for your feedback, Our relationship manager will get back to you.</string>-->
-    <string name="offer_accepted">SMS Pay will be activated in 24 hours. You will receive an app notification.</string>
+    <string name="offer_accepted">Thank you for your feedback, Our relationship manager will get back to you.</string>
+    <string name="offer_accepted_sms">SMS Pay will be activated in 24 hours. You will receive an app notification.</string>
+    <string name="offer_accepted_qr">QR Pay will be activated in 24 hours. You will receive an app notification.</string>
 
     <string name="request_cannot_process">Sorry, request cannot be process at this time.</string>
     <string name="enter_amount">Please enter amount</string>

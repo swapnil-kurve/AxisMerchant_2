@@ -102,7 +102,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         switch (v.getId())
         {
             case R.id.txtSubmit:
-                    getUserData();
+                getUserData();
                 break;
 
 
