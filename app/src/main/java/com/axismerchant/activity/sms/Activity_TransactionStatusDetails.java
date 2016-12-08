@@ -2,7 +2,6 @@ package com.axismerchant.activity.sms;
 
 import android.app.Dialog;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +27,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -60,12 +60,14 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
     View refLayout;
     DBHelper dbHelper;
     boolean isOnAirplane;
+    ProgressDialogue progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_status_details);
 
+        progressDialog = new ProgressDialogue();
         View resendLink = findViewById(R.id.refundLayout);
         txtResText = (TextView) findViewById(R.id.ref_text);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
@@ -325,13 +327,10 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
     private class GetSMSXnDetails extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_TransactionStatusDetails.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_TransactionStatusDetails.this);
             progressDialog.show();
         }
 
@@ -488,15 +487,12 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
     private class ResendURL extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
         String custMobile = "", XnId;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_TransactionStatusDetails.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_TransactionStatusDetails.this);
             progressDialog.show();
         }
 
@@ -622,14 +618,10 @@ public class Activity_TransactionStatusDetails extends AppCompatActivity impleme
 
     private class RefundTransactions extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_TransactionStatusDetails.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_TransactionStatusDetails.this);
             progressDialog.show();
         }
 

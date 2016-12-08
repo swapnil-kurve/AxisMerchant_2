@@ -3,7 +3,6 @@ package com.axismerchant.fragments.login;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +22,7 @@ import com.axismerchant.activity.start.Activity_SetOTP;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -52,6 +52,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     SharedPreferences preferences;
     ImageView imgSwitch, imgErrorMID, imgErrorMobile;
     int flag = 1 ;
+    ProgressDialogue progressDialogue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,6 +80,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getInitialize(View view) {
+        progressDialogue = new ProgressDialogue();
         edtMerchantID = (EditText) view.findViewById(R.id.edtMerchantID);
         edtMobileNumber = (EditText) view.findViewById(R.id.edtMobileNumber);
         imgErrorMID = (ImageView) view.findViewById(R.id.imgErrorMID);
@@ -219,14 +221,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     private class LoginProcess extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            progressDialogue.onCreateDialog(getActivity());
         }
 
         @Override
@@ -255,9 +254,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     str = data;
                 }
             } catch (ParseException e1) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             } catch (IOException e) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             }
             return str;
         }
@@ -280,7 +279,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     String authToken = object1.optString("authToken");
 
                     result = encryptDecryptRegister.decrypt(result);
-                    progressDialog.dismiss();
+                    progressDialogue.dismiss();
 
                     if (result.equals("Success") || result.equals("AlreadyRegistered")) {
                         /*email = encryptDecryptRegister.decrypt(email);
@@ -307,7 +306,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
-                    progressDialog.dismiss();
+                    progressDialogue.dismiss();
                 }
             } catch (JSONException e) {
             }

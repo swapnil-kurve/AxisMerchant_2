@@ -2,7 +2,6 @@ package com.axismerchant.activity.service_support;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +31,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -68,6 +68,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
     Spinner spinNoOfRolls, spinnerVisitingTime;
     Spinner spinWeeklyOff;
     String mTotalRollsRequired, weeklyOff, visitingTime;
+    ProgressDialogue progressDialog;
     private String blockCharacterSet = "~#^|$%&*!()-+?,.<>@:;";
 
     @Override
@@ -75,6 +76,7 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sublinks);
 
+        progressDialog = new ProgressDialogue();
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
 
@@ -517,12 +519,10 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
     }
 
     public class GetData extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(Activity_SubLinks.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_SubLinks.this);
             progressDialog.show();
         }
 

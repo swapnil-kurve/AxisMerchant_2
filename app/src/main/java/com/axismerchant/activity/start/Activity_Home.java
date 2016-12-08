@@ -1,7 +1,6 @@
 package com.axismerchant.activity.start;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +47,7 @@ import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.HomeBanner;
 import com.axismerchant.classes.Notification;
 import com.axismerchant.classes.Promotions;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 import com.bumptech.glide.Glide;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -93,6 +93,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     ArrayList<String> mvisaArrayList;
     HomeBanner banner;
     EncryptDecryptRegister encryptDecryptRegister;
+    ProgressDialogue customProgressDialog;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private NavigationItemAdapter navigationItemAdapter;
@@ -100,9 +101,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     private int session = 1;
     private int[] images = {R.mipmap.smspay_menu, R.mipmap.qrpay_menu, R.mipmap.service_support_menu, R.mipmap.reports_menu,
             R.mipmap.analytics, R.mipmap.offers, R.mipmap.profile_menu, R.mipmap.refer, R.mipmap.translation, R.mipmap.faq, R.mipmap.demo_video,R.mipmap.ver, R.mipmap.logout};
-
     private int[] homeCoach = {R.drawable.home_profile, R.drawable.home_smspay, R.drawable.home_qr, R.drawable.home_reports, R.drawable.home_service_support};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,6 +236,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
 
     private void getInitialize() {
+        customProgressDialog = new ProgressDialogue();
         txtNotification = (TextView) findViewById(R.id.txtNotificationCount);
         View lySMSPay = findViewById(R.id.smsPay);
         View lyQRCodePay = findViewById(R.id.qrCodePayment);
@@ -584,16 +584,13 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     }
 
     public class GetPromotions extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
         String ArrURL[];
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_Home.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            customProgressDialog.onCreateDialog(Activity_Home.this);
+            customProgressDialog.show();
         }
 
         @Override
@@ -623,9 +620,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     str = data;
                 }
             } catch (org.apache.http.ParseException e1) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
             } catch (IOException e) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
             }
             CustomizedExceptionHandler.writeToFile(str);
             return str;
@@ -674,16 +671,16 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         CirclePageIndicator pageIndicator = (CirclePageIndicator) findViewById(R.id.indicator);
                         pageIndicator.setViewPager(viewPager);
 
-                        progressDialog.dismiss();
+                        customProgressDialog.dismiss();
 
                     }
-                    progressDialog.dismiss();
+                    customProgressDialog.dismiss();
                     getMVisaIDs();
                 }
             } catch (JSONException e) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
             }finally {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
             }
         }
     }
@@ -735,16 +732,14 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     }
 
     public class GetmVisaIds extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
         String ArrURL[];
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_Home.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            customProgressDialog.onCreateDialog(Activity_Home.this);
+            customProgressDialog.show();
         }
 
         @Override
@@ -774,10 +769,10 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     str = data;
                 }
             } catch (org.apache.http.ParseException e1) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
 
             } catch (IOException e) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
 
             }
             CustomizedExceptionHandler.writeToFile(str);
@@ -819,19 +814,19 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         editor.putStringSet("mVisaIds", set);
                         editor.apply();
 
-                        progressDialog.dismiss();
+                        customProgressDialog.dismiss();
 
                     } else if(result.equalsIgnoreCase("SessionFailure")){
                         session = 0;
                     }else {
-                        progressDialog.dismiss();
+                        customProgressDialog.dismiss();
 
                     }
                 }
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
                 checkSessionVariable();
             } catch (JSONException e) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
 
             }
         }
@@ -871,15 +866,13 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     }
 
     public class CheckStatus extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_Home.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            customProgressDialog.onCreateDialog(Activity_Home.this);
+            customProgressDialog.show();
         }
 
         @Override
@@ -910,10 +903,10 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     str = data;
                 }
             } catch (org.apache.http.ParseException e1) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
 
             } catch (IOException e) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
 
             }
             return str;
@@ -951,7 +944,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                             editor.putString("SMSRequestValidated","Active");
                             editor.apply();
 
-                            progressDialog.dismiss();
+                            customProgressDialog.dismiss();
 
                             startActivity(new Intent(Activity_Home.this, Activity_SMSPayHome.class));
                             finish();
@@ -967,17 +960,17 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                         {
                             startActivity(new Intent(Activity_Home.this, Activity_SMSSignUp.class));
                         }
-                        progressDialog.dismiss();
+                        customProgressDialog.dismiss();
 
                     } else if(result.equalsIgnoreCase("SessionFailure")){
                         session = 0;
                     }else {
-                        progressDialog.dismiss();
+                        customProgressDialog.dismiss();
                         startActivity(new Intent(Activity_Home.this, Activity_SMSSignUp.class));
                     }
                 }
             } catch (JSONException e) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
 
             }
         }
@@ -985,14 +978,12 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
     private class GetProfileDetails extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_Home.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            customProgressDialog.onCreateDialog(Activity_Home.this);
+            customProgressDialog.show();
         }
 
         @Override
@@ -1022,9 +1013,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     str = data;
                 }
             }catch (ParseException e1) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
             } catch (IOException e) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
             }
             CustomizedExceptionHandler.writeToFile(str);
             return str;
@@ -1079,16 +1070,17 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                 }else {
                     Constants.showToast(Activity_Home.this, getString(R.string.no_details));
                 }
-                progressDialog.dismiss();
+                    customProgressDialog.dismiss();
                     getPromotionImages();
                 }else {
                     Constants.showToast(Activity_Home.this,getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                progressDialog.dismiss();
+                customProgressDialog.dismiss();
             }
 
         }
     }
+
 
 }

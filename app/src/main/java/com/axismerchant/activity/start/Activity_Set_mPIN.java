@@ -1,6 +1,5 @@
 package com.axismerchant.activity.start;
 
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +20,7 @@ import com.axismerchant.R;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -50,6 +50,7 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
     EncryptDecryptRegister encryptDecryptRegister;
     SharedPreferences preferences;
     String regID;
+    ProgressDialogue progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
 
     private void getInitialize() {
 
+        progressDialog = new ProgressDialogue();
         encryptDecryptRegister = new EncryptDecryptRegister();
 
         edtEnter_mPIN = (EditText) findViewById(R.id.edt_mPIN);
@@ -186,13 +188,10 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
 
     private class SetMPIN extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_Set_mPIN.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_Set_mPIN.this);
             progressDialog.show();
         }
 

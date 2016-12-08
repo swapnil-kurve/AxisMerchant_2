@@ -1,7 +1,6 @@
 package com.axismerchant.activity.sms;
 
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +33,7 @@ import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
 import com.axismerchant.custom.MoneyValueFilter;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -69,6 +69,7 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
     DBHelper dbHelper;
     String MID,MOBILE,mFromFavo = "No";
     int i;
+    ProgressDialogue progressDialog;
     private String blockCharacterSet = "~#^|$%&*!()-+?,.<>@:;";
 
     @Override
@@ -76,6 +77,7 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_epayment_new);
 
+        progressDialog = new ProgressDialogue();
         SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         boolean mCoach = preferences.getBoolean("SMSCoach1", true);
         if(mCoach)
@@ -424,15 +426,12 @@ public class Activity_SMSPayment extends AppCompatActivity implements View.OnCli
 
     private class InsertTransactions extends AsyncTask<String, Void, String> {
 
-    ProgressDialog progressDialog;
     String custMobile = "",amount = "",remark = "";
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(Activity_SMSPayment.this);
-        progressDialog.setMessage("Please wait...");
-        progressDialog.setCancelable(false);
+        progressDialog.onCreateDialog(Activity_SMSPayment.this);
         progressDialog.show();
     }
 

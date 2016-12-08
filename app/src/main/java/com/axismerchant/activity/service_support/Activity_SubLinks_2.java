@@ -1,7 +1,6 @@
 package com.axismerchant.activity.service_support;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +25,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -57,12 +57,14 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
     EditText edtProblemDetails;//, edtVisitTime;
+    ProgressDialogue progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_links_2);
 
+        progressDialog = new ProgressDialogue();
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
 
@@ -325,12 +327,9 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
     }
 
     public class GetData extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(Activity_SubLinks_2.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_SubLinks_2.this);
             progressDialog.show();
         }
 

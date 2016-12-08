@@ -1,7 +1,6 @@
 package com.axismerchant.fragments.sms;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +21,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.SMSXnSummary;
+import com.axismerchant.custom.ProgressDialogue;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -67,6 +67,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
     CustomListAdapter adapter;
     ParallaxListView listData;
     String date;
+    ProgressDialogue progressDialog;
     private int type;
 
     @Override
@@ -75,6 +76,7 @@ public class Fragment_SMSTransactionReport extends Fragment{
         View view = inflater.inflate(R.layout.parallax_scroll_for_report, container, false);
         Bundle args = getArguments();
 
+        progressDialog = new ProgressDialogue();
         listData = (ParallaxListView) view.findViewById(R.id.list_view);
 
         encryptDecryptRegister =  new EncryptDecryptRegister();
@@ -275,14 +277,11 @@ public class Fragment_SMSTransactionReport extends Fragment{
     }
 
     private class GetTransactions extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 

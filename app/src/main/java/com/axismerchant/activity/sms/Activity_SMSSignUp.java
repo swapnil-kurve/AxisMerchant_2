@@ -1,7 +1,6 @@
 package com.axismerchant.activity.sms;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +27,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 import com.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFeatures;
 import com.axismerchant.fragments.sms.PageFragmentForSMS_SignUpFees;
@@ -59,12 +59,14 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
     int flag = 0, eventClicked = 0;
     ImageView imgAccept;
     TextView txtDone,txtProceed;
+    ProgressDialogue progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_sign_up);
 
+        progressDialog = new ProgressDialogue();
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
@@ -380,13 +382,10 @@ public class Activity_SMSSignUp extends AppCompatActivity implements View.OnClic
 
     private class SendRequest extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_SMSSignUp.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_SMSSignUp.this);
             progressDialog.show();
         }
 

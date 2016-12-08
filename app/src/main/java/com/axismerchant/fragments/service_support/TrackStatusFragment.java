@@ -3,7 +3,6 @@ package com.axismerchant.fragments.service_support;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +27,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.SRStatus;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -83,6 +83,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
         }
 
     };
+    ProgressDialogue progressDialog;
     private int flag = 0;
 
     @Nullable
@@ -90,6 +91,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_trackstatus, container, false);
 
+        progressDialog = new ProgressDialogue();
         listSRStatus = (ListView) view.findViewById(R.id.listSRStatus);
         txtSearch = (TextView) view.findViewById(R.id.txtSearch);
         txtSearch1 = (TextView) view.findViewById(R.id.txtSearch1);
@@ -296,15 +298,12 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
     private class GetSRStatusList extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         private int len;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -491,7 +490,7 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
             txtDate.setText("Requested on "+srStatuses.get(position).getRequestDate().split("\\s+")[0]);
             txtProblemCode.setText(srStatuses.get(position).getProblemSubCode());
 
-            if(srStatuses.get(position).getDocketId().equalsIgnoreCase(""))
+            if (!srStatuses.get(position).getDocketId().equalsIgnoreCase(""))
             {
                 txtDocketIDTitle.setText("Docket ID");
                 txtDocketID.setText(srStatuses.get(position).getDocketId());
@@ -507,13 +506,10 @@ public class TrackStatusFragment extends Fragment implements View.OnClickListene
 
     private class GetStatusListBySR extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 

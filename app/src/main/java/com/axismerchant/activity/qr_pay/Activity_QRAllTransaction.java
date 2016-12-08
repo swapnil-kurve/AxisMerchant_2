@@ -1,6 +1,5 @@
 package com.axismerchant.activity.qr_pay;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +26,7 @@ import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
 import com.axismerchant.classes.QRTransactions;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -56,12 +56,14 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
     QRTransactions qrTransactions;
     ListView listQRTransactions;
     SetQRAdapter qrAdapter;
+    ProgressDialogue progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_all_transaction);
 
+        progressDialog = new ProgressDialogue();
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
         ImageView imgNotification = (ImageView) findViewById(R.id.imgNotification);
         ImageView imgProfile = (ImageView) findViewById(R.id.imgProfile);
@@ -155,13 +157,10 @@ public class Activity_QRAllTransaction extends AppCompatActivity implements View
 
     private class GetQRPayData extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_QRAllTransaction.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_QRAllTransaction.this);
             progressDialog.show();
         }
 

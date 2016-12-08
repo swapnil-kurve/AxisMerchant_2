@@ -1,7 +1,6 @@
 package com.axismerchant.fragments.reports;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +25,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.TransactionReport;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -51,7 +51,6 @@ import java.util.List;
 public class Fragment_for_TransactionReport extends Fragment {
     public static final String ARG_OBJECT = "object";
     ViewPager viewPager;
-    private String[] tabs ;
     String MOBILE, MID;
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
@@ -60,12 +59,15 @@ public class Fragment_for_TransactionReport extends Fragment {
     Typeface typeFace;
     PagerSlidingTabStrip tabsStrip;
     TextView txtMessage;
+    ProgressDialogue progressDialog;
+    private String[] tabs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_transactions_status, container, false);
 
+        progressDialog = new ProgressDialogue();
         txtMessage = (TextView) view.findViewById(R.id.txtMessage);
 
         encryptDecryptRegister =  new EncryptDecryptRegister();
@@ -88,6 +90,36 @@ public class Fragment_for_TransactionReport extends Fragment {
         return view; //fragment_page_for_transaction_report
     }
 
+    private void getChartData() {
+        String mVisaId = "";
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.ProfileInfo, Context.MODE_PRIVATE);
+        if (preferences.contains("mvisaId")) {
+            mVisaId = preferences.getString("mvisaId", "");
+        }
+
+        if (Constants.isNetworkConnectionAvailable(getActivity())) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new GetTransactions().executeOnExecutor(AsyncTask
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getTransDetailsforAll", MID, MOBILE, mVisaId, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+            } else {
+                new GetTransactions().execute(Constants.DEMO_SERVICE + "getTransDetailsforAll", MID, MOBILE, mVisaId, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+
+            }
+        } else {
+            Constants.showToast(getActivity(), getString(R.string.no_internet));
+        }
+    }
+
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -117,37 +149,12 @@ public class Fragment_for_TransactionReport extends Fragment {
         }
     }
 
-
-    private void getChartData() {
-        String mVisaId = "";
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.ProfileInfo,Context.MODE_PRIVATE);
-        if(preferences.contains("mvisaId")) {
-            mVisaId = preferences.getString("mvisaId", "");
-        }
-
-        if (Constants.isNetworkConnectionAvailable(getActivity())) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                new GetTransactions().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE, mVisaId, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
-            } else {
-                new GetTransactions().execute(Constants.DEMO_SERVICE+"getTransDetailsforAll", MID, MOBILE, mVisaId, "All", Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
-
-            }
-        } else {
-            Constants.showToast(getActivity(), getString(R.string.no_internet));
-        }
-    }
-
-
     private class GetTransactions extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -263,18 +270,5 @@ public class Fragment_for_TransactionReport extends Fragment {
             }
 
         }
-    }
-
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 }

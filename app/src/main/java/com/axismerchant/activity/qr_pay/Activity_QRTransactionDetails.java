@@ -1,7 +1,6 @@
 package com.axismerchant.activity.qr_pay;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +23,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -54,12 +54,14 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
     String XnID,val ;
     TextView txtResText;
     View refLayout;
+    ProgressDialogue progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_transaction_details);
 
+        progressDialog = new ProgressDialogue();
         View resendLink = findViewById(R.id.refundLayout);
         txtResText = (TextView) findViewById(R.id.ref_text);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
@@ -206,14 +208,10 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
     private class RefundTransactions extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_QRTransactionDetails.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_QRTransactionDetails.this);
             progressDialog.show();
         }
 
@@ -291,13 +289,10 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
 
     private class GetQRXnDetails extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_QRTransactionDetails.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_QRTransactionDetails.this);
             progressDialog.show();
         }
 
@@ -406,7 +401,7 @@ public class Activity_QRTransactionDetails extends AppCompatActivity implements 
                         if(onDate.contains("-"))
                             onDate.replace("-","/");
 
-                        val = "[{'bank_code':'00031','session_id':'12341234','username':'8898626498','mvisa_merchant_id':'"+mvisa_merchant_id+"','password':'a01610228fe998f515a72dd730294d87','auth_code':'"+auth_code+"','ref_no':'"+ref_no+"','tid':'"+tid+"','class_name':'AllTransaction','function':'refundSR'}]";
+                        val = "[{'bank_code':'" + getString(R.string.bank_code_qr_ref) + "','session_id':'" + getString(R.string.session_id_qr_ref) + "','username':'" + getString(R.string.username_qr_ref) + "','mvisa_merchant_id':'" + mvisa_merchant_id + "','password':'" + getString(R.string.password_qr_ref) + "','auth_code':'" + auth_code + "','ref_no':'" + ref_no + "','tid':'" + tid + "','class_name':'AllTransaction','function':'refundSR'}]";
 
                         Log.e("Val", val);
 

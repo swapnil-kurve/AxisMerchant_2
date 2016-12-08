@@ -1,7 +1,6 @@
 package com.axismerchant.fragments.reports;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +25,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.MIS_MPR;
+import com.axismerchant.custom.ProgressDialogue;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -78,6 +78,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     TextView txtMessage, txtDateDuration, txtGraphType;
     int type;
     double screenInches;
+    ProgressDialogue progressDialog;
     private String date, mGraphType = "Transactions", currentDateAndTime, mDuration = "Daily";
 
     @Override
@@ -146,6 +147,7 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
     }
 
     private void getInitialize(View view) {
+        progressDialog = new ProgressDialogue();
         TextView txtDate = (TextView) view.findViewById(R.id.txtDate);
         TextView txtMID = (TextView) view.findViewById(R.id.txtMID);
 
@@ -345,13 +347,10 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
     private class GetTransactions extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -466,13 +465,10 @@ public class Fragment_for_MPR extends Fragment implements AdapterView.OnItemClic
 
     private class GetFilteredData extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 

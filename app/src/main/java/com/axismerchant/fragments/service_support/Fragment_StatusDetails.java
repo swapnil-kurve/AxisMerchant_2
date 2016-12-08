@@ -2,7 +2,6 @@ package com.axismerchant.fragments.service_support;
 
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +19,7 @@ import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,13 +47,15 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
     String MID,MOBILE;
-    TextView txtMIDNo, txtTIDNo,txtDocketID, txtProblemCode, txtDate, txtClosingRemark, txtOk, txtResponseCode, txtCurrentStatus, txtTIDTitle;
+    TextView txtMIDNo, txtTIDNo, txtDocketID, txtProblemCode, txtDate, txtClosingRemark, txtOk, txtResponseCode, txtCurrentStatus, txtTIDTitle, textDocketIDTitle;
+    ProgressDialogue progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_status_details, container, false);
 
+        progressDialog = new ProgressDialogue();
         txtMIDNo = (TextView) view.findViewById(R.id.txtMMIDNumber);
         txtTIDNo = (TextView) view.findViewById(R.id.txtTIDNumber);
         txtDocketID = (TextView) view.findViewById(R.id.txtDocketID);
@@ -64,6 +66,7 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
         txtCurrentStatus = (TextView) view.findViewById(R.id.txtCurrentStatus);
         txtResponseCode = (TextView) view.findViewById(R.id.txtResponseCode);
         txtTIDTitle = (TextView) view.findViewById(R.id.textTIDNumber);
+        textDocketIDTitle = (TextView) view.findViewById(R.id.textDocketID);
 
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
@@ -120,13 +123,10 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
 
     private class GetSRStatusDetails extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -234,12 +234,20 @@ public class Fragment_StatusDetails extends Fragment implements View.OnClickList
                         }
                         txtMIDNo.setText(merchantId);
                         txtTIDNo.setText(tid);
-                        txtDocketID.setText(docketId);
+//                        txtDocketID.setText(docketId);
                         txtProblemCode.setText(problemSubCode);
                         txtDate.setText(requestDate);
                         txtClosingRemark.setText(serviceStatus);
                         txtResponseCode.setText(responseCode);
                         txtCurrentStatus.setText(currentStatus);
+
+                        if (!docketId.equalsIgnoreCase("")) {
+                            textDocketIDTitle.setText("Docket ID");
+                            txtDocketID.setText(docketId);
+                        } else {
+                            textDocketIDTitle.setText("Reference ID");
+                            txtDocketID.setText(serviceRequestNumber);
+                        }
 
 
                         progressDialog.dismiss();

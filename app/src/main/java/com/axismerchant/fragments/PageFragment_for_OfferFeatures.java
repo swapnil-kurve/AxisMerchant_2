@@ -1,7 +1,6 @@
 package com.axismerchant.fragments;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +20,7 @@ import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -50,17 +50,18 @@ public class PageFragment_for_OfferFeatures extends Fragment{
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
     String pImgpath,promotionText,withOptions,terms,pHead,promoCode,offerValidity,promotype;
-
-    private String mPromotionId;
     int pos;
     TextView txtText;
     View viewButtonLayout;
+    ProgressDialogue progressDialog;
+    private String mPromotionId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_for_offer_features, container, false);
 
+        progressDialog = new ProgressDialogue();
         viewButtonLayout = getActivity().findViewById(R.id.buttonLayout);
         txtText = (TextView) view.findViewById(R.id.txtText);
 
@@ -107,19 +108,26 @@ public class PageFragment_for_OfferFeatures extends Fragment{
         Constants.retrieveMPINFromDatabase(getActivity());
     }
 
+    private void logout() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(getActivity(), Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
+    }
 
     /**
      * To Get Promotion details on the basis of Promotion ID
      */
     private class GetPromotionsByID extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -232,18 +240,6 @@ public class PageFragment_for_OfferFeatures extends Fragment{
             }
 
         }
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(getActivity(), Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        getActivity().finish();
     }
 
 }

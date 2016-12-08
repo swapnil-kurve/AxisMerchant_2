@@ -2,7 +2,6 @@ package com.axismerchant.activity.sms;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +33,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -69,12 +69,14 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     EncryptDecryptRegister encryptDecryptRegister;
     int simStatus;
     boolean isOnAirplane;
+    ProgressDialogue progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smspay);
 
+        progressDialog = new ProgressDialogue();
         TextView txtRequestNewPayment = (TextView) findViewById(R.id.txtNewPayment);
         TextView txtSeeAllTransactions = (TextView) findViewById(R.id.txtSeeAllTransactions);
         ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
@@ -396,14 +398,11 @@ public class Activity_SMSPayHome extends AppCompatActivity implements View.OnCli
     }
 
     public class GetLastTransactionByMer extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_SMSPayHome.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_SMSPayHome.this);
             progressDialog.show();
         }
 

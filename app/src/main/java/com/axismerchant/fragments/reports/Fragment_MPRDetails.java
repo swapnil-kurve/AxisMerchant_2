@@ -3,7 +3,6 @@ package com.axismerchant.fragments.reports;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +24,7 @@ import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -73,6 +73,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
         }
 
     };
+    ProgressDialogue progressDialog;
     private View lyEmail, lyDetailsLayout, lyShowEmailButton, lyPaymentDate;
 
     @Override
@@ -99,6 +100,7 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
     }
 
     private void getInitialize(View view) {
+        progressDialog = new ProgressDialogue();
         TextView txtDate = (TextView) view.findViewById(R.id.txtDate);
         TextView txtMID = (TextView) view.findViewById(R.id.txtMID);
         TextView txtConfirm = (TextView) view.findViewById(R.id.txtConfirm);
@@ -315,13 +317,10 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
     private class SendRequest extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -430,13 +429,10 @@ public class Fragment_MPRDetails extends Fragment implements View.OnClickListene
 
     private class GetMPRDetails extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 

@@ -1,7 +1,6 @@
 package com.axismerchant.fragments.analytics;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +26,7 @@ import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.MIS_MPR;
 import com.axismerchant.classes.MerchantLikeMe;
+import com.axismerchant.custom.ProgressDialogue;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -83,6 +83,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
     TextView txtDateDuration,txtGraphType, txtXn, txtVol, txtTicket, txtMessage, txtHeaderText;
     View lyTop, lyInfo, lyTopMessages;
     double screenInches;
+    ProgressDialogue progressDialog;
     /**
      * Modify Here Analytics Graph
      */
@@ -93,6 +94,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_page_transaction_analytics, container, false);
 
+        progressDialog = new ProgressDialogue();
         encryptDecryptRegister =  new EncryptDecryptRegister();
         encryptDecrypt = new EncryptDecrypt();
         likeMeArrayList = new ArrayList<>();
@@ -434,13 +436,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
     private class GetMerchantData extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -544,13 +543,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
     private class GetMerchantGraphData extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -651,13 +647,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
     private class GetAnalyticsData extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -778,13 +771,10 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
 
     private class GetAnalyticsDataForFilter extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 

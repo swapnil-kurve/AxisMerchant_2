@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class Activity_MIS_Home extends AppCompatActivity implements View.OnClickListener {
 
-    double screenInches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

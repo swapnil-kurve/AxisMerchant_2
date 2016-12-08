@@ -1,7 +1,6 @@
 package com.axismerchant.fragments.sms;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +26,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.SMSPayStatus;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -61,6 +61,7 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
     EncryptDecrypt encryptDecrypt;
     int pageNO;
     boolean loadingMore = false;
+    ProgressDialogue progressDialog;
     private String[] arrTitle = {"All", "Pending", "Success", "Failed"};
     private String pageTitle, MID, MOBILE;
 
@@ -131,6 +132,7 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
     }
 
     private void getInitialize(View view) {
+        progressDialog = new ProgressDialogue();
         listTransactions = (ListView) view.findViewById(R.id.listTransactions);
 
         encryptDecrypt = new EncryptDecrypt();
@@ -281,14 +283,11 @@ public class PageFragmentFor_SMSTransactionsStatus extends Fragment implements A
 
     private class GetEPayData extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             loadingMore = true;
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
 
         }

@@ -1,7 +1,6 @@
 package com.axismerchant.activity.refer;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,6 +25,7 @@ import com.axismerchant.classes.EncryptDecrypt;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.Notification;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -52,6 +52,7 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
     String MOBILE, MID;
     EncryptDecryptRegister encryptDecryptRegister;
     EncryptDecrypt encryptDecrypt;
+    ProgressDialogue progressDialog;
     private String blockNumberSet = "1234567890~#^|$%&*!()-+?,.<>@:;";
 
     @Override
@@ -59,6 +60,7 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refer_home);
 
+        progressDialog = new ProgressDialogue();
         encryptDecrypt = new EncryptDecrypt();
         encryptDecryptRegister = new EncryptDecryptRegister();
 
@@ -200,15 +202,23 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
         }
     }
 
+    private void logout() {
+        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KeepLoggedIn", "false");
+        editor.apply();
+        Intent intent = new Intent(this, Activity_Main.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     private class SetReferral extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_ReferHome.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_ReferHome.this);
             progressDialog.show();
         }
 
@@ -297,17 +307,5 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
             }
 
         }
-    }
-
-    private void logout()
-    {
-        SharedPreferences preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("KeepLoggedIn", "false");
-        editor.apply();
-        Intent intent = new Intent(this, Activity_Main.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
     }
 }

@@ -3,7 +3,6 @@ package com.axismerchant.fragments.login;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +24,7 @@ import com.axismerchant.activity.start.Activity_SetOTP;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.custom.ProgressDialogue;
 import com.axismerchant.database.DBHelper;
 
 import org.apache.http.HttpEntity;
@@ -58,6 +58,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     SharedPreferences preferences;
     EncryptDecryptRegister encryptDecryptRegister;
     int flag = 1;
+    ProgressDialogue progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +84,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getInitialize(View view) {
+        progressDialog = new ProgressDialogue();
         edtMPIN = (EditText) view.findViewById(R.id.edtmPIN);
         imgErrorMPIN = (ImageView) view.findViewById(R.id.imgErrorMPIN);
         imgSwitch = (ImageView) view.findViewById(R.id.imgTick);
@@ -229,14 +231,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     }
 
     private class VerifyMPIN extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 
@@ -329,14 +329,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private class ForgotMPIN extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(getActivity());
             progressDialog.show();
         }
 

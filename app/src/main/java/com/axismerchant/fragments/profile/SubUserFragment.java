@@ -2,7 +2,6 @@ package com.axismerchant.fragments.profile;
 
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,6 +31,7 @@ import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.ExpandableListAdapter;
 import com.axismerchant.classes.HTTPUtils;
 import com.axismerchant.classes.UserList;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -70,6 +70,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
     UserList userList;
     TextView txtCreateNewUser,txtSubmit;
     View lyCreateUser, lyUserList;
+    ProgressDialogue progressDialogue;
     private String blockCharacterSet = "~#^|$%&*!()-+?,.<>@:;";
     private String blockNumberSet = "1234567890~#^|$%&*!()-+?,.<>@:;";
 
@@ -110,6 +111,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
 
     private void getInitialize(View view) {
 
+        progressDialogue = new ProgressDialogue();
         edtEmailId = (EditText) view.findViewById(R.id.edtEmail);
         edtMobileNo = (EditText) view.findViewById(R.id.edtMobileNumber);
         edtUserName = (EditText) view.findViewById(R.id.edtUsername);
@@ -398,15 +400,12 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
     }
 
     private class CreateSubUser extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            progressDialogue.onCreateDialog(getActivity());
+            progressDialogue.show();
         }
 
         @Override
@@ -440,9 +439,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                     str = data;
                 }
             } catch (ParseException e1) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             } catch (IOException e) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             }
             CustomizedExceptionHandler.writeToFile(str);
             return str;
@@ -481,28 +480,25 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                     } else {
                         Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }
-                    progressDialog.dismiss();
+                    progressDialogue.dismiss();
                 }else {
-                    progressDialog.dismiss();
+                    progressDialogue.dismiss();
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             }
 
         }
     }
 
     private class GetUserList extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            progressDialogue.onCreateDialog(getActivity());
+            progressDialogue.show();
         }
 
         @Override
@@ -532,9 +528,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                     str = data;
                 }
             } catch (ParseException e1) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             } catch (IOException e) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             }
             CustomizedExceptionHandler.writeToFile(str);
             return str;
@@ -586,37 +582,34 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                         }
 
                         setAdapter();
-                        progressDialog.dismiss();
+                        progressDialogue.dismiss();
 
                     }else if(result.equalsIgnoreCase("SessionFailure")){
                         Constants.showToast(getActivity(), getString(R.string.session_expired));
-                        progressDialog.dismiss();
+                        progressDialogue.dismiss();
                         logout();
                     } else {
-                        progressDialog.dismiss();
+                        progressDialogue.dismiss();
                         txtCreateNewUser.setVisibility(View.GONE);
                         lyCreateUser.setVisibility(View.VISIBLE);
                         Constants.showToast(getActivity(), getString(R.string.no_subuser));
 
                     }
-                    progressDialog.dismiss();
+                    progressDialogue.dismiss();
                 }
             } catch (JSONException e) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             }
         }
     }
 
     private class UpdateSubUser extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+            progressDialogue.onCreateDialog(getActivity());
+            progressDialogue.show();
         }
 
         @Override
@@ -652,9 +645,9 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                     str = data;
                 }
             } catch (ParseException e1) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             } catch (IOException e) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             }
             CustomizedExceptionHandler.writeToFile(str);
             return str;
@@ -707,13 +700,13 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                     } else {
                         Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }
-                    progressDialog.dismiss();
+                    progressDialogue.dismiss();
                 }else
                 {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
             } catch (JSONException e) {
-                progressDialog.dismiss();
+                progressDialogue.dismiss();
             }
 
         }

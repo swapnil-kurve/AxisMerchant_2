@@ -1,6 +1,5 @@
 package com.axismerchant.activity.start;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +21,7 @@ import com.axismerchant.R;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.HTTPUtils;
+import com.axismerchant.custom.ProgressDialogue;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -46,6 +46,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
     EditText edtOTP;
     SharedPreferences preferences;
     EncryptDecryptRegister encryptDecryptRegister;
+    ProgressDialogue progressDialog;
     private View.OnTouchListener otl = new View.OnTouchListener() {
         public boolean onTouch(View v, MotionEvent event) {
             return true; // the listener has consumed the event
@@ -97,6 +98,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
     private void getInitialize() {
 
+        progressDialog = new ProgressDialogue();
         edtOTP = (EditText) findViewById(R.id.edtOtp);
         TextView txtZero = (TextView) findViewById(R.id.zero);
         TextView txtOne = (TextView) findViewById(R.id.one);
@@ -266,13 +268,10 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
     private class VerifyOTP extends AsyncTask<String, Void, String>
     {
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_SetOTP.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_SetOTP.this);
             progressDialog.show();
         }
 
@@ -349,13 +348,10 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
 
     private class LoginProcess extends AsyncTask<String, Void, String> {
 
-        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(Activity_SetOTP.this);
-            progressDialog.setMessage("Please wait...");
-            progressDialog.setCancelable(false);
+            progressDialog.onCreateDialog(Activity_SetOTP.this);
             progressDialog.show();
         }
 
