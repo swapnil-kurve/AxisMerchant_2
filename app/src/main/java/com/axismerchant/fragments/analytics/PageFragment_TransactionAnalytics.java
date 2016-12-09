@@ -88,6 +88,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
      * Modify Here Analytics Graph
      */
     int[] clor = new int[1];
+    private ImageView imgFilter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,7 +101,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
         likeMeArrayList = new ArrayList<>();
         analyticsArrayList = new ArrayList<>();
 
-        ImageView imgFilter = (ImageView) view.findViewById(R.id.imgFilter);
+        imgFilter = (ImageView) view.findViewById(R.id.imgFilter);
         listData = (ParallaxListView) view.findViewById(R.id.list_view);
         lyTop = view.findViewById(R.id.lyTop);
         lyInfo = view.findViewById(R.id.lyInfo);
@@ -516,7 +517,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                             merchantLikeMe = new MerchantLikeMe(noOfTxn, txnVol, avgTicketSize, mer_id, mHead);
                             likeMeArrayList.add(merchantLikeMe);
                         }
-
+                        progressDialog.dismiss();
                         getGraphData();
                         adapter = new CustomListAdapterForMerchantLikeMe(getActivity(), likeMeArrayList);
                         listData.setAdapter(adapter);
@@ -749,6 +750,7 @@ public class PageFragment_TransactionAnalytics extends Fragment implements View.
                 else {
 //                    Constants.showToast(getActivity(), getString(R.string.no_details));
                     txtMessage.setVisibility(View.VISIBLE);
+                    imgFilter.setVisibility(View.GONE);
                 }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));

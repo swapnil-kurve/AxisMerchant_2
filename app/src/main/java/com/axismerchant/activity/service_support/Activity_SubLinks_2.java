@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -56,8 +58,9 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
     String MID,MOBILE, mServiceType = "";
     EncryptDecrypt encryptDecrypt;
     EncryptDecryptRegister encryptDecryptRegister;
-    EditText edtProblemDetails;//, edtVisitTime;
+    EditText edtTID, edtProblemDetails;//, edtVisitTime;
     ProgressDialogue progressDialog;
+    private String blockCharacterSet = "~#^|$%&*!()-+?,.<>@:;";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,7 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
         encryptDecryptRegister = new EncryptDecryptRegister();
 
         TextView txtSubmitRequest = (TextView) findViewById(R.id.txtSubmitRequest);
+        edtTID = (EditText) findViewById(R.id.edtTID);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgNotification = (ImageView) findViewById(R.id.imgNotification);
         imgProfile = (ImageView) findViewById(R.id.imgProfile);
@@ -94,6 +98,22 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
 
 
         edtProblemDetails.setMaxLines(3);
+
+        InputFilter[] filterTID = new InputFilter[2];
+        filterTID[0] = new InputFilter() {
+
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+                if (source != null && blockCharacterSet.contains(("" + source))) {
+                    return "";
+                }
+                return null;
+            }
+        };
+        filterTID[1] = new InputFilter.LengthFilter(8);
+
+        edtTID.setFilters(filterTID);
 
         txtMID.setText(MID);
 
@@ -245,8 +265,11 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
 
     private void sendRequest() {
 
-        if(edtProblemDetails.getText().toString().trim().length() == 0)
+        if (edtTID.getText().toString().trim().length() == 0)
         {
+            Constants.showToast(this, getString(R.string.invalid_id));
+            edtTID.setError("");
+        } else if (edtProblemDetails.getText().toString().trim().length() == 0) {
             Constants.showToast(this, getString(R.string.invalid_problem_desc));
             edtProblemDetails.setError("");
         }else {
@@ -256,7 +279,7 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
 
 
     private void callService() {
-
+        String tid = edtTID.getText().toString().trim();
         String ProblemDetails = edtProblemDetails.getText().toString().trim();
         String RollRequired = "0";
 
@@ -265,9 +288,9 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
         if (Constants.isNetworkConnectionAvailable(getApplicationContext())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 new GetData().executeOnExecutor(AsyncTask
-                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", serviceType, ProblemDetails, "", "", "", RollRequired, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, tid, serviceType, ProblemDetails, "", "", "", RollRequired, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
             } else {
-                new GetData().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, "", serviceType, ProblemDetails, "", "", "", RollRequired, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+                new GetData().execute(Constants.DEMO_SERVICE + "addServiceRequest", MID, MOBILE, tid, serviceType, ProblemDetails, "", "", "", RollRequired, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
 
             }
         } else {

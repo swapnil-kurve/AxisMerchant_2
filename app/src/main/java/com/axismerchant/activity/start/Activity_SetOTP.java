@@ -61,11 +61,11 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
         getInitialize();
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null && bundle.containsKey("OTP"))
+       /* if(bundle != null && bundle.containsKey("OTP"))
         {
             String otp = bundle.getString("OTP");
             ((TextView)findViewById(R.id.dummyText)).setText(otp);
-        }
+        }*/
 
         edtOTP.setOnTouchListener(otl);
 

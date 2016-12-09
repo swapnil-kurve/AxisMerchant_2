@@ -114,6 +114,47 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/title_size" />
 
+            <LinearLayout
+                android:id="@+id/lyTerminal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <com.axismerchant.custom.CustomTextViewMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_terminal_id"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/subtitle_size" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.axismerchant.custom.CustomEditTextLightBold
+                        android:id="@+id/edtTID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:inputType="numberDecimal"
+                        android:maxLength="8"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textSize="@dimen/edtittext_size" />
+
+                    <ImageView
+                        android:id="@+id/imgStar1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="10dp"
+                        android:src="@drawable/star" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
 
             <com.axismerchant.custom.CustomTextViewMedium
                 android:layout_width="match_parent"
