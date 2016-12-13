@@ -226,6 +226,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         protected void onPreExecute() {
             super.onPreExecute();
             progressDialogue.onCreateDialog(getActivity());
+            progressDialogue.show();
         }
 
         @Override

@@ -72,6 +72,7 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
         encryptDecryptRegister = new EncryptDecryptRegister();
 
         TextView txtSubmitRequest = (TextView) findViewById(R.id.txtSubmitRequest);
+        View lyTerminal = findViewById(R.id.lyTerminal);
         edtTID = (EditText) findViewById(R.id.edtTID);
         imgBack = (ImageView) findViewById(R.id.imgBack);
         imgNotification = (ImageView) findViewById(R.id.imgNotification);
@@ -151,66 +152,79 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
                 txtSubCode.setText(getString(R.string.axis_no));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "CHANGE IN ACCOUNT MODE (AXIS A/C NO.)";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("NeftRtgs")){
                 txtSubCode.setText(getString(R.string.neft));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "CHANGE IN ACCOUNT MODE (NEFT/RTGS)";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("DbaName")){
                 txtSubCode.setText(getString(R.string.dba));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (DBA NAME)";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("LegalName")){
                 txtSubCode.setText(getString(R.string.legal_name));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (LEGAL NAME)";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("AddressChange")){
                 txtSubCode.setText(getString(R.string.address_change));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (ADDRESS CHANGE)";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("PhoneNo")){
                 txtSubCode.setText(getString(R.string.phone_no));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (MOBILE NUMBER)";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("NewLocation")){
                 txtSubCode.setText(getString(R.string.new_loc));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (NEW LOCATION)";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("AssetSwapping")){
                 txtSubCode.setText(getString(R.string.asset_swapping));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "UPDATE MERCHANT DETAILS (ASSET SWAPPING)";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("Dcc")){
                 txtSubCode.setText(getString(R.string.dcc));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "MERCHANT CREATION – DCC";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("AdditionalDcc")){
                 txtSubCode.setText(getString(R.string.additional_dcc));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "MERCHANT CREATION – ADDITIONAL DCC";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("CashPos")){
                 txtSubCode.setText(getString(R.string.cash_pos));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "Cash@PoS";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("Apply_mVisa")){
                 txtSubCode.setText(getString(R.string.apply_for_mvisa));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "APPLY FOR mVISA / QR CODE PAY";
+                lyTerminal.setVisibility(View.GONE);
             }else
             if(heading.equalsIgnoreCase("MprStatmentRequest")){
                 txtSubCode.setText(getString(R.string.mpr_request));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));
                 mServiceType = "MPR STATEMENT REQUEST (MERCHANT PAYMENT REPORT)";
+                lyTerminal.setVisibility(View.GONE);
             }
         }
 
@@ -265,15 +279,23 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
 
     private void sendRequest() {
 
-        if (edtTID.getText().toString().trim().length() == 0)
-        {
-            Constants.showToast(this, getString(R.string.invalid_id));
-            edtTID.setError("");
-        } else if (edtProblemDetails.getText().toString().trim().length() == 0) {
-            Constants.showToast(this, getString(R.string.invalid_problem_desc));
-            edtProblemDetails.setError("");
+        if (txtHeading.getText().toString().equalsIgnoreCase("Account Management")) {
+            if (edtProblemDetails.getText().toString().trim().length() == 0) {
+                Constants.showToast(this, getString(R.string.invalid_problem_desc));
+                edtProblemDetails.setError("");
+            } else {
+                callService();
+            }
         }else {
-            callService();
+            if (edtTID.getText().toString().trim().length() == 0) {
+                Constants.showToast(this, getString(R.string.invalid_id));
+                edtTID.setError("");
+            } else if (edtProblemDetails.getText().toString().trim().length() == 0) {
+                Constants.showToast(this, getString(R.string.invalid_problem_desc));
+                edtProblemDetails.setError("");
+            } else {
+                callService();
+            }
         }
     }
 
