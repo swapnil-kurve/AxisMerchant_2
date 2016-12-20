@@ -251,22 +251,22 @@ public class ServiceSupportFragment extends Fragment implements View.OnClickList
                 break;
 
             case R.id.txtCallIssuer:
-                Intent inCallIssuer = new Intent(getActivity(), Activity_SubLinks_2.class);
+                Intent inCallIssuer = new Intent(getActivity(), Activity_SubLinks.class);
                 inCallIssuer.putExtra("Heading", "CallIssues");
                 startActivity(inCallIssuer);
                 break;
             case R.id.txtPaymentInquiry:
-                Intent inPaymentInquiry = new Intent(getActivity(), Activity_SubLinks_2.class);
+                Intent inPaymentInquiry = new Intent(getActivity(), Activity_SubLinks.class);
                 inPaymentInquiry.putExtra("Heading", "PaymentInquiry");
                 startActivity(inPaymentInquiry);
                 break;
             case R.id.txtPickUpCard:
-                Intent inPickUpCard = new Intent(getActivity(), Activity_SubLinks_2.class);
+                Intent inPickUpCard = new Intent(getActivity(), Activity_SubLinks.class);
                 inPickUpCard.putExtra("Heading", "PickUpCard");
                 startActivity(inPickUpCard);
                 break;
             case R.id.txtDeclineCard:
-                Intent inDeclineCard = new Intent(getActivity(), Activity_SubLinks_2.class);
+                Intent inDeclineCard = new Intent(getActivity(), Activity_SubLinks.class);
                 inDeclineCard.putExtra("Heading", "DeclineCard");
                 startActivity(inDeclineCard);
                 break;

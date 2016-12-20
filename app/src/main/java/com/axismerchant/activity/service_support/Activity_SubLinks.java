@@ -221,6 +221,27 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                 mServiceType = "TERMINAL SOFTWARE CORRUPTED";
             }
 
+
+            if(heading.equalsIgnoreCase("CallIssues")){
+                txtSubCode.setText(getString(R.string.call_issues));
+                txtHeading.setText(getString(R.string.others));
+                mServiceType = "CALL ISSUER";
+            }else
+            if(heading.equalsIgnoreCase("PaymentInquiry")){
+                txtSubCode.setText(getString(R.string.payement_inquiry));
+                txtHeading.setText(getString(R.string.others));
+                mServiceType = "PAYMENT INQUIRY";
+            }else
+            if(heading.equalsIgnoreCase("PickUpCard")){
+                txtSubCode.setText(getString(R.string.pick_up_card));
+                txtHeading.setText(getString(R.string.others));
+                mServiceType = "PICK UP CARD";
+            }else
+            if(heading.equalsIgnoreCase("DeclineCard")){
+                txtSubCode.setText(getString(R.string.decline_card));
+                txtHeading.setText(getString(R.string.others));
+                mServiceType = "DECLINE CARD";
+            }else
             if(heading.equalsIgnoreCase("CardSwipeError")){
                 txtSubCode.setText(getString(R.string.card_swipe_error));
                 txtHeading.setText(getString(R.string.others));

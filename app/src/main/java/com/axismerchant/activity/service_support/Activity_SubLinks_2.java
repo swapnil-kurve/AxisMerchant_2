@@ -123,7 +123,7 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
         {
             String heading = bundle.getString("Heading");
 
-            if(heading.equalsIgnoreCase("CallIssues")){
+           /* if(heading.equalsIgnoreCase("CallIssues")){
                 txtSubCode.setText(getString(R.string.call_issues));
                 txtHeading.setText(getString(R.string.others));
                 mServiceType = "CALL ISSUER";
@@ -147,7 +147,7 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
                 txtSubCode.setText(getString(R.string.card_swipe_error));
                 txtHeading.setText(getString(R.string.others));
                 mServiceType = "CARD SWIPE ERROR";
-            }else
+            }else*/
             if(heading.equalsIgnoreCase("AxisAccNo")){
                 txtSubCode.setText(getString(R.string.axis_no));
                 txtHeading.setText(getString(R.string.account) + " " + getString(R.string.management));

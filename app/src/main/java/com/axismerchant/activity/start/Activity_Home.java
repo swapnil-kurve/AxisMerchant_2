@@ -479,7 +479,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                 case 10:
 //                    startActivity(new Intent(this, Activity_VideoDemo.class));
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://youtu.be/1jVBpT0m8Wg")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://m.youtube.com/watch?feature=youtu.be&v=aNaoS7_l8sE")));
                     break;
 
                 case 11:

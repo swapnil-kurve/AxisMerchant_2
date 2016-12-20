@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
@@ -40,12 +42,19 @@ public class Constants {
     public static final String EPaymentData = "EPaymentData";
     public static final String LanguageData = "LanguageData";
 
+    public static final String MyVersion = android.os.Build.VERSION.RELEASE; // e.g. myVersion := "1.6"
+
+
     public static final String[] FORCE_TLS_PROTOCOL = {"TLSv1.2"};
     public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
     public static final String DEMO_SERVICE_REFUND = "http://merchantportal.paycraftsol.com/";
 
-    //    public static final String DEMO_SERVICE = "https://merchant.axisbank.co.in/mservices.asmx/";
+//    public static final String DEMO_SERVICE = "https://merchant.axisbank.co.in/mservices.asmx/";
 //    public static final String DEMO_SERVICE_REFUND = "https://merchant.axisbank.co.in/";
+
+//    public static final String DEMO_SERVICE = "http://192.168.88.14:9006/mservices.asmx/";
+//    public static final String DEMO_SERVICE_REFUND = "http://192.168.88.14:9006/";
+
     public static String MPIN = "";
     public static String IMEI = "";
     public static String MERCHANT_ID = "";
@@ -63,6 +72,17 @@ public class Constants {
         Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
     }
 
+
+    public static String getVersionName(Context context)
+    {
+        PackageInfo pInfo = null;
+        try {
+            pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return pInfo.versionName;
+    }
 
     //To get IMEI number of device
     public static void getIMEI(Context context){
@@ -139,11 +159,11 @@ public class Constants {
         ArrayList<Notification> notificationArrayList = new ArrayList<>();
 
         try {
-            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.MESSAGE + "," + DBHelper.READ_STATUS + "," + DBHelper.ON_DATE
+            crs = db.rawQuery("select DISTINCT " + DBHelper.PROMOTION_ID + "," + DBHelper.MESSAGE + "," + DBHelper.READ_STATUS + "," + DBHelper.ON_DATE
                     + " from " + DBHelper.TABLE_NAME_NOTIFICATION + " where " + DBHelper.READ_STATUS + " = '" + str + "'", null);
 
             while (crs.moveToNext()) {
-                String mUID = crs.getString(crs.getColumnIndex(DBHelper.UID));
+                String mUID = crs.getString(crs.getColumnIndex(DBHelper.PROMOTION_ID));
                 String mMessage = crs.getString(crs.getColumnIndex(DBHelper.MESSAGE));
                 String mDate = crs.getString(crs.getColumnIndex(DBHelper.ON_DATE));
                 String mReadStatus = crs.getString(crs.getColumnIndex(DBHelper.READ_STATUS));

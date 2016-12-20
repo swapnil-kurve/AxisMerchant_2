@@ -61,11 +61,11 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
         getInitialize();
 
         Bundle bundle = getIntent().getExtras();
-       /* if(bundle != null && bundle.containsKey("OTP"))
+        if(bundle != null && bundle.containsKey("OTP"))
         {
             String otp = bundle.getString("OTP");
             ((TextView)findViewById(R.id.dummyText)).setText(otp);
-        }*/
+        }
 
         edtOTP.setOnTouchListener(otl);
 
@@ -370,6 +370,7 @@ public class Activity_SetOTP extends AppCompatActivity implements View.OnClickLi
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[3])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.deviceType), encryptDecryptRegister.encrypt(arg0[4])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[5])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.versionNo), encryptDecryptRegister.encrypt(Constants.getVersionName(Activity_SetOTP.this))));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 HttpResponse response = httpclient.execute(httppost);

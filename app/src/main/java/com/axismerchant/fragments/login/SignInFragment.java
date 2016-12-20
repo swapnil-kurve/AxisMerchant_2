@@ -257,6 +257,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.currentTime), encryptDecryptRegister.encrypt(arg0[5])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[6])));
                 nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[7])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.versionNo), encryptDecryptRegister.encrypt(Constants.getVersionName(getActivity()))));
 
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

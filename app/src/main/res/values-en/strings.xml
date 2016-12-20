@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Axis Bank Merchant App</string>
 
-    <string name="version">Version B 1.0.9</string>
+    <string name="version">Version B 2.0.2</string>
     <!--<string name="version">Version UAT-42</string>-->
 
     <string name="action_settings">Settings</string>
@@ -210,7 +210,7 @@
         <item>SMS Pay</item>
         <item>QR Code Pay</item>
         <item>Service Support</item>
-        <item>Report &amp; MIS</item>
+        <item>Reports &amp; MIS</item>
         <item>Analytics</item>
         <item>Offers &amp; Notices</item>
         <item>Profile Management</item>
@@ -569,4 +569,5 @@
     <string name="problem_code_title">Problem Code</string>
     <string name="closing_remark_title">Closing Remarks</string>
     <string name="current_status_title">Current Status</string>
+    <string name="versionNo">versionNo</string>
 </resources>
