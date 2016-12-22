@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.astuetz.PagerSlidingTabStrip;
 import com.axismerchant.R;
 import com.axismerchant.activity.Activity_Notification;
+import com.axismerchant.activity.start.Activity_Home;
 import com.axismerchant.activity.start.Activity_UserProfile;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.Notification;
@@ -94,6 +95,12 @@ public class Activity_Analytics extends AppCompatActivity implements View.OnClic
         super.onResume();
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Activity_Home.class));
+        finish();
+    }
+
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
         public SampleFragmentPagerAdapter(FragmentManager fragmentManager) {
@@ -127,6 +134,5 @@ public class Activity_Analytics extends AppCompatActivity implements View.OnClic
             return tabs[position];
         }
     }
-
 
 }

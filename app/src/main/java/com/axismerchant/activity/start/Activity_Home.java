@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -55,7 +53,6 @@ import com.viewpagerindicator.CirclePageIndicator;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -69,9 +66,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
 
@@ -90,7 +85,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     String MID, MOBILE, isAdmin;
     ImageView imgMenu;
     ArrayList<HomeBanner> homeBanners;
-    ArrayList<String> mvisaArrayList;
+    //    ArrayList<String> mvisaArrayList;
     HomeBanner banner;
     EncryptDecryptRegister encryptDecryptRegister;
     ProgressDialogue customProgressDialog;
@@ -202,10 +197,11 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         navigationItemAdapter = new NavigationItemAdapter();
         mDrawerList.setAdapter(navigationItemAdapter);
 
-        getMerchantDetails();
-
+//        getMerchantDetails();
+        getPromotionImages();
     }
 
+/*
     private void getMVisaIDs() {
         if (Constants.isNetworkConnectionAvailable(this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -219,6 +215,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             Constants.showToast(this, getString(R.string.no_internet));
         }
     }
+*/
 
     private void getPromotionImages() {
         if (Constants.isNetworkConnectionAvailable(this)) {
@@ -269,7 +266,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
         promotionsArrayList = new ArrayList<>(3);
         homeBanners = new ArrayList<>();
-        mvisaArrayList = new ArrayList<>();
+//        mvisaArrayList = new ArrayList<>();
 
     }
 
@@ -312,13 +309,20 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.imgProfile:
-                startActivity(new Intent(this, Activity_UserProfile.class));
+                intent = new Intent(this, Activity_UserProfile.class);
+                intent.putExtra("FromHome", true);
+                startActivity(intent);
+                finish();
                 break;
 
             case R.id.imgNotification:
-                startActivity(new Intent(this, Activity_Notification.class));
+                intent = new Intent(this, Activity_Notification.class);
+                intent.putExtra("FromHome", true);
+                startActivity(intent);
+                finish();
                 break;
 
             case R.id.imgMenu:
@@ -331,10 +335,12 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
             case R.id.reportsAndMIS:
                 startActivity(new Intent(this, Activity_MIS_Home.class));
+                finish();
                 break;
 
             case R.id.serviceSupport:
                 startActivity(new Intent(this, Activity_ServiceSupport.class));
+                finish();
                 break;
 
             case R.id.qrCodePayment:
@@ -353,9 +359,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
             if(mVisaId.equals("")  ||  mVisaId.equalsIgnoreCase("Null"))
             {
-                if (mVisaStatus.equalsIgnoreCase("Not Requested") && isAdmin.equalsIgnoreCase("True")) {
+                if ((mVisaStatus.equalsIgnoreCase("") || mVisaStatus.equalsIgnoreCase("Not Requested")) && isAdmin.equalsIgnoreCase("True")) {
                     startActivity(new Intent(this, Activity_QRSignUp.class));
-                } else if (mVisaStatus.equalsIgnoreCase("Not Requested") && isAdmin.equalsIgnoreCase("False")) {
+                } else if ((mVisaStatus.equalsIgnoreCase("") || mVisaStatus.equalsIgnoreCase("Not Requested")) && isAdmin.equalsIgnoreCase("False")) {
                     ShowDialogNotAuthorized();
                 } else {
                     preferences = getSharedPreferences(Constants.EPaymentData, Context.MODE_PRIVATE);
@@ -367,6 +373,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             }else
             {
                 startActivity(new Intent(this, Activity_QRPayHome.class));
+                finish();
             }
         } else {
             startActivity(new Intent(this, Activity_QRSignUp.class));
@@ -433,6 +440,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getId() == R.id.left_drawer)
         {
+            Intent intent;
             switch (position)
             {
                 case 0:
@@ -445,36 +453,45 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                 case 2:
                     startActivity(new Intent(this, Activity_ServiceSupport.class));
+                    finish();
                     break;
 
                 case 3:
                     startActivity(new Intent(this, Activity_MIS_Home.class));
+                    finish();
                     break;
 
                 case 4:
                     startActivity(new Intent(this, Activity_Analytics.class));
+                    finish();
                     break;
 
                 case 5:
                     startActivity(new Intent(this, Activity_OffersNotices.class));
+                    finish();
                     break;
 
                 case 6:
-                    startActivity(new Intent(this, Activity_UserProfile.class));
+                    intent = new Intent(this, Activity_UserProfile.class);
+                    intent.putExtra("FromHome", true);
+                    startActivity(intent);
+                    finish();
                     break;
 
                 case 7:
                     startActivity(new Intent(this, Activity_ReferHome.class));
+                    finish();
                     break;
 
                 case 8:
-                    Intent intent = new Intent(this, Activity_Language.class);
+                    intent = new Intent(this, Activity_Language.class);
                     intent.putExtra("FromHome",true);
                     startActivity(intent);
                     break;
 
                 case 9:
                     startActivity(new Intent(this, Activity_FAQ.class));
+                    finish();
                     break;
 
                 case 10:
@@ -520,11 +537,12 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
     }
 
-    private void checkSessionVariable() {
+    /*private void checkSessionVariable() {
         if (session == 0)
             logout(0);
-    }
+    }*/
 
+/*
     private void retrieveFromDatabase() {
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -553,7 +571,9 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             promotionsArrayList.add(promotions);
         }
     }
+*/
 
+/*
     private void getMerchantDetails() {
         if (Constants.isNetworkConnectionAvailable(Activity_Home.this)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -567,6 +587,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             Constants.showToast(Activity_Home.this, getString(R.string.no_internet));
         }
     }
+*/
 
     private void logout(int i) {
         if (i == 1)
@@ -673,9 +694,13 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
                         customProgressDialog.dismiss();
 
+                    } else if (result.equalsIgnoreCase("SessionFailure")) {
+                        logout(0);
+                    } else {
+                        customProgressDialog.dismiss();
+
                     }
-                    customProgressDialog.dismiss();
-                    getMVisaIDs();
+//                    getMVisaIDs();
                 }
             } catch (JSONException e) {
                 customProgressDialog.dismiss();
@@ -731,6 +756,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }
     }
 
+/*
     public class GetmVisaIds extends AsyncTask<String, Void, String> {
 
         String ArrURL[];
@@ -831,6 +857,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             }
         }
     }
+*/
 
     private class NavigationItemAdapter extends BaseAdapter
     {
@@ -976,6 +1003,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }
     }
 
+/*
     private class GetProfileDetails extends AsyncTask<String, Void, String>
     {
 
@@ -1081,6 +1109,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
 
         }
     }
+*/
 
 
 }

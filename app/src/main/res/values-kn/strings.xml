@@ -4,7 +4,7 @@
     <!--================================================================================================-->
 
     <!--<string name="version">Version UAT-42</string>-->
-    <string name="version">Version B 2.0.2</string>
+    <string name="version">Version B 2.0.3</string>
     <string name="mvisa_id">mvisa_id</string>
     <string name="userMobileNo">userMobileNo</string>
     <string name="regUsersId">regUsersId</string>
@@ -205,11 +205,13 @@
 </string>
     <string name="fees_description1">ಯುಟಿಲಿಟಿ/ಸರಕಾರ/ವಿಮೆ/ಶಿಕ್ಷಣ/ವಿಶ್ವವಿದ್ಯಾಲಯಗಳು</string>
     <string name="fees_debit1">Transaction Value \u003c\u003d 2000 : 0.75%\nTransaction Value \u003E 2000 : 1%</string>
-    <string name="fees_domestic_cards_diff11">1.05%</string>
-    <string name="fees_domestic_cards_diff12">1.05%</string>
-    <string name="fees_domestic_cards_blended1">1.05%</string>
+    <string name="fees_domestic_cards_diff11">1.30%</string>
+    <string name="fees_domestic_cards_diff12">1.30%</string>
+    <string name="fees_domestic_cards_diff13">1.30%</string>
+    <string name="fees_domestic_cards_blended1">1.30%</string>
     <string name="fees_international1">DCC / Non DCC 0.99% / 2.50%</string>
-    <string name="fees_setup1">ರೂ. 5000/ರೂ. 500</string>
+    <!--<string name="fees_setup1">ರೂ. 5000/ರೂ. 500</string>-->
+    <string name="fees_setup1">ರೂ. 100 / ರೂ. 250</string>
     <string name="fees_net_banking1">ರೂ. 15</string>
 
     <string name="fees_description2">ಇತರ ಎಲ್ಲMCCs</string>
@@ -563,7 +565,8 @@
     <string name="premium01">2.20%</string>
     <string name="update">Update User</string>
     <string name="axis_fees_qr">Axis bank offers new ways to accept the payments. Expand your business by accepting payments through cards.</string>
-    <string name="qr_fees_pt1">Initial Setup fees Waived off</string>
+    <!--<string name="qr_fees_pt1">Initial Setup fees Waived off</string>-->
+    <string name="qr_fees_pt1">Initial Setup fees Rs. 100</string>
     <string name="qr_fees_pt2">Rentals fees - Waived off</string>
     <string name="qr_fees_pt3">LTC / NTC - Waived off</string>
     <string name="qr_fees_pt4">MDR to be considered same as that agreed upon for POS transactions.</string>
@@ -622,5 +625,7 @@
     <string name="current_status_title">ಸಧ್ಯದಸ್ಥಿತಿಗತಿ</string>
     <string name="transaction_id">ವಹಿವಾಟುಐಡಿ</string>
     <string name="versionNo">versionNo</string>
+    <string name="invoice_no_label">ಇನ್ವಾಯ್ಸ್ನಂಬರ್</string>
+    <string name="remarks_label">ಟಿಪ್ಪಣಿ</string>
 
 </resources>

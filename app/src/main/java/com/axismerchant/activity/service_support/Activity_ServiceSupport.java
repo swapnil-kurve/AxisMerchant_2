@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.axismerchant.R;
 import com.axismerchant.activity.Activity_Notification;
+import com.axismerchant.activity.start.Activity_Home;
 import com.axismerchant.activity.start.Activity_UserProfile;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.Notification;
@@ -120,8 +121,10 @@ public class Activity_ServiceSupport extends Activity implements View.OnClickLis
 //        {
 //            changeToServiceSupport();
 //        }else {
-            super.onBackPressed();
+//            super.onBackPressed();
 //        }
+        startActivity(new Intent(this, Activity_Home.class));
+        finish();
     }
 
     @Override

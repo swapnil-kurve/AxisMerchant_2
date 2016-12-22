@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class PageFragmentForSMS_SignUpFees extends Fragment {
     public static final String ARG_OBJECT = "object";
     Spinner spinDescription;
-    TextView txtRegular01, txtPremium01, txtBlended01, txtSetupFee,txtNetBanking;
+    TextView txtRegular01, txtPremium01, txtSPremium01, txtBlended01, txtSetupFee, txtNetBanking;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class PageFragmentForSMS_SignUpFees extends Fragment {
 
         txtRegular01 = (TextView) view.findViewById(R.id.txtRegular01);
         txtPremium01 = (TextView) view.findViewById(R.id.txtPremium01);
+        txtSPremium01 = (TextView) view.findViewById(R.id.txtSPremium01);
         txtBlended01 = (TextView) view.findViewById(R.id.txtBlended01);
         txtSetupFee = (TextView) view.findViewById(R.id.txtSetupFee);
         txtNetBanking = (TextView) view.findViewById(R.id.txtNetBanking);
@@ -62,6 +63,7 @@ public class PageFragmentForSMS_SignUpFees extends Fragment {
                     txtRegular01.setText(getString(R.string.fees_domestic_cards_diff11));
                     txtBlended01.setText(getString(R.string.fees_domestic_cards_blended1));
                     txtPremium01.setText(getString(R.string.fees_domestic_cards_diff12));
+                    txtSPremium01.setText(getString(R.string.fees_domestic_cards_diff13));
                     txtSetupFee.setText(getString(R.string.fees_setup1));
                     txtNetBanking.setText(getString(R.string.fees_net_banking1));
 
@@ -69,6 +71,7 @@ public class PageFragmentForSMS_SignUpFees extends Fragment {
                     txtRegular01.setText(getString(R.string.fees_domestic_cards_diff21));
                     txtBlended01.setText(getString(R.string.fees_domestic_cards_blended2));
                     txtPremium01.setText(getString(R.string.fees_domestic_cards_diff22));
+                    txtSPremium01.setText(getString(R.string.fees_domestic_cards_diff23));
                     txtSetupFee.setText(getString(R.string.fees_setup2));
                     txtNetBanking.setText(getString(R.string.fees_net_banking2));
                 }

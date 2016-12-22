@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.axismerchant.R;
 import com.axismerchant.activity.Activity_Notification;
+import com.axismerchant.activity.start.Activity_Home;
 import com.axismerchant.activity.start.Activity_UserProfile;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.Notification;
@@ -104,5 +105,11 @@ public class Activity_MIS_Home extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(this, Activity_Notification.class));
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Activity_Home.class));
+        finish();
     }
 }

@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.axismerchant.R;
+import com.axismerchant.activity.start.Activity_Home;
 import com.axismerchant.activity.start.Activity_UserProfile;
 import com.axismerchant.classes.Notification;
 import com.axismerchant.database.DBHelper;
@@ -69,51 +70,6 @@ public class Activity_Notification extends AppCompatActivity implements View.OnC
         }
     }
 
-
-    private class NotificationAdapter extends BaseAdapter
-    {
-        Context context;
-        ArrayList<Notification> notificationArrayList;
-
-        public NotificationAdapter(Activity_Notification activity_notification, ArrayList<Notification> notificationArrayList) {
-            context = activity_notification;
-            this.notificationArrayList = notificationArrayList;
-        }
-
-        @Override
-        public int getCount() {
-            return notificationArrayList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return notificationArrayList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-            convertView  = inflater.inflate(R.layout.custom_row_for_notification, null);
-
-            txtDate = (TextView) convertView.findViewById(R.id.txtDate);
-            txtMessage = (TextView) convertView.findViewById(R.id.txtMsg);
-
-            txtDate.setText(notificationArrayList.get(position).getDate());
-            txtMessage.setText(notificationArrayList.get(position).getMessage());
-
-
-            return convertView;
-        }
-
-    }
-
-
     private void UpdateIntoNotification() {
         dbHelper = new DBHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -158,5 +114,57 @@ public class Activity_Notification extends AppCompatActivity implements View.OnC
             db.close();
         }
         return notificationArrayList;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("FromHome")) {
+            startActivity(new Intent(this, Activity_Home.class));
+            finish();
+        } else
+            super.onBackPressed();
+    }
+
+    private class NotificationAdapter extends BaseAdapter {
+        Context context;
+        ArrayList<Notification> notificationArrayList;
+
+        public NotificationAdapter(Activity_Notification activity_notification, ArrayList<Notification> notificationArrayList) {
+            context = activity_notification;
+            this.notificationArrayList = notificationArrayList;
+        }
+
+        @Override
+        public int getCount() {
+            return notificationArrayList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return notificationArrayList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.custom_row_for_notification, null);
+
+            txtDate = (TextView) convertView.findViewById(R.id.txtDate);
+            txtMessage = (TextView) convertView.findViewById(R.id.txtMsg);
+
+            txtDate.setText(notificationArrayList.get(position).getDate());
+            txtMessage.setText(notificationArrayList.get(position).getMessage());
+
+
+            return convertView;
+        }
+
     }
 }

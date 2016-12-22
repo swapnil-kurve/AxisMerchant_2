@@ -307,7 +307,12 @@ public class Activity_UserProfile extends AppCompatActivity implements View.OnCl
             }
 
         } else {
-            super.onBackPressed();
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null && bundle.containsKey("FromHome")) {
+                startActivity(new Intent(this, Activity_Home.class));
+                finish();
+            } else
+                super.onBackPressed();
         }
         }
 

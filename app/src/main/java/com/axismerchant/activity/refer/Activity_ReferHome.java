@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.axismerchant.R;
 import com.axismerchant.activity.Activity_Notification;
 import com.axismerchant.activity.AppActivity;
+import com.axismerchant.activity.start.Activity_Home;
 import com.axismerchant.activity.start.Activity_Main;
 import com.axismerchant.activity.start.Activity_UserProfile;
 import com.axismerchant.classes.Constants;
@@ -210,6 +211,12 @@ public class Activity_ReferHome extends AppActivity implements View.OnClickListe
         Intent intent = new Intent(this, Activity_Main.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Activity_Home.class));
         finish();
     }
 

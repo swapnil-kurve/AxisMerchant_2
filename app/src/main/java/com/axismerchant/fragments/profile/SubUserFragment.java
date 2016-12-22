@@ -461,6 +461,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                     String result = obj.optString("result");
 
                     result = encryptDecryptRegister.decrypt(result);
+                    progressDialogue.dismiss();
                     if (result.equals("Success")) {
                         Constants.showToast(getActivity(), getString(R.string.sub_user_created));
 
@@ -480,7 +481,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                     } else {
                         Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }
-                    progressDialogue.dismiss();
+//                    progressDialogue.dismiss();
                 }else {
                     progressDialogue.dismiss();
                     Constants.showToast(getActivity(), getString(R.string.network_error));

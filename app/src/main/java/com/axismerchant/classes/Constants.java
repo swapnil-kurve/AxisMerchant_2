@@ -42,15 +42,12 @@ public class Constants {
     public static final String EPaymentData = "EPaymentData";
     public static final String LanguageData = "LanguageData";
 
-    public static final String MyVersion = android.os.Build.VERSION.RELEASE; // e.g. myVersion := "1.6"
-
-
     public static final String[] FORCE_TLS_PROTOCOL = {"TLSv1.2"};
-    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
-    public static final String DEMO_SERVICE_REFUND = "http://merchantportal.paycraftsol.com/";
+//    public static final String DEMO_SERVICE = "http://merchantportal.paycraftsol.com/mservices.asmx/";
+//    public static final String DEMO_SERVICE_REFUND = "http://merchantportal.paycraftsol.com/";
 
-//    public static final String DEMO_SERVICE = "https://merchant.axisbank.co.in/mservices.asmx/";
-//    public static final String DEMO_SERVICE_REFUND = "https://merchant.axisbank.co.in/";
+    public static final String DEMO_SERVICE = "https://merchant.axisbank.co.in/mservices.asmx/";
+    public static final String DEMO_SERVICE_REFUND = "https://merchant.axisbank.co.in/";
 
 //    public static final String DEMO_SERVICE = "http://192.168.88.14:9006/mservices.asmx/";
 //    public static final String DEMO_SERVICE_REFUND = "http://192.168.88.14:9006/";
@@ -61,7 +58,6 @@ public class Constants {
     public static String MOBILE_NUM = "";
     public static String secretekeyDatabase = "";
     public static String AuthToken = "";
-    //    public static final String DEMO_SERVICE = "http://demo.nxglabs.in/mservices.asmx/";
     public static String SecretKey = "secretKey";
     public static String GOOGLE_PROJ_ID = "660348263150";
     public static String API = "AIzaSyBX5KAIoDg-k3Wt2sjSLB1B4S8RHDlxdYY";

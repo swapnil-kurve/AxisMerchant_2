@@ -14,17 +14,18 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.axismerchant.classes.EncryptDecryptRegister;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
 import com.axismerchant.R;
 import com.axismerchant.activity.Activity_Notification;
+import com.axismerchant.activity.start.Activity_Home;
 import com.axismerchant.activity.start.Activity_UserProfile;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.classes.Contents_QRCode;
+import com.axismerchant.classes.EncryptDecryptRegister;
 import com.axismerchant.classes.Notification;
 import com.axismerchant.classes.QRCodeEncoder;
 import com.axismerchant.database.DBHelper;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
 
 import java.util.ArrayList;
 
@@ -265,4 +266,9 @@ public class Activity_QRPayHome extends Activity implements View.OnClickListener
         super.onResume();
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Activity_Home.class));
+        finish();
+    }
 }
