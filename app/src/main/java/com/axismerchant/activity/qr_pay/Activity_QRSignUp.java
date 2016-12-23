@@ -368,6 +368,12 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, Activity_Home.class));
+        finish();
+    }
+
     public class SendRequest extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
@@ -469,5 +475,4 @@ public class Activity_QRSignUp extends AppCompatActivity implements View.OnClick
             progressDialog.dismiss();
         }
     }
-
 }

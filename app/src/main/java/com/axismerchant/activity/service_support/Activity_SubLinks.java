@@ -637,7 +637,12 @@ public class Activity_SubLinks extends Activity implements View.OnClickListener,
                             responseCode = object2.optString("result");
                             responseCode = encryptDecrypt.decrypt(responseCode);
                         }
-                        ShowDialogReponse("Fail", "", "", responseCode);
+                        String res;
+                        if (responseCode.contains("AlreadyAdded")) {
+                            res = responseCode.split(",")[0];
+                            ShowDialogReponse("Fail", "", "", res);
+                        } else
+                            ShowDialogReponse("Fail", "", "", responseCode);
                     }
                 }else
                 {

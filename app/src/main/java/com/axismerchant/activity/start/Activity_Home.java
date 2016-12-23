@@ -369,6 +369,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                     editor.putString("QRRequestValidated", "Pending");
                     editor.apply();
                     startActivity(new Intent(this, Activity_QRSignUp.class));
+                    finish();
                 }
             }else
             {
@@ -377,6 +378,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             }
         } else {
             startActivity(new Intent(this, Activity_QRSignUp.class));
+            finish();
         }
     }
 

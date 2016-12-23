@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.axismerchant.R;
 import com.axismerchant.activity.Activity_Notification;
 import com.axismerchant.activity.offers.Activity_OffersNotices;
@@ -30,6 +29,7 @@ import com.axismerchant.activity.start.Activity_Home;
 import com.axismerchant.activity.start.Activity_Main;
 import com.axismerchant.classes.Constants;
 import com.axismerchant.database.DBHelper;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -207,7 +207,7 @@ public class GCMNotificationIntentService extends IntentService {
             PugNotification.with(this)
                     .load()
                     .title(title)
-//                    .message(SubTitle)
+                    .message(SubTitle)
                     .bigTextStyle(SubTitle)
                     .smallIcon(R.mipmap.axis_tr)
                     .largeIcon(R.mipmap.axis_mnemonic)
@@ -220,7 +220,7 @@ public class GCMNotificationIntentService extends IntentService {
             PugNotification.with(this)
                     .load()
                     .title(title)
-//                    .message(message)
+                    .message(message)
                     .bigTextStyle(message)
                     .smallIcon(R.mipmap.axis_tr)
                     .largeIcon(R.mipmap.axis_mnemonic)

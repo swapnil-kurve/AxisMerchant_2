@@ -679,6 +679,7 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                         res = encryptDecrypt.decrypt(res);
 
                         if(res.equalsIgnoreCase("Success")) {
+                            progressDialogue.dismiss();
                             Constants.showToast(getActivity(), getString(R.string.sub_user_updated));
 
                             getUserList();
@@ -699,6 +700,14 @@ public class SubUserFragment extends Fragment implements View.OnClickListener, E
                         Constants.showToast(getActivity(), getString(R.string.session_expired));
                         logout();
                     } else {
+
+                        JSONObject obj12 = array.getJSONObject(1);
+                        JSONArray rowsResponse1 = obj12.getJSONArray("updateUser");
+
+                        JSONObject obj2 = rowsResponse1.getJSONObject(0);
+                        String result12 = obj2.optString("result");
+
+                        result = encryptDecryptRegister.decrypt(result12);
                         Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }
                     progressDialogue.dismiss();

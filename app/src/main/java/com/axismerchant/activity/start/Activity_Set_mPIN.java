@@ -41,8 +41,10 @@ import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,6 +53,8 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
     SharedPreferences preferences;
     String regID;
     ProgressDialogue progressDialog;
+    ArrayList<String> mvisaArrayList;
+    String MID, MOBILE, isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,7 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
         TextView txtSubmit = (TextView) findViewById(R.id.txtSubmit);
 
         txtSubmit.setOnClickListener(this);
+        mvisaArrayList = new ArrayList<>();
     }
 
 
@@ -96,8 +101,12 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
         }else if(mMPIN.equals(mConfirmedMPIN))
         {
             Constants.MPIN = mMPIN;
+            MID = Constants.MERCHANT_ID;
+            MOBILE = Constants.MOBILE_NUM;
+            
             saveMPINToDB(encryptDecryptRegister.encrypt(mMPIN));
             preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+            isAdmin = encryptDecryptRegister.decrypt(preferences.getString("isAdmin", ""));
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("MPIN", encryptDecryptRegister.encrypt(mMPIN));
             editor.apply();
@@ -186,6 +195,41 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
         finish();
     }
 
+    private void getMerchantDetails() {
+        if (Constants.isNetworkConnectionAvailable(Activity_Set_mPIN.this)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new GetProfileDetails().executeOnExecutor(AsyncTask
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getProfileDetails", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+            } else {
+                new GetProfileDetails().execute(Constants.DEMO_SERVICE + "getProfileDetails", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+
+            }
+        } else {
+            Constants.showToast(Activity_Set_mPIN.this, getString(R.string.no_internet));
+        }
+    }
+
+    private void getMVisaIDs() {
+        if (Constants.isNetworkConnectionAvailable(Activity_Set_mPIN.this)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                new GetmVisaIds().executeOnExecutor(AsyncTask
+                        .THREAD_POOL_EXECUTOR, Constants.DEMO_SERVICE + "getAllMvisaIds", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+            } else {
+                new GetmVisaIds().execute(Constants.DEMO_SERVICE + "getAllMvisaIds", MID, MOBILE, Constants.SecretKey, Constants.AuthToken, Constants.IMEI);
+
+            }
+        } else {
+            Constants.showToast(Activity_Set_mPIN.this, getString(R.string.no_internet));
+        }
+    }
+
+    private void gotoHome() {
+        Intent intent = new Intent(Activity_Set_mPIN.this, Activity_Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     private class SetMPIN extends AsyncTask<String, Void, String>
     {
         @Override
@@ -251,6 +295,7 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                         lastLogin = encryptDecryptRegister.decrypt(lastLogin);
 
                         preferences = getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
+                        isAdmin = encryptDecryptRegister.decrypt(preferences.getString("isAdmin", ""));
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("LoggedIn", "true");
                         editor.putString("LastLogin", encryptDecryptRegister.encrypt(lastLogin));
@@ -259,10 +304,14 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
                             editor.putString("KeepLoggedIn", "true");
                         editor.apply();
 
-                        Intent intent = new Intent(Activity_Set_mPIN.this, Activity_Home.class);
+                        /*Intent intent = new Intent(Activity_Set_mPIN.this, Activity_Home.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
-                        finish();
+                        finish();*/
+
+                        getMerchantDetails();
+
+
                     } else if(result.equalsIgnoreCase("Session Time Out")) {
                         Constants.showToast(Activity_Set_mPIN.this, getString(R.string.session_expired));
                         logout();
@@ -275,6 +324,213 @@ public class Activity_Set_mPIN extends AppCompatActivity implements View.OnClick
             } catch (JSONException e) {
             }
 
+        }
+    }
+
+    private class GetProfileDetails extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.onCreateDialog(Activity_Set_mPIN.this);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            String str = "";
+            try {
+                HTTPUtils utils = new HTTPUtils();
+                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
+                URI newURI = URI.create(arg0[0]);
+                HttpPost httppost = new HttpPost(newURI);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpclient.execute(httppost);
+                int stats = response.getStatusLine().getStatusCode();
+
+                if (stats == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    str = data;
+                }
+            } catch (ParseException e1) {
+                progressDialog.dismiss();
+            } catch (IOException e) {
+                progressDialog.dismiss();
+            }
+            CustomizedExceptionHandler.writeToFile(str);
+            return str;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            try {
+                if (!s.equals("")) {
+                    JSONArray jsonArray = new JSONArray(s);
+                    JSONObject object = jsonArray.getJSONObject(0);
+                    JSONArray rowsResponse = object.getJSONArray("rowsResponse");
+                    JSONObject obj = rowsResponse.getJSONObject(0);
+                    String result = obj.getString("result");
+
+                    result = encryptDecryptRegister.decrypt(result);
+
+                    if (result.equals("Success")) {
+
+                        JSONObject object1 = jsonArray.getJSONObject(1);
+                        JSONArray getMerchantDetails = object1.getJSONArray("getProfileDetails");
+                        JSONObject object2 = getMerchantDetails.getJSONObject(0);
+
+                        preferences = Activity_Set_mPIN.this.getSharedPreferences(Constants.ProfileInfo, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        editor.putString("merchantId", object2.optString("merchantId"));
+                        editor.putString("username", object2.optString("username"));
+                        editor.putString("mobileNo", object2.optString("mobileNo"));
+                        editor.putString("regAdd", object2.optString("regAdd"));
+                        editor.putString("mCity", object2.optString("mCity"));
+                        editor.putString("state", object2.optString("state"));
+                        editor.putString("merchantCountry", object2.optString("merchantCountry"));
+                        editor.putString("mEmailId", object2.optString("mEmailId"));
+                        editor.putString("COUNTRY_Code", object2.optString("COUNTRY_Code"));
+                        editor.putString("mvisaId", object2.optString("mvisaId"));
+                        editor.putString("mcc", object2.optString("mcc"));
+                        editor.putString("merLegalName", object2.optString("merLegalName"));
+                        editor.putString("merMobileNO", object2.optString("merMobileNO"));
+                        editor.putString("currencyCode", object2.optString("currencyCode"));
+                        editor.putString("mvisaStatus", object2.optString("mvisaStatus"));
+
+                        String cc = encryptDecryptRegister.decrypt(object2.optString("currencyCode"));
+
+                        editor.apply();
+
+                    } else if (result.equalsIgnoreCase("SessionFailure")) {
+                        Constants.showToast(Activity_Set_mPIN.this, getString(R.string.no_details));
+                    } else {
+                        Constants.showToast(Activity_Set_mPIN.this, getString(R.string.no_details));
+                    }
+                    progressDialog.dismiss();
+                    if (isAdmin.equalsIgnoreCase("True"))
+                        getMVisaIDs();
+                    else {
+                        gotoHome();
+                    }
+                } else {
+                    Constants.showToast(Activity_Set_mPIN.this, getString(R.string.network_error));
+                }
+            } catch (JSONException e) {
+                progressDialog.dismiss();
+            }
+
+        }
+    }
+
+    public class GetmVisaIds extends AsyncTask<String, Void, String> {
+
+        String ArrURL[];
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.onCreateDialog(Activity_Set_mPIN.this);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            String str = null;
+            try {
+                HTTPUtils utils = new HTTPUtils();
+                HttpClient httpclient = utils.getNewHttpClient(arg0[0].startsWith("https"));
+                URI newURI = URI.create(arg0[0]);
+                HttpPost httppost = new HttpPost(newURI);
+
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.merchant_id), encryptDecryptRegister.encrypt(arg0[1])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.mobile_no), encryptDecryptRegister.encrypt(arg0[2])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.secretKey), encryptDecryptRegister.encrypt(arg0[3])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.authToken), encryptDecryptRegister.encrypt(arg0[4])));
+                nameValuePairs.add(new BasicNameValuePair(getString(R.string.imei_no), encryptDecryptRegister.encrypt(arg0[5])));
+
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+                HttpResponse response = httpclient.execute(httppost);
+                int stats = response.getStatusLine().getStatusCode();
+
+                if (stats == 200) {
+                    HttpEntity entity = response.getEntity();
+                    String data = EntityUtils.toString(entity);
+                    str = data;
+                }
+            } catch (org.apache.http.ParseException e1) {
+                progressDialog.dismiss();
+
+            } catch (IOException e) {
+                progressDialog.dismiss();
+
+            }
+            CustomizedExceptionHandler.writeToFile(str);
+            return str;
+        }
+
+
+        @Override
+        protected void onPostExecute(String data) {
+            super.onPostExecute(data);
+
+            try {
+                if (data != null) {
+                    JSONArray transaction = new JSONArray(data);
+                    JSONObject object1 = transaction.getJSONObject(0);
+
+                    JSONArray rowResponse = object1.getJSONArray("rowsResponse");
+                    JSONObject obj = rowResponse.getJSONObject(0);
+                    String result = obj.optString("result");
+
+                    result = encryptDecryptRegister.decrypt(result);
+                    if (result.equals("Success")) {
+                        JSONObject object = transaction.getJSONObject(1);
+                        JSONArray getImagesForSlider = object.getJSONArray("getAllMvisaIds");
+                        ArrURL = new String[getImagesForSlider.length()];
+                        for (int i = 0; i < getImagesForSlider.length(); i++) {
+
+                            JSONObject object2 = getImagesForSlider.getJSONObject(i);
+                            String mvisa_mid = object2.optString("mvisa_mid");
+
+                            mvisaArrayList.add(mvisa_mid);
+                        }
+
+                        SharedPreferences preferences = Activity_Set_mPIN.this.getSharedPreferences(Constants.ProfileInfo, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        //Set the values
+                        Set<String> set = new HashSet<String>();
+                        set.addAll(mvisaArrayList);
+                        editor.putStringSet("mVisaIds", set);
+                        editor.apply();
+
+                        progressDialog.dismiss();
+
+                    } else if (result.equalsIgnoreCase("SessionFailure")) {
+                    } else {
+                        progressDialog.dismiss();
+                    }
+                }
+                progressDialog.dismiss();
+                gotoHome();
+            } catch (JSONException e) {
+                progressDialog.dismiss();
+
+            }
         }
     }
 }

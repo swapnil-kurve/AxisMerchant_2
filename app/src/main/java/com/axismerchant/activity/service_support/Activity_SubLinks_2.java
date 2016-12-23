@@ -341,6 +341,11 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
                 txtRequestNumber.setText(getString(R.string.request_raised) + "\n" + getString(R.string.request_number) + " \n" + request_Number + ",\n Docket Id " + docket_id);
             }
             imgResponse.setImageResource(R.drawable.happiness);
+        } else if (response_code.equalsIgnoreCase("AlreadyAdded")) {
+            txtResponseStatus.setText("Fail");
+            txtResponseStatus.setTextColor(Color.RED);
+            txtRequestNumber.setText("Your request for " + mServiceType + " is already in process.");
+            imgResponse.setImageResource(R.mipmap.fail);
         } else {
             txtResponseStatus.setText("Fail");
             txtResponseStatus.setTextColor(Color.RED);
@@ -468,7 +473,12 @@ public class Activity_SubLinks_2 extends AppCompatActivity implements View.OnCli
                             responseCode = object2.optString("result");
                             responseCode = encryptDecrypt.decrypt(responseCode);
                         }
-                        ShowDialogReponse("Fail", "", "", responseCode);
+                        String res;
+                        if (responseCode.contains("AlreadyAdded")) {
+                            res = responseCode.split(",")[0];
+                            ShowDialogReponse("Fail", "", "", res);
+                        } else
+                            ShowDialogReponse("Fail", "", "", responseCode);
                     }
                 }else
                 {

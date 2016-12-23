@@ -52,7 +52,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     SharedPreferences preferences;
     ImageView imgSwitch, imgErrorMID, imgErrorMobile;
     int flag = 1 ;
-    ProgressDialogue progressDialogue;
+    String veriPin;
+    ProgressDialogue progressDialog;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,7 +82,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getInitialize(View view) {
-        progressDialogue = new ProgressDialogue();
+        progressDialog = new ProgressDialogue();
         edtMerchantID = (EditText) view.findViewById(R.id.edtMerchantID);
         edtMobileNumber = (EditText) view.findViewById(R.id.edtMobileNumber);
         imgErrorMID = (ImageView) view.findViewById(R.id.imgErrorMID);
@@ -95,6 +97,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         imgErrorMobile.setOnClickListener(this);
 
         encryptDecryptRegister = new EncryptDecryptRegister();
+
 
     }
 
@@ -194,6 +197,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             }
             else {
             Constants.getIMEI(getActivity());
+
             preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("MerchantID", encryptDecryptRegister.encrypt(Constants.MERCHANT_ID));
@@ -225,8 +229,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialogue.onCreateDialog(getActivity());
-            progressDialogue.show();
+            progressDialog.onCreateDialog(getActivity());
+            progressDialog.show();
         }
 
         @Override
@@ -256,9 +260,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     str = data;
                 }
             } catch (ParseException e1) {
-                progressDialogue.dismiss();
+                progressDialog.dismiss();
             } catch (IOException e) {
-                progressDialogue.dismiss();
+                progressDialog.dismiss();
             }
             return str;
         }
@@ -277,11 +281,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                     String email = object1.optString("email");
                     String username = object1.optString("username");
                     String isAdmin = object1.optString("isAdmin");
-                    String veriPin = object1.optString("veriPin");
+                    veriPin = object1.optString("veriPin");
                     String authToken = object1.optString("authToken");
 
                     result = encryptDecryptRegister.decrypt(result);
-                    progressDialogue.dismiss();
+                    progressDialog.dismiss();
 
                     if (result.equals("Success") || result.equals("AlreadyRegistered")) {
                         /*email = encryptDecryptRegister.decrypt(email);
@@ -303,16 +307,20 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                         intent.putExtra("OTP", veriPin);
                         startActivity(intent);
                         getActivity().finish();
+
+
                     }else {
                         Constants.showToast(getActivity(), getString(R.string.invalid_details));
                     }
                 }else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
-                    progressDialogue.dismiss();
+                    progressDialog.dismiss();
                 }
             } catch (JSONException e) {
             }
 
         }
     }
+
+
 }

@@ -61,7 +61,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
     SharedPreferences preferences;
     EncryptDecryptRegister encryptDecryptRegister;
     int flag = 1;
-    String MID, MOBILE;
+    String MID, MOBILE, isAdmin;
     ProgressDialogue progressDialog;
     ArrayList<String> mvisaArrayList;
 
@@ -82,6 +82,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         SharedPreferences preferences = getActivity().getSharedPreferences(Constants.LoginPref, Context.MODE_PRIVATE);
         Constants.MERCHANT_ID = encryptDecryptRegister.decrypt(preferences.getString("MerchantID", ""));
         Constants.MOBILE_NUM = encryptDecryptRegister.decrypt(preferences.getString("MobileNum", ""));
+        isAdmin = encryptDecryptRegister.decrypt(preferences.getString("isAdmin", ""));
         Constants.getIMEI(getActivity());
         Constants.retrieveMPINFromDatabase(getActivity());
 
@@ -265,6 +266,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         } else {
             Constants.showToast(getActivity(), getString(R.string.no_internet));
         }
+    }
+
+    private void gotoHome() {
+        Intent intent = new Intent(getActivity(), Activity_Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     private class VerifyMPIN extends AsyncTask<String, Void, String> {
@@ -543,7 +551,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
                         Constants.showToast(getActivity(), getString(R.string.no_details));
                     }
                     progressDialog.dismiss();
-                    getMVisaIDs();
+                    if (isAdmin.equalsIgnoreCase("True"))
+                        getMVisaIDs();
+                    else {
+                        gotoHome();
+                    }
                 } else {
                     Constants.showToast(getActivity(), getString(R.string.network_error));
                 }
@@ -639,10 +651,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
                         progressDialog.dismiss();
 
-                        Intent intent = new Intent(getActivity(), Activity_Home.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        getActivity().finish();
+                        gotoHome();
 
                     } else if (result.equalsIgnoreCase("SessionFailure")) {
 //                        session = 0;
