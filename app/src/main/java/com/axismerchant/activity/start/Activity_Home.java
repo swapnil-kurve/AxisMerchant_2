@@ -408,6 +408,7 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
         }else
         {
             startActivity(new Intent(this, Activity_SMSSignUp.class));
+            finish();
         }
     }
 
@@ -429,7 +430,6 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                finish();
             }
         });
 
@@ -985,9 +985,11 @@ public class Activity_Home extends AppActivity implements View.OnClickListener, 
                             Intent intent = new Intent(Activity_Home.this, Activity_SMSSignUp.class);
                             intent.putExtra("SMSRequestValidated","Pending");
                             startActivity(intent);
+                            finish();
                         }else
                         {
                             startActivity(new Intent(Activity_Home.this, Activity_SMSSignUp.class));
+                            finish();
                         }
                         customProgressDialog.dismiss();
 

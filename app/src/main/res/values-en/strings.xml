@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Axis Bank Merchant App</string>
 
-    <string name="version">Version B 2.0.4</string>
+    <string name="version">Version 1.0.0</string>
     <!--<string name="version">Version UAT-42</string>-->
 
     <string name="action_settings">Settings</string>

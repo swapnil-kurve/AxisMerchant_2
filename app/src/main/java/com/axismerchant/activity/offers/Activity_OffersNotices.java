@@ -213,7 +213,7 @@ public class Activity_OffersNotices extends AppCompatActivity implements Adapter
             promotionsArrayList.clear();
 
         try {
-            crs = db.rawQuery("select DISTINCT " + DBHelper.UID + "," + DBHelper.PROMOTION_ID + "," + DBHelper.TITLE + "," + DBHelper.SUB_TITLE + ","
+            crs = db.rawQuery("select DISTINCT " + DBHelper.PROMOTION_ID + "," + DBHelper.UID + "," + DBHelper.TITLE + "," + DBHelper.SUB_TITLE + ","
                     + DBHelper.MESSAGE + "," + DBHelper.IMG_URL + ","
                     + DBHelper.PROMOTION_TYPE + "," + DBHelper.WITH_OPTION + "," + DBHelper.READ_STATUS + "," + DBHelper.STATUS + " from " + DBHelper.TABLE_NAME_PROMOTIONS
                     + " order by CAST(" + DBHelper.UID + " AS Integer) desc", null);
